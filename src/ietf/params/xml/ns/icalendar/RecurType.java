@@ -15,43 +15,57 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Java class for RecurType complex type.
+ * Java class for RecurType complex type. Recurrence Rule (RFC5545 section
+ * 3.3.10)
+ * <p/>
+ * This value type is used to identify properties that contain a recurrence rule
+ * specification.
+ * <p/>
+ * The FREQ rule part is REQUIRED, but MUST NOT occur more than once.
+ * <p/>
+ * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
+ * same 'recur'.
+ * <p/>
+ * The other rule parts are OPTIONAL, but MUST NOT occur more than once.
  * <p/>
  * The following schema fragment specifies the expected content contained within
  * this class.
+ * <code>
+ *   <xs:complexType name="RecurType">
+ *   <xs:sequence>
+ *     <xs:element name="freq" type="xcal:FreqRecurType"/>
+ *     <xs:sequence>
+ *       <xs:choice minOccurs="0">
+ *         <xs:element ref="xcal:until" />
+ *         <xs:element ref="xcal:count" />
+ *       </xs:choice>
+ *     </xs:sequence>
+ *     <xs:element name="interval" type="xs:string" minOccurs="0"/>
+ *     <xs:element name="bysecond" type="xs:string"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="byminute" type="xs:string"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="byhour" type="xs:string"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="byday" type="xs:string"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="byyearday" type="xs:string"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="bymonthday" type="xcal:BymonthdayRecurType"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="byweekno" type="xs:string"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="bymonth" type="xcal:BymonthRecurType"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="bysetpos" type="xs:integer"
+ *                 minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:element name="wkst" type="xcal:WeekdayRecurType" minOccurs="0" />
+ *   </xs:sequence>
+ * </xs:complexType>
+ * </code>
  * <p/>
- * <
- * pre> &lt;complexType name="RecurType"> &lt;complexContent> &lt;restriction
- * base="{http://www.w3.org/2001/XMLSchema}anyType"> &lt;sequence> &lt;element
- * name="freq" type="{urn:ietf:params:xml:ns:icalendar-2.0}FreqRecurType"/>
- * &lt;sequence> &lt;choice minOccurs="0"> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}until"/> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}count"/> &lt;/choice>
- * &lt;/sequence> &lt;element name="interval"
- * type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/> &lt;element
- * name="bysecond" type="{http://www.w3.org/2001/XMLSchema}string"
- * maxOccurs="unbounded" minOccurs="0"/> &lt;element name="byminute"
- * type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"
- * minOccurs="0"/> &lt;element name="byhour"
- * type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"
- * minOccurs="0"/> &lt;element name="byday"
- * type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"
- * minOccurs="0"/> &lt;element name="byyearday"
- * type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"
- * minOccurs="0"/> &lt;element name="bymonthday"
- * type="{urn:ietf:params:xml:ns:icalendar-2.0}BymonthdayRecurType"
- * maxOccurs="unbounded" minOccurs="0"/> &lt;element name="byweekno"
- * type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"
- * minOccurs="0"/> &lt;element name="bymonth"
- * type="{urn:ietf:params:xml:ns:icalendar-2.0}BymonthRecurType"
- * maxOccurs="unbounded" minOccurs="0"/> &lt;element name="bysetpos"
- * type="{http://www.w3.org/2001/XMLSchema}integer" maxOccurs="unbounded"
- * minOccurs="0"/> &lt;element name="wkst"
- * type="{urn:ietf:params:xml:ns:icalendar-2.0}WeekdayRecurType" minOccurs="0"/>
- * &lt;/sequence> &lt;/restriction> &lt;/complexContent> &lt;/complexType>
- * </pre>
- * <p/>
- *
+ * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.10">Recurrence
+ * Rule</a>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RecurType", propOrder = {
@@ -88,46 +102,99 @@ public class RecurType {
   private static final String WKST = "WKST";
   private static final String UTC_PATTERN = "yyyyMMdd'T'HHmmss'Z'";
   @XmlElement(required = true)
+  /**
+   * The FREQ rule part is REQUIRED, but MUST NOT occur more than once.
+   * <p/>
+   * type-freq = element freq { "SECONDLY" | "MINUTELY" | "HOURLY" | "DAILY" |
+   * "WEEKLY" | "MONTHLY" | "YEARLY" }
+   */
   protected FreqRecurType freq;
+  /**
+   * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
+   * same 'recur'.
+   * <p/>
+   * type-until = element until { type-date | type-date-time }
+   */
   protected UntilRecurType until;
-  protected Integer count = -1;
-  protected Integer interval = -1;
+  /**
+   * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
+   * same 'recur'.
+   * <p/>
+   * type-count = element count { xsd:positiveInteger }
+   */
+  protected Integer count;
+  /**
+   * element interval { xsd:positiveInteger }
+   */
+  protected Integer interval;
+  /**
+   * type-bysecond = element bysecond { xsd:positiveInteger }
+   */
   protected List<String> bysecond;
+  /**
+   * type-byminute = element byminute { xsd:positiveInteger }
+   */
   protected List<String> byminute;
+  /**
+   * type-byhour = element byhour { xsd:positiveInteger }
+   */
   protected List<String> byhour;
+  /**
+   * type-byday = element byday { xsd:integer?, type-weekday }
+   */
   protected List<String> byday;
+  /**
+   * type-byyearday = element byyearday { xsd:integer }
+   */
   protected List<Integer> byyearday;
+  /**
+   * type-bymonthday = element bymonthday { xsd:integer } [-31,31]
+   */
   @XmlElement(type = Integer.class)
   protected List<Integer> bymonthday;
+  /**
+   * type-byweekno = element byweekno { xsd:integer }
+   */
   protected List<Integer> byweekno;
+  /**
+   * type-bymonth = element bymonth { xsd:positiveInteger } [1,12]
+   */
   @XmlElement(type = Integer.class)
   protected List<Integer> bymonth;
+  /**
+   * type-bysetpos = element bysetpos { xsd:integer }
+   */
   protected List<Integer> bysetpos;
+  /**
+   * type-weekday = ( "SU" | "MO" | "TU" | "WE" | "TH" | "FR" | "SA" )
+   */
   protected WeekdayRecurType wkst;
 
   public RecurType() {
   }
 
   /**
-   * Constructs a new instance from the specified string value.
+   * Construct a new RecurType instance from an iCalendar-compliant RECUR
+   * String.
    * <p/>
-   * @param aValue a string representation of a recurrence.
-   * @throws ParseException thrown when the specified string contains an invalid
-   *                        representation of an UNTIL date value
+   * @param aValue an iCalendar RECUR String representation of a recurrence.
+   * @throws ParseException if the specified string contains an invalid
+   *                        representation of an UNTIL date value or otherwise
+   *                        cannot be parsed
    */
   public RecurType(final String aValue) throws Exception {
     DateFormat sdf = new SimpleDateFormat(UTC_PATTERN);
 
-    final StringTokenizer t = new StringTokenizer(aValue, ";=");
-    while (t.hasMoreTokens()) {
-      final String token = t.nextToken();
+    final StringTokenizer tokenizer = new StringTokenizer(aValue, ";=");
+    while (tokenizer.hasMoreTokens()) {
+      final String token = tokenizer.nextToken();
       switch (token) {
         case FREQ:
-          freq = FreqRecurType.fromValue(nextToken(t, token));
+          freq = FreqRecurType.fromValue(nextToken(tokenizer, token));
           break;
         case UNTIL:
           // UNTIL must be specified in UTC time..
-          final String untilString = nextToken(t, token);
+          final String untilString = nextToken(tokenizer, token);
           if (untilString != null && untilString.indexOf("T") >= 0) {
             until = new UntilRecurType(sdf.parse(untilString));
           } else {
@@ -135,40 +202,40 @@ public class RecurType {
           }
           break;
         case COUNT:
-          count = Integer.parseInt(nextToken(t, token));
+          count = Integer.parseInt(nextToken(tokenizer, token));
           break;
         case INTERVAL:
-          interval = Integer.parseInt(nextToken(t, token));
+          interval = Integer.parseInt(nextToken(tokenizer, token));
           break;
         case BYSECOND:
-          bysecond = listParseString(nextToken(t, token));
+          bysecond = listParseString(nextToken(tokenizer, token));
           break;
         case BYMINUTE:
-          byminute = listParseString(nextToken(t, token));
+          byminute = listParseString(nextToken(tokenizer, token));
           break;
         case BYHOUR:
-          byhour = listParseString(nextToken(t, token));
+          byhour = listParseString(nextToken(tokenizer, token));
           break;
         case BYDAY:
-          byday = listParseString(nextToken(t, token));
+          byday = listParseString(nextToken(tokenizer, token));
           break;
         case BYMONTHDAY:
-          bymonthday = listParseInteger(nextToken(t, token));
+          bymonthday = listParseInteger(nextToken(tokenizer, token));
           break;
         case BYYEARDAY:
-          byyearday = listParseInteger(nextToken(t, token));
+          byyearday = listParseInteger(nextToken(tokenizer, token));
           break;
         case BYWEEKNO:
-          byweekno = listParseInteger(nextToken(t, token));
+          byweekno = listParseInteger(nextToken(tokenizer, token));
           break;
         case BYMONTH:
-          bymonth = listParseInteger(nextToken(t, token));
+          bymonth = listParseInteger(nextToken(tokenizer, token));
           break;
         case BYSETPOS:
-          bysetpos = listParseInteger(nextToken(t, token));
+          bysetpos = listParseInteger(nextToken(tokenizer, token));
           break;
         case WKST:
-          wkst = WeekdayRecurType.valueOf(nextToken(t, token));
+          wkst = WeekdayRecurType.valueOf(nextToken(tokenizer, token));
           break;
       }
     }
@@ -664,11 +731,11 @@ public class RecurType {
   }
 
   /**
-   * toString method prints a properly formatted RECUR string.
+   * Print this RecurType object instance as a properly formatted RECUR string.
    * <p/>
    * This method is forked from the iCal4j Recur class.
    * <p/>
-   * @return an iCAL compliant RECUR string.
+   * @return an iCalendar-compliant RECUR string.
    */
   @Override
   public final String toString() {
@@ -760,11 +827,12 @@ public class RecurType {
 
   //<editor-fold defaultstate="collapsed" desc="List Tokenizer Support Methods">
   /**
-   * {@inheritDoc}
+   * Format a list of objects (expect Integer and String) into a concatenated
+   * comma-delimited String. {@inheritDoc}
    */
-  private String listFormat(List<?> integerList) {
+  private String listFormat(List<?> aList) {
     final StringBuffer b = new StringBuffer();
-    for (final Iterator i = integerList.iterator(); i.hasNext();) {
+    for (final Iterator i = aList.iterator(); i.hasNext();) {
       b.append(i.next());
       if (i.hasNext()) {
         b.append(',');
@@ -774,6 +842,8 @@ public class RecurType {
   }
 
   /**
+   * Parse a comma-delimited String into a list of Integers.
+   * <p/>
    * @param aString              a string representation of a number list
    * @param minValue             the minimum allowable value
    * @param maxValue             the maximum allowable value
@@ -789,6 +859,8 @@ public class RecurType {
   }
 
   /**
+   * Parse a comma-delimited String into a list of Strings.
+   * <p/>
    * @param aString              a string representation of a number list
    * @param minValue             the minimum allowable value
    * @param maxValue             the maximum allowable value
