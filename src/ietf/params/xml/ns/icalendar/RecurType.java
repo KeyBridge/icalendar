@@ -177,6 +177,8 @@ public class RecurType {
    * Construct a new RecurType instance from an iCalendar-compliant RECUR
    * String.
    * <p/>
+   * This method is forked from the iCal4j Recur class.
+   * <p/>
    * @param aValue an iCalendar RECUR String representation of a recurrence.
    * @throws ParseException if the specified string contains an invalid
    *                        representation of an UNTIL date value or otherwise
@@ -240,14 +242,20 @@ public class RecurType {
       }
     }
     /**
-     * Validate the Frequency
+     * Validate the Frequency.
      */
     if (freq == null) {
-      throw new IllegalArgumentException(
-        "A recurrence rule MUST contain a FREQ rule part.");
+      throw new IllegalArgumentException("A recurrence rule MUST contain a FREQ rule part.");
     }
   }
 
+  /**
+   * Internal tokenizer method supporting the String constructor.
+   * <p/>
+   * @param t         a StringTokenizer instance
+   * @param lastToken the last token
+   * @return the next token
+   */
   private String nextToken(StringTokenizer t, String lastToken) {
     try {
       return t.nextToken();
