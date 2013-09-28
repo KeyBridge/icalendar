@@ -21,5 +21,4 @@ package ietf.params.xml.ns.icalendar.property;
  * @author jesse
  */
 public class NewClass {
-
 }
