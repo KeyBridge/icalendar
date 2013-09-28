@@ -1,51 +1,33 @@
-About package-info.java
++------------------------------------------------------------------------------+
+|      Java implementation of iCalendar (RFC5545) XML Encoding                 |
++------------------------------------------------------------------------------+
 
-Used in this library to declare JAXB namespace annotations on a package level via annotations.
+About: 
+   This is a compilation of the XML format for iCalendar (xCal) draft.
+   
+Version
+  Comports with draft-daboo-et-al-icalendar-in-xml-11
 
-http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/javadoc.html#sourcefiles
+Copyright
+  Caulfield IP Holdings
 
-Package Comment Files
+License
+  Apache License, Version 2.0
 
-Each package can have its own documentation comment, contained in its own "source"
-file, that the Javadoc tool will merge into the package summary page that it
-generates. You typically include in this comment any documentation that applies
-to the entire package.
++------------------------------------------------------------------------------+
+|  Copyright (C) 2013 Caulfield IP Holdings (Caulfield) and/or its affiliates. |
++------------------------------------------------------------------------------+
 
-To create a package comment file, you have a choice of two files to place your comments:
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
-    package-info.java - Can contain a package declaration, package annotations,
-                        package comments and Javadoc tags. This file is new in
-                        JDK 5.0, and is preferred over package.html.
+       http://www.apache.org/licenses/LICENSE-2.0
 
-    package.html      - Can contain only package comments and Javadoc tags, no package
-                        annotations.
-
-A package may have a single package.html file or a single package-info.java file
-but not both. Place either file in the package directory in the source tree along
-with your .java files.
-
-    package-info.java - This file can contain a package comment of the following
-                        structure -- the comment is placed before the package declaration:
-
-File: java/applet/package-info.java
-
-    /**
-     * Provides the classes necessary to create an
-     * applet and the classes an applet uses
-     * to communicate with its applet context.
-     * <p>
-     * The applet framework involves two entities:
-     * the applet and the applet context.
-     * An applet is an embeddable window (see the
-     * {@link java.awt.Panel} class) with a few extra
-     * methods that the applet context can use to
-     * initialize, start, and stop the applet.
-     *
-     * @since 1.0
-     * @see java.awt
-     */
-    package java.lang.applet;
-
-Note that while the comment separators /** and /* must be present, the leading
-asterisks on the intermediate lines can be omitted.
-
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   
+   

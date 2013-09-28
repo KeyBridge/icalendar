@@ -7,6 +7,7 @@
 package ietf.params.xml.ns.icalendar;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -180,9 +181,9 @@ public class RecurType {
    * This method is forked from the iCal4j Recur class.
    * <p/>
    * @param aValue an iCalendar RECUR String representation of a recurrence.
-   * @throws ParseException if the specified string contains an invalid
-   *                        representation of an UNTIL date value or otherwise
-   *                        cannot be parsed
+   * @throws Exception if the specified string contains an invalid
+   *                   representation of an UNTIL date value or otherwise cannot
+   *                   be parsed
    */
   public RecurType(final String aValue) throws Exception {
     DateFormat sdf = new SimpleDateFormat(UTC_PATTERN);

@@ -6,9 +6,9 @@
 //
 package ietf.params.xml.ns.icalendar.property.base;
 
+import ietf.params.xml.ns.icalendar.RecurType;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.recur.ExrulePropType;
-import ietf.params.xml.ns.icalendar.RecurType;
 import ietf.params.xml.ns.icalendar.property.base.recur.RrulePropType;
 import java.util.Objects;
 import javax.xml.bind.annotation.*;
