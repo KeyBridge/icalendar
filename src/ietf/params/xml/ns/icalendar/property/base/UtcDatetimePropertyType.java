@@ -49,7 +49,7 @@ public class UtcDatetimePropertyType extends BasePropertyType {
   }
 
   public UtcDatetimePropertyType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    this.utcDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime);
+    this.utcDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
   }
 
   /**
@@ -73,7 +73,7 @@ public class UtcDatetimePropertyType extends BasePropertyType {
   }
 
   public void setUtcDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    this.utcDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime);
+    this.utcDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
   }
 
   public boolean isSetUtcDateTime() {

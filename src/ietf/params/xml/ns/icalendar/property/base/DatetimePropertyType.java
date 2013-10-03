@@ -50,7 +50,14 @@ public class DatetimePropertyType extends BasePropertyType {
    *
    */
   public void setDateTime(XMLGregorianCalendar value) {
-    this.dateTime = value;
+    /**
+     * Call normalize to Normalize this instance to UTC.
+     * <p/>
+     * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z
+     * <p/>
+     * Implements W3C XML Schema Part 2, Section 3.2.7.3 (A).
+     */
+    this.dateTime = value.normalize();
   }
 
   public boolean isSetDateTime() {

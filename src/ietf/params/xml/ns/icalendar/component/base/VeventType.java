@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -18,11 +19,12 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VeventType")
+@XmlRootElement
 public class VeventType extends BaseComponentType {
 
   public String toStringFull() {
     SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
-    sdf.setCalendar(Calendar.getInstance(TIME_ZONE));
+    sdf.setTimeZone(TIME_ZONE);
 
     return "VeventType"
       + " uid " + getUID()
@@ -37,7 +39,7 @@ public class VeventType extends BaseComponentType {
   @Override
   public String toString() {
     SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
-    sdf.setCalendar(Calendar.getInstance(TIME_ZONE));
+    sdf.setTimeZone(TIME_ZONE);
 
     return "VeventType"
       + " dtstart [" + (getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "")
