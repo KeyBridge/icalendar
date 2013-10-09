@@ -91,6 +91,6 @@ public class RecurPropertyType extends BasePropertyType {
 
   @Override
   public String toString() {
-    return "RecurPropertyType" + " recur [" + recur + ']';
+    return recur != null ? recur.toString() : null;
   }
 }

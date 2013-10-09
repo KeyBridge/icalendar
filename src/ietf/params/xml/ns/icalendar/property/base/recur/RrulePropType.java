@@ -33,6 +33,6 @@ public class RrulePropType extends RecurPropertyType {
 
   @Override
   public String toString() {
-    return "RrulePropType " + super.toString() + ']';
+    return super.toString();
   }
 }

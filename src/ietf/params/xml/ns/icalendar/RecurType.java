@@ -1,7 +1,6 @@
 package ietf.params.xml.ns.icalendar;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,42 +21,6 @@ import javax.xml.bind.annotation.XmlType;
  * same 'recur'.
  * <p/>
  * The other rule parts are OPTIONAL, but MUST NOT occur more than once.
- * <p/>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <code>
- *   <xs:complexType name="RecurType">
- *   <xs:sequence>
- *     <xs:element name="freq" type="xcal:FreqRecurType"/>
- *     <xs:sequence>
- *       <xs:choice minOccurs="0">
- *         <xs:element ref="xcal:until" />
- *         <xs:element ref="xcal:count" />
- *       </xs:choice>
- *     </xs:sequence>
- *     <xs:element name="interval" type="xs:string" minOccurs="0"/>
- *     <xs:element name="bysecond" type="xs:string"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="byminute" type="xs:string"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="byhour" type="xs:string"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="byday" type="xs:string"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="byyearday" type="xs:string"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="bymonthday" type="xcal:BymonthdayRecurType"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="byweekno" type="xs:string"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="bymonth" type="xcal:BymonthRecurType"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="bysetpos" type="xs:integer"
- *                 minOccurs="0" maxOccurs="unbounded" />
- *     <xs:element name="wkst" type="xcal:WeekdayRecurType" minOccurs="0" />
- *   </xs:sequence>
- * </xs:complexType>
- * </code>
  * <p/>
  * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.10">Recurrence
  * Rule</a>
@@ -295,11 +258,19 @@ public class RecurType {
   /**
    * Sets the value of the until property.
    * <p/>
-   * @param value allowed object is {@link UntilRecurType }
+   * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
+   * same 'recur'. Therefore, if the input value is not null the COUNT field is
+   * set to null.
+   * <p/>
+   * <
+   * p/> @param value allowed object is {@link UntilRecurType }
    *
    */
   public void setUntil(UntilRecurType value) {
     this.until = value;
+    if (value != null) {
+      this.count = null;
+    }
   }
 
   public boolean isSetUntil() {
@@ -319,11 +290,18 @@ public class RecurType {
   /**
    * Sets the value of the count property.
    * <p/>
+   * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
+   * same 'recur'. Therefore, if the input value is not null the UNTIL field is
+   * set to null.
+   * <p/>
    * @param value allowed object is {@link Integer }
    *
    */
   public void setCount(Integer value) {
     this.count = value;
+    if (count != null) {
+      this.until = null;
+    }
   }
 
   public boolean isSetCount() {

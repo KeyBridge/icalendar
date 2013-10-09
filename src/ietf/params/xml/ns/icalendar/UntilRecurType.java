@@ -1,6 +1,7 @@
 package ietf.params.xml.ns.icalendar;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.xml.bind.annotation.*;
@@ -32,6 +33,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class UntilRecurType {
 
+  private static final String UTC_PATTERN = "yyyyMMdd'T'HHmmss'Z'";
   @XmlTransient
   protected static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
   @XmlSchemaType(name = "date")
@@ -52,6 +54,19 @@ public class UntilRecurType {
 
   public UntilRecurType(java.util.Date dateTime) throws DatatypeConfigurationException {
     setDateTime(dateTime);
+  }
+
+  /**
+   * Construct an UntilRecurType from a string.
+   * <p/>
+   * @param dateTime an encoded date time string of the format
+   *                 'yyyyMMdd'T'HHmmss'Z''
+   * @throws DatatypeConfigurationException if the parsed date is not valid.
+   * @throws ParseException                 if the string cannot be parsed into
+   *                                        a Date
+   */
+  public UntilRecurType(String dateTime) throws DatatypeConfigurationException, ParseException {
+    setDateTime(new SimpleDateFormat(UTC_PATTERN).parse(dateTime));
   }
 
   /**
@@ -154,6 +169,11 @@ public class UntilRecurType {
     return true;
   }
 
+  /**
+   * Print both the dateTime and date fields.
+   * <p/>
+   * @return
+   */
   public String toStringFull() {
     return "UntilRecurType"
       + " dateTime [" + dateTime
@@ -162,11 +182,11 @@ public class UntilRecurType {
   }
 
   /**
-   * @return a properly formatted date string: yyyyMMdd
+   * @return an encoded date time string of the format 'yyyyMMdd'T'HHmmss'Z''
    */
   @Override
   public String toString() {
-    DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    DateFormat sdf = new SimpleDateFormat(UTC_PATTERN);
     return getCalendar() != null ? sdf.format(getCalendar().getTime()) : null;
   }
 }
