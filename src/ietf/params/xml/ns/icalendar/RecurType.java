@@ -153,12 +153,7 @@ public class RecurType {
           freq = FreqRecurType.fromValue(nextToken(tokenizer, token));
           break;
         case UNTIL:
-          final String untilString = nextToken(tokenizer, token);
-          if (untilString != null && untilString.indexOf("T") >= 0) {
-            until = new UntilRecurType(sdf.parse(untilString));
-          } else {
-            until = null;
-          }
+          until = new UntilRecurType(nextToken(tokenizer, token));
           break;
         case COUNT:
           count = Integer.parseInt(nextToken(tokenizer, token));

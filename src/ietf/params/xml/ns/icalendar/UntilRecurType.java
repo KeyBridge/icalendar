@@ -112,8 +112,96 @@ public class UntilRecurType {
   private static final String PATTERN_DATE_TIME = "yyyyMMdd'T'HHmmss'Z'";
   @XmlTransient
   protected static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
+  /**
+   * xsd:date — Gregorian calendar date
+   * <p/>
+   * This datatype is modeled after the calendar dates defined in Chapter 5.2.1
+   * of ISO (International Organization for Standardization) 8601. Its value
+   * space is the set of Gregorian calendar dates as defined by this standard;
+   * i.e., a one-day-long period of time. Its lexical space is the ISO 8601
+   * extended format:
+   * <code>[-]CCYY-MM-DD[Z|(+|-)hh:mm]</code> with an optional time zone. Time
+   * zones that aren't specified are considered undetermined.
+   * <p/>
+   * Restrictions
+   * <p/>
+   * The basic format of ISO 8601 calendar dates, CCYYMMDD, isn't supported.
+   * <p/>
+   * The other forms of dates available in ISO 8601 aren't supported: ordinal
+   * dates defined by the year, the number of the day in the year, dates
+   * identified by calendar week, and day numbers.
+   * <p/>
+   * As the value space is defined by reference to ISO 8601, there is no support
+   * for any calendar system other than Gregorian. Because the lexical space is
+   * also defined using a reference to ISO 8601, there is no support for any
+   * localization such as different orders for date parts or named months.
+   * <p/>
+   * The order relation between dates with and without time zone is partial:
+   * they can be compared beyond a +/- 14 hour interval.
+   * <p/>
+   * There is a difference between ISO 8601, which defines a day as a 24-hour
+   * period of time, and the W3C XML Schema, which indicates that a date is a
+   * "one-day-long, non-periodic instance ... independent of how many hours this
+   * day has." Even though technically correct, some days don't last exactly 24
+   * hours because of leap seconds; this definition doesn't concur with the
+   * definition of xsd:duration that states that a day is always exactly 24
+   * hours long. Example
+   * <p/>
+   * Valid values include: 2001-10-26, 2001-10-26+02:00, 2001-10-26Z,
+   * 2001-10-26+00:00, -2001-10-26, or -20000-04-01.
+   * <p/>
+   * The following values would be invalid: 2001-10 (all the parts must be
+   * specified), 2001-10-32 (the days part—32—is out of range), 2001-13-26+02:00
+   * (the month part—13—is out of range), or 01-10-26 (the century part is
+   * missing).
+   * <p/>
+   * @see <a
+   * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
+   */
   @XmlSchemaType(name = "date")
   protected XMLGregorianCalendar date;
+  /**
+   * xsd:dateTime — Instant of time (Gregorian calendar)
+   * <p/>
+   * This datatype describes instances identified by the combination of a date
+   * and a time. Its value space is described as a combination of date and time
+   * of day in Chapter 5.4 of ISO 8601. Its lexical space is the extended
+   * format:
+   * <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may be
+   * specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
+   * considered undetermined.
+   * <p/>
+   * Restrictions
+   * <p/>
+   * The basic format of ISO 8601 calendar datetimes, CCYYMMDDThhmmss, isn't
+   * supported.
+   * <p/>
+   * The other forms of date-times available in ISO 8601—ordinal dates defined
+   * by the year, the number of the day in the year, dates identified by
+   * calendar week, and day numbers—aren't supported.
+   * <p/>
+   * As the value space is defined by reference to ISO 8601, there is no support
+   * for any calendar system other than Gregorian. As the lexical space is also
+   * defined in reference to ISO 8601, there is no support for any localization
+   * such as different orders for date parts or named months.
+   * <p/>
+   * The order relation between date-times with and without time zone is
+   * partial: they can be compared only outside of a +/- 14 hours interval.
+   * Example
+   * <p/>
+   * Valid values for xsd:dateTime include: 2001-10-26T21:32:52,
+   * 2001-10-26T21:32:52+02:00, 2001-10-26T19:32:52Z, 2001-10-26T19:32:52+00:00,
+   * -2001-10-26T21:32:52, or 2001-10-26T21:32:52.12679.
+   * <p/>
+   * The following values are invalid: 2001-10-26 (all the parts must be
+   * specified), 2001-10-26T21:32 (all the parts must be specified),
+   * 2001-10-26T25:32:52+02:00 (the hours part—25—is out of range), or
+   * 01-10-26T21:32 (all the parts must be specified).
+   * <p/>
+   * @see <a
+   * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
+   * <p/>
+   */
   @XmlElement(name = "date-time")
   protected XMLGregorianCalendar dateTime;
 
@@ -135,14 +223,21 @@ public class UntilRecurType {
   /**
    * Construct an UntilRecurType from a string.
    * <p/>
-   * @param dateTime an encoded date time string of the format
-   *                 'yyyyMMdd'T'HHmmss'Z''
+   * @param untilString an encoded date time string of the format
+   *                    'yyyyMMdd'T'HHmmss'Z'' or 'yyyyMMdd'
    * @throws DatatypeConfigurationException if the parsed date is not valid.
    * @throws ParseException                 if the string cannot be parsed into
    *                                        a Date
    */
-  public UntilRecurType(String dateTime) throws DatatypeConfigurationException, ParseException {
-    setDateTime(new SimpleDateFormat(PATTERN_DATE).parse(dateTime));
+  public UntilRecurType(String untilString) throws DatatypeConfigurationException, ParseException {
+    if (untilString == null || untilString.isEmpty()) {
+      throw new IllegalArgumentException("Cannot parse a null or empty string.");
+    }
+    if (PATTERN_DATE.length() == untilString.length()) {
+      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+    } else {
+      setDateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
+    }
   }
 
   /**
@@ -163,6 +258,20 @@ public class UntilRecurType {
    */
   public void setDate(XMLGregorianCalendar value) {
     this.date = value;
+  }
+
+  /**
+   * Helper method to set the UNTIL Date using a conventional Date instance.
+   * <p/>
+   * @param date
+   * @throws DatatypeConfigurationException
+   */
+  public final void setDate(java.util.Date date) throws DatatypeConfigurationException {
+    if (date != null) {
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(date);
+      setDate(DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize());
+    }
   }
 
   public boolean isSetDate() {
@@ -189,10 +298,23 @@ public class UntilRecurType {
     this.dateTime = value;
   }
 
+  /**
+   * Helper method to set the UNTIL DateTime using a conventional
+   * GregorianCalendar instance.
+   * <p/>
+   * @param dateTime
+   * @throws DatatypeConfigurationException
+   */
   public final void setDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
   }
 
+  /**
+   * Helper method to set the UNTIL DateTime using a conventional Date instance.
+   * <p/>
+   * @param dateTime
+   * @throws DatatypeConfigurationException
+   */
   public final void setDateTime(java.util.Date dateTime) throws DatatypeConfigurationException {
     if (dateTime != null) {
       Calendar calendar = Calendar.getInstance();
