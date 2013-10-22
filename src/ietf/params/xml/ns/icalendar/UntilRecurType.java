@@ -110,8 +110,12 @@ public class UntilRecurType {
    * href="http://tools.ietf.org/html/rfc5545#section-3.3.5">Date-Time</a>
    */
   private static final String PATTERN_DATE_TIME = "yyyyMMdd'T'HHmmss'Z'";
-  @XmlTransient
-  protected static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
+  /**
+   * Used to normalize all calendar instances to UTC. e.g.
+   * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z. Implements
+   * W3C XML Schema Part 2, Section 3.2.7.3 (A)
+   */
+  private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
   /**
    * xsd:date — Gregorian calendar date
    * <p/>
@@ -119,9 +123,8 @@ public class UntilRecurType {
    * of ISO (International Organization for Standardization) 8601. Its value
    * space is the set of Gregorian calendar dates as defined by this standard;
    * i.e., a one-day-long period of time. Its lexical space is the ISO 8601
-   * extended format:
-   * <code>[-]CCYY-MM-DD[Z|(+|-)hh:mm]</code> with an optional time zone. Time
-   * zones that aren't specified are considered undetermined.
+   * extended format: <code>[-]CCYY-MM-DD[Z|(+|-)hh:mm]</code> with an optional
+   * time zone. Time zones that aren't specified are considered undetermined.
    * <p/>
    * Restrictions
    * <p/>
@@ -158,6 +161,7 @@ public class UntilRecurType {
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    */
+  @XmlElement
   @XmlSchemaType(name = "date")
   protected XMLGregorianCalendar date;
   /**
@@ -166,9 +170,8 @@ public class UntilRecurType {
    * This datatype describes instances identified by the combination of a date
    * and a time. Its value space is described as a combination of date and time
    * of day in Chapter 5.4 of ISO 8601. Its lexical space is the extended
-   * format:
-   * <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may be
-   * specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
+   * format: <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may
+   * be specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
    * considered undetermined.
    * <p/>
    * Restrictions
@@ -268,7 +271,7 @@ public class UntilRecurType {
    */
   public final void setDate(java.util.Date date) throws DatatypeConfigurationException {
     if (date != null) {
-      Calendar calendar = Calendar.getInstance();
+      Calendar calendar = Calendar.getInstance(TIME_ZONE);
       calendar.setTime(date);
       setDate(DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize());
     }
@@ -317,7 +320,7 @@ public class UntilRecurType {
    */
   public final void setDateTime(java.util.Date dateTime) throws DatatypeConfigurationException {
     if (dateTime != null) {
-      Calendar calendar = Calendar.getInstance();
+      Calendar calendar = Calendar.getInstance(TIME_ZONE);
       calendar.setTime(dateTime);
       setDateTime((GregorianCalendar) calendar);
     }
@@ -361,10 +364,7 @@ public class UntilRecurType {
     if (!Objects.equals(this.date, other.date)) {
       return false;
     }
-    if (!Objects.equals(this.dateTime, other.dateTime)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.dateTime, other.dateTime);
   }
 
   /**
