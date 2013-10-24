@@ -237,7 +237,12 @@ public class UntilRecurType {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
     if (PATTERN_DATE.length() == untilString.length()) {
-      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      /**
+       * Telcordia cannot read the standards-compliant xsd:date format. Always
+       * force return the xsd:date-time format to accommodate.
+       */
+//      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      setDateTime(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
     } else {
       setDateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
     }
