@@ -1,16 +1,12 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.DtendPropType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.DtstartPropType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.DuePropType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.ExdatePropType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.RdatePropType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.RecurrenceIdPropType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.XBedeworkRegistrationEndPropType;
-import ietf.params.xml.ns.icalendar.property.base.datedatetime.XBedeworkRegistrationStartPropType;
+import ietf.params.xml.ns.icalendar.property.base.datedatetime.*;
 import java.util.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -49,9 +45,97 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class DateDatetimePropertyType extends BasePropertyType {
 
+  /**
+   * xsd:dateTime — Instant of time (Gregorian calendar)
+   * <p/>
+   * This datatype describes instances identified by the combination of a date
+   * and a time. Its value space is described as a combination of date and time
+   * of day in Chapter 5.4 of ISO 8601. Its lexical space is the extended
+   * format: <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may
+   * be specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
+   * considered undetermined.
+   * <p/>
+   * Restrictions
+   * <p/>
+   * The basic format of ISO 8601 calendar datetimes, CCYYMMDDThhmmss, isn't
+   * supported.
+   * <p/>
+   * The other forms of date-times available in ISO 8601—ordinal dates defined
+   * by the year, the number of the day in the year, dates identified by
+   * calendar week, and day numbers—aren't supported.
+   * <p/>
+   * As the value space is defined by reference to ISO 8601, there is no support
+   * for any calendar system other than Gregorian. As the lexical space is also
+   * defined in reference to ISO 8601, there is no support for any localization
+   * such as different orders for date parts or named months.
+   * <p/>
+   * The order relation between date-times with and without time zone is
+   * partial: they can be compared only outside of a +/- 14 hours interval.
+   * Example
+   * <p/>
+   * Valid values for xsd:dateTime include: 2001-10-26T21:32:52,
+   * 2001-10-26T21:32:52+02:00, 2001-10-26T19:32:52Z, 2001-10-26T19:32:52+00:00,
+   * -2001-10-26T21:32:52, or 2001-10-26T21:32:52.12679.
+   * <p/>
+   * The following values are invalid: 2001-10-26 (all the parts must be
+   * specified), 2001-10-26T21:32 (all the parts must be specified),
+   * 2001-10-26T25:32:52+02:00 (the hours part—25—is out of range), or
+   * 01-10-26T21:32 (all the parts must be specified).
+   * <p/>
+   * @see <a
+   * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
+   * <p/>
+   */
   @XmlElement(name = "date-time")
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar dateTime;
-  @XmlSchemaType(name = "date")
+  /**
+   * xsd:date — Gregorian calendar date
+   * <p/>
+   * This datatype is modeled after the calendar dates defined in Chapter 5.2.1
+   * of ISO (International Organization for Standardization) 8601. Its value
+   * space is the set of Gregorian calendar dates as defined by this standard;
+   * i.e., a one-day-long period of time. Its lexical space is the ISO 8601
+   * extended format: <code>[-]CCYY-MM-DD[Z|(+|-)hh:mm]</code> with an optional
+   * time zone. Time zones that aren't specified are considered undetermined.
+   * <p/>
+   * Restrictions
+   * <p/>
+   * The basic format of ISO 8601 calendar dates, CCYYMMDD, isn't supported.
+   * <p/>
+   * The other forms of dates available in ISO 8601 aren't supported: ordinal
+   * dates defined by the year, the number of the day in the year, dates
+   * identified by calendar week, and day numbers.
+   * <p/>
+   * As the value space is defined by reference to ISO 8601, there is no support
+   * for any calendar system other than Gregorian. Because the lexical space is
+   * also defined using a reference to ISO 8601, there is no support for any
+   * localization such as different orders for date parts or named months.
+   * <p/>
+   * The order relation between dates with and without time zone is partial:
+   * they can be compared beyond a +/- 14 hour interval.
+   * <p/>
+   * There is a difference between ISO 8601, which defines a day as a 24-hour
+   * period of time, and the W3C XML Schema, which indicates that a date is a
+   * "one-day-long, non-periodic instance ... independent of how many hours this
+   * day has." Even though technically correct, some days don't last exactly 24
+   * hours because of leap seconds; this definition doesn't concur with the
+   * definition of xsd:duration that states that a day is always exactly 24
+   * hours long. Example
+   * <p/>
+   * Valid values include: 2001-10-26, 2001-10-26+02:00, 2001-10-26Z,
+   * 2001-10-26+00:00, -2001-10-26, or -20000-04-01.
+   * <p/>
+   * The following values would be invalid: 2001-10 (all the parts must be
+   * specified), 2001-10-32 (the days part—32—is out of range), 2001-13-26+02:00
+   * (the month part—13—is out of range), or 01-10-26 (the century part is
+   * missing).
+   * <p/>
+   * @see <a
+   * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
+   */
+  @XmlElement
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDate.class)
   protected XMLGregorianCalendar date;
 
   public DateDatetimePropertyType() {

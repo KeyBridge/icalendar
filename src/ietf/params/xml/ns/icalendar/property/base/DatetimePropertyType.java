@@ -1,11 +1,13 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
@@ -30,7 +32,49 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class DatetimePropertyType extends BasePropertyType {
 
+  /**
+   * xsd:dateTime — Instant of time (Gregorian calendar)
+   * <p/>
+   * This datatype describes instances identified by the combination of a date
+   * and a time. Its value space is described as a combination of date and time
+   * of day in Chapter 5.4 of ISO 8601. Its lexical space is the extended
+   * format: <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may
+   * be specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
+   * considered undetermined.
+   * <p/>
+   * Restrictions
+   * <p/>
+   * The basic format of ISO 8601 calendar datetimes, CCYYMMDDThhmmss, isn't
+   * supported.
+   * <p/>
+   * The other forms of date-times available in ISO 8601—ordinal dates defined
+   * by the year, the number of the day in the year, dates identified by
+   * calendar week, and day numbers—aren't supported.
+   * <p/>
+   * As the value space is defined by reference to ISO 8601, there is no support
+   * for any calendar system other than Gregorian. As the lexical space is also
+   * defined in reference to ISO 8601, there is no support for any localization
+   * such as different orders for date parts or named months.
+   * <p/>
+   * The order relation between date-times with and without time zone is
+   * partial: they can be compared only outside of a +/- 14 hours interval.
+   * Example
+   * <p/>
+   * Valid values for xsd:dateTime include: 2001-10-26T21:32:52,
+   * 2001-10-26T21:32:52+02:00, 2001-10-26T19:32:52Z, 2001-10-26T19:32:52+00:00,
+   * -2001-10-26T21:32:52, or 2001-10-26T21:32:52.12679.
+   * <p/>
+   * The following values are invalid: 2001-10-26 (all the parts must be
+   * specified), 2001-10-26T21:32 (all the parts must be specified),
+   * 2001-10-26T25:32:52+02:00 (the hours part—25—is out of range), or
+   * 01-10-26T21:32 (all the parts must be specified).
+   * <p/>
+   * @see <a
+   * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
+   * <p/>
+   */
   @XmlElement(name = "date-time", required = true)
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar dateTime;
 
   /**
