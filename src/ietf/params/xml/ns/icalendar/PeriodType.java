@@ -1,10 +1,12 @@
 package ietf.params.xml.ns.icalendar;
 
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
@@ -36,7 +38,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class PeriodType {
 
   @XmlElement(required = true)
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar start;
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar end;
   protected String duration;
 

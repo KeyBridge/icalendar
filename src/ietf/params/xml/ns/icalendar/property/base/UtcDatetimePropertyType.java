@@ -1,5 +1,6 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CompletedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CreatedPropType;
@@ -10,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Objects;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -43,6 +45,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class UtcDatetimePropertyType extends BasePropertyType {
 
   @XmlElement(name = "utc-date-time", required = true)
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar utcDateTime;
 
   public UtcDatetimePropertyType() {
