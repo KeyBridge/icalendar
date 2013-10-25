@@ -4,27 +4,24 @@ import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsetfromPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsettoPropType;
 import java.util.Objects;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import java.util.TimeZone;
+import javax.xml.bind.annotation.*;
 
 /**
  * Java class for UtcOffsetPropertyType complex type.
- * <p/>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p/>
- * <
- * pre> &lt;complexType name="UtcOffsetPropertyType"> &lt;complexContent>
- * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
- * &lt;sequence> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}utc-offset"/> &lt;/sequence>
- * &lt;/extension> &lt;/complexContent> &lt;/complexType>
- * </pre>
- * <p/>
- *
+ * <p>
+ * 3.6.14. UTC Offset (RFC 5545, Section 3.3.14)
+ * <p>
+ * iCalendar "UTC-OFFSET" property values are represented by the IC:utc-offset
+ * XML element. The content of the element is the same UTC offset value
+ * specified by [RFC5545], with the exception that the hour, minute, and second
+ * components are separated by a ":" character, for consistency with
+ * [W3C.REC-xmlschema-2-20041028].
+ * <p>
+ * value-utc-offset = element utc-offset { xsd:string { pattern =
+ * "(+|-)\d\d:\d\d(:\d\d)?" } }
+ * <p>
+ * Example: -04:00
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UtcOffsetPropertyType", propOrder = {
@@ -36,8 +33,52 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class UtcOffsetPropertyType extends BasePropertyType {
 
+  /**
+   * UTC-OFFSET: This value type is used to identify properties that contain an
+   * offset from UTC to local time.
+   * <p>
+   * This value type is defined by the following notation:
+   * <p>
+   * utc-offset = time-numzone
+   * <p>
+   * time-numzone = ("+" / "-") time-hour time-minute [time-second]
+   * <p>
+   * he PLUS SIGN character MUST be specified for positive UTC offsets (i.e.,
+   * ahead of UTC). The HYPHEN-MINUS character MUST be specified for negative
+   * UTC offsets (i.e., behind of UTC). The value of "-0000" and "-000000" are
+   * not allowed. The time-second, if present, MUST NOT be 60; if absent, it
+   * defaults to zero.
+   * <p>
+   * The following UTC offsets are given for standard time for New York (five
+   * hours behind UTC) and Geneva (one hour ahead of UTC): <code>-0500</code>
+   * and <code>+0100</code>
+   */
   @XmlElement(name = "utc-offset", required = true)
   protected String utcOffset;
+
+  /**
+   * Construct a new empty UtcOffset.
+   */
+  public UtcOffsetPropertyType() {
+  }
+
+  /**
+   * Construct a new UtcOffset with a pre-configured offset string.
+   * <p>
+   * @param utcOffset a pre-configured offset string.
+   */
+  public UtcOffsetPropertyType(String utcOffset) {
+    this.utcOffset = utcOffset;
+  }
+
+  /**
+   * Construct a new UtcOffset calculated from the indicated time zone.
+   * <p>
+   * @param timeZone a standard Timezone instance.
+   */
+  public UtcOffsetPropertyType(TimeZone timeZone) {
+    setUtcOffset(timeZone);
+  }
 
   /**
    * Gets the value of the utcOffset property.
@@ -57,6 +98,19 @@ public class UtcOffsetPropertyType extends BasePropertyType {
    */
   public void setUtcOffset(String value) {
     this.utcOffset = value;
+  }
+
+  /**
+   * Helper method to automatically set the UTC offset string from a given Time
+   * Zone.
+   * <p>
+   * @param timeZone
+   */
+  public final void setUtcOffset(TimeZone timeZone) {
+    this.utcOffset = String.format("%s%02d:%02d",
+                                   timeZone.getRawOffset() >= 0 ? "+" : "-",
+                                   Math.abs(timeZone.getRawOffset() / 3600000),
+                                   (timeZone.getRawOffset() / 60000) % 60);
   }
 
   public boolean isSetUtcOffset() {
@@ -79,9 +133,12 @@ public class UtcOffsetPropertyType extends BasePropertyType {
       return false;
     }
     final UtcOffsetPropertyType other = (UtcOffsetPropertyType) obj;
-    if (!Objects.equals(this.utcOffset, other.utcOffset)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.utcOffset, other.utcOffset);
   }
+
+  @Override
+  public String toString() {
+    return "utcOffset [" + utcOffset + ']';
+  }
+
 }
