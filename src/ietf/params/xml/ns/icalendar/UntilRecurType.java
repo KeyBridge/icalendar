@@ -1,10 +1,13 @@
 package ietf.params.xml.ns.icalendar;
 
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -31,6 +34,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
   "date",
   "dateTime"
 })
+@XmlRootElement
 public class UntilRecurType {
 
   /**
@@ -109,7 +113,7 @@ public class UntilRecurType {
    * @see <a
    * href="http://tools.ietf.org/html/rfc5545#section-3.3.5">Date-Time</a>
    */
-  private static final String PATTERN_DATE_TIME = "yyyyMMdd'T'HHmmss'Z'";
+  private static final String PATTERN_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   /**
    * Used to normalize all calendar instances to UTC. e.g.
    * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z. Implements
@@ -162,7 +166,7 @@ public class UntilRecurType {
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    */
   @XmlElement
-  @XmlSchemaType(name = "date")
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDate.class)
   protected XMLGregorianCalendar date;
   /**
    * xsd:dateTime — Instant of time (Gregorian calendar)
@@ -206,6 +210,7 @@ public class UntilRecurType {
    * <p/>
    */
   @XmlElement(name = "date-time")
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar dateTime;
 
   public UntilRecurType() {
@@ -237,12 +242,7 @@ public class UntilRecurType {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
     if (PATTERN_DATE.length() == untilString.length()) {
-      /**
-       * Telcordia cannot read the standards-compliant xsd:date format. Always
-       * force return the xsd:date-time format to accommodate.
-       */
-//      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
-      setDateTime(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
     } else {
       setDateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
     }
