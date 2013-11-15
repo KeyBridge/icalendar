@@ -1,7 +1,6 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.datedatetime.*;
 import java.util.*;
@@ -87,7 +86,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * <p/>
    */
   @XmlElement(name = "date-time")
-  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
+//  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar dateTime;
   /**
    * xsd:date — Gregorian calendar date

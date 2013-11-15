@@ -77,8 +77,9 @@ public class XmlAdapterXCalDateTime extends XmlAdapter<String, XMLGregorianCalen
    * <p/>
    * The date with UTC time, or absolute time, is identified by a LATIN CAPITAL
    * LETTER Z suffix character, the UTC designator, appended to the time value.
-   * For example, the following represents January 19, 1998, at 0700 UTC:
-   * <code>19980119T070000Z</code>
+   * <p>
+   * From RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
+   * <code>pattern-date-time = xsd:string { pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?" }</code>
    * <p/>
    * The "TZID" property parameter MUST NOT be applied to DATE-TIME properties
    * whose time values are specified in UTC.
@@ -88,6 +89,8 @@ public class XmlAdapterXCalDateTime extends XmlAdapter<String, XMLGregorianCalen
    * <p/>
    * @see <a
    * href="http://tools.ietf.org/html/rfc5545#section-3.3.5">Date-Time</a>
+   * @see <a href="http://tools.ietf.org/html/rfc6321#appendix-A">RELAX NG
+   * Schema</a>
    */
   private static final String PATTERN_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 

@@ -14,20 +14,26 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Java class for UntilRecurType complex type.
- * <p/>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p/>
- * <
- * pre> &lt;complexType name="UntilRecurType"> &lt;complexContent>
- * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- * &lt;sequence> &lt;choice> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date"/> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date-time"/> &lt;/choice>
- * &lt;/sequence> &lt;/restriction> &lt;/complexContent> &lt;/complexType>
- * </pre>
- * <p/>
- *
+ * <p>
+ * The UNTIL rule part defines a DATE or DATE-TIME value that bounds the
+ * recurrence rule in an inclusive manner.
+ * <p>
+ * If the value specified by UNTIL is synchronized with the specified
+ * recurrence, this DATE or DATE-TIME becomes the last instance of the
+ * recurrence.
+ * <p>
+ * <strong>The value of the UNTIL rule part MUST have the same value type as the
+ * "DTSTART" property.</strong>
+ * <p>
+ * Furthermore, if the "DTSTART" property is specified as a date with local
+ * time, then the UNTIL rule part MUST also be specified as a date with local
+ * time. If the "DTSTART" property is specified as a date with UTC time or a
+ * date with local time and time zone reference, then the UNTIL rule part MUST
+ * be specified as a date with UTC time.
+ * <p>
+ * In the case of the "STANDARD" and "DAYLIGHT" sub-components the UNTIL rule
+ * part MUST always be specified as a date with UTC time. If specified as a
+ * DATE-TIME value, then it MUST be specified in a UTC time format.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UntilRecurType", propOrder = {
@@ -60,10 +66,13 @@ public class UntilRecurType {
    * <p/>
    * No additional content value encoding (i.e., BACKSLASH character encoding,
    * see Section 3.3.11) is defined for this value type.
-   * <p/>
-   * Example: The following represents July 14, 1997: 19970714
+   * <p>
+   * From RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
+   * <code>pattern-date = xsd:string { pattern = "\d\d\d\d-\d\d-\d\d" }</code>
    * <p/>
    * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.4">Date</a>
+   * @see <a href="http://tools.ietf.org/html/rfc6321#appendix-A">RELAX NG
+   * Schema</a>
    */
   private static final String PATTERN_DATE = "yyyyMMdd";
   /**
@@ -101,8 +110,9 @@ public class UntilRecurType {
    * <p/>
    * The date with UTC time, or absolute time, is identified by a LATIN CAPITAL
    * LETTER Z suffix character, the UTC designator, appended to the time value.
-   * For example, the following represents January 19, 1998, at 0700 UTC:
-   * <code>19980119T070000Z</code>
+   * <p>
+   * From RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
+   * <code>pattern-date-time = xsd:string { pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?" }</code>
    * <p/>
    * The "TZID" property parameter MUST NOT be applied to DATE-TIME properties
    * whose time values are specified in UTC.
@@ -112,6 +122,8 @@ public class UntilRecurType {
    * <p/>
    * @see <a
    * href="http://tools.ietf.org/html/rfc5545#section-3.3.5">Date-Time</a>
+   * @see <a href="http://tools.ietf.org/html/rfc6321#appendix-A">RELAX NG
+   * Schema</a>
    */
   private static final String PATTERN_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   /**
@@ -242,7 +254,12 @@ public class UntilRecurType {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
     if (PATTERN_DATE.length() == untilString.length()) {
-      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      /**
+       * Telcordia and Google cannot read DATE patterned UNTIL fields.
+       * Accommodate this by always setting the date-time field instead.
+       */
+//      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      setDateTime(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
     } else {
       setDateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
     }
