@@ -34,7 +34,7 @@ import javax.xml.namespace.QName;
 public class ArtifactType {
 
   @XmlAnyAttribute
-  private Map<QName, String> otherAttributes = new HashMap<QName, String>();
+  private Map<QName, String> otherAttributes = new HashMap<>();
 
   /**
    * Gets a map that contains attributes that aren't bound to any typed property

@@ -184,6 +184,7 @@ import javax.xml.bind.annotation.XmlType;
   "bysetpos",
   "wkst"
 })
+@SuppressWarnings("ProtectedField")
 public class RecurType {
 
   private static final String FREQ = "FREQ";
@@ -396,9 +397,7 @@ public class RecurType {
    * same 'recur'. Therefore, if the input value is not null the COUNT field is
    * set to null.
    * <p/>
-   * <
-   * p/> @param value allowed object is {@link UntilRecurType }
-   *
+   * @param value allowed object is {@link UntilRecurType }
    */
   public void setUntil(UntilRecurType value) {
     this.until = value;
@@ -469,24 +468,11 @@ public class RecurType {
   /**
    * Gets the value of the bysecond property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the bysecond property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getBysecond().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link String }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<String> getBysecond() {
     if (bysecond == null) {
-      bysecond = new ArrayList<String>();
+      bysecond = new ArrayList<>();
     }
     return this.bysecond;
   }
@@ -502,24 +488,11 @@ public class RecurType {
   /**
    * Gets the value of the byminute property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the byminute property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getByminute().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link String }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<String> getByminute() {
     if (byminute == null) {
-      byminute = new ArrayList<String>();
+      byminute = new ArrayList<>();
     }
     return this.byminute;
   }
@@ -535,24 +508,11 @@ public class RecurType {
   /**
    * Gets the value of the byhour property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the byhour property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getByhour().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link String }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<String> getByhour() {
     if (byhour == null) {
-      byhour = new ArrayList<String>();
+      byhour = new ArrayList<>();
     }
     return this.byhour;
   }
@@ -570,10 +530,12 @@ public class RecurType {
    * <p/>
    * Recommend using the methods addByDay and removeByDay to manipulate this
    * list.
+   * <p>
+   * @return a non-null ArrayList
    */
   public List<String> getByday() {
     if (byday == null) {
-      byday = new ArrayList<String>();
+      byday = new ArrayList<>();
     }
     return this.byday;
   }
@@ -599,24 +561,11 @@ public class RecurType {
   /**
    * Gets the value of the byyearday property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the byyearday property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getByyearday().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link String }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<Integer> getByyearday() {
     if (byyearday == null) {
-      byyearday = new ArrayList<Integer>();
+      byyearday = new ArrayList<>();
     }
     return this.byyearday;
   }
@@ -632,24 +581,11 @@ public class RecurType {
   /**
    * Gets the value of the bymonthday property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the bymonthday property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getBymonthday().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link Integer }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<Integer> getBymonthday() {
     if (bymonthday == null) {
-      bymonthday = new ArrayList<Integer>();
+      bymonthday = new ArrayList<>();
     }
     return this.bymonthday;
   }
@@ -665,24 +601,11 @@ public class RecurType {
   /**
    * Gets the value of the byweekno property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the byweekno property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getByweekno().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link String }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<Integer> getByweekno() {
     if (byweekno == null) {
-      byweekno = new ArrayList<Integer>();
+      byweekno = new ArrayList<>();
     }
     return this.byweekno;
   }
@@ -698,24 +621,11 @@ public class RecurType {
   /**
    * Gets the value of the bymonth property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the bymonth property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getBymonth().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link Integer }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<Integer> getBymonth() {
     if (bymonth == null) {
-      bymonth = new ArrayList<Integer>();
+      bymonth = new ArrayList<>();
     }
     return this.bymonth;
   }
@@ -731,24 +641,11 @@ public class RecurType {
   /**
    * Gets the value of the bysetpos property.
    * <p/>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the bysetpos property.
-   * <p/>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getBysetpos().add(newItem);
-   * </pre>
-   * <p/>
-   *
-   * Objects of the following type(s) are allowed in the list {@link Integer }
-   *
-   *
+   * @return a non-null ArrayList
    */
   public List<Integer> getBysetpos() {
     if (bysetpos == null) {
-      bysetpos = new ArrayList<Integer>();
+      bysetpos = new ArrayList<>();
     }
     return this.bysetpos;
   }
@@ -960,7 +857,7 @@ public class RecurType {
    * @param allowsNegativeValues indicates whether negative values are allowed
    */
   private List<Integer> listParseInteger(String aString) {
-    List<Integer> list = new ArrayList<Integer>();
+    List<Integer> list = new ArrayList<>();
     final StringTokenizer t = new StringTokenizer(aString, ",");
     while (t.hasMoreTokens()) {
       list.add(Integer.valueOf(t.nextToken()));
@@ -977,7 +874,7 @@ public class RecurType {
    * @param allowsNegativeValues indicates whether negative values are allowed
    */
   private List<String> listParseString(String aString) {
-    List<String> list = new ArrayList<String>();
+    List<String> list = new ArrayList<>();
     final StringTokenizer t = new StringTokenizer(aString, ",");
     while (t.hasMoreTokens()) {
       list.add(t.nextToken());

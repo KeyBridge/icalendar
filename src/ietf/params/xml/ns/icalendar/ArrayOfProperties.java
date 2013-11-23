@@ -122,7 +122,7 @@ public class ArrayOfProperties {
    */
   public List<JAXBElement<? extends BasePropertyType>> getBasePropertyOrTzid() {
     if (basePropertyOrTzid == null) {
-      basePropertyOrTzid = new ArrayList<JAXBElement<? extends BasePropertyType>>();
+      basePropertyOrTzid = new ArrayList<>();
     }
     return this.basePropertyOrTzid;
   }

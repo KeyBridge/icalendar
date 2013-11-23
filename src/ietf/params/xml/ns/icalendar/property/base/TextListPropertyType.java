@@ -61,7 +61,7 @@ public class TextListPropertyType extends BasePropertyType {
    */
   public List<String> getText() {
     if (text == null) {
-      text = new ArrayList<String>();
+      text = new ArrayList<>();
     }
     return this.text;
   }

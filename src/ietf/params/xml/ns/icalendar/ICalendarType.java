@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "IcalendarType", propOrder = {
   "vcalendar"
 })
-public class IcalendarType {
+public class ICalendarType {
 
   @XmlElement(required = true)
   protected List<VcalendarType> vcalendar;
@@ -55,7 +55,7 @@ public class IcalendarType {
    */
   public List<VcalendarType> getVcalendar() {
     if (vcalendar == null) {
-      vcalendar = new ArrayList<VcalendarType>();
+      vcalendar = new ArrayList<>();
     }
     return this.vcalendar;
   }
@@ -83,7 +83,7 @@ public class IcalendarType {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final IcalendarType other = (IcalendarType) obj;
+    final ICalendarType other = (ICalendarType) obj;
     if (!Objects.equals(this.vcalendar, other.vcalendar)) {
       return false;
     }

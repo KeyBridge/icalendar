@@ -943,11 +943,11 @@ public class ObjectFactory {
   }
 
   /**
-   * Create an instance of {@link IcalendarType }
+   * Create an instance of {@link ICalendarType }
    *
    */
-  public IcalendarType createIcalendarType() {
-    return new IcalendarType();
+  public ICalendarType createIcalendarType() {
+    return new ICalendarType();
   }
 
   /**
@@ -1189,7 +1189,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "recurrence-id", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RecurrenceIdPropType> createRecurrenceId(RecurrenceIdPropType value) {
-    return new JAXBElement<RecurrenceIdPropType>(_RecurrenceId_QNAME, RecurrenceIdPropType.class, null, value);
+    return new JAXBElement<>(_RecurrenceId_QNAME, RecurrenceIdPropType.class, null, value);
   }
 
   /**
@@ -1199,7 +1199,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "priority", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<PriorityPropType> createPriority(PriorityPropType value) {
-    return new JAXBElement<PriorityPropType>(_Priority_QNAME, PriorityPropType.class, null, value);
+    return new JAXBElement<>(_Priority_QNAME, PriorityPropType.class, null, value);
   }
 
   /**
@@ -1209,7 +1209,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "description", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DescriptionPropType> createDescription(DescriptionPropType value) {
-    return new JAXBElement<DescriptionPropType>(_Description_QNAME, DescriptionPropType.class, null, value);
+    return new JAXBElement<>(_Description_QNAME, DescriptionPropType.class, null, value);
   }
 
   /**
@@ -1219,7 +1219,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "resources", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ResourcesPropType> createResources(ResourcesPropType value) {
-    return new JAXBElement<ResourcesPropType>(_Resources_QNAME, ResourcesPropType.class, null, value);
+    return new JAXBElement<>(_Resources_QNAME, ResourcesPropType.class, null, value);
   }
 
   /**
@@ -1229,7 +1229,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "cn", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<CnParamType> createCn(CnParamType value) {
-    return new JAXBElement<CnParamType>(_Cn_QNAME, CnParamType.class, null, value);
+    return new JAXBElement<>(_Cn_QNAME, CnParamType.class, null, value);
   }
 
   /**
@@ -1239,7 +1239,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-microsoft-cdo-busystatus", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XMicrosoftCdoBusystatusPropType> createXMicrosoftCdoBusystatus(XMicrosoftCdoBusystatusPropType value) {
-    return new JAXBElement<XMicrosoftCdoBusystatusPropType>(_XMicrosoftCdoBusystatus_QNAME, XMicrosoftCdoBusystatusPropType.class, null, value);
+    return new JAXBElement<>(_XMicrosoftCdoBusystatus_QNAME, XMicrosoftCdoBusystatusPropType.class, null, value);
   }
 
   /**
@@ -1249,7 +1249,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "cal-address")
   public JAXBElement<String> createCalAddress(String value) {
-    return new JAXBElement<String>(_CalAddress_QNAME, String.class, null, value);
+    return new JAXBElement<>(_CalAddress_QNAME, String.class, null, value);
   }
 
   /**
@@ -1259,7 +1259,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "geo", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<GeoPropType> createGeo(GeoPropType value) {
-    return new JAXBElement<GeoPropType>(_Geo_QNAME, GeoPropType.class, null, value);
+    return new JAXBElement<>(_Geo_QNAME, GeoPropType.class, null, value);
   }
 
   /**
@@ -1269,7 +1269,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vtimezone", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VtimezoneType> createVtimezone(VtimezoneType value) {
-    return new JAXBElement<VtimezoneType>(_Vtimezone_QNAME, VtimezoneType.class, null, value);
+    return new JAXBElement<>(_Vtimezone_QNAME, VtimezoneType.class, null, value);
   }
 
   /**
@@ -1279,7 +1279,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "date-time")
   public JAXBElement<XMLGregorianCalendar> createDateTime(XMLGregorianCalendar value) {
-    return new JAXBElement<XMLGregorianCalendar>(_DateTime_QNAME, XMLGregorianCalendar.class, null, value);
+    return new JAXBElement<>(_DateTime_QNAME, XMLGregorianCalendar.class, null, value);
   }
 
   /**
@@ -1289,7 +1289,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vcalendar")
   public JAXBElement<VcalendarType> createVcalendar(VcalendarType value) {
-    return new JAXBElement<VcalendarType>(_Vcalendar_QNAME, VcalendarType.class, null, value);
+    return new JAXBElement<>(_Vcalendar_QNAME, VcalendarType.class, null, value);
   }
 
   /**
@@ -1299,7 +1299,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "categories", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CategoriesPropType> createCategories(CategoriesPropType value) {
-    return new JAXBElement<CategoriesPropType>(_Categories_QNAME, CategoriesPropType.class, null, value);
+    return new JAXBElement<>(_Categories_QNAME, CategoriesPropType.class, null, value);
   }
 
   /**
@@ -1309,7 +1309,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-registration-start", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkRegistrationStartPropType> createXBedeworkRegistrationStart(XBedeworkRegistrationStartPropType value) {
-    return new JAXBElement<XBedeworkRegistrationStartPropType>(_XBedeworkRegistrationStart_QNAME, XBedeworkRegistrationStartPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkRegistrationStart_QNAME, XBedeworkRegistrationStartPropType.class, null, value);
   }
 
   /**
@@ -1319,7 +1319,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "cutype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<CutypeParamType> createCutype(CutypeParamType value) {
-    return new JAXBElement<CutypeParamType>(_Cutype_QNAME, CutypeParamType.class, null, value);
+    return new JAXBElement<>(_Cutype_QNAME, CutypeParamType.class, null, value);
   }
 
   /**
@@ -1329,7 +1329,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-max-tickets-per-user", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkMaxTicketsPerUserPropType> createXBedeworkMaxTicketsPerUser(XBedeworkMaxTicketsPerUserPropType value) {
-    return new JAXBElement<XBedeworkMaxTicketsPerUserPropType>(_XBedeworkMaxTicketsPerUser_QNAME, XBedeworkMaxTicketsPerUserPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkMaxTicketsPerUser_QNAME, XBedeworkMaxTicketsPerUserPropType.class, null, value);
   }
 
   /**
@@ -1339,7 +1339,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-uid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<XBedeworkUidParamType> createXBedeworkUid(XBedeworkUidParamType value) {
-    return new JAXBElement<XBedeworkUidParamType>(_XBedeworkUid_QNAME, XBedeworkUidParamType.class, null, value);
+    return new JAXBElement<>(_XBedeworkUid_QNAME, XBedeworkUidParamType.class, null, value);
   }
 
   /**
@@ -1349,7 +1349,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-wsCalendar-attach", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<WsCalendarAttachType> createXWsCalendarAttach(WsCalendarAttachType value) {
-    return new JAXBElement<WsCalendarAttachType>(_XWsCalendarAttach_QNAME, WsCalendarAttachType.class, null, value);
+    return new JAXBElement<>(_XWsCalendarAttach_QNAME, WsCalendarAttachType.class, null, value);
   }
 
   /**
@@ -1359,7 +1359,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "role", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RoleParamType> createRole(RoleParamType value) {
-    return new JAXBElement<RoleParamType>(_Role_QNAME, RoleParamType.class, null, value);
+    return new JAXBElement<>(_Role_QNAME, RoleParamType.class, null, value);
   }
 
   /**
@@ -1369,7 +1369,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "created", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CreatedPropType> createCreated(CreatedPropType value) {
-    return new JAXBElement<CreatedPropType>(_Created_QNAME, CreatedPropType.class, null, value);
+    return new JAXBElement<>(_Created_QNAME, CreatedPropType.class, null, value);
   }
 
   /**
@@ -1379,7 +1379,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-wscalendar-type", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<WsCalendarTypeType> createXWscalendarType(WsCalendarTypeType value) {
-    return new JAXBElement<WsCalendarTypeType>(_XWscalendarType_QNAME, WsCalendarTypeType.class, null, value);
+    return new JAXBElement<>(_XWscalendarType_QNAME, WsCalendarTypeType.class, null, value);
   }
 
   /**
@@ -1389,7 +1389,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "time")
   public JAXBElement<String> createTime(String value) {
-    return new JAXBElement<String>(_Time_QNAME, String.class, null, value);
+    return new JAXBElement<>(_Time_QNAME, String.class, null, value);
   }
 
   /**
@@ -1398,7 +1398,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "float")
   public JAXBElement<Float> createFloat(Float value) {
-    return new JAXBElement<Float>(_Float_QNAME, Float.class, null, value);
+    return new JAXBElement<>(_Float_QNAME, Float.class, null, value);
   }
 
   /**
@@ -1408,7 +1408,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "until")
   public JAXBElement<UntilRecurType> createUntil(UntilRecurType value) {
-    return new JAXBElement<UntilRecurType>(_Until_QNAME, UntilRecurType.class, null, value);
+    return new JAXBElement<>(_Until_QNAME, UntilRecurType.class, null, value);
   }
 
   /**
@@ -1418,7 +1418,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "attendee", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<AttendeePropType> createAttendee(AttendeePropType value) {
-    return new JAXBElement<AttendeePropType>(_Attendee_QNAME, AttendeePropType.class, null, value);
+    return new JAXBElement<>(_Attendee_QNAME, AttendeePropType.class, null, value);
   }
 
   /**
@@ -1428,7 +1428,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "components")
   public JAXBElement<ArrayOfComponents> createComponents(ArrayOfComponents value) {
-    return new JAXBElement<ArrayOfComponents>(_Components_QNAME, ArrayOfComponents.class, null, value);
+    return new JAXBElement<>(_Components_QNAME, ArrayOfComponents.class, null, value);
   }
 
   /**
@@ -1438,7 +1438,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "request-status", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RequestStatusPropType> createRequestStatus(RequestStatusPropType value) {
-    return new JAXBElement<RequestStatusPropType>(_RequestStatus_QNAME, RequestStatusPropType.class, null, value);
+    return new JAXBElement<>(_RequestStatus_QNAME, RequestStatusPropType.class, null, value);
   }
 
   /**
@@ -1448,7 +1448,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rel", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<TextParameterType> createRel(TextParameterType value) {
-    return new JAXBElement<TextParameterType>(_Rel_QNAME, TextParameterType.class, null, value);
+    return new JAXBElement<>(_Rel_QNAME, TextParameterType.class, null, value);
   }
 
   /**
@@ -1458,7 +1458,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-organizer", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<OrganizerPropType> createXBedeworkExsynchOrganizer(OrganizerPropType value) {
-    return new JAXBElement<OrganizerPropType>(_XBedeworkExsynchOrganizer_QNAME, OrganizerPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkExsynchOrganizer_QNAME, OrganizerPropType.class, null, value);
   }
 
   /**
@@ -1468,7 +1468,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "sequence", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<SequencePropType> createSequence(SequencePropType value) {
-    return new JAXBElement<SequencePropType>(_Sequence_QNAME, SequencePropType.class, null, value);
+    return new JAXBElement<>(_Sequence_QNAME, SequencePropType.class, null, value);
   }
 
   /**
@@ -1478,7 +1478,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "integer")
   public JAXBElement<BigInteger> createInteger(BigInteger value) {
-    return new JAXBElement<BigInteger>(_Integer_QNAME, BigInteger.class, null, value);
+    return new JAXBElement<>(_Integer_QNAME, BigInteger.class, null, value);
   }
 
   /**
@@ -1488,7 +1488,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "member", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<MemberParamType> createMember(MemberParamType value) {
-    return new JAXBElement<MemberParamType>(_Member_QNAME, MemberParamType.class, null, value);
+    return new JAXBElement<>(_Member_QNAME, MemberParamType.class, null, value);
   }
 
   /**
@@ -1498,7 +1498,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "action", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ActionPropType> createAction(ActionPropType value) {
-    return new JAXBElement<ActionPropType>(_Action_QNAME, ActionPropType.class, null, value);
+    return new JAXBElement<>(_Action_QNAME, ActionPropType.class, null, value);
   }
 
   /**
@@ -1508,7 +1508,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzoffsetto", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TzoffsettoPropType> createTzoffsetto(TzoffsettoPropType value) {
-    return new JAXBElement<TzoffsettoPropType>(_Tzoffsetto_QNAME, TzoffsettoPropType.class, null, value);
+    return new JAXBElement<>(_Tzoffsetto_QNAME, TzoffsettoPropType.class, null, value);
   }
 
   /**
@@ -1518,7 +1518,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dtstart", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DtstartPropType> createDtstart(DtstartPropType value) {
-    return new JAXBElement<DtstartPropType>(_Dtstart_QNAME, DtstartPropType.class, null, value);
+    return new JAXBElement<>(_Dtstart_QNAME, DtstartPropType.class, null, value);
   }
 
   /**
@@ -1528,7 +1528,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "fmttype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<FmttypeParamType> createFmttype(FmttypeParamType value) {
-    return new JAXBElement<FmttypeParamType>(_Fmttype_QNAME, FmttypeParamType.class, null, value);
+    return new JAXBElement<>(_Fmttype_QNAME, FmttypeParamType.class, null, value);
   }
 
   /**
@@ -1538,7 +1538,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-cost", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkCostPropType> createXBedeworkCost(XBedeworkCostPropType value) {
-    return new JAXBElement<XBedeworkCostPropType>(_XBedeworkCost_QNAME, XBedeworkCostPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkCost_QNAME, XBedeworkCostPropType.class, null, value);
   }
 
   /**
@@ -1548,7 +1548,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "related", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RelatedParamType> createRelated(RelatedParamType value) {
-    return new JAXBElement<RelatedParamType>(_Related_QNAME, RelatedParamType.class, null, value);
+    return new JAXBElement<>(_Related_QNAME, RelatedParamType.class, null, value);
   }
 
   /**
@@ -1558,7 +1558,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "location", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<LocationPropType> createLocation(LocationPropType value) {
-    return new JAXBElement<LocationPropType>(_Location_QNAME, LocationPropType.class, null, value);
+    return new JAXBElement<>(_Location_QNAME, LocationPropType.class, null, value);
   }
 
   /**
@@ -1568,7 +1568,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "count")
   public JAXBElement<BigInteger> createCount(BigInteger value) {
-    return new JAXBElement<BigInteger>(_Count_QNAME, BigInteger.class, null, value);
+    return new JAXBElement<>(_Count_QNAME, BigInteger.class, null, value);
   }
 
   /**
@@ -1578,7 +1578,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-microsoft-cdo-intendedstatus", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XMicrosoftCdoIntendedstatusPropType> createXMicrosoftCdoIntendedstatus(XMicrosoftCdoIntendedstatusPropType value) {
-    return new JAXBElement<XMicrosoftCdoIntendedstatusPropType>(_XMicrosoftCdoIntendedstatus_QNAME, XMicrosoftCdoIntendedstatusPropType.class, null, value);
+    return new JAXBElement<>(_XMicrosoftCdoIntendedstatus_QNAME, XMicrosoftCdoIntendedstatusPropType.class, null, value);
   }
 
   /**
@@ -1588,7 +1588,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-instance-only", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkInstanceOnlyPropType> createXBedeworkInstanceOnly(XBedeworkInstanceOnlyPropType value) {
-    return new JAXBElement<XBedeworkInstanceOnlyPropType>(_XBedeworkInstanceOnly_QNAME, XBedeworkInstanceOnlyPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkInstanceOnly_QNAME, XBedeworkInstanceOnlyPropType.class, null, value);
   }
 
   /**
@@ -1598,17 +1598,17 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dtend", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DtendPropType> createDtend(DtendPropType value) {
-    return new JAXBElement<DtendPropType>(_Dtend_QNAME, DtendPropType.class, null, value);
+    return new JAXBElement<>(_Dtend_QNAME, DtendPropType.class, null, value);
   }
 
   /**
    * Create an instance of
-   * {@link JAXBElement }{@code <}{@link IcalendarType }{@code >}}
+   * {@link JAXBElement }{@code <}{@link ICalendarType }{@code >}}
    * <p/>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "icalendar")
-  public JAXBElement<IcalendarType> createIcalendar(IcalendarType value) {
-    return new JAXBElement<IcalendarType>(_Icalendar_QNAME, IcalendarType.class, null, value);
+  public JAXBElement<ICalendarType> createIcalendar(ICalendarType value) {
+    return new JAXBElement<>(_Icalendar_QNAME, ICalendarType.class, null, value);
   }
 
   /**
@@ -1618,7 +1618,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "artifactBase")
   public JAXBElement<ArtifactBaseType> createArtifactBase(ArtifactBaseType value) {
-    return new JAXBElement<ArtifactBaseType>(_ArtifactBase_QNAME, ArtifactBaseType.class, null, value);
+    return new JAXBElement<>(_ArtifactBase_QNAME, ArtifactBaseType.class, null, value);
   }
 
   /**
@@ -1628,7 +1628,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rsvp", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RsvpParamType> createRsvp(RsvpParamType value) {
-    return new JAXBElement<RsvpParamType>(_Rsvp_QNAME, RsvpParamType.class, null, value);
+    return new JAXBElement<>(_Rsvp_QNAME, RsvpParamType.class, null, value);
   }
 
   /**
@@ -1638,7 +1638,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "duration", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DurationPropType> createDuration(DurationPropType value) {
-    return new JAXBElement<DurationPropType>(_Duration_QNAME, DurationPropType.class, null, value);
+    return new JAXBElement<>(_Duration_QNAME, DurationPropType.class, null, value);
   }
 
   /**
@@ -1648,7 +1648,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "standard", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<StandardType> createStandard(StandardType value) {
-    return new JAXBElement<StandardType>(_Standard_QNAME, StandardType.class, null, value);
+    return new JAXBElement<>(_Standard_QNAME, StandardType.class, null, value);
   }
 
   /**
@@ -1658,7 +1658,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tolerance", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TolerancePropType> createTolerance(TolerancePropType value) {
-    return new JAXBElement<TolerancePropType>(_Tolerance_QNAME, TolerancePropType.class, null, value);
+    return new JAXBElement<>(_Tolerance_QNAME, TolerancePropType.class, null, value);
   }
 
   /**
@@ -1668,7 +1668,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "comment", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CommentPropType> createComment(CommentPropType value) {
-    return new JAXBElement<CommentPropType>(_Comment_QNAME, CommentPropType.class, null, value);
+    return new JAXBElement<>(_Comment_QNAME, CommentPropType.class, null, value);
   }
 
   /**
@@ -1678,7 +1678,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "gap", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DurationParameterType> createGap(DurationParameterType value) {
-    return new JAXBElement<DurationParameterType>(_Gap_QNAME, DurationParameterType.class, null, value);
+    return new JAXBElement<>(_Gap_QNAME, DurationParameterType.class, null, value);
   }
 
   /**
@@ -1688,7 +1688,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "partstat", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<PartstatParamType> createPartstat(PartstatParamType value) {
-    return new JAXBElement<PartstatParamType>(_Partstat_QNAME, PartstatParamType.class, null, value);
+    return new JAXBElement<>(_Partstat_QNAME, PartstatParamType.class, null, value);
   }
 
   /**
@@ -1698,7 +1698,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-max-tickets", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkMaxTicketsPropType> createXBedeworkMaxTickets(XBedeworkMaxTicketsPropType value) {
-    return new JAXBElement<XBedeworkMaxTicketsPropType>(_XBedeworkMaxTickets_QNAME, XBedeworkMaxTicketsPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkMaxTickets_QNAME, XBedeworkMaxTicketsPropType.class, null, value);
   }
 
   /**
@@ -1708,7 +1708,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-registration-end", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkRegistrationEndPropType> createXBedeworkRegistrationEnd(XBedeworkRegistrationEndPropType value) {
-    return new JAXBElement<XBedeworkRegistrationEndPropType>(_XBedeworkRegistrationEnd_QNAME, XBedeworkRegistrationEndPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkRegistrationEnd_QNAME, XBedeworkRegistrationEndPropType.class, null, value);
   }
 
   /**
@@ -1718,7 +1718,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "completed", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CompletedPropType> createCompleted(CompletedPropType value) {
-    return new JAXBElement<CompletedPropType>(_Completed_QNAME, CompletedPropType.class, null, value);
+    return new JAXBElement<>(_Completed_QNAME, CompletedPropType.class, null, value);
   }
 
   /**
@@ -1728,7 +1728,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "encoding", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<EncodingParamType> createEncoding(EncodingParamType value) {
-    return new JAXBElement<EncodingParamType>(_Encoding_QNAME, EncodingParamType.class, null, value);
+    return new JAXBElement<>(_Encoding_QNAME, EncodingParamType.class, null, value);
   }
 
   /**
@@ -1738,7 +1738,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "valarm", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<ValarmType> createValarm(ValarmType value) {
-    return new JAXBElement<ValarmType>(_Valarm_QNAME, ValarmType.class, null, value);
+    return new JAXBElement<>(_Valarm_QNAME, ValarmType.class, null, value);
   }
 
   /**
@@ -1748,7 +1748,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "calscale", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CalscalePropType> createCalscale(CalscalePropType value) {
-    return new JAXBElement<CalscalePropType>(_Calscale_QNAME, CalscalePropType.class, null, value);
+    return new JAXBElement<>(_Calscale_QNAME, CalscalePropType.class, null, value);
   }
 
   /**
@@ -1758,7 +1758,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "interval", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<WsCalendarIntervalType> createInterval(WsCalendarIntervalType value) {
-    return new JAXBElement<WsCalendarIntervalType>(_Interval_QNAME, WsCalendarIntervalType.class, null, value);
+    return new JAXBElement<>(_Interval_QNAME, WsCalendarIntervalType.class, null, value);
   }
 
   /**
@@ -1768,7 +1768,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vtodo", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VtodoType> createVtodo(VtodoType value) {
-    return new JAXBElement<VtodoType>(_Vtodo_QNAME, VtodoType.class, null, value);
+    return new JAXBElement<>(_Vtodo_QNAME, VtodoType.class, null, value);
   }
 
   /**
@@ -1778,7 +1778,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "binary")
   public JAXBElement<String> createBinary(String value) {
-    return new JAXBElement<String>(_Binary_QNAME, String.class, null, value);
+    return new JAXBElement<>(_Binary_QNAME, String.class, null, value);
   }
 
   /**
@@ -1788,7 +1788,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<TzidParamType> createTzid(TzidParamType value) {
-    return new JAXBElement<TzidParamType>(_Tzid_QNAME, TzidParamType.class, null, value);
+    return new JAXBElement<>(_Tzid_QNAME, TzidParamType.class, null, value);
   }
 
   /**
@@ -1798,7 +1798,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dtstamp", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DtstampPropType> createDtstamp(DtstampPropType value) {
-    return new JAXBElement<DtstampPropType>(_Dtstamp_QNAME, DtstampPropType.class, null, value);
+    return new JAXBElement<>(_Dtstamp_QNAME, DtstampPropType.class, null, value);
   }
 
   /**
@@ -1808,7 +1808,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "method", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<MethodPropType> createMethod(MethodPropType value) {
-    return new JAXBElement<MethodPropType>(_Method_QNAME, MethodPropType.class, null, value);
+    return new JAXBElement<>(_Method_QNAME, MethodPropType.class, null, value);
   }
 
   /**
@@ -1818,7 +1818,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vavailability", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VavailabilityType> createVavailability(VavailabilityType value) {
-    return new JAXBElement<VavailabilityType>(_Vavailability_QNAME, VavailabilityType.class, null, value);
+    return new JAXBElement<>(_Vavailability_QNAME, VavailabilityType.class, null, value);
   }
 
   /**
@@ -1828,7 +1828,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "freebusy", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<FreebusyPropType> createFreebusy(FreebusyPropType value) {
-    return new JAXBElement<FreebusyPropType>(_Freebusy_QNAME, FreebusyPropType.class, null, value);
+    return new JAXBElement<>(_Freebusy_QNAME, FreebusyPropType.class, null, value);
   }
 
   /**
@@ -1838,7 +1838,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "parameters")
   public JAXBElement<ArrayOfParameters> createParameters(ArrayOfParameters value) {
-    return new JAXBElement<ArrayOfParameters>(_Parameters_QNAME, ArrayOfParameters.class, null, value);
+    return new JAXBElement<>(_Parameters_QNAME, ArrayOfParameters.class, null, value);
   }
 
   /**
@@ -1848,7 +1848,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-endtzid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkExsynchEndtzidPropType> createXBedeworkExsynchEndtzid(XBedeworkExsynchEndtzidPropType value) {
-    return new JAXBElement<XBedeworkExsynchEndtzidPropType>(_XBedeworkExsynchEndtzid_QNAME, XBedeworkExsynchEndtzidPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkExsynchEndtzid_QNAME, XBedeworkExsynchEndtzidPropType.class, null, value);
   }
 
   /**
@@ -1858,7 +1858,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-starttzid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkExsynchStarttzidPropType> createXBedeworkExsynchStarttzid(XBedeworkExsynchStarttzidPropType value) {
-    return new JAXBElement<XBedeworkExsynchStarttzidPropType>(_XBedeworkExsynchStarttzid_QNAME, XBedeworkExsynchStarttzidPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkExsynchStarttzid_QNAME, XBedeworkExsynchStarttzidPropType.class, null, value);
   }
 
   /**
@@ -1868,7 +1868,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "due", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DuePropType> createDue(DuePropType value) {
-    return new JAXBElement<DuePropType>(_Due_QNAME, DuePropType.class, null, value);
+    return new JAXBElement<>(_Due_QNAME, DuePropType.class, null, value);
   }
 
   /**
@@ -1878,7 +1878,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "uri")
   public JAXBElement<String> createUri(String value) {
-    return new JAXBElement<String>(_Uri_QNAME, String.class, null, value);
+    return new JAXBElement<>(_Uri_QNAME, String.class, null, value);
   }
 
   /**
@@ -1888,7 +1888,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "period")
   public JAXBElement<PeriodType> createPeriod(PeriodType value) {
-    return new JAXBElement<PeriodType>(_Period_QNAME, PeriodType.class, null, value);
+    return new JAXBElement<>(_Period_QNAME, PeriodType.class, null, value);
   }
 
   /**
@@ -1898,7 +1898,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "url", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<UrlPropType> createUrl(UrlPropType value) {
-    return new JAXBElement<UrlPropType>(_Url_QNAME, UrlPropType.class, null, value);
+    return new JAXBElement<>(_Url_QNAME, UrlPropType.class, null, value);
   }
 
   /**
@@ -1908,7 +1908,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "text")
   public JAXBElement<String> createText(String value) {
-    return new JAXBElement<String>(_Text_QNAME, String.class, null, value);
+    return new JAXBElement<>(_Text_QNAME, String.class, null, value);
   }
 
   /**
@@ -1918,7 +1918,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "related-to", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RelatedToPropType> createRelatedTo(RelatedToPropType value) {
-    return new JAXBElement<RelatedToPropType>(_RelatedTo_QNAME, RelatedToPropType.class, null, value);
+    return new JAXBElement<>(_RelatedTo_QNAME, RelatedToPropType.class, null, value);
   }
 
   /**
@@ -1928,7 +1928,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "repeat", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RepeatPropType> createRepeat(RepeatPropType value) {
-    return new JAXBElement<RepeatPropType>(_Repeat_QNAME, RepeatPropType.class, null, value);
+    return new JAXBElement<>(_Repeat_QNAME, RepeatPropType.class, null, value);
   }
 
   /**
@@ -1938,7 +1938,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "daylight", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<DaylightType> createDaylight(DaylightType value) {
-    return new JAXBElement<DaylightType>(_Daylight_QNAME, DaylightType.class, null, value);
+    return new JAXBElement<>(_Daylight_QNAME, DaylightType.class, null, value);
   }
 
   /**
@@ -1948,7 +1948,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "baseComponent")
   public JAXBElement<BaseComponentType> createBaseComponent(BaseComponentType value) {
-    return new JAXBElement<BaseComponentType>(_BaseComponent_QNAME, BaseComponentType.class, null, value);
+    return new JAXBElement<>(_BaseComponent_QNAME, BaseComponentType.class, null, value);
   }
 
   /**
@@ -1958,7 +1958,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "boolean")
   public JAXBElement<Boolean> createBoolean(Boolean value) {
-    return new JAXBElement<Boolean>(_Boolean_QNAME, Boolean.class, null, value);
+    return new JAXBElement<>(_Boolean_QNAME, Boolean.class, null, value);
   }
 
   /**
@@ -1968,7 +1968,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rdate", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RdatePropType> createRdate(RdatePropType value) {
-    return new JAXBElement<RdatePropType>(_Rdate_QNAME, RdatePropType.class, null, value);
+    return new JAXBElement<>(_Rdate_QNAME, RdatePropType.class, null, value);
   }
 
   /**
@@ -1978,7 +1978,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "summary", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<SummaryPropType> createSummary(SummaryPropType value) {
-    return new JAXBElement<SummaryPropType>(_Summary_QNAME, SummaryPropType.class, null, value);
+    return new JAXBElement<>(_Summary_QNAME, SummaryPropType.class, null, value);
   }
 
   /**
@@ -1988,7 +1988,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "utc-offset")
   public JAXBElement<String> createUtcOffset(String value) {
-    return new JAXBElement<String>(_UtcOffset_QNAME, String.class, null, value);
+    return new JAXBElement<>(_UtcOffset_QNAME, String.class, null, value);
   }
 
   /**
@@ -1997,7 +1997,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "latitude")
   public JAXBElement<Float> createLatitude(Float value) {
-    return new JAXBElement<Float>(_Latitude_QNAME, Float.class, null, value);
+    return new JAXBElement<>(_Latitude_QNAME, Float.class, null, value);
   }
 
   /**
@@ -2007,7 +2007,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "schedule-agent", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ScheduleAgentParamType> createScheduleAgent(ScheduleAgentParamType value) {
-    return new JAXBElement<ScheduleAgentParamType>(_ScheduleAgent_QNAME, ScheduleAgentParamType.class, null, value);
+    return new JAXBElement<>(_ScheduleAgent_QNAME, ScheduleAgentParamType.class, null, value);
   }
 
   /**
@@ -2017,7 +2017,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "delegated-from", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DelegatedFromParamType> createDelegatedFrom(DelegatedFromParamType value) {
-    return new JAXBElement<DelegatedFromParamType>(_DelegatedFrom_QNAME, DelegatedFromParamType.class, null, value);
+    return new JAXBElement<>(_DelegatedFrom_QNAME, DelegatedFromParamType.class, null, value);
   }
 
   /**
@@ -2027,7 +2027,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vfreebusy", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VfreebusyType> createVfreebusy(VfreebusyType value) {
-    return new JAXBElement<VfreebusyType>(_Vfreebusy_QNAME, VfreebusyType.class, null, value);
+    return new JAXBElement<>(_Vfreebusy_QNAME, VfreebusyType.class, null, value);
   }
 
   /**
@@ -2037,7 +2037,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "available", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<AvailableType> createAvailable(AvailableType value) {
-    return new JAXBElement<AvailableType>(_Available_QNAME, AvailableType.class, null, value);
+    return new JAXBElement<>(_Available_QNAME, AvailableType.class, null, value);
   }
 
   /**
@@ -2047,7 +2047,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "organizer", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<OrganizerPropType> createOrganizer(OrganizerPropType value) {
-    return new JAXBElement<OrganizerPropType>(_Organizer_QNAME, OrganizerPropType.class, null, value);
+    return new JAXBElement<>(_Organizer_QNAME, OrganizerPropType.class, null, value);
   }
 
   /**
@@ -2057,7 +2057,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "schedule-force-send", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ScheduleForceSendParamType> createScheduleForceSend(ScheduleForceSendParamType value) {
-    return new JAXBElement<ScheduleForceSendParamType>(_ScheduleForceSend_QNAME, ScheduleForceSendParamType.class, null, value);
+    return new JAXBElement<>(_ScheduleForceSend_QNAME, ScheduleForceSendParamType.class, null, value);
   }
 
   /**
@@ -2067,7 +2067,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "date")
   public JAXBElement<XMLGregorianCalendar> createDate(XMLGregorianCalendar value) {
-    return new JAXBElement<XMLGregorianCalendar>(_Date_QNAME, XMLGregorianCalendar.class, null, value);
+    return new JAXBElement<>(_Date_QNAME, XMLGregorianCalendar.class, null, value);
   }
 
   /**
@@ -2077,7 +2077,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzname", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TznamePropType> createTzname(TznamePropType value) {
-    return new JAXBElement<TznamePropType>(_Tzname_QNAME, TznamePropType.class, null, value);
+    return new JAXBElement<>(_Tzname_QNAME, TznamePropType.class, null, value);
   }
 
   /**
@@ -2087,7 +2087,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "baseParameter")
   public JAXBElement<BaseParameterType> createBaseParameter(BaseParameterType value) {
-    return new JAXBElement<BaseParameterType>(_BaseParameter_QNAME, BaseParameterType.class, null, value);
+    return new JAXBElement<>(_BaseParameter_QNAME, BaseParameterType.class, null, value);
   }
 
   /**
@@ -2097,7 +2097,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "exdate", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ExdatePropType> createExdate(ExdatePropType value) {
-    return new JAXBElement<ExdatePropType>(_Exdate_QNAME, ExdatePropType.class, null, value);
+    return new JAXBElement<>(_Exdate_QNAME, ExdatePropType.class, null, value);
   }
 
   /**
@@ -2107,7 +2107,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "artifact")
   public JAXBElement<ArtifactType> createArtifact(ArtifactType value) {
-    return new JAXBElement<ArtifactType>(_Artifact_QNAME, ArtifactType.class, null, value);
+    return new JAXBElement<>(_Artifact_QNAME, ArtifactType.class, null, value);
   }
 
   /**
@@ -2116,7 +2116,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "longitude")
   public JAXBElement<Float> createLongitude(Float value) {
-    return new JAXBElement<Float>(_Longitude_QNAME, Float.class, null, value);
+    return new JAXBElement<>(_Longitude_QNAME, Float.class, null, value);
   }
 
   /**
@@ -2126,7 +2126,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "granularity", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DurationPropType> createGranularity(DurationPropType value) {
-    return new JAXBElement<DurationPropType>(_Granularity_QNAME, DurationPropType.class, null, value);
+    return new JAXBElement<>(_Granularity_QNAME, DurationPropType.class, null, value);
   }
 
   /**
@@ -2136,7 +2136,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "utc-date-time")
   public JAXBElement<XMLGregorianCalendar> createUtcDateTime(XMLGregorianCalendar value) {
-    return new JAXBElement<XMLGregorianCalendar>(_UtcDateTime_QNAME, XMLGregorianCalendar.class, null, value);
+    return new JAXBElement<>(_UtcDateTime_QNAME, XMLGregorianCalendar.class, null, value);
   }
 
   /**
@@ -2146,7 +2146,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "prodid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ProdidPropType> createProdid(ProdidPropType value) {
-    return new JAXBElement<ProdidPropType>(_Prodid_QNAME, ProdidPropType.class, null, value);
+    return new JAXBElement<>(_Prodid_QNAME, ProdidPropType.class, null, value);
   }
 
   /**
@@ -2156,7 +2156,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "baseProperty")
   public JAXBElement<BasePropertyType> createBaseProperty(BasePropertyType value) {
-    return new JAXBElement<BasePropertyType>(_BaseProperty_QNAME, BasePropertyType.class, null, value);
+    return new JAXBElement<>(_BaseProperty_QNAME, BasePropertyType.class, null, value);
   }
 
   /**
@@ -2166,7 +2166,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rrule", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RrulePropType> createRrule(RrulePropType value) {
-    return new JAXBElement<RrulePropType>(_Rrule_QNAME, RrulePropType.class, null, value);
+    return new JAXBElement<>(_Rrule_QNAME, RrulePropType.class, null, value);
   }
 
   /**
@@ -2176,7 +2176,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "uid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<UidPropType> createUid(UidPropType value) {
-    return new JAXBElement<UidPropType>(_Uid_QNAME, UidPropType.class, null, value);
+    return new JAXBElement<>(_Uid_QNAME, UidPropType.class, null, value);
   }
 
   /**
@@ -2186,7 +2186,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "transp", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TranspPropType> createTransp(TranspPropType value) {
-    return new JAXBElement<TranspPropType>(_Transp_QNAME, TranspPropType.class, null, value);
+    return new JAXBElement<>(_Transp_QNAME, TranspPropType.class, null, value);
   }
 
   /**
@@ -2196,7 +2196,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "altrep", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<AltrepParamType> createAltrep(AltrepParamType value) {
-    return new JAXBElement<AltrepParamType>(_Altrep_QNAME, AltrepParamType.class, null, value);
+    return new JAXBElement<>(_Altrep_QNAME, AltrepParamType.class, null, value);
   }
 
   /**
@@ -2206,7 +2206,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "class", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ClassPropType> createClass(ClassPropType value) {
-    return new JAXBElement<ClassPropType>(_Class_QNAME, ClassPropType.class, null, value);
+    return new JAXBElement<>(_Class_QNAME, ClassPropType.class, null, value);
   }
 
   /**
@@ -2216,7 +2216,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "properties")
   public JAXBElement<ArrayOfProperties> createProperties(ArrayOfProperties value) {
-    return new JAXBElement<ArrayOfProperties>(_Properties_QNAME, ArrayOfProperties.class, null, value);
+    return new JAXBElement<>(_Properties_QNAME, ArrayOfProperties.class, null, value);
   }
 
   /**
@@ -2226,7 +2226,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "status", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<StatusPropType> createStatus(StatusPropType value) {
-    return new JAXBElement<StatusPropType>(_Status_QNAME, StatusPropType.class, null, value);
+    return new JAXBElement<>(_Status_QNAME, StatusPropType.class, null, value);
   }
 
   /**
@@ -2236,7 +2236,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dir", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DirParamType> createDir(DirParamType value) {
-    return new JAXBElement<DirParamType>(_Dir_QNAME, DirParamType.class, null, value);
+    return new JAXBElement<>(_Dir_QNAME, DirParamType.class, null, value);
   }
 
   /**
@@ -2246,7 +2246,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "schedule-status", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ScheduleStatusParamType> createScheduleStatus(ScheduleStatusParamType value) {
-    return new JAXBElement<ScheduleStatusParamType>(_ScheduleStatus_QNAME, ScheduleStatusParamType.class, null, value);
+    return new JAXBElement<>(_ScheduleStatus_QNAME, ScheduleStatusParamType.class, null, value);
   }
 
   /**
@@ -2256,7 +2256,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzoffsetfrom", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TzoffsetfromPropType> createTzoffsetfrom(TzoffsetfromPropType value) {
-    return new JAXBElement<TzoffsetfromPropType>(_Tzoffsetfrom_QNAME, TzoffsetfromPropType.class, null, value);
+    return new JAXBElement<>(_Tzoffsetfrom_QNAME, TzoffsetfromPropType.class, null, value);
   }
 
   /**
@@ -2266,7 +2266,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vevent", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VeventType> createVevent(VeventType value) {
-    return new JAXBElement<VeventType>(_Vevent_QNAME, VeventType.class, null, value);
+    return new JAXBElement<>(_Vevent_QNAME, VeventType.class, null, value);
   }
 
   /**
@@ -2276,7 +2276,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "delegated-to", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DelegatedToParamType> createDelegatedTo(DelegatedToParamType value) {
-    return new JAXBElement<DelegatedToParamType>(_DelegatedTo_QNAME, DelegatedToParamType.class, null, value);
+    return new JAXBElement<>(_DelegatedTo_QNAME, DelegatedToParamType.class, null, value);
   }
 
   /**
@@ -2286,7 +2286,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-lastmod", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkExsynchLastmodPropType> createXBedeworkExsynchLastmod(XBedeworkExsynchLastmodPropType value) {
-    return new JAXBElement<XBedeworkExsynchLastmodPropType>(_XBedeworkExsynchLastmod_QNAME, XBedeworkExsynchLastmodPropType.class, null, value);
+    return new JAXBElement<>(_XBedeworkExsynchLastmod_QNAME, XBedeworkExsynchLastmodPropType.class, null, value);
   }
 
   /**
@@ -2296,7 +2296,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "language", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<LanguageParamType> createLanguage(LanguageParamType value) {
-    return new JAXBElement<LanguageParamType>(_Language_QNAME, LanguageParamType.class, null, value);
+    return new JAXBElement<>(_Language_QNAME, LanguageParamType.class, null, value);
   }
 
   /**
@@ -2306,7 +2306,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "reltype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ReltypeParamType> createReltype(ReltypeParamType value) {
-    return new JAXBElement<ReltypeParamType>(_Reltype_QNAME, ReltypeParamType.class, null, value);
+    return new JAXBElement<>(_Reltype_QNAME, ReltypeParamType.class, null, value);
   }
 
   /**
@@ -2316,7 +2316,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "sent-by", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<SentByParamType> createSentBy(SentByParamType value) {
-    return new JAXBElement<SentByParamType>(_SentBy_QNAME, SentByParamType.class, null, value);
+    return new JAXBElement<>(_SentBy_QNAME, SentByParamType.class, null, value);
   }
 
   /**
@@ -2326,7 +2326,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "percent-complete", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<PercentCompletePropType> createPercentComplete(PercentCompletePropType value) {
-    return new JAXBElement<PercentCompletePropType>(_PercentComplete_QNAME, PercentCompletePropType.class, null, value);
+    return new JAXBElement<>(_PercentComplete_QNAME, PercentCompletePropType.class, null, value);
   }
 
   /**
@@ -2336,7 +2336,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "exrule", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ExrulePropType> createExrule(ExrulePropType value) {
-    return new JAXBElement<ExrulePropType>(_Exrule_QNAME, ExrulePropType.class, null, value);
+    return new JAXBElement<>(_Exrule_QNAME, ExrulePropType.class, null, value);
   }
 
   /**
@@ -2346,7 +2346,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "gluon", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<WsCalendarGluonType> createGluon(WsCalendarGluonType value) {
-    return new JAXBElement<WsCalendarGluonType>(_Gluon_QNAME, WsCalendarGluonType.class, null, value);
+    return new JAXBElement<>(_Gluon_QNAME, WsCalendarGluonType.class, null, value);
   }
 
   /**
@@ -2356,7 +2356,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "contact", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ContactPropType> createContact(ContactPropType value) {
-    return new JAXBElement<ContactPropType>(_Contact_QNAME, ContactPropType.class, null, value);
+    return new JAXBElement<>(_Contact_QNAME, ContactPropType.class, null, value);
   }
 
   /**
@@ -2366,7 +2366,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "fbtype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<FbtypeParamType> createFbtype(FbtypeParamType value) {
-    return new JAXBElement<FbtypeParamType>(_Fbtype_QNAME, FbtypeParamType.class, null, value);
+    return new JAXBElement<>(_Fbtype_QNAME, FbtypeParamType.class, null, value);
   }
 
   /**
@@ -2376,7 +2376,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "version", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<VersionPropType> createVersion(VersionPropType value) {
-    return new JAXBElement<VersionPropType>(_Version_QNAME, VersionPropType.class, null, value);
+    return new JAXBElement<>(_Version_QNAME, VersionPropType.class, null, value);
   }
 
   /**
@@ -2386,7 +2386,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "range", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RangeParamType> createRange(RangeParamType value) {
-    return new JAXBElement<RangeParamType>(_Range_QNAME, RangeParamType.class, null, value);
+    return new JAXBElement<>(_Range_QNAME, RangeParamType.class, null, value);
   }
 
   /**
@@ -2396,7 +2396,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "link", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<LinkPropType> createLink(LinkPropType value) {
-    return new JAXBElement<LinkPropType>(_Link_QNAME, LinkPropType.class, null, value);
+    return new JAXBElement<>(_Link_QNAME, LinkPropType.class, null, value);
   }
 
   /**
@@ -2406,7 +2406,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "attach", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<AttachPropType> createAttach(AttachPropType value) {
-    return new JAXBElement<AttachPropType>(_Attach_QNAME, AttachPropType.class, null, value);
+    return new JAXBElement<>(_Attach_QNAME, AttachPropType.class, null, value);
   }
 
   /**
@@ -2416,7 +2416,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vjournal", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VjournalType> createVjournal(VjournalType value) {
-    return new JAXBElement<VjournalType>(_Vjournal_QNAME, VjournalType.class, null, value);
+    return new JAXBElement<>(_Vjournal_QNAME, VjournalType.class, null, value);
   }
 
   /**
@@ -2426,7 +2426,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "last-modified", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<LastModifiedPropType> createLastModified(LastModifiedPropType value) {
-    return new JAXBElement<LastModifiedPropType>(_LastModified_QNAME, LastModifiedPropType.class, null, value);
+    return new JAXBElement<>(_LastModified_QNAME, LastModifiedPropType.class, null, value);
   }
 
   /**
@@ -2436,7 +2436,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "trigger", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TriggerPropType> createTrigger(TriggerPropType value) {
-    return new JAXBElement<TriggerPropType>(_Trigger_QNAME, TriggerPropType.class, null, value);
+    return new JAXBElement<>(_Trigger_QNAME, TriggerPropType.class, null, value);
   }
 
   /**
@@ -2446,7 +2446,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzurl", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TzurlPropType> createTzurl(TzurlPropType value) {
-    return new JAXBElement<TzurlPropType>(_Tzurl_QNAME, TzurlPropType.class, null, value);
+    return new JAXBElement<>(_Tzurl_QNAME, TzurlPropType.class, null, value);
   }
 
   /**
@@ -2456,7 +2456,7 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzid", scope = ArrayOfProperties.class)
   public JAXBElement<TextPropertyType> createArrayOfPropertiesTzid(TextPropertyType value) {
-    return new JAXBElement<TextPropertyType>(_Tzid_QNAME, TextPropertyType.class, ArrayOfProperties.class, value);
+    return new JAXBElement<>(_Tzid_QNAME, TextPropertyType.class, ArrayOfProperties.class, value);
   }
 
   /**

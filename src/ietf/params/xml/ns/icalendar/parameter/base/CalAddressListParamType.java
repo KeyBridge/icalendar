@@ -65,7 +65,7 @@ public class CalAddressListParamType
    */
   public List<String> getCalAddress() {
     if (calAddress == null) {
-      calAddress = new ArrayList<String>();
+      calAddress = new ArrayList<>();
     }
     return this.calAddress;
   }

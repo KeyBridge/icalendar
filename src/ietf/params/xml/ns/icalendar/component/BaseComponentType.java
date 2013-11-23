@@ -384,10 +384,7 @@ public abstract class BaseComponentType {
       return false;
     }
     final BaseComponentType other = (BaseComponentType) obj;
-    if (this.hashCode() != obj.hashCode()) {
-      return false;
-    }
-    return true;
+    return this.hashCode() == other.hashCode();
   }
 
   @Override

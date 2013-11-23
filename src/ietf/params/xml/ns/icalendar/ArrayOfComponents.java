@@ -69,7 +69,7 @@ public class ArrayOfComponents {
    */
   public List<JAXBElement<? extends BaseComponentType>> getBaseComponent() {
     if (baseComponent == null) {
-      baseComponent = new ArrayList<JAXBElement<? extends BaseComponentType>>();
+      baseComponent = new ArrayList<>();
     }
     return this.baseComponent;
   }

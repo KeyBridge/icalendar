@@ -69,7 +69,7 @@ public class WsCalendarAttachType extends BasePropertyType {
    */
   public List<JAXBElement<?>> getArtifactOrArtifactBaseOrUri() {
     if (artifactOrArtifactBaseOrUri == null) {
-      artifactOrArtifactBaseOrUri = new ArrayList<JAXBElement<?>>();
+      artifactOrArtifactBaseOrUri = new ArrayList<>();
     }
     return this.artifactOrArtifactBaseOrUri;
   }

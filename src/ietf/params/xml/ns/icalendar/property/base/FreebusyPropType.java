@@ -56,7 +56,7 @@ public class FreebusyPropType extends BasePropertyType {
    */
   public List<PeriodType> getPeriod() {
     if (period == null) {
-      period = new ArrayList<PeriodType>();
+      period = new ArrayList<>();
     }
     return this.period;
   }

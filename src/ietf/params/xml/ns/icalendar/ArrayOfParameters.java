@@ -81,7 +81,7 @@ public class ArrayOfParameters {
    */
   public List<JAXBElement<? extends BaseParameterType>> getBaseParameter() {
     if (baseParameter == null) {
-      baseParameter = new ArrayList<JAXBElement<? extends BaseParameterType>>();
+      baseParameter = new ArrayList<>();
     }
     return this.baseParameter;
   }
