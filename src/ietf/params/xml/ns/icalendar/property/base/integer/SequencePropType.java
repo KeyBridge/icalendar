@@ -23,4 +23,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SequencePropType")
 public class SequencePropType extends IntegerPropertyType {
+
+  public SequencePropType() {
+  }
+
+  public SequencePropType(int sequence) {
+    super();
+    this.integer = sequence;
+  }
+
 }

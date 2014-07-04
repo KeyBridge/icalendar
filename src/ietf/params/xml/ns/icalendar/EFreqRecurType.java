@@ -4,12 +4,12 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Java class for FreqRecurType.
+ * Java class for EFreqRecurType.
  * <p/>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <pre>
- * &lt;simpleType name="FreqRecurType">
+ * &lt;simpleType name="EFreqRecurType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
  *     &lt;enumeration value="SECONDLY"/>
  *     &lt;enumeration value="MINUTELY"/>
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "FreqRecurType")
 @XmlEnum
-public enum FreqRecurType {
+public enum EFreqRecurType {
 
   SECONDLY,
   MINUTELY,
@@ -39,7 +39,7 @@ public enum FreqRecurType {
     return name();
   }
 
-  public static FreqRecurType fromValue(String v) {
+  public static EFreqRecurType fromValue(String v) {
     return valueOf(v);
   }
 }

@@ -1,7 +1,9 @@
 package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -32,4 +34,19 @@ public class DtstartPropType extends DateDatetimePropertyType {
   public DtstartPropType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     super(dateTime);
   }
+
+  /**
+   * Set the DateTime parameter with a DATE. Since java.util.Date has no notion
+   * of TimeZone you must also provide the timezone for the DATE value.
+   * <p>
+   * @param date     a date
+   * @param timeZone the date timezone
+   * @throws DatatypeConfigurationException if the date/timezone combination
+   *                                        cannot be converted to an
+   *                                        XMLGregorianCalendar
+   */
+  public DtstartPropType(Date date, TimeZone timeZone) throws DatatypeConfigurationException {
+    super(date, timeZone);
+  }
+
 }

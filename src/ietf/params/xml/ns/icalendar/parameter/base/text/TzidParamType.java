@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TzidParamType")
 public class TzidParamType extends TextParameterType {
+
+  public TzidParamType() {
+  }
+
+  public TzidParamType(String text) {
+    super(text);
+  }
+
 }

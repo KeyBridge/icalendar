@@ -22,4 +22,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TzidPropType")
 public class TzidPropType extends TextPropertyType {
+
+  public TzidPropType() {
+  }
+
+  public TzidPropType(String text) {
+    super(text);
+  }
 }

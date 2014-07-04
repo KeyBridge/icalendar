@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ProdidPropType")
 public class ProdidPropType extends TextPropertyType {
+
+  public ProdidPropType() {
+  }
+
+  public ProdidPropType(String text) {
+    super(text);
+  }
+
 }

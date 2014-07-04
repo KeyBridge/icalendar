@@ -1,7 +1,7 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
-import ietf.params.xml.ns.icalendar.property.base.caladdress.AttendeePropType;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
+import ietf.params.xml.ns.icalendar.property.base.caladdress.AttendeePropType;
 import ietf.params.xml.ns.icalendar.property.base.caladdress.OrganizerPropType;
 import java.util.Objects;
 import javax.xml.bind.annotation.*;
@@ -34,6 +34,13 @@ public class CalAddressPropertyType extends BasePropertyType {
 
   @XmlElement(name = "cal-address", required = true)
   protected String calAddress;
+
+  public CalAddressPropertyType() {
+  }
+
+  public CalAddressPropertyType(String calAddress) {
+    this.calAddress = calAddress;
+  }
 
   /**
    * Gets the value of the calAddress property.

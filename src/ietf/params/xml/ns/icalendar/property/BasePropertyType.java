@@ -1,34 +1,10 @@
 package ietf.params.xml.ns.icalendar.property;
 
 import ietf.params.xml.ns.icalendar.ArrayOfParameters;
-import ietf.params.xml.ns.icalendar.property.base.FreebusyPropType;
-import ietf.params.xml.ns.icalendar.property.base.TextPropertyType;
-import ietf.params.xml.ns.icalendar.property.base.DatetimePropertyType;
-import ietf.params.xml.ns.icalendar.property.base.RequestStatusPropType;
-import ietf.params.xml.ns.icalendar.property.base.IntegerPropertyType;
-import ietf.params.xml.ns.icalendar.property.base.RecurPropertyType;
-import ietf.params.xml.ns.icalendar.property.base.CalAddressPropertyType;
-import ietf.params.xml.ns.icalendar.property.base.LinkPropType;
-import ietf.params.xml.ns.icalendar.property.base.DurationPropType;
-import ietf.params.xml.ns.icalendar.property.base.CalscalePropType;
-import ietf.params.xml.ns.icalendar.property.base.TextListPropertyType;
-import ietf.params.xml.ns.icalendar.property.base.UtcOffsetPropertyType;
-import ietf.params.xml.ns.icalendar.property.base.UtcDatetimePropertyType;
-import ietf.params.xml.ns.icalendar.property.base.UriPropertyType;
-import ietf.params.xml.ns.icalendar.property.base.GeoPropType;
-import ietf.params.xml.ns.icalendar.property.base.RelatedToPropType;
-import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
-import ietf.params.xml.ns.icalendar.property.base.AttachPropType;
-import ietf.params.xml.ns.icalendar.property.base.TriggerPropType;
-import ietf.params.xml.ns.icalendar.property.base.TolerancePropType;
-import ietf.params.xml.ns.icalendar.property.base.WsCalendarAttachType;
+import ietf.params.xml.ns.icalendar.property.base.*;
 import java.util.Objects;
 import java.util.TimeZone;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * Java class for BasePropertyType complex type.
@@ -73,6 +49,9 @@ public abstract class BasePropertyType {
    *
    */
   public ArrayOfParameters getParameters() {
+    if (parameters == null) {
+      parameters = new ArrayOfParameters();
+    }
     return parameters;
   }
 

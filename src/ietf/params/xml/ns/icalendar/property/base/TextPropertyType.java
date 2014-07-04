@@ -1,36 +1,9 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
-import ietf.params.xml.ns.icalendar.property.base.text.ClassPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.DescriptionPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.TzidPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.StatusPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.UidPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.TranspPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.LocationPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.XBedeworkExsynchLastmodPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.SummaryPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.ProdidPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.MethodPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.BusytypePropType;
-import ietf.params.xml.ns.icalendar.property.base.text.ContactPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.XBedeworkCostPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.XBedeworkInstanceOnlyPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.TznamePropType;
-import ietf.params.xml.ns.icalendar.property.base.text.XBedeworkExsynchEndtzidPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.XBedeworkExsynchStarttzidPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.VersionPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.XMicrosoftCdoBusystatusPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.XMicrosoftCdoIntendedstatusPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.CommentPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.ActionPropType;
-import ietf.params.xml.ns.icalendar.property.base.text.WsCalendarTypeType;
+import ietf.params.xml.ns.icalendar.property.base.text.*;
 import java.util.Objects;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * Java class for TextPropertyType complex type.

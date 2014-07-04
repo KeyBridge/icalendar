@@ -23,4 +23,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PriorityPropType")
 public class PriorityPropType extends IntegerPropertyType {
+
+  public PriorityPropType() {
+  }
+
+  public PriorityPropType(int priority) {
+    super();
+    this.integer = priority;
+  }
 }

@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SummaryPropType")
 public class SummaryPropType extends TextPropertyType {
+
+  public SummaryPropType() {
+  }
+
+  public SummaryPropType(String text) {
+    super(text);
+  }
+
 }

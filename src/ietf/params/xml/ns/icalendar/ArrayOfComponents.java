@@ -89,7 +89,7 @@ public class ArrayOfComponents {
    * <p/>
    * @param jaXBElement
    */
-  public void addProperty(JAXBElement<? extends BaseComponentType> jaXBElement) {
+  public void addComponent(JAXBElement<? extends BaseComponentType> jaXBElement) {
     getBaseComponent().add(jaXBElement);
   }
 

@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ContactPropType")
 public class ContactPropType extends TextPropertyType {
+
+  public ContactPropType() {
+  }
+
+  public ContactPropType(String text) {
+    super(text);
+  }
+
 }

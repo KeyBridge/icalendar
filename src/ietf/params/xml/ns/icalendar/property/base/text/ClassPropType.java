@@ -27,4 +27,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ClassPropType")
 public class ClassPropType extends TextPropertyType {
+
+  public ClassPropType() {
+  }
+
+  public ClassPropType(String text) {
+    super(text);
+  }
+
 }

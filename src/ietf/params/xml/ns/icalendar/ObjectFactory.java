@@ -762,8 +762,8 @@ public class ObjectFactory {
    * Create an instance of {@link PriorityPropType }
    *
    */
-  public PriorityPropType createPriorityPropType() {
-    return new PriorityPropType();
+  public PriorityPropType createPriorityPropType(int priority) {
+    return new PriorityPropType(priority);
   }
 
   /**

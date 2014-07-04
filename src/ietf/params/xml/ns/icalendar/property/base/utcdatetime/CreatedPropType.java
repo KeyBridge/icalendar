@@ -1,9 +1,11 @@
 package ietf.params.xml.ns.icalendar.property.base.utcdatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.UtcDatetimePropertyType;
+import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.DatatypeConfigurationException;
 
 /**
  * Java class for CreatedPropType complex type.
@@ -23,4 +25,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CreatedPropType")
 public class CreatedPropType extends UtcDatetimePropertyType {
+
+  public CreatedPropType() {
+  }
+
+  public CreatedPropType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
+    super(dateTime);
+  }
+
 }

@@ -1,8 +1,8 @@
 package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
+import ietf.params.xml.ns.icalendar.component.EComponentName;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Locale;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,6 +22,34 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 public class VeventType extends BaseComponentType {
 
+  public VeventType() {
+    super(EComponentName.VEVENT);
+  }
+
+  /**
+   * Print the VEvent to a simple string format.
+   * <p>
+   * @return
+   */
+  @Override
+  public String toString() {
+//    SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+    SimpleDateFormat sdf = new SimpleDateFormat(UTC_PATTERN, Locale.ENGLISH);
+    sdf.setTimeZone(TIME_ZONE);
+    StringBuilder b = new StringBuilder();
+    b.append(BEGIN).append(':').append(getName());
+    b.append(LINE_SEPARATOR);
+    b.append("DTSTAMP:").append(getDTSTAMP() != null ? sdf.format(getDTSTAMP().getTime()) : "");
+    b.append(LINE_SEPARATOR);
+    b.append("getDTSTART:").append(getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "");
+    b.append(LINE_SEPARATOR);
+    b.append("getDTEND:").append(getDTEND() != null ? sdf.format(getDTEND().getTime()) : "");
+    b.append(LINE_SEPARATOR);
+    b.append(END).append(':').append(getName());
+    b.append(LINE_SEPARATOR);
+    return b.toString();
+  }
+
   public String toStringFull() {
     SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
     sdf.setTimeZone(TIME_ZONE);
@@ -36,8 +64,7 @@ public class VeventType extends BaseComponentType {
       + ']';
   }
 
-  @Override
-  public String toString() {
+  public String toStringBrief() {
     SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
     sdf.setTimeZone(TIME_ZONE);
 

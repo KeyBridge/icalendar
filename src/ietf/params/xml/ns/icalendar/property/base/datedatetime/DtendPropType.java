@@ -1,7 +1,9 @@
 package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -31,4 +33,9 @@ public class DtendPropType extends DateDatetimePropertyType {
   public DtendPropType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     super(dateTime);
   }
+
+  public DtendPropType(Date date, TimeZone timeZone) throws DatatypeConfigurationException {
+    super(date, timeZone);
+  }
+
 }

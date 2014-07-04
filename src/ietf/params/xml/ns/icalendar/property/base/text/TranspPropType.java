@@ -27,4 +27,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TranspPropType")
 public class TranspPropType extends TextPropertyType {
+
+  public TranspPropType() {
+  }
+
+  public TranspPropType(String text) {
+    super(text);
+  }
+
 }

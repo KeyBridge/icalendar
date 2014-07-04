@@ -208,7 +208,7 @@ public class RecurType {
    * type-freq = element freq { "SECONDLY" | "MINUTELY" | "HOURLY" | "DAILY" |
    * "WEEKLY" | "MONTHLY" | "YEARLY" }
    */
-  protected FreqRecurType freq;
+  protected EFreqRecurType freq;
   /**
    * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
    * same 'recur'.
@@ -268,7 +268,7 @@ public class RecurType {
   /**
    * type-weekday = ( "SU" | "MO" | "TU" | "WE" | "TH" | "FR" | "SA" )
    */
-  protected WeekdayRecurType wkst;
+  protected EWeekdayRecurType wkst;
 
   public RecurType() {
   }
@@ -290,7 +290,7 @@ public class RecurType {
       final String token = tokenizer.nextToken();
       switch (token) {
         case FREQ:
-          freq = FreqRecurType.fromValue(nextToken(tokenizer, token));
+          freq = EFreqRecurType.fromValue(nextToken(tokenizer, token));
           break;
         case UNTIL:
           until = new UntilRecurType(nextToken(tokenizer, token));
@@ -329,7 +329,7 @@ public class RecurType {
           bysetpos = listParseInteger(nextToken(tokenizer, token));
           break;
         case WKST:
-          wkst = WeekdayRecurType.valueOf(nextToken(tokenizer, token));
+          wkst = EWeekdayRecurType.valueOf(nextToken(tokenizer, token));
           break;
       }
     }
@@ -359,20 +359,20 @@ public class RecurType {
   /**
    * Gets the value of the freq property.
    * <p/>
-   * @return possible object is {@link FreqRecurType }
+   * @return possible object is {@link EFreqRecurType }
    *
    */
-  public FreqRecurType getFreq() {
+  public EFreqRecurType getFreq() {
     return freq;
   }
 
   /**
    * Sets the value of the freq property.
    * <p/>
-   * @param value allowed object is {@link FreqRecurType }
+   * @param value allowed object is {@link EFreqRecurType }
    *
    */
-  public void setFreq(FreqRecurType value) {
+  public void setFreq(EFreqRecurType value) {
     this.freq = value;
   }
 
@@ -526,7 +526,7 @@ public class RecurType {
   }
 
   /**
-   * Gets the value of the byday property.
+   * Gets the value of the byday property: a list of days.
    * <p/>
    * Recommend using the methods addByDay and removeByDay to manipulate this
    * list.
@@ -548,13 +548,13 @@ public class RecurType {
     this.byday = null;
   }
 
-  public void addByDay(WeekdayRecurType weekdayRecurType) {
+  public void addByDay(EWeekdayRecurType weekdayRecurType) {
     if (!getByday().contains(weekdayRecurType.name())) {
       getByday().add(weekdayRecurType.name());
     }
   }
 
-  public void removeByDay(WeekdayRecurType weekdayRecurType) {
+  public void removeByDay(EWeekdayRecurType weekdayRecurType) {
     getByday().remove(weekdayRecurType.name());
   }
 
@@ -650,6 +650,11 @@ public class RecurType {
     return this.bysetpos;
   }
 
+  /**
+   * Inspect the bysetpos list and determine if it is null or empty.
+   * <p>
+   * @return TRUE if bysetpos is not null and not empty
+   */
   public boolean isSetBysetpos() {
     return ((this.bysetpos != null) && (!this.bysetpos.isEmpty()));
   }
@@ -661,20 +666,20 @@ public class RecurType {
   /**
    * Gets the value of the wkst property.
    * <p/>
-   * @return possible object is {@link WeekdayRecurType }
+   * @return possible object is {@link EWeekdayRecurType }
    *
    */
-  public WeekdayRecurType getWkst() {
+  public EWeekdayRecurType getWkst() {
     return wkst;
   }
 
   /**
    * Sets the value of the wkst property.
    * <p/>
-   * @param value allowed object is {@link WeekdayRecurType }
+   * @param value allowed object is {@link EWeekdayRecurType }
    *
    */
-  public void setWkst(WeekdayRecurType value) {
+  public void setWkst(EWeekdayRecurType value) {
     this.wkst = value;
   }
 

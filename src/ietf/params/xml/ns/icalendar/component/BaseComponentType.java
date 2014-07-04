@@ -49,12 +49,77 @@ import javax.xml.datatype.Duration;
   WsCalendarGluonType.class,
   WsCalendarIntervalType.class
 })
+@SuppressWarnings("unchecked")
 public abstract class BaseComponentType {
+
+  /**
+   * Component start token.
+   */
+  @XmlTransient
+  public static final String BEGIN = "BEGIN";
+  /**
+   * Component end token.
+   */
+  @XmlTransient
+  public static final String END = "END";
+  /**
+   * A string used to denote the start (and end) of iCalendar content lines.
+   */
+  @XmlTransient
+  public static final String LINE_SEPARATOR = "\r\n";
+  /**
+   * Prefix for non-standard components.
+   */
+  @XmlTransient
+  public static final String EXPERIMENTAL_PREFIX = "X-";
+  /**
+   * yyyyMMdd'T'HHmmss'Z' - the default date time formatting pattern
+   */
+  public static final String UTC_PATTERN = "yyyyMMdd'T'HHmmss'Z'";
+  public static final String RELAXED_PATTERN = "yyyyMMdd";
 
   @XmlTransient
   protected static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
+  /**
+   * The iCalendar object name. This is set in the component constructor.
+   */
+  @XmlTransient
+  protected EComponentName name;
+
   protected ArrayOfProperties properties;
   protected ArrayOfComponents components;
+
+  public BaseComponentType() {
+  }
+
+  public BaseComponentType(EComponentName name) {
+    this.name = name;
+  }
+
+  public BaseComponentType(EComponentName name, ArrayOfProperties properties) {
+    this.name = name;
+    this.properties = properties;
+  }
+
+  public BaseComponentType(EComponentName name, ArrayOfComponents components) {
+    this.name = name;
+    this.components = components;
+  }
+
+  public BaseComponentType(EComponentName name, ArrayOfProperties properties, ArrayOfComponents components) {
+    this.name = name;
+    this.properties = properties;
+    this.components = components;
+  }
+
+  /**
+   * Get the iCalendar object name. This is set in the component constructor.
+   * <p>
+   * @return the iCalendar object name
+   */
+  public EComponentName getName() {
+    return name;
+  }
 
   /**
    * Gets the value of the properties property.
@@ -126,9 +191,9 @@ public abstract class BaseComponentType {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}uid is a UidPropType
      */
-    JAXBElement jAXBElement = findJaXBElement("UID");
+    JAXBElement<UidPropType> jAXBElement = findJaXBElement("UID");
     if (jAXBElement != null) {
-      return ((UidPropType) jAXBElement.getValue()).getText();
+      return jAXBElement.getValue().getText();
     } else {
       return null;
     }
@@ -156,9 +221,9 @@ public abstract class BaseComponentType {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtstamp is a DtstampPropType
      */
-    JAXBElement jAXBElement = findJaXBElement("DTSTAMP");
+    JAXBElement<DtstampPropType> jAXBElement = findJaXBElement("DTSTAMP");
     if (jAXBElement != null) {
-      return ((DtstampPropType) jAXBElement.getValue()).getCalendar();
+      return jAXBElement.getValue().getCalendar();
     } else {
       return null;
     }
@@ -188,9 +253,9 @@ public abstract class BaseComponentType {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtstart is a DtstartPropType
      */
-    JAXBElement jAXBElement = findJaXBElement("DTSTART");
+    JAXBElement<DtstartPropType> jAXBElement = findJaXBElement("DTSTART");
     if (jAXBElement != null) {
-      return ((DtstartPropType) jAXBElement.getValue()).getCalendar();
+      return jAXBElement.getValue().getCalendar();
     } else {
       return null;
     }
@@ -223,9 +288,9 @@ public abstract class BaseComponentType {
      * RFC5545 says either 'dtend' or 'duration' may appear in a 'eventprop',
      * but 'dtend' and 'duration' MUST NOT occur in the same 'eventprop'
      */
-    JAXBElement jAXBElement = findJaXBElement("DTEND");
+    JAXBElement<DtendPropType> jAXBElement = findJaXBElement("DTEND");
     if (jAXBElement != null) {
-      return ((DtendPropType) jAXBElement.getValue()).getCalendar();
+      return jAXBElement.getValue().getCalendar();
     } else if (findJaXBElement("DURATION") != null) {
       /**
        * If the dtEnd is not set then try to calculate it from the duration.
@@ -264,9 +329,9 @@ public abstract class BaseComponentType {
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}duration is a
      * DurationPropType
      */
-    JAXBElement jAXBElement = findJaXBElement("DURATION");
+    JAXBElement<DurationPropType> jAXBElement = findJaXBElement("DURATION");
     if (jAXBElement != null) {
-      return ((DurationPropType) jAXBElement.getValue()).getDuration();
+      return jAXBElement.getValue().getDuration();
     } else if (findJaXBElement("DTEND") != null) {
       /**
        * If the duration is not set then try to calculate it from the start/end
@@ -307,9 +372,9 @@ public abstract class BaseComponentType {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}rrule is a RrulePropType
      */
-    JAXBElement jAXBElement = findJaXBElement("RRULE");
+    JAXBElement<RrulePropType> jAXBElement = findJaXBElement("RRULE");
     if (jAXBElement != null) {
-      return (RrulePropType) jAXBElement.getValue();
+      return jAXBElement.getValue();
     } else {
       return null;
     }

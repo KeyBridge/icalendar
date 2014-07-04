@@ -1,6 +1,7 @@
 package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
+import ietf.params.xml.ns.icalendar.component.EComponentName;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -27,4 +28,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VcalendarType")
 public class VcalendarType extends BaseComponentType {
+
+  public VcalendarType() {
+    super(EComponentName.VCALENDAR);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String toString() {
+    final StringBuilder b = new StringBuilder();
+    b.append(BEGIN).append(':').append(getName());
+    b.append(LINE_SEPARATOR);
+    b.append(getProperties());
+    b.append(getComponents());
+    b.append(END).append(':').append(getName());
+    b.append(LINE_SEPARATOR);
+    return b.toString();
+  }
+
 }

@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TznamePropType")
 public class TznamePropType extends TextPropertyType {
+
+  public TznamePropType() {
+  }
+
+  public TznamePropType(String text) {
+    super(text);
+  }
+
 }

@@ -152,6 +152,22 @@ public class DateDatetimePropertyType extends BasePropertyType {
   }
 
   /**
+   * Set the DateTime parameter with a DATE. Since java.util.Date has no notion
+   * of TimeZone you must also provide the timezone for the DATE value.
+   * <p>
+   * @param date     a date
+   * @param timeZone the date timezone
+   * @throws DatatypeConfigurationException if the date/timezone combination
+   *                                        cannot be converted to an
+   *                                        XMLGregorianCalendar
+   */
+  public DateDatetimePropertyType(Date date, TimeZone timeZone) throws DatatypeConfigurationException {
+    Calendar cal = Calendar.getInstance(timeZone);
+    cal.setTime(date);
+    setDateTime((GregorianCalendar) cal);
+  }
+
+  /**
    * Gets the value of the dateTime property.
    * <p/>
    * @return possible object is {@link XMLGregorianCalendar }
@@ -171,7 +187,15 @@ public class DateDatetimePropertyType extends BasePropertyType {
     this.dateTime = value;
   }
 
-  public void setDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
+  /**
+   * Sets the value of the dateTime property from a normal java.util.Calendar.
+   * The timezone of the input calendar is automatically normalized to UTC.
+   * <p/>
+   * @param dateTime a calendar instance.
+   * @throws DatatypeConfigurationException if the calendar instance cannot be
+   *                                        converted to an XMLGregorianCalendar
+   */
+  public final void setDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     /**
      * Call normalize to Normalize this instance to UTC.
      * <p/>

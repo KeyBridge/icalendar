@@ -1,19 +1,10 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
-import ietf.params.xml.ns.icalendar.property.base.integer.PercentCompletePropType;
-import ietf.params.xml.ns.icalendar.property.base.integer.PriorityPropType;
-import ietf.params.xml.ns.icalendar.property.base.integer.RepeatPropType;
-import ietf.params.xml.ns.icalendar.property.base.integer.SequencePropType;
-import ietf.params.xml.ns.icalendar.property.base.integer.XBedeworkMaxTicketsPerUserPropType;
-import ietf.params.xml.ns.icalendar.property.base.integer.XBedeworkMaxTicketsPropType;
+import ietf.params.xml.ns.icalendar.property.base.integer.*;
 import java.math.BigInteger;
 import java.util.Objects;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * Java class for IntegerPropertyType complex type.
@@ -46,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
 public class IntegerPropertyType extends BasePropertyType {
 
   @XmlElement(required = true)
-  protected BigInteger integer;
+  protected Integer integer;
 
   /**
    * Gets the value of the integer property.
@@ -54,7 +45,7 @@ public class IntegerPropertyType extends BasePropertyType {
    * @return possible object is {@link BigInteger }
    *
    */
-  public BigInteger getInteger() {
+  public Integer getInteger() {
     return integer;
   }
 
@@ -64,7 +55,7 @@ public class IntegerPropertyType extends BasePropertyType {
    * @param value allowed object is {@link BigInteger }
    *
    */
-  public void setInteger(BigInteger value) {
+  public void setInteger(Integer value) {
     this.integer = value;
   }
 

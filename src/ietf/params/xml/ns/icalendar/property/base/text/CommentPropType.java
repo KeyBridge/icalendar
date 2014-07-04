@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CommentPropType")
 public class CommentPropType extends TextPropertyType {
+
+  public CommentPropType() {
+  }
+
+  public CommentPropType(String text) {
+    super(text);
+  }
+
 }

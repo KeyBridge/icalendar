@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VersionPropType")
 public class VersionPropType extends TextPropertyType {
+
+  public VersionPropType() {
+  }
+
+  public VersionPropType(String text) {
+    super(text);
+  }
+
 }

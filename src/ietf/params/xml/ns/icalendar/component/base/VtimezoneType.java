@@ -1,6 +1,7 @@
 package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
+import ietf.params.xml.ns.icalendar.component.EComponentName;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -26,4 +27,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VtimezoneType")
 public class VtimezoneType extends BaseComponentType {
+
+  public VtimezoneType() {
+    super(EComponentName.VTIMEZONE);
+  }
 }

@@ -1,6 +1,7 @@
 package ietf.params.xml.ns.icalendar.property.base.textlist;
 
 import ietf.params.xml.ns.icalendar.property.base.TextListPropertyType;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -23,4 +24,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CategoriesPropType")
 public class CategoriesPropType extends TextListPropertyType {
+
+  public CategoriesPropType() {
+  }
+
+  public CategoriesPropType(List<String> text) {
+    super(text);
+  }
+
 }

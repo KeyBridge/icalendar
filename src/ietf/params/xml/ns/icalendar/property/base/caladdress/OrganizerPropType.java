@@ -1,6 +1,7 @@
 package ietf.params.xml.ns.icalendar.property.base.caladdress;
 
 import ietf.params.xml.ns.icalendar.property.base.CalAddressPropertyType;
+import java.net.URI;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -23,4 +24,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OrganizerPropType")
 public class OrganizerPropType extends CalAddressPropertyType {
+
+  public OrganizerPropType() {
+  }
+
+  public OrganizerPropType(String calAddress) {
+    super(calAddress);
+  }
+
+  public OrganizerPropType(URI calAddress) {
+    super(calAddress.toString());
+  }
+
 }

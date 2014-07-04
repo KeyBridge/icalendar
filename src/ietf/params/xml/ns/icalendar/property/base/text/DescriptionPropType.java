@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DescriptionPropType")
 public class DescriptionPropType extends TextPropertyType {
+
+  public DescriptionPropType() {
+  }
+
+  public DescriptionPropType(String text) {
+    super(text);
+  }
+
 }

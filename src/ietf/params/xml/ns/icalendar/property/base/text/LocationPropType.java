@@ -22,4 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LocationPropType")
 public class LocationPropType extends TextPropertyType {
+
+  public LocationPropType() {
+  }
+
+  public LocationPropType(String text) {
+    super(text);
+  }
+
 }

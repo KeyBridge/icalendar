@@ -4,12 +4,12 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Java class for WeekdayRecurType.
+ * Java class for EWeekdayRecurType.
  * <p/>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <pre>
- * &lt;simpleType name="WeekdayRecurType">
+ * &lt;simpleType name="EWeekdayRecurType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
  *     &lt;enumeration value="SU"/>
  *     &lt;enumeration value="MO"/>
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "WeekdayRecurType")
 @XmlEnum
-public enum WeekdayRecurType {
+public enum EWeekdayRecurType {
 
   /**
    * Sunday
@@ -60,7 +60,7 @@ public enum WeekdayRecurType {
     return name();
   }
 
-  public static WeekdayRecurType fromValue(String v) {
+  public static EWeekdayRecurType fromValue(String v) {
     return valueOf(v);
   }
 }

@@ -4,30 +4,30 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Java class for RangeValueType.
+ * Java class for ECalscaleValueType.
  * <p/>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <pre>
- * &lt;simpleType name="RangeValueType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *     &lt;enumeration value="THISANDFUTURE"/>
+ * &lt;simpleType name="ECalscaleValueType">
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *     &lt;enumeration value="GREGORIAN"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * <p/>
  */
-@XmlType(name = "RangeValueType")
+@XmlType(name = "CalscaleValueType")
 @XmlEnum
-public enum RangeValueType {
+public enum ECalscaleValueType {
 
-  THISANDFUTURE;
+  GREGORIAN;
 
   public String value() {
     return name();
   }
 
-  public static RangeValueType fromValue(String v) {
+  public static ECalscaleValueType fromValue(String v) {
     return valueOf(v);
   }
 }

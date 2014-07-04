@@ -1,27 +1,9 @@
 package ietf.params.xml.ns.icalendar.parameter.base;
 
-import ietf.params.xml.ns.icalendar.parameter.base.text.CnParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.CutypeParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.EncodingParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.FbtypeParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.FmttypeParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.LanguageParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.PartstatParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.RelatedParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.ReltypeParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.RoleParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.ScheduleAgentParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.ScheduleForceSendParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.ScheduleStatusParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.TzidParamType;
-import ietf.params.xml.ns.icalendar.parameter.base.text.XBedeworkUidParamType;
 import ietf.params.xml.ns.icalendar.parameter.BaseParameterType;
+import ietf.params.xml.ns.icalendar.parameter.base.text.*;
 import java.util.Objects;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * Java class for TextParameterType complex type.
@@ -63,6 +45,13 @@ public class TextParameterType extends BaseParameterType {
 
   @XmlElement(required = true)
   protected String text;
+
+  public TextParameterType() {
+  }
+
+  public TextParameterType(String text) {
+    this.text = text;
+  }
 
   /**
    * Gets the value of the text property.
