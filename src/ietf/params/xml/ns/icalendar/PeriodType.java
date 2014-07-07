@@ -166,7 +166,7 @@ public final class PeriodType implements Comparable<PeriodType> {
     this.start = value;
   }
 
-  public final void setStart(GregorianCalendar dateTime) throws DatatypeConfigurationException {
+  public void setStart(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     this.start = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
   }
 
@@ -333,7 +333,14 @@ public final class PeriodType implements Comparable<PeriodType> {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    return this.hashCode() == obj.hashCode();
+    final PeriodType other = (PeriodType) obj;
+    if (!Objects.equals(this.start, other.start)) {
+      return false;
+    }
+    if (!Objects.equals(this.end, other.end)) {
+      return false;
+    }
+    return Objects.equals(this.duration, other.duration);
   }
 
   @Override

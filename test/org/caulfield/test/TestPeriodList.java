@@ -58,10 +58,11 @@ public class TestPeriodList {
 //    }
 
 //    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20140725T000000Z");
-//    RecurType recur = new RecurType("FREQ=WEEKLY;UNTIL=20140725T000000Z;WKST=SU;BYDAY=TU,WE,TH,SA");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;UNTIL=20140730T000000Z;WKST=SU;BYDAY=TU,WE,TH,SA");
 //    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=15;INTERVAL=2;WKST=SU;BYDAY=TU,WE,TH");
 //    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5");
-    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
+    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
 
     System.out.println("DEBUG recur " + recur.toStringFull());
     Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart.getTime(),
@@ -70,7 +71,10 @@ public class TestPeriodList {
                                                                     periodStart.getTime(),
                                                                     periodEnd.getTime());
     System.out.println("RecurSet");
-    System.out.println(recurSet);
+    int i = 0;
+    for (PeriodType periodType : recurSet) {
+      System.out.println(i++ + "   " + periodType);
+    }
 
   }
 }
