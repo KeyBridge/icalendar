@@ -1,5 +1,6 @@
 package ietf.params.xml.ns.icalendar;
 
+import java.util.Calendar;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
@@ -27,13 +28,28 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum EFreqRecurType {
 
-  SECONDLY,
-  MINUTELY,
-  HOURLY,
-  DAILY,
-  WEEKLY,
-  MONTHLY,
-  YEARLY;
+  SECONDLY(Calendar.SECOND),
+  MINUTELY(Calendar.MINUTE),
+  HOURLY(Calendar.HOUR),
+  DAILY(Calendar.DAY_OF_YEAR),
+  WEEKLY(Calendar.WEEK_OF_YEAR),
+  MONTHLY(Calendar.MONTH),
+  YEARLY(Calendar.YEAR);
+  private final int calendarValue;
+
+  private EFreqRecurType(int calendarValue) {
+    this.calendarValue = calendarValue;
+  }
+
+  /**
+   * Get the Calendar value corresponding to the recurrence frequency. The
+   * Calendar value is used when calculating incremental recurring events.
+   * <p>
+   * @return a non-null Integer
+   */
+  public int getCalendarValue() {
+    return calendarValue;
+  }
 
   public String value() {
     return name();

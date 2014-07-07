@@ -127,6 +127,12 @@ public class UntilRecurType {
    */
   private static final String PATTERN_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   /**
+   * RFC 2445 UTC date time pattern.
+   */
+  public static final String PATTERN_UTC = "yyyyMMdd'T'HHmmss'Z'";
+  public static final java.util.TimeZone TIMEZONE_UTC = java.util.TimeZone.getTimeZone("UTC");
+
+  /**
    * Used to normalize all calendar instances to UTC. e.g.
    * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z. Implements
    * W3C XML Schema Part 2, Section 3.2.7.3 (A)
@@ -241,10 +247,11 @@ public class UntilRecurType {
   }
 
   /**
-   * Construct an UntilRecurType from a string.
+   * Construct an UntilRecurType from a string. Three formats are supported: RFC
+   * 2445 UTC standard "yyyyMMdd'T'HHmmss'Z'", RFC 5545 DATE-TIME
+   * "yyyy-MM-dd'T'HH:mm:ss'Z'" or RFC 5545 DATE "yyyyMMdd"
    * <p/>
-   * @param untilString an encoded date time string of the format
-   *                    'yyyyMMdd'T'HHmmss'Z'' or 'yyyyMMdd'
+   * @param untilString an encoded date time string
    * @throws DatatypeConfigurationException if the parsed date is not valid.
    * @throws ParseException                 if the string cannot be parsed into
    *                                        a Date
@@ -253,15 +260,19 @@ public class UntilRecurType {
     if (untilString == null || untilString.isEmpty()) {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
-    if (PATTERN_DATE.length() == untilString.length()) {
+    if (PATTERN_UTC.length() - 4 == untilString.length()) {
+      setDateTime(new SimpleDateFormat(PATTERN_UTC).parse(untilString));
+    } else if (PATTERN_DATE.length() == untilString.length()) {
       /**
        * Telcordia and Google cannot read DATE patterned UNTIL fields.
        * Accommodate this by always setting the date-time field instead.
        */
 //      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
       setDateTime(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
-    } else {
+    } else if (PATTERN_DATE_TIME.length() - 4 == untilString.length()) {
       setDateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
+    } else {
+      throw new ParseException("Failed to parse UNTIL date string: " + untilString, 0);
     }
   }
 
@@ -273,6 +284,15 @@ public class UntilRecurType {
    */
   public XMLGregorianCalendar getDate() {
     return date;
+  }
+
+  /**
+   * Gets the value of the date property.
+   * <p/>
+   * @return possible object is {@link GregorianCalendar }
+   */
+  public GregorianCalendar getDateCalendar() {
+    return date != null ? date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null) : null;
   }
 
   /**
@@ -311,6 +331,15 @@ public class UntilRecurType {
    */
   public XMLGregorianCalendar getDateTime() {
     return dateTime;
+  }
+
+  /**
+   * Gets the value of the dateTime property.
+   * <p/>
+   * @return possible object is {@link GregorianCalendar }
+   */
+  public GregorianCalendar getDateTimeCalendar() {
+    return dateTime != null ? dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null) : null;
   }
 
   /**
@@ -387,6 +416,30 @@ public class UntilRecurType {
       return false;
     }
     return Objects.equals(this.dateTime, other.dateTime);
+  }
+
+  /**
+   * Returns whether this Calendar represents a time before the time represented
+   * by the specified Object. This method is equivalent to:
+   * <p>
+   * @param when the Object to be compared
+   * @return true if the time of this Calendar is before the time represented by
+   *         when; false otherwise.
+   */
+  public boolean before(Calendar when) {
+    return date != null ? getDateCalendar().before(when) : getDateTimeCalendar().before(when);
+  }
+
+  /**
+   * Returns whether this Calendar represents a time after the time represented
+   * by the specified Object.
+   * <p>
+   * @param when the Object to be compared
+   * @return true if the time of this Calendar is after the time represented by
+   *         when; false otherwise.
+   */
+  public boolean after(Calendar when) {
+    return date != null ? getDateCalendar().after(when) : getDateTimeCalendar().after(when);
   }
 
   /**

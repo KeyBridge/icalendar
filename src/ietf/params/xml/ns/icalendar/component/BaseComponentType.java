@@ -73,6 +73,10 @@ public abstract class BaseComponentType {
   @XmlTransient
   public static final String EXPERIMENTAL_PREFIX = "X-";
   /**
+   * [ISO.8601.2004] International Organization for Standardization, "Data
+   * elements and interchange formats -- Information interchange --
+   * Representation of dates and times", 2004.
+   * <p>
    * yyyyMMdd'T'HHmmss'Z' - the default date time formatting pattern
    */
   public static final String UTC_PATTERN = "yyyyMMdd'T'HHmmss'Z'";

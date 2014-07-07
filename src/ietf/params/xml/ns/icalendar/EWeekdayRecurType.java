@@ -1,5 +1,6 @@
 package ietf.params.xml.ns.icalendar;
 
+import java.util.Calendar;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
@@ -30,31 +31,46 @@ public enum EWeekdayRecurType {
   /**
    * Sunday
    */
-  SU,
+  SU(Calendar.SUNDAY),
   /**
    * Monday
    */
-  MO,
+  MO(Calendar.MONDAY),
   /**
    * Tuesday
    */
-  TU,
+  TU(Calendar.TUESDAY),
   /**
    * Wednesday
    */
-  WE,
+  WE(Calendar.WEDNESDAY),
   /**
    * Thursday
    */
-  TH,
+  TH(Calendar.THURSDAY),
   /**
    * Friday
    */
-  FR,
+  FR(Calendar.FRIDAY),
   /**
    * Saturday
    */
-  SA;
+  SA(Calendar.SATURDAY);
+
+  private final int calendarValue;
+
+  private EWeekdayRecurType(int calendarValue) {
+    this.calendarValue = calendarValue;
+  }
+
+  /**
+   * Get the corresponding java.util.Calendar integer value for this weekday.
+   * <p>
+   * @return the Calendar integer value
+   */
+  public int getCalendarValue() {
+    return calendarValue;
+  }
 
   public String value() {
     return name();
