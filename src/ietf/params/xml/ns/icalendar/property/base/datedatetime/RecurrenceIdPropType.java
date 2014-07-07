@@ -3,7 +3,6 @@ package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -35,8 +34,8 @@ public class RecurrenceIdPropType extends DateDatetimePropertyType {
     super(dateTime);
   }
 
-  public RecurrenceIdPropType(Date date, TimeZone timeZone) throws DatatypeConfigurationException {
-    super(date, timeZone);
+  public RecurrenceIdPropType(Date date) throws DatatypeConfigurationException {
+    super(date);
   }
 
 }

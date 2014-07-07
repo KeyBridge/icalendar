@@ -161,8 +161,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
    *                                        cannot be converted to an
    *                                        XMLGregorianCalendar
    */
-  public DateDatetimePropertyType(Date date, TimeZone timeZone) throws DatatypeConfigurationException {
-    Calendar cal = Calendar.getInstance(timeZone);
+  public DateDatetimePropertyType(Date date) throws DatatypeConfigurationException {
+    Calendar cal = Calendar.getInstance(TIME_ZONE);
     cal.setTime(date);
     setDateTime((GregorianCalendar) cal);
   }
