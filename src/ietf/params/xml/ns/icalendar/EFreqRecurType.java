@@ -51,6 +51,15 @@ public enum EFreqRecurType {
     return calendarValue;
   }
 
+  /**
+   * JSF-friendly getter.
+   * <p>
+   * @return the name
+   */
+  public String getName() {
+    return name();
+  }
+
   public String value() {
     return name();
   }

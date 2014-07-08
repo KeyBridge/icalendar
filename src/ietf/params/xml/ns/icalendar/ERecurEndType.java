@@ -16,7 +16,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlTransient
 public enum ERecurEndType {
 
-  COUNT, UNTIL, NONE;
+  COUNT,
+  UNTIL,
+  NONE;
 
   public String value() {
     return name();

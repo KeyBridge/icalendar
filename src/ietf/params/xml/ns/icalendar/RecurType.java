@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  * in any sequence, but to ensure backward compatibility with applications that
  * pre-date this revision of iCalendar the FREQ rule part MUST be the first rule
  * part specified in a RECUR value.
-  * <p>
+ * <p>
  * Recurrence rules may generate recurrence instances with an invalid date
  * (e.g., February 30) or nonexistent local time (e.g., 1:30 AM on a day where
  * the local time is moved forward by an hour at 1:00 AM). Such recurrence
@@ -232,7 +232,7 @@ public class RecurType {
    * <p>
    * type-byday = element byday { xsd:integer?, type-weekday }
    */
-  protected List<String> byday;
+  protected List<EWeekdayRecurType> byday;
   /**
    * The BYMONTHDAY rule part specifies a COMMA-separated list of days of the
    * month. Valid values are 1 to 31 or -31 to -1. For example, -10 represents
@@ -349,7 +349,7 @@ public class RecurType {
           byhour = listParseInteger(nextToken(tokenizer, token));
           break;
         case BYDAY:
-          byday = listParseString(nextToken(tokenizer, token));
+          byday = listParseWeekday(nextToken(tokenizer, token));
           break;
         case BYMONTHDAY:
           bymonthday = listParseInteger(nextToken(tokenizer, token));
@@ -420,11 +420,16 @@ public class RecurType {
 
   /**
    * Gets the value of the until property.
+   * <p>
+   * This getter ALWAYS returns a non-null instance. Call isSetUntil first to
+   * determine if this field is set.
    * <p/>
-   * @return possible object is {@link UntilRecurType }
-   *
+   * @return a non-null instance of {@link UntilRecurType }.
    */
   public UntilRecurType getUntil() {
+    if (until == null) {
+      until = new UntilRecurType();
+    }
     return until;
   }
 
@@ -454,6 +459,33 @@ public class RecurType {
   }
 
   /**
+   * Helper method to get the UNTIL value as a DATE.
+   * <p>
+   * @return the UNTIL date value.
+   */
+  public Date getUntilDate() {
+    return getUntil().getDate();
+  }
+
+  /**
+   * Helper method to set the UNTIL value as a DATE.
+   * <p>
+   * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
+   * same 'recur'.
+   * <p>
+   * Input values less than 1 are silently ignored.
+   * <p>
+   * Therefore, on success (if the input value is not null) the COUNT field is
+   * set to null.
+   * <p>
+   * @param until the UNTIL date value.
+   */
+  public void setUntilDate(Date until) {
+    getUntil().setDate(until);
+    this.count = null;
+  }
+
+  /**
    * Gets the value of the count property.
    * <p/>
    * @return possible object is {@link Integer }
@@ -471,8 +503,8 @@ public class RecurType {
    * <p>
    * Input values less than 1 are silently ignored.
    * <p>
-   * Therefore, on success (if the input value is not null and valid) the UNTIL
-   * field is set to null.
+   * Therefore, on success (if the input value is not null and greater than
+   * zero) the UNTIL field is set to null.
    * <p>
    * @param value allowed object is {@link Integer }
    *
@@ -531,6 +563,10 @@ public class RecurType {
     return this.bysecond;
   }
 
+  public void setBysecond(List<Integer> bysecond) {
+    this.bysecond = bysecond;
+  }
+
   public boolean isSetBysecond() {
     return ((this.bysecond != null) && (!this.bysecond.isEmpty()));
   }
@@ -549,6 +585,10 @@ public class RecurType {
       byminute = new ArrayList<>();
     }
     return this.byminute;
+  }
+
+  public void setByminute(List<Integer> byminute) {
+    this.byminute = byminute;
   }
 
   public boolean isSetByminute() {
@@ -571,6 +611,10 @@ public class RecurType {
     return this.byhour;
   }
 
+  public void setByhour(List<Integer> byhour) {
+    this.byhour = byhour;
+  }
+
   public boolean isSetByhour() {
     return ((this.byhour != null) && (!this.byhour.isEmpty()));
   }
@@ -587,11 +631,15 @@ public class RecurType {
    * <p>
    * @return a non-null ArrayList
    */
-  public List<String> getByday() {
+  public List<EWeekdayRecurType> getByday() {
     if (byday == null) {
       byday = new ArrayList<>();
     }
     return this.byday;
+  }
+
+  public void setByday(List<EWeekdayRecurType> byday) {
+    this.byday = byday;
   }
 
   public boolean isSetByday() {
@@ -602,40 +650,14 @@ public class RecurType {
     this.byday = null;
   }
 
-  public void addByDay(EWeekdayRecurType weekdayRecurType) {
-    if (!getByday().contains(weekdayRecurType.name())) {
-      getByday().add(weekdayRecurType.name());
+  public void addByDay(EWeekdayRecurType weekday) {
+    if (!getByday().contains(weekday)) {
+      getByday().add(weekday);
     }
   }
 
-  public void removeByDay(EWeekdayRecurType weekdayRecurType) {
-    getByday().remove(weekdayRecurType.name());
-  }
-
-  /**
-   * Get the byday list of days, formatted as enumerated Weekday entities.
-   * <p>
-   * @return a non-null ArrayList
-   */
-  public List<EWeekdayRecurType> getBydayEnum() {
-    List<EWeekdayRecurType> eByday = new ArrayList<>();
-    for (String string : getByday()) {
-      eByday.add(EWeekdayRecurType.valueOf(string));
-    }
-    return eByday;
-  }
-
-  /**
-   * Set the byday list of days from an enumerated list.
-   * <p>
-   * @param eByday an enumerated list of days
-   */
-  public void setBydayEnum(List<EWeekdayRecurType> eByday) {
-    for (EWeekdayRecurType eWeekdayRecurType : eByday) {
-      if (!getByday().contains(eWeekdayRecurType.name())) {
-        byday.add(eWeekdayRecurType.name());
-      }
-    }
+  public void removeByDay(EWeekdayRecurType weekday) {
+    getByday().remove(weekday);
   }
 
   /**
@@ -648,6 +670,10 @@ public class RecurType {
       byyearday = new ArrayList<>();
     }
     return this.byyearday;
+  }
+
+  public void setByyearday(List<Integer> byyearday) {
+    this.byyearday = byyearday;
   }
 
   public boolean isSetByyearday() {
@@ -670,6 +696,10 @@ public class RecurType {
     return this.bymonthday;
   }
 
+  public void setBymonthday(List<Integer> bymonthday) {
+    this.bymonthday = bymonthday;
+  }
+
   public boolean isSetBymonthday() {
     return ((this.bymonthday != null) && (!this.bymonthday.isEmpty()));
   }
@@ -688,6 +718,10 @@ public class RecurType {
       byweekno = new ArrayList<>();
     }
     return this.byweekno;
+  }
+
+  public void setByweekno(List<Integer> byweekno) {
+    this.byweekno = byweekno;
   }
 
   public boolean isSetByweekno() {
@@ -710,6 +744,10 @@ public class RecurType {
     return this.bymonth;
   }
 
+  public void setBymonth(List<Integer> bymonth) {
+    this.bymonth = bymonth;
+  }
+
   public boolean isSetBymonth() {
     return ((this.bymonth != null) && (!this.bymonth.isEmpty()));
   }
@@ -728,6 +766,10 @@ public class RecurType {
       bysetpos = new ArrayList<>();
     }
     return this.bysetpos;
+  }
+
+  public void setBysetpos(List<Integer> bysetpos) {
+    this.bysetpos = bysetpos;
   }
 
   /**
@@ -965,5 +1007,24 @@ public class RecurType {
       list.add(t.nextToken());
     }
     return list;
-  }//</editor-fold>
+  }
+
+  /**
+   * Parse a comma-delimited String into a list of enumerated Weekday types.
+   * <p/>
+   * @param aString a string representation of a number list
+   */
+  private List<EWeekdayRecurType> listParseWeekday(String aString) {
+    List<EWeekdayRecurType> list = new ArrayList<>();
+    final StringTokenizer t = new StringTokenizer(aString, ",");
+    while (t.hasMoreTokens()) {
+      try {
+        list.add(EWeekdayRecurType.valueOf(t.nextToken()));
+      } catch (Exception e) {
+      }
+    }
+    return list;
+  }
+
+//</editor-fold>
 }

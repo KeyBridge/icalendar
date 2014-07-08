@@ -343,14 +343,14 @@ public class ICalendarUtil {
     if (recurType.isSetByday()) {
       Set<Calendar> set = new HashSet<>();
       if (dateSet.isEmpty()) {
-        for (EWeekdayRecurType weekday : recurType.getBydayEnum()) {
+        for (EWeekdayRecurType weekday : recurType.getByday()) {
           final Calendar cal = (Calendar) periodStart.clone();
           cal.set(Calendar.DAY_OF_WEEK, weekday.getCalendarValue());
           set.add(cal);
         }
       } else {
         for (Calendar calendar : dateSet) {
-          for (EWeekdayRecurType weekday : recurType.getBydayEnum()) {
+          for (EWeekdayRecurType weekday : recurType.getByday()) {
             final Calendar cal = (Calendar) calendar.clone();
             cal.set(Calendar.DAY_OF_WEEK, weekday.getCalendarValue());
             set.add(cal);

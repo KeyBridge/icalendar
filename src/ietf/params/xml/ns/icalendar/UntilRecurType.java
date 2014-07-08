@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -34,6 +36,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * In the case of the "STANDARD" and "DAYLIGHT" sub-components the UNTIL rule
  * part MUST always be specified as a date with UTC time. If specified as a
  * DATE-TIME value, then it MUST be specified in a UTC time format.
+ * <p>
+ * Developer note: In this implementation all values are recorded as DATE-TIME.
+ * This implementation has therefore been modified to only support DATE-TIME.
+ * The DATE getter and setter methods read and write java.util.Date values, but
+ * the internal storage is always DATE-TIME.
+ * <p>
+ * The internal DATE field getter and setter methods have been renamed with a
+ * 'Xml' suffix.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UntilRecurType", propOrder = {
@@ -67,12 +77,14 @@ public class UntilRecurType {
    * No additional content value encoding (i.e., BACKSLASH character encoding,
    * see Section 3.3.11) is defined for this value type.
    * <p>
-   * From RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
+   * RFC 6321: 3.3.4 DATE: The date encoding pattern is:
    * <code>pattern-date = xsd:string { pattern = "\d\d\d\d-\d\d-\d\d" }</code>
+   * XML Definition: Appendix A # 3.3.4 Example:
+   * <date>2011-05-17</date>
    * <p/>
    * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.4">Date</a>
-   * @see <a href="http://tools.ietf.org/html/rfc6321#appendix-A">RELAX NG
-   * Schema</a>
+   * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.4">RELAX NG
+   * Schema 3.6.4 DATE</a>
    */
   private static final String PATTERN_DATE = "yyyyMMdd";
   /**
@@ -111,8 +123,10 @@ public class UntilRecurType {
    * The date with UTC time, or absolute time, is identified by a LATIN CAPITAL
    * LETTER Z suffix character, the UTC designator, appended to the time value.
    * <p>
-   * From RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
+   * RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
    * <code>pattern-date-time = xsd:string { pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?" }</code>
+   * XML Definition: Appendix A # 3.3.5 Example:
+   * <date-time>2011-05-17T12:00:00</date-time>
    * <p/>
    * The "TZID" property parameter MUST NOT be applied to DATE-TIME properties
    * whose time values are specified in UTC.
@@ -122,22 +136,28 @@ public class UntilRecurType {
    * <p/>
    * @see <a
    * href="http://tools.ietf.org/html/rfc5545#section-3.3.5">Date-Time</a>
-   * @see <a href="http://tools.ietf.org/html/rfc6321#appendix-A">RELAX NG
-   * Schema</a>
+   * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.5">RELAX NG
+   * Schema 3.6.5 DATE-TIME</a>
    */
   private static final String PATTERN_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   /**
    * RFC 2445 UTC date time pattern.
+   * <p>
+   * This pattern is to be used only when printing to String. The PATTERN_DATE
+   * and PATTERN_DATE_TIME are to be used when marshaling to XML.
+   * <p>
+   * @see RFC 6321
    */
   public static final String PATTERN_UTC = "yyyyMMdd'T'HHmmss'Z'";
-  public static final java.util.TimeZone TIMEZONE_UTC = java.util.TimeZone.getTimeZone("UTC");
-
   /**
+   * Coordinated Universal Time.
+   * <p>
    * Used to normalize all calendar instances to UTC. e.g.
    * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z. Implements
    * W3C XML Schema Part 2, Section 3.2.7.3 (A)
    */
-  private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
+  public static final java.util.TimeZone TIMEZONE_UTC = java.util.TimeZone.getTimeZone("UTC");
+
   /**
    * xsd:date — Gregorian calendar date
    * <p/>
@@ -243,7 +263,7 @@ public class UntilRecurType {
   }
 
   public UntilRecurType(java.util.Date dateTime) throws DatatypeConfigurationException {
-    setDateTime(dateTime);
+    dateTime(dateTime);
   }
 
   /**
@@ -261,119 +281,86 @@ public class UntilRecurType {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
     if (PATTERN_UTC.length() - 4 == untilString.length()) {
-      setDateTime(new SimpleDateFormat(PATTERN_UTC).parse(untilString));
+      dateTime(new SimpleDateFormat(PATTERN_UTC).parse(untilString));
     } else if (PATTERN_DATE.length() == untilString.length()) {
       /**
        * Telcordia and Google cannot read DATE patterned UNTIL fields.
-       * Accommodate this by always setting the date-time field instead.
+       * Accommodate this by always using the date-time field instead. Also, in
+       * most all implementations the DTSTART field is always a DATE-TIME.
        */
 //      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
-      setDateTime(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      dateTime(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
     } else if (PATTERN_DATE_TIME.length() - 4 == untilString.length()) {
-      setDateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
+      dateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
     } else {
       throw new ParseException("Failed to parse UNTIL date string: " + untilString, 0);
     }
   }
 
   /**
-   * Gets the value of the date property.
+   * Gets the value of the date property. If the date field is null a new
+   * Calendar instance is created and returned, but the internal field will
+   * remain unset.
    * <p/>
-   * @return possible object is {@link XMLGregorianCalendar }
-   *
+   * @return a non-null Calendar instance.
    */
-  public XMLGregorianCalendar getDate() {
-    return date;
-  }
-
-  /**
-   * Gets the value of the date property.
-   * <p/>
-   * @return possible object is {@link GregorianCalendar }
-   */
-  public GregorianCalendar getDateCalendar() {
-    return date != null ? date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null) : null;
+  public Calendar getDateXml() {
+    return date != null
+      ? date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
+      : Calendar.getInstance(TIMEZONE_UTC);
   }
 
   /**
    * Sets the value of the date property.
    * <p/>
-   * @param value allowed object is {@link XMLGregorianCalendar }
-   *
+   * @param calendar the calendar value
+   * @throws DatatypeConfigurationException if the calendar cannot be converted
+   *                                        to a XMLGregorianCalendar
    */
-  public void setDate(XMLGregorianCalendar value) {
-    this.date = value;
+  public void setDateXml(Calendar calendar) throws DatatypeConfigurationException {
+    this.date = DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize();
   }
 
-  /**
-   * Helper method to set the UNTIL Date using a conventional Date instance.
-   * <p/>
-   * @param date
-   * @throws DatatypeConfigurationException
-   */
-  public final void setDate(java.util.Date date) throws DatatypeConfigurationException {
-    if (date != null) {
-      Calendar calendar = Calendar.getInstance(TIME_ZONE);
-      calendar.setTime(date);
-      setDate(DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize());
-    }
-  }
-
-  public boolean isSetDate() {
+  public boolean isSetDateXml() {
     return (this.date != null);
   }
 
   /**
-   * Gets the value of the dateTime property.
+   * Gets the value of the dateTime property. If the dateTime field is null a
+   * new Calendar instance is created and returned, but the internal field will
+   * remain unset.
    * <p/>
-   * @return possible object is {@link XMLGregorianCalendar }
-   *
+   * @return a non-null Calendar instance.
    */
-  public XMLGregorianCalendar getDateTime() {
-    return dateTime;
-  }
-
-  /**
-   * Gets the value of the dateTime property.
-   * <p/>
-   * @return possible object is {@link GregorianCalendar }
-   */
-  public GregorianCalendar getDateTimeCalendar() {
-    return dateTime != null ? dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null) : null;
+  public Calendar getDateTime() {
+    return dateTime != null
+      ? dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
+      : Calendar.getInstance(TIMEZONE_UTC);
   }
 
   /**
    * Sets the value of the dateTime property.
    * <p/>
-   * @param value allowed object is {@link XMLGregorianCalendar }
-   *
+   * @param calendar the calendar value
+   * @throws DatatypeConfigurationException if the calendar cannot be converted
+   *                                        to a XMLGregorianCalendar
    */
-  public void setDateTime(XMLGregorianCalendar value) {
-    this.dateTime = value;
+  public void setDateTime(Calendar calendar) throws DatatypeConfigurationException {
+    this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize();
   }
 
   /**
-   * Helper method to set the UNTIL DateTime using a conventional
-   * GregorianCalendar instance.
+   * Internal helper method to set the UNTIL DateTime using a conventional Date
+   * instance.
    * <p/>
    * @param dateTime
    * @throws DatatypeConfigurationException
    */
-  public final void setDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
-  }
-
-  /**
-   * Helper method to set the UNTIL DateTime using a conventional Date instance.
-   * <p/>
-   * @param dateTime
-   * @throws DatatypeConfigurationException
-   */
-  public final void setDateTime(java.util.Date dateTime) throws DatatypeConfigurationException {
+  private void dateTime(java.util.Date dateTime) throws DatatypeConfigurationException {
     if (dateTime != null) {
-      Calendar calendar = Calendar.getInstance(TIME_ZONE);
+      Calendar calendar = Calendar.getInstance(TIMEZONE_UTC);
       calendar.setTime(dateTime);
-      setDateTime((GregorianCalendar) calendar);
+      setDateTime(calendar);
     }
   }
 
@@ -382,15 +369,42 @@ public class UntilRecurType {
   }
 
   /**
-   * Return the dateTime or date fields converted to a java.util.Calendar.
+   * Get the DATE-TIME field as a java.util.Date instance.
+   * <p>
+   * @return a DATE-TIME value
+   */
+  public Date getDate() {
+    return getDateTime().getTime();
+  }
+
+  /**
+   * Set the DATE-TIME field with a java.util.Date instance.
+   * <p>
+   * @param date a DATE-TIME value
+   */
+  public void setDate(Date date) {
+    try {
+      dateTime(date);
+    } catch (DatatypeConfigurationException ex) {
+      Logger.getLogger(UntilRecurType.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+
+  /**
+   * A convenience method to get either the dateTime or date fields converted to
+   * a java.util.Calendar. This method does not care which internal field is
+   * populated - it will grab the first available non-null value.
+   * <p>
+   * Developer note: This method should be used only for GETTING and not for
+   * inspection.
    * <p/>
-   * @return
+   * @return a Calendar instance populated by EITHER the date or dateTime field.
    */
   public Calendar getCalendar() {
     if (dateTime != null) {
-      return dateTime.toGregorianCalendar(TIME_ZONE, Locale.ENGLISH, null);
+      return dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null);
     } else if (date != null) {
-      return date.toGregorianCalendar(TIME_ZONE, Locale.ENGLISH, null);
+      return date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null);
     }
     return null;
   }
@@ -427,7 +441,7 @@ public class UntilRecurType {
    *         when; false otherwise.
    */
   public boolean before(Calendar when) {
-    return date != null ? getDateCalendar().before(when) : getDateTimeCalendar().before(when);
+    return date != null ? getDateXml().before(when) : getDateTime().before(when);
   }
 
   /**
@@ -439,7 +453,7 @@ public class UntilRecurType {
    *         when; false otherwise.
    */
   public boolean after(Calendar when) {
-    return date != null ? getDateCalendar().after(when) : getDateTimeCalendar().after(when);
+    return date != null ? getDateXml().after(when) : getDateTime().after(when);
   }
 
   /**
