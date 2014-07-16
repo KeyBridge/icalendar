@@ -1,5 +1,6 @@
 package ietf.params.xml.ns.icalendar;
 
+import java.io.Serializable;
 import java.util.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -94,7 +95,9 @@ import javax.xml.bind.annotation.XmlType;
   "wkst"
 })
 @SuppressWarnings("ProtectedField")
-public class RecurType {
+public class RecurType implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private static final String FREQ = "FREQ";
   private static final String UNTIL = "UNTIL";
@@ -110,7 +113,6 @@ public class RecurType {
   private static final String BYMONTH = "BYMONTH";
   private static final String BYSETPOS = "BYSETPOS";
   private static final String WKST = "WKST";
-  @XmlElement(required = true)
   /**
    * The FREQ rule part is REQUIRED, but MUST NOT occur more than once.
    * <p>
@@ -128,6 +130,7 @@ public class RecurType {
    * type-freq = element freq { "SECONDLY" | "MINUTELY" | "HOURLY" | "DAILY" |
    * "WEEKLY" | "MONTHLY" | "YEARLY" }
    */
+  @XmlElement(required = true)
   protected EFreqRecurType freq;
   /**
    * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the

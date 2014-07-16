@@ -2,6 +2,7 @@ package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +52,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
   "dateTime"
 })
 @XmlRootElement
-public class UntilRecurType {
+public class UntilRecurType implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   /**
    * RFC5545 3.3.4. DATE
