@@ -27,12 +27,26 @@ public class VeventType extends BaseComponentType {
   }
 
   /**
+   * Print the VeventType start and end string on a single line..
+   * <p>
+   * @return From [UTC_PATTERN] to [UTC_PATTERN]
+   */
+  @Override
+  public String toString() {
+    SimpleDateFormat sdf = new SimpleDateFormat(UTC_PATTERN, Locale.ENGLISH);
+    sdf.setTimeZone(TIME_ZONE);
+    StringBuilder b = new StringBuilder();
+    b.append("From ").append(getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "");
+    b.append("to ").append(getDTEND() != null ? sdf.format(getDTEND().getTime()) : "");
+    return b.toString();
+  }
+
+  /**
    * Print the VEvent to a simple string format.
    * <p>
    * @return
    */
-  @Override
-  public String toString() {
+  public String toStringMultiline() {
 //    SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
     SimpleDateFormat sdf = new SimpleDateFormat(UTC_PATTERN, Locale.ENGLISH);
     sdf.setTimeZone(TIME_ZONE);
@@ -41,9 +55,9 @@ public class VeventType extends BaseComponentType {
     b.append(LINE_SEPARATOR);
     b.append("DTSTAMP:").append(getDTSTAMP() != null ? sdf.format(getDTSTAMP().getTime()) : "");
     b.append(LINE_SEPARATOR);
-    b.append("getDTSTART:").append(getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "");
+    b.append("DTSTART:").append(getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "");
     b.append(LINE_SEPARATOR);
-    b.append("getDTEND:").append(getDTEND() != null ? sdf.format(getDTEND().getTime()) : "");
+    b.append("DTEND:").append(getDTEND() != null ? sdf.format(getDTEND().getTime()) : "");
     b.append(LINE_SEPARATOR);
     b.append(END).append(':').append(getName());
     b.append(LINE_SEPARATOR);
