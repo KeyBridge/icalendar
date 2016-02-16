@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar.component;
 
 import ietf.params.xml.ns.icalendar.ArrayOfComponents;
@@ -26,7 +41,7 @@ import javax.xml.datatype.Duration;
  *
  * This type is the basis for all components and provides a base class for
  * applications.
- * <p/>
+ * <p>
  * Essentially it states that a component is a set of properties and components.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -118,7 +133,7 @@ public abstract class BaseComponentType {
 
   /**
    * Get the iCalendar object name. This is set in the component constructor.
-   * <p>
+   *
    * @return the iCalendar object name
    */
   public EComponentName getName() {
@@ -127,7 +142,7 @@ public abstract class BaseComponentType {
 
   /**
    * Gets the value of the properties property.
-   * <p/>
+   *
    * @return possible object is {@link ArrayOfProperties }
    *
    */
@@ -140,7 +155,7 @@ public abstract class BaseComponentType {
 
   /**
    * Sets the value of the properties property.
-   * <p/>
+   *
    * @param value allowed object is {@link ArrayOfProperties }
    *
    */
@@ -154,7 +169,7 @@ public abstract class BaseComponentType {
 
   /**
    * Gets the value of the components property.
-   * <p/>
+   *
    * @return possible object is {@link ArrayOfComponents }
    *
    */
@@ -167,7 +182,7 @@ public abstract class BaseComponentType {
 
   /**
    * Sets the value of the components property.
-   * <p/>
+   *
    * @param value allowed object is {@link ArrayOfComponents }
    *
    */
@@ -181,14 +196,14 @@ public abstract class BaseComponentType {
 
   /**
    * Unique Identifier. Property Name: UID
-   * <p/>
+   * <p>
    * This property defines the persistent, globally unique identifier for the
    * calendar component.
-   * <p/>
+   * <p>
    * Implementations MUST be able to receive and persist values of at least 255
    * octets for this property, but they MUST NOT truncate values in the middle
    * of a UTF-8 multi-octet sequence.
-   * <p/>
+   *
    * @return The UID Property
    */
   public String getUID() {
@@ -209,16 +224,16 @@ public abstract class BaseComponentType {
 
   /**
    * Date-Time Stamp
-   * <p/>
+   * <p>
    * Property Name: DTSTAMP
-   * <p/>
+   * <p>
    * Purpose: In the case of an iCalendar object that specifies a "METHOD"
    * property, this property specifies the date and time that the instance of
    * the iCalendar object was created. In the case of an iCalendar object that
    * doesn't specify a "METHOD" property, this property specifies the date and
    * time that the information associated with the calendar component was last
    * revised in the calendar store.
-   * <p/>
+   *
    * @return
    */
   public Calendar getDTSTAMP() {
@@ -239,18 +254,18 @@ public abstract class BaseComponentType {
 
   /**
    * Date-Time Start
-   * <p/>
+   * <p>
    * Property Name: DTSTART
-   * <p/>
+   * <p>
    * Purpose: This property specifies when the calendar component begins.
-   * <p/>
+   * <p>
    * Value Type: The default value type is DATE-TIME. The time value MUST be one
    * of the forms defined for the DATE-TIME value type. The value type can be
    * set to a DATE value type.
-   * <p/>
+   * <p>
    * Property Parameters: IANA, non-standard, value data type, and time zone
    * identifier property parameters can be specified on this property.
-   * <p/>
+   *
    * @return
    */
   public Calendar getDTSTART() {
@@ -271,24 +286,24 @@ public abstract class BaseComponentType {
 
   /**
    * Date-Time Start
-   * <p/>
+   * <p>
    * Property Name: DTSTART
-   * <p/>
+   * <p>
    * Purpose: This property specifies when the calendar component begins.
-   * <p/>
+   * <p>
    * Value Type: The default value type is DATE-TIME. The time value MUST be one
    * of the forms defined for the DATE-TIME value type. The value type can be
    * set to a DATE value type.
-   * <p/>
+   * <p>
    * Property Parameters: IANA, non-standard, value data type, and time zone
    * identifier property parameters can be specified on this property.
-   * <p/>
+   *
    * @return
    */
   public Calendar getDTEND() {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtend is a DtendPropType
-     * <p/>
+     * <p>
      * RFC5545 says either 'dtend' or 'duration' may appear in a 'eventprop',
      * but 'dtend' and 'duration' MUST NOT occur in the same 'eventprop'
      */
@@ -316,16 +331,16 @@ public abstract class BaseComponentType {
 
   /**
    * 3.8.2.5. Duration
-   * <p/>
+   * <p>
    * Purpose: This property specifies a positive duration of time.
-   * <p/>
+   * <p>
    * e.g. The following is an example of this property that specifies an
    * interval of time of one hour and zero minutes and zero seconds:
    * DURATION:PT1H0M0S
-   * <p/>
+   * <p>
    * RFC5545 says either 'dtend' or 'duration' may appear in a 'eventprop', but
    * 'dtend' and 'duration' MUST NOT occur in the same 'eventprop'
-   * <p/>
+   *
    * @return the DURATION property
    */
   public Duration getDURATION() {
@@ -364,12 +379,12 @@ public abstract class BaseComponentType {
 
   /**
    * Recurrence Rule
-   * <p/>
+   * <p>
    * Value Name: RECUR
-   * <p/>
+   * <p>
    * Purpose: This value type is used to identify properties that contain a
    * recurrence rule specification.
-   * <p/>
+   *
    * @return
    */
   public RrulePropType getRRULE() {
@@ -387,7 +402,7 @@ public abstract class BaseComponentType {
   /**
    * Set the RRULE parameter with a RecurType definition. This method creates an
    * internal RrulePropType.
-   * <p/>
+   *
    * @param recurType
    */
   public void setRRULE(RecurType recurType) {
@@ -396,7 +411,7 @@ public abstract class BaseComponentType {
 
   /**
    * The RrulePropType must contain a valid RecurType.
-   * <p/>
+   *
    * @param rrulePropType
    */
   public void setRRULE(RrulePropType rrulePropType) {
@@ -406,7 +421,7 @@ public abstract class BaseComponentType {
   /**
    * Scans the properties or components looking for a QName local part that
    * matches the input name.
-   * <p/>
+   *
    * @param qNameLocalPart the QName local part (e.g. 'fn'). Not case sensitive.
    * @return the corresponding JaXBElement, null if not found.
    */
@@ -428,7 +443,7 @@ public abstract class BaseComponentType {
    * Important: Hash code is based on the UID value returned from the getUID
    * method and NOT a blind hash of the properties array. This ensures
    * consistent hash code value.
-   * <p/>
+   *
    * @return hash of the getUID method returned value.
    */
   @Override
@@ -440,7 +455,7 @@ public abstract class BaseComponentType {
 
   /**
    * Equals is based on hash code, which is based on UID.
-   * <p/>
+   *
    * @param obj
    * @return TRUE if the UID values match, otherwise FALSE
    */
@@ -459,8 +474,8 @@ public abstract class BaseComponentType {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "]\n properties [" + properties
-      + "]\n components [" + components
-      + "]\n";
+           + "]\n properties [" + properties
+           + "]\n components [" + components
+           + "]\n";
   }
 }

@@ -1,16 +1,31 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar.parameter.base;
 
-import ietf.params.xml.ns.icalendar.parameter.base.caladdress.SentByParamType;
 import ietf.params.xml.ns.icalendar.parameter.BaseParameterType;
+import ietf.params.xml.ns.icalendar.parameter.base.caladdress.SentByParamType;
 import java.util.Objects;
 import javax.xml.bind.annotation.*;
 
 /**
  * Java class for CalAddressParamType complex type.
- * <p/>
+ * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p/>
+ * <p>
  * <
  * pre> &lt;complexType name="CalAddressParamType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType">
@@ -18,8 +33,8 @@ import javax.xml.bind.annotation.*;
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}cal-address"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p/>
- *
+ * <p>
+ * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CalAddressParamType", propOrder = {
@@ -29,14 +44,14 @@ import javax.xml.bind.annotation.*;
   SentByParamType.class
 })
 public class CalAddressParamType
-  extends BaseParameterType {
+        extends BaseParameterType {
 
   @XmlElement(name = "cal-address", required = true)
   protected String calAddress;
 
   /**
    * Gets the value of the calAddress property.
-   * <p/>
+   *
    * @return possible object is {@link String }
    *
    */
@@ -46,7 +61,7 @@ public class CalAddressParamType
 
   /**
    * Sets the value of the calAddress property.
-   * <p/>
+   *
    * @param value allowed object is {@link String }
    *
    */

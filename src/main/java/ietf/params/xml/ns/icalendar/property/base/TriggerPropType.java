@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar.property.base;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
@@ -81,44 +96,44 @@ public class TriggerPropType extends BasePropertyType {
   protected String duration;
   /**
    * xsd:dateTime — Instant of time (Gregorian calendar)
-   * <p/>
+   * <p>
    * This datatype describes instances identified by the combination of a date
    * and a time. Its value space is described as a combination of date and time
    * of day in Chapter 5.4 of ISO 8601. Its lexical space is the extended
    * format: <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may
    * be specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
    * considered undetermined.
-   * <p/>
+   * <p>
    * Restrictions
-   * <p/>
+   * <p>
    * The basic format of ISO 8601 calendar datetimes, CCYYMMDDThhmmss, isn't
    * supported.
-   * <p/>
+   * <p>
    * The other forms of date-times available in ISO 8601—ordinal dates defined
    * by the year, the number of the day in the year, dates identified by
    * calendar week, and day numbers—aren't supported.
-   * <p/>
+   * <p>
    * As the value space is defined by reference to ISO 8601, there is no support
    * for any calendar system other than Gregorian. As the lexical space is also
    * defined in reference to ISO 8601, there is no support for any localization
    * such as different orders for date parts or named months.
-   * <p/>
+   * <p>
    * The order relation between date-times with and without time zone is
    * partial: they can be compared only outside of a +/- 14 hours interval.
    * Example
-   * <p/>
+   * <p>
    * Valid values for xsd:dateTime include: 2001-10-26T21:32:52,
    * 2001-10-26T21:32:52+02:00, 2001-10-26T19:32:52Z, 2001-10-26T19:32:52+00:00,
    * -2001-10-26T21:32:52, or 2001-10-26T21:32:52.12679.
-   * <p/>
+   * <p>
    * The following values are invalid: 2001-10-26 (all the parts must be
    * specified), 2001-10-26T21:32 (all the parts must be specified),
    * 2001-10-26T25:32:52+02:00 (the hours part—25—is out of range), or
    * 01-10-26T21:32 (all the parts must be specified).
-   * <p/>
+   *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
-   * <p/>
+   *
    */
   @XmlElement(name = "date-time")
   @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
@@ -126,7 +141,7 @@ public class TriggerPropType extends BasePropertyType {
 
   /**
    * Gets the value of the duration property.
-   * <p/>
+   *
    * @return possible object is {@link String }
    *
    */
@@ -136,7 +151,7 @@ public class TriggerPropType extends BasePropertyType {
 
   /**
    * Sets the value of the duration property.
-   * <p/>
+   *
    * @param value allowed object is {@link String }
    *
    */
@@ -150,7 +165,7 @@ public class TriggerPropType extends BasePropertyType {
 
   /**
    * Gets the value of the dateTime property.
-   * <p/>
+   *
    * @return possible object is {@link XMLGregorianCalendar }
    *
    */
@@ -160,7 +175,7 @@ public class TriggerPropType extends BasePropertyType {
 
   /**
    * Sets the value of the dateTime property.
-   * <p/>
+   *
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */

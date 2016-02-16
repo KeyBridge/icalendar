@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar.property.base;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
@@ -12,10 +27,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Java class for DateDatetimePropertyType complex type.
- * <p/>
+ * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p/>
+ * <p>
  * <
  * pre> &lt;complexType name="DateDatetimePropertyType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
@@ -24,8 +39,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date"/> &lt;/choice>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p/>
- *
+ * <p>
+ * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DateDatetimePropertyType", propOrder = {
@@ -46,74 +61,74 @@ public class DateDatetimePropertyType extends BasePropertyType {
 
   /**
    * xsd:dateTime — Instant of time (Gregorian calendar)
-   * <p/>
+   * <p>
    * This datatype describes instances identified by the combination of a date
    * and a time. Its value space is described as a combination of date and time
    * of day in Chapter 5.4 of ISO 8601. Its lexical space is the extended
    * format: <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may
    * be specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
    * considered undetermined.
-   * <p/>
+   * <p>
    * Restrictions
-   * <p/>
+   * <p>
    * The basic format of ISO 8601 calendar datetimes, CCYYMMDDThhmmss, isn't
    * supported.
-   * <p/>
+   * <p>
    * The other forms of date-times available in ISO 8601—ordinal dates defined
    * by the year, the number of the day in the year, dates identified by
    * calendar week, and day numbers—aren't supported.
-   * <p/>
+   * <p>
    * As the value space is defined by reference to ISO 8601, there is no support
    * for any calendar system other than Gregorian. As the lexical space is also
    * defined in reference to ISO 8601, there is no support for any localization
    * such as different orders for date parts or named months.
-   * <p/>
+   * <p>
    * The order relation between date-times with and without time zone is
    * partial: they can be compared only outside of a +/- 14 hours interval.
    * Example
-   * <p/>
+   * <p>
    * Valid values for xsd:dateTime include: 2001-10-26T21:32:52,
    * 2001-10-26T21:32:52+02:00, 2001-10-26T19:32:52Z, 2001-10-26T19:32:52+00:00,
    * -2001-10-26T21:32:52, or 2001-10-26T21:32:52.12679.
-   * <p/>
+   * <p>
    * The following values are invalid: 2001-10-26 (all the parts must be
    * specified), 2001-10-26T21:32 (all the parts must be specified),
    * 2001-10-26T25:32:52+02:00 (the hours part—25—is out of range), or
    * 01-10-26T21:32 (all the parts must be specified).
-   * <p/>
+   *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
-   * <p/>
+   *
    */
   @XmlElement(name = "date-time")
 //  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar dateTime;
   /**
    * xsd:date — Gregorian calendar date
-   * <p/>
+   * <p>
    * This datatype is modeled after the calendar dates defined in Chapter 5.2.1
    * of ISO (International Organization for Standardization) 8601. Its value
    * space is the set of Gregorian calendar dates as defined by this standard;
    * i.e., a one-day-long period of time. Its lexical space is the ISO 8601
    * extended format: <code>[-]CCYY-MM-DD[Z|(+|-)hh:mm]</code> with an optional
    * time zone. Time zones that aren't specified are considered undetermined.
-   * <p/>
+   * <p>
    * Restrictions
-   * <p/>
+   * <p>
    * The basic format of ISO 8601 calendar dates, CCYYMMDD, isn't supported.
-   * <p/>
+   * <p>
    * The other forms of dates available in ISO 8601 aren't supported: ordinal
    * dates defined by the year, the number of the day in the year, dates
    * identified by calendar week, and day numbers.
-   * <p/>
+   * <p>
    * As the value space is defined by reference to ISO 8601, there is no support
    * for any calendar system other than Gregorian. Because the lexical space is
    * also defined using a reference to ISO 8601, there is no support for any
    * localization such as different orders for date parts or named months.
-   * <p/>
+   * <p>
    * The order relation between dates with and without time zone is partial:
    * they can be compared beyond a +/- 14 hour interval.
-   * <p/>
+   * <p>
    * There is a difference between ISO 8601, which defines a day as a 24-hour
    * period of time, and the W3C XML Schema, which indicates that a date is a
    * "one-day-long, non-periodic instance ... independent of how many hours this
@@ -121,15 +136,15 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * hours because of leap seconds; this definition doesn't concur with the
    * definition of xsd:duration that states that a day is always exactly 24
    * hours long. Example
-   * <p/>
+   * <p>
    * Valid values include: 2001-10-26, 2001-10-26+02:00, 2001-10-26Z,
    * 2001-10-26+00:00, -2001-10-26, or -20000-04-01.
-   * <p/>
+   * <p>
    * The following values would be invalid: 2001-10 (all the parts must be
    * specified), 2001-10-32 (the days part—32—is out of range), 2001-13-26+02:00
    * (the month part—13—is out of range), or 01-10-26 (the century part is
    * missing).
-   * <p/>
+   *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    */
@@ -143,9 +158,9 @@ public class DateDatetimePropertyType extends BasePropertyType {
   public DateDatetimePropertyType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     /**
      * Call normalize to Normalize this instance to UTC.
-     * <p/>
+     * <p>
      * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z
-     * <p/>
+     * <p>
      * Implements W3C XML Schema Part 2, Section 3.2.7.3 (A).
      */
     this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
@@ -154,7 +169,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
   /**
    * Set the DateTime parameter with a DATE. Since java.util.Date has no notion
    * of TimeZone you must also provide the timezone for the DATE value.
-   * <p>
+   *
    * @param date     a date
    * @param timeZone the date timezone
    * @throws DatatypeConfigurationException if the date/timezone combination
@@ -169,7 +184,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
 
   /**
    * Gets the value of the dateTime property.
-   * <p/>
+   *
    * @return possible object is {@link XMLGregorianCalendar }
    *
    */
@@ -179,7 +194,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
 
   /**
    * Sets the value of the dateTime property.
-   * <p/>
+   *
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */
@@ -190,7 +205,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
   /**
    * Sets the value of the dateTime property from a normal java.util.Calendar.
    * The timezone of the input calendar is automatically normalized to UTC.
-   * <p/>
+   *
    * @param dateTime a calendar instance.
    * @throws DatatypeConfigurationException if the calendar instance cannot be
    *                                        converted to an XMLGregorianCalendar
@@ -198,9 +213,9 @@ public class DateDatetimePropertyType extends BasePropertyType {
   public final void setDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     /**
      * Call normalize to Normalize this instance to UTC.
-     * <p/>
+     * <p>
      * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z
-     * <p/>
+     * <p>
      * Implements W3C XML Schema Part 2, Section 3.2.7.3 (A).
      */
     this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
@@ -212,7 +227,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
 
   /**
    * Gets the value of the date property.
-   * <p/>
+   *
    * @return possible object is {@link XMLGregorianCalendar }
    *
    */
@@ -222,7 +237,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
 
   /**
    * Sets the value of the date property.
-   * <p/>
+   *
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */
@@ -270,8 +285,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
   @Override
   public String toString() {
     return "DateDatetimePropertyType"
-      + " dateTime [" + dateTime
-      + "] date [" + date
-      + ']';
+           + " dateTime [" + dateTime
+           + "] date [" + date
+           + ']';
   }
 }

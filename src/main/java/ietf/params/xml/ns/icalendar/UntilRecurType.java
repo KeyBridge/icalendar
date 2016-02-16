@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
@@ -58,10 +73,10 @@ public class UntilRecurType implements Serializable {
 
   /**
    * RFC5545 3.3.4. DATE
-   * <p/>
+   * <p>
    * Purpose: This value type is used to identify values that contain a calendar
    * date.
-   * <p/>
+   * <p>
    * Format Definition: This value type is defined by the following notation:
    * <pre>
    * date               = date-value
@@ -76,7 +91,7 @@ public class UntilRecurType implements Serializable {
    * for a calendar date. The textual format specifies a four-digit year,
    * two-digit month, and two-digit day of the month. There are no separator
    * characters between the year, month, and day component text.
-   * <p/>
+   * <p>
    * No additional content value encoding (i.e., BACKSLASH character encoding,
    * see Section 3.3.11) is defined for this value type.
    * <p>
@@ -84,7 +99,7 @@ public class UntilRecurType implements Serializable {
    * <code>pattern-date = xsd:string { pattern = "\d\d\d\d-\d\d-\d\d" }</code>
    * XML Definition: Appendix A # 3.3.4 Example:
    * <date>2011-05-17</date>
-   * <p/>
+   *
    * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.4">Date</a>
    * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.4">RELAX NG
    * Schema 3.6.4 DATE</a>
@@ -92,10 +107,10 @@ public class UntilRecurType implements Serializable {
   private static final String PATTERN_DATE = "yyyyMMdd";
   /**
    * RFC 5545 3.3.5. DATE-TIME
-   * <p/>
+   * <p>
    * Purpose: This value type is used to identify values that specify a precise
    * calendar date and time of day.
-   * <p/>
+   * <p>
    * Format Definition: This value type is defined by the following notation:
    * <pre>
    * date-time  = date "T" time ;As specified in the DATE and TIME
@@ -104,25 +119,25 @@ public class UntilRecurType implements Serializable {
    * are specified as a COMMA-separated list of values. No additional content
    * value encoding (i.e., BACKSLASH character encoding, see Section 3.3.11) is
    * defined for this value type.
-   * <p/>
+   * <p>
    * The "DATE-TIME" value type is used to identify values that contain a
    * precise calendar date and time of day. The format is based on the
    * [ISO.8601.2004] complete representation, basic format for a calendar date
    * and time of day. The text format is a concatenation of the "date", followed
    * by the LATIN CAPITAL LETTER T character, the time designator, followed by
    * the "time" format.
-   * <p/>
+   * <p>
    * The "DATE-TIME" value type expresses time values in three forms:
-   * <p/>
+   * <p>
    * The form of date and time with UTC offset MUST NOT be used. For example,
    * the following is not valid for a DATE-TIME value:
-   * <p/>
+   * <p>
    * 19980119T230000-0800 ;Invalid time format
-   * <p/>
+   * <p>
    * FORM #1: DATE WITH LOCAL TIME <em>NOT SUPPORTED</em>
-   * <p/>
+   * <p>
    * FORM #2: DATE WITH UTC TIME
-   * <p/>
+   * <p>
    * The date with UTC time, or absolute time, is identified by a LATIN CAPITAL
    * LETTER Z suffix character, the UTC designator, appended to the time value.
    * <p>
@@ -130,13 +145,13 @@ public class UntilRecurType implements Serializable {
    * <code>pattern-date-time = xsd:string { pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?" }</code>
    * XML Definition: Appendix A # 3.3.5 Example:
    * <date-time>2011-05-17T12:00:00</date-time>
-   * <p/>
+   * <p>
    * The "TZID" property parameter MUST NOT be applied to DATE-TIME properties
    * whose time values are specified in UTC.
-   * <p/>
+   * <p>
    * FORM #3: DATE WITH LOCAL TIME AND TIME ZONE REFERENCE <em>NOT
    * SUPPORTED</em>
-   * <p/>
+   *
    * @see <a
    * href="http://tools.ietf.org/html/rfc5545#section-3.3.5">Date-Time</a>
    * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.5">RELAX NG
@@ -148,7 +163,7 @@ public class UntilRecurType implements Serializable {
    * <p>
    * This pattern is to be used only when printing to String. The PATTERN_DATE
    * and PATTERN_DATE_TIME are to be used when marshaling to XML.
-   * <p>
+   *
    * @see RFC 6321
    */
   public static final String PATTERN_UTC = "yyyyMMdd'T'HHmmss'Z'";
@@ -163,30 +178,30 @@ public class UntilRecurType implements Serializable {
 
   /**
    * xsd:date — Gregorian calendar date
-   * <p/>
+   * <p>
    * This datatype is modeled after the calendar dates defined in Chapter 5.2.1
    * of ISO (International Organization for Standardization) 8601. Its value
    * space is the set of Gregorian calendar dates as defined by this standard;
    * i.e., a one-day-long period of time. Its lexical space is the ISO 8601
    * extended format: <code>[-]CCYY-MM-DD[Z|(+|-)hh:mm]</code> with an optional
    * time zone. Time zones that aren't specified are considered undetermined.
-   * <p/>
+   * <p>
    * Restrictions
-   * <p/>
+   * <p>
    * The basic format of ISO 8601 calendar dates, CCYYMMDD, isn't supported.
-   * <p/>
+   * <p>
    * The other forms of dates available in ISO 8601 aren't supported: ordinal
    * dates defined by the year, the number of the day in the year, dates
    * identified by calendar week, and day numbers.
-   * <p/>
+   * <p>
    * As the value space is defined by reference to ISO 8601, there is no support
    * for any calendar system other than Gregorian. Because the lexical space is
    * also defined using a reference to ISO 8601, there is no support for any
    * localization such as different orders for date parts or named months.
-   * <p/>
+   * <p>
    * The order relation between dates with and without time zone is partial:
    * they can be compared beyond a +/- 14 hour interval.
-   * <p/>
+   * <p>
    * There is a difference between ISO 8601, which defines a day as a 24-hour
    * period of time, and the W3C XML Schema, which indicates that a date is a
    * "one-day-long, non-periodic instance ... independent of how many hours this
@@ -194,15 +209,15 @@ public class UntilRecurType implements Serializable {
    * hours because of leap seconds; this definition doesn't concur with the
    * definition of xsd:duration that states that a day is always exactly 24
    * hours long. Example
-   * <p/>
+   * <p>
    * Valid values include: 2001-10-26, 2001-10-26+02:00, 2001-10-26Z,
    * 2001-10-26+00:00, -2001-10-26, or -20000-04-01.
-   * <p/>
+   * <p>
    * The following values would be invalid: 2001-10 (all the parts must be
    * specified), 2001-10-32 (the days part—32—is out of range), 2001-13-26+02:00
    * (the month part—13—is out of range), or 01-10-26 (the century part is
    * missing).
-   * <p/>
+   *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    */
@@ -211,44 +226,44 @@ public class UntilRecurType implements Serializable {
   protected XMLGregorianCalendar date;
   /**
    * xsd:dateTime — Instant of time (Gregorian calendar)
-   * <p/>
+   * <p>
    * This datatype describes instances identified by the combination of a date
    * and a time. Its value space is described as a combination of date and time
    * of day in Chapter 5.4 of ISO 8601. Its lexical space is the extended
    * format: <code>[-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]</code> The time zone may
    * be specified as Z (UTC) or (+|-)hh:mm. Time zones that aren't specified are
    * considered undetermined.
-   * <p/>
+   * <p>
    * Restrictions
-   * <p/>
+   * <p>
    * The basic format of ISO 8601 calendar datetimes, CCYYMMDDThhmmss, isn't
    * supported.
-   * <p/>
+   * <p>
    * The other forms of date-times available in ISO 8601—ordinal dates defined
    * by the year, the number of the day in the year, dates identified by
    * calendar week, and day numbers—aren't supported.
-   * <p/>
+   * <p>
    * As the value space is defined by reference to ISO 8601, there is no support
    * for any calendar system other than Gregorian. As the lexical space is also
    * defined in reference to ISO 8601, there is no support for any localization
    * such as different orders for date parts or named months.
-   * <p/>
+   * <p>
    * The order relation between date-times with and without time zone is
    * partial: they can be compared only outside of a +/- 14 hours interval.
    * Example
-   * <p/>
+   * <p>
    * Valid values for xsd:dateTime include: 2001-10-26T21:32:52,
    * 2001-10-26T21:32:52+02:00, 2001-10-26T19:32:52Z, 2001-10-26T19:32:52+00:00,
    * -2001-10-26T21:32:52, or 2001-10-26T21:32:52.12679.
-   * <p/>
+   * <p>
    * The following values are invalid: 2001-10-26 (all the parts must be
    * specified), 2001-10-26T21:32 (all the parts must be specified),
    * 2001-10-26T25:32:52+02:00 (the hours part—25—is out of range), or
    * 01-10-26T21:32 (all the parts must be specified).
-   * <p/>
+   *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
-   * <p/>
+   *
    */
   @XmlElement(name = "date-time")
   @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
@@ -273,7 +288,7 @@ public class UntilRecurType implements Serializable {
    * Construct an UntilRecurType from a string. Three formats are supported: RFC
    * 2445 UTC standard "yyyyMMdd'T'HHmmss'Z'", RFC 5545 DATE-TIME
    * "yyyy-MM-dd'T'HH:mm:ss'Z'" or RFC 5545 DATE "yyyyMMdd"
-   * <p/>
+   *
    * @param untilString an encoded date time string
    * @throws DatatypeConfigurationException if the parsed date is not valid.
    * @throws ParseException                 if the string cannot be parsed into
@@ -304,18 +319,18 @@ public class UntilRecurType implements Serializable {
    * Gets the value of the date property. If the date field is null a new
    * Calendar instance is created and returned, but the internal field will
    * remain unset.
-   * <p/>
+   *
    * @return a non-null Calendar instance.
    */
   public Calendar getDateXml() {
     return date != null
-      ? date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
-      : Calendar.getInstance(TIMEZONE_UTC);
+           ? date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
+           : Calendar.getInstance(TIMEZONE_UTC);
   }
 
   /**
    * Sets the value of the date property.
-   * <p/>
+   *
    * @param calendar the calendar value
    * @throws DatatypeConfigurationException if the calendar cannot be converted
    *                                        to a XMLGregorianCalendar
@@ -332,18 +347,18 @@ public class UntilRecurType implements Serializable {
    * Gets the value of the dateTime property. If the dateTime field is null a
    * new Calendar instance is created and returned, but the internal field will
    * remain unset.
-   * <p/>
+   *
    * @return a non-null Calendar instance.
    */
   public Calendar getDateTime() {
     return dateTime != null
-      ? dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
-      : Calendar.getInstance(TIMEZONE_UTC);
+           ? dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
+           : Calendar.getInstance(TIMEZONE_UTC);
   }
 
   /**
    * Sets the value of the dateTime property.
-   * <p/>
+   *
    * @param calendar the calendar value
    * @throws DatatypeConfigurationException if the calendar cannot be converted
    *                                        to a XMLGregorianCalendar
@@ -355,7 +370,7 @@ public class UntilRecurType implements Serializable {
   /**
    * Internal helper method to set the UNTIL DateTime using a conventional Date
    * instance.
-   * <p/>
+   *
    * @param dateTime
    * @throws DatatypeConfigurationException
    */
@@ -373,7 +388,7 @@ public class UntilRecurType implements Serializable {
 
   /**
    * Get the DATE-TIME field as a java.util.Date instance.
-   * <p>
+   *
    * @return a DATE-TIME value
    */
   public Date getDate() {
@@ -382,7 +397,7 @@ public class UntilRecurType implements Serializable {
 
   /**
    * Set the DATE-TIME field with a java.util.Date instance.
-   * <p>
+   *
    * @param date a DATE-TIME value
    */
   public void setDate(Date date) {
@@ -400,7 +415,7 @@ public class UntilRecurType implements Serializable {
    * <p>
    * Developer note: This method should be used only for GETTING and not for
    * inspection.
-   * <p/>
+   *
    * @return a Calendar instance populated by EITHER the date or dateTime field.
    */
   public Calendar getCalendar() {
@@ -438,7 +453,7 @@ public class UntilRecurType implements Serializable {
   /**
    * Returns whether this Calendar represents a time before the time represented
    * by the specified Object. This method is equivalent to:
-   * <p>
+   *
    * @param when the Object to be compared
    * @return true if the time of this Calendar is before the time represented by
    *         when; false otherwise.
@@ -450,7 +465,7 @@ public class UntilRecurType implements Serializable {
   /**
    * Returns whether this Calendar represents a time after the time represented
    * by the specified Object.
-   * <p>
+   *
    * @param when the Object to be compared
    * @return true if the time of this Calendar is after the time represented by
    *         when; false otherwise.
@@ -461,14 +476,14 @@ public class UntilRecurType implements Serializable {
 
   /**
    * Print both the dateTime and date fields.
-   * <p/>
+   *
    * @return
    */
   public String toStringFull() {
     return "UntilRecurType"
-      + " dateTime [" + dateTime
-      + "] date [" + date
-      + ']';
+           + " dateTime [" + dateTime
+           + "] date [" + date
+           + ']';
   }
 
   /**

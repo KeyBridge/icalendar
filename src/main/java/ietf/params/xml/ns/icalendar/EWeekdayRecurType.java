@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar;
 
 import java.util.Calendar;
@@ -6,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Java class for EWeekdayRecurType.
- * <p/>
+ * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <pre>
@@ -22,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * <p/>
+ * <p>
  */
 @XmlType(name = "WeekdayRecurType")
 @XmlEnum
@@ -65,7 +80,7 @@ public enum EWeekdayRecurType {
 
   /**
    * Get the corresponding java.util.Calendar integer value for this weekday.
-   * <p>
+   *
    * @return the Calendar integer value
    */
   public int getCalendarValue() {
@@ -74,7 +89,7 @@ public enum EWeekdayRecurType {
 
   /**
    * JSF-friendly getter
-   * <p>
+   *
    * @return the name
    */
   public String getName() {

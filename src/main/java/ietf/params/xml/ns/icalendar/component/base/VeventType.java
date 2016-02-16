@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
@@ -11,9 +26,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Java class for VeventType complex type.
- * <p/>
+ * <p>
  * RFC5545 says:
- * <p/>
+ * <p>
  * Either 'dtend' or 'duration' may appear in a 'eventprop', but 'dtend' and
  * 'duration' MUST NOT occur in the same 'eventprop'
  */
@@ -28,7 +43,7 @@ public class VeventType extends BaseComponentType {
 
   /**
    * Print the VeventType start and end string on a single line..
-   * <p>
+   *
    * @return From [UTC_PATTERN] to [UTC_PATTERN]
    */
   @Override
@@ -43,7 +58,7 @@ public class VeventType extends BaseComponentType {
 
   /**
    * Print the VEvent to a simple string format.
-   * <p>
+   *
    * @return
    */
   public String toStringMultiline() {
@@ -69,13 +84,13 @@ public class VeventType extends BaseComponentType {
     sdf.setTimeZone(TIME_ZONE);
 
     return "VeventType"
-      + " uid " + getUID()
-      + "]\n dtstamp [" + (getDTSTAMP() != null ? sdf.format(getDTSTAMP().getTime()) : "")
-      + "]\n dtstart [" + (getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "")
-      + "]\n dtend   [" + (getDTEND() != null ? sdf.format(getDTEND().getTime()) : "")
-      + "]\n duration [" + getDURATION()
-      + "] rrule [" + getRRULE()
-      + ']';
+           + " uid " + getUID()
+           + "]\n dtstamp [" + (getDTSTAMP() != null ? sdf.format(getDTSTAMP().getTime()) : "")
+           + "]\n dtstart [" + (getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "")
+           + "]\n dtend   [" + (getDTEND() != null ? sdf.format(getDTEND().getTime()) : "")
+           + "]\n duration [" + getDURATION()
+           + "] rrule [" + getRRULE()
+           + ']';
   }
 
   public String toStringBrief() {
@@ -83,9 +98,9 @@ public class VeventType extends BaseComponentType {
     sdf.setTimeZone(TIME_ZONE);
 
     return "VeventType"
-      + " dtstart [" + (getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "")
-      + "] dtend [" + (getDTEND() != null ? sdf.format(getDTEND().getTime()) : "")
-      + "] rrule [" + getRRULE()
-      + ']';
+           + " dtstart [" + (getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "")
+           + "] dtend [" + (getDTEND() != null ? sdf.format(getDTEND().getTime()) : "")
+           + "] rrule [" + getRRULE()
+           + ']';
   }
 }

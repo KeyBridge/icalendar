@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Jesse Caulfield <jesse@caulfield.org>.
+ * Copyright 2016 Key Bridge LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import javax.xml.datatype.Duration;
  * Portions of code in this class are either inspired by or copied from the
  * Recur.java class in the iCal4j project (v2.0) and are &copy; 2004 Ben
  * Fortuna. Credit to the original author for paving the way.
- * <p>
+ *
  * @author Jesse Caulfield <jesse@caulfield.org> 07/07/14
  */
 public class ICalendarUtil {
@@ -61,7 +61,7 @@ public class ICalendarUtil {
    * <p>
    * Also note that component transparency and anniversary-style dates do not
    * affect set calculation.
-   * <p>
+   *
    * @param dtStart     the (master) event start date and mergeTime
    * @param dtEnd       the (master) event end date and mergeTime
    * @param recurType   the (master) event recurrence type
@@ -173,8 +173,8 @@ public class ICalendarUtil {
            */
 //          System.err.println("   COUNT EXCEEDED " + sdf.format(candidateDtStart.getTime()));
         } else if (startCandidate.getTime().after(periodStart)
-          && startCandidate.getTime().after(dtStart)
-          && startCandidate.getTime().before(periodEnd)) {
+                   && startCandidate.getTime().after(dtStart)
+                   && startCandidate.getTime().before(periodEnd)) {
           /**
            * VALID: CREATE and ADD and new PeriodType to the set.
            */
@@ -202,7 +202,7 @@ public class ICalendarUtil {
   //<editor-fold defaultstate="collapsed" desc="RRULE Calculators">
   /**
    * Calculate the BYSECOND rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -235,7 +235,7 @@ public class ICalendarUtil {
 
   /**
    * Calculate the BYMINUTE rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -268,7 +268,7 @@ public class ICalendarUtil {
 
   /**
    * Calculate the BYHOUR rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -309,7 +309,7 @@ public class ICalendarUtil {
    * handled in the WHILE loop wrapping this method. If UNTIL and COUNT are not
    * specified then the DAILY will return every day in the period after the
    * event start.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -332,7 +332,7 @@ public class ICalendarUtil {
 
   /**
    * Calculate the BYDAY rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -365,7 +365,7 @@ public class ICalendarUtil {
 
   /**
    * Calculate the BYWEEKNO rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -398,7 +398,7 @@ public class ICalendarUtil {
 
   /**
    * Calculate the BYMONTH rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -431,7 +431,7 @@ public class ICalendarUtil {
 
   /**
    * Calculate the BYMONTHDAY rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -464,7 +464,7 @@ public class ICalendarUtil {
 
   /**
    * Calculate the BYYEARDAY rule.
-   * <p>
+   *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
@@ -509,7 +509,7 @@ public class ICalendarUtil {
    * Developer note: the returned list contains DATE-TIME values. The TIME
    * component of the periodStart parameter SHOULD be set to match the DTSTART
    * time.
-   * <p>
+   *
    * @param recurType   the event recurrence. If null or invalid then a empty
    *                    HashSet is returned.
    * @param periodStart the PERIOD start DATE-TIME value.
@@ -614,14 +614,14 @@ public class ICalendarUtil {
    * If no INTERVAL value is set in the recurrence then the calendar is
    * incremented by one FREQ period. Otherwise the calendar is incremented by
    * INTERVAL FREQ periods.
-   * <p>
+   *
    * @param calendar a java.util.Calendar to increment
    */
   private static void increment(RecurType recurType, final Calendar calendar) {
     calendar.add(recurType.getFreq().getCalendarValue(),
                  recurType.isSetInterval() && recurType.getInterval() >= 1
-      ? recurType.getInterval()
-      : 1);
+                 ? recurType.getInterval()
+                 : 1);
   }
 
   /**
@@ -635,7 +635,7 @@ public class ICalendarUtil {
    * of [ISO 8601], respectively. These components are ordered in their
    * significance by their order of appearance i.e. as year, month, day, hour,
    * minute, and second.
-   * <p>
+   *
    * @param milliseconds the duration in milliseconds.
    * @return a Duration instance
    * @throws DatatypeConfigurationException
@@ -654,7 +654,7 @@ public class ICalendarUtil {
    * of [ISO 8601], respectively. These components are ordered in their
    * significance by their order of appearance i.e. as year, month, day, hour,
    * minute, and second.
-   * <p>
+   *
    * @param start the start date and mergeTime
    * @param end   the end date and mergeTime
    * @return a Duration instance
@@ -674,7 +674,7 @@ public class ICalendarUtil {
    * of [ISO 8601], respectively. These components are ordered in their
    * significance by their order of appearance i.e. as year, month, day, hour,
    * minute, and second.
-   * <p>
+   *
    * @param start the start date and mergeTime
    * @param end   the end date and mergeTime
    * @return a Duration instance
@@ -688,7 +688,7 @@ public class ICalendarUtil {
    * Set the TIME (Hour, Minute and Second) values for the start (and end
    * mergeTime if set) to match the mergeTime (HMS) values of the given date
    * value.
-   * <p>
+   *
    * @param date the DATETIME calendar - only the TIME values are extracted
    * @param time the TIME calendar value - only the TIME values are extracted
    * @return a calendar with date values from the date calendar and TIME values
@@ -704,7 +704,7 @@ public class ICalendarUtil {
    * Set the TIME (Hour, Minute and Second) values for the start (and end
    * mergeTime if set) to match the mergeTime (HMS) values of the given date
    * value.
-   * <p>
+   *
    * @param date the DATETIME calendar - only the TIME values are extracted
    * @param time the TIME calendar value - only the TIME values are extracted
    * @return a calendar with date values from the date calendar and TIME values

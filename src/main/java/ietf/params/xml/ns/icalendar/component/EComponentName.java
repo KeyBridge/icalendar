@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Jesse Caulfield <jesse@caulfield.org>.
+ * Copyright 2016 Key Bridge LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  * An enumerate list of iCalendar component types. The name is used when writing
  * the component to String.
- * <p>
+ *
  * @author Jesse Caulfield <jesse@caulfield.org> 07/04/14
  */
 @XmlEnum

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
@@ -109,7 +124,7 @@ public final class PeriodType implements Comparable<PeriodType> {
   /**
    * Set the TIME (Hour, Minute and Second) values for the start (and end time
    * if set) to match the time (HMS) values of the given date value.
-   * <p>
+   *
    * @param time a date value - only the time values are extracted
    * @throws DatatypeConfigurationException if the start date fails to set
    */
@@ -122,7 +137,7 @@ public final class PeriodType implements Comparable<PeriodType> {
   /**
    * Set the TIME (Hour, Minute and Second) values for the start (and end time
    * if set) to match the time (HMS) values of the given date value.
-   * <p>
+   *
    * @param time a calendar value - only the time values are extracted
    * @throws DatatypeConfigurationException if the start date fails to set
    */
@@ -147,7 +162,7 @@ public final class PeriodType implements Comparable<PeriodType> {
 
   /**
    * Gets the value of the start property.
-   * <p/>
+   *
    * @return possible object is {@link XMLGregorianCalendar }
    *
    */
@@ -158,7 +173,7 @@ public final class PeriodType implements Comparable<PeriodType> {
 
   /**
    * Sets the value of the start property.
-   * <p/>
+   *
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */
@@ -179,7 +194,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    * <p>
    * If the END property is null it is attempted to be calculated from the
    * DURATION property.
-   * <p/>
+   *
    * @return possible object is {@link XMLGregorianCalendar }
    */
   public GregorianCalendar getEnd() {
@@ -201,7 +216,7 @@ public final class PeriodType implements Comparable<PeriodType> {
   /**
    * Sets the value of the end property. If the input value is not null then the
    * duration is set to null.
-   * <p/>
+   *
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */
@@ -247,7 +262,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    * Throws
    * <p>
    * If DURATION is null it is calculated from the END property.
-   * <p>
+   *
    * @return new Duration created from parsing the internal
    *         lexicalRepresentation.
    * @throws DatatypeConfigurationException - if the XML datatype cannot be
@@ -273,7 +288,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    * Sets the value of the duration property.
    * <p>
    * If the duration is valid then the internal 'end' field is set to null.
-   * <p/>
+   *
    * @param value allowed object is {@link String }
    * @throws DatatypeConfigurationException if the string cannot be converted to
    *                                        an XML Duration datatype
@@ -289,7 +304,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    * The internal field is formatted according to the XML Schema 1.0 spec and
    * can be always parsed back later into the equivalent Duration Object by
    * DatatypeFactory.newDuration(String lexicalRepresentation).
-   * <p>
+   *
    * @param value a duration instance
    */
   public final void setDuration(Duration value) {
@@ -307,7 +322,7 @@ public final class PeriodType implements Comparable<PeriodType> {
 
   /**
    * Hash code is calculated from start, end and duration.
-   * <p>
+   *
    * @return the object hashcode
    */
   @Override
@@ -321,7 +336,7 @@ public final class PeriodType implements Comparable<PeriodType> {
 
   /**
    * Equals is calculated from start, end and duration.
-   * <p>
+   *
    * @param obj the other object
    * @return greater, less or equal [1, -1, 0]
    */
@@ -352,8 +367,8 @@ public final class PeriodType implements Comparable<PeriodType> {
     if (this.start.compare(o.start) == 0) {
       try {
         return this.end != null
-          ? this.end.compare(o.end)
-          : this.getDuration().compare(o.getDuration());
+               ? this.end.compare(o.end)
+               : this.getDuration().compare(o.getDuration());
       } catch (DatatypeConfigurationException ex) {
 //        Logger.getLogger(PeriodType.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -368,7 +383,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    * <p>
    * period-explicit = date-time "/" date-time -OR-<br/>
    * period-start = date-time "/" dur-value
-   * <p>
+   *
    * @return Period of Time formatted as a string.
    */
   @Override
@@ -376,7 +391,7 @@ public final class PeriodType implements Comparable<PeriodType> {
     SimpleDateFormat sdf = new SimpleDateFormat(UTC_PATTERN);
     sdf.setTimeZone(TIMEZONE_UTC);
     return sdf.format(getStart().getTime()) + "/" + (end != null
-      ? sdf.format(getEnd().getTime())
-      : duration);
+                                                     ? sdf.format(getEnd().getTime())
+                                                     : duration);
   }
 }

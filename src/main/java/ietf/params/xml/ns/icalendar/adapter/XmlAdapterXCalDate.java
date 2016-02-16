@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Jesse Caulfield.
+ * Copyright 2016 Key Bridge LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * default namespace = "urn:ietf:params:xml:ns:icalendar-2.0"
  * <p>
  * 3.3.4 DATE: pattern-date = xsd:string { pattern = "\d\d\d\d-\d\d-\d\d" }
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public class XmlAdapterXCalDate extends XmlAdapter<String, XMLGregorianCalendar> {
@@ -45,7 +45,7 @@ public class XmlAdapterXCalDate extends XmlAdapter<String, XMLGregorianCalendar>
    * <p>
    * This method is extremely forgiving of the input pattern and accepts any
    * xsd:date (Gregorian calendar date) formatted input string representation.
-   * <p/>
+   * <p>
    * The xsd:date datatype is modeled after the calendar dates defined in
    * Chapter 5.2.1 of ISO (International Organization for Standardization) 8601.
    * Its value space is the set of Gregorian calendar dates as defined by this
@@ -53,23 +53,23 @@ public class XmlAdapterXCalDate extends XmlAdapter<String, XMLGregorianCalendar>
    * 8601 extended format: <code>[-]CCYY-MM-DD[Z|(+|-)hh:mm]</code> with an
    * optional time zone. Time zones that aren't specified are considered
    * undetermined.
-   * <p/>
+   * <p>
    * Restrictions
-   * <p/>
+   * <p>
    * The basic format of ISO 8601 calendar dates, CCYYMMDD, isn't supported.
-   * <p/>
+   * <p>
    * The other forms of dates available in ISO 8601 aren't supported: ordinal
    * dates defined by the year, the number of the day in the year, dates
    * identified by calendar week, and day numbers.
-   * <p/>
+   * <p>
    * As the value space is defined by reference to ISO 8601, there is no support
    * for any calendar system other than Gregorian. Because the lexical space is
    * also defined using a reference to ISO 8601, there is no support for any
    * localization such as different orders for date parts or named months.
-   * <p/>
+   * <p>
    * The order relation between dates with and without time zone is partial:
    * they can be compared beyond a +/- 14 hour interval.
-   * <p/>
+   * <p>
    * There is a difference between ISO 8601, which defines a day as a 24-hour
    * period of time, and the W3C XML Schema, which indicates that a date is a
    * "one-day-long, non-periodic instance ... independent of how many hours this
@@ -77,18 +77,18 @@ public class XmlAdapterXCalDate extends XmlAdapter<String, XMLGregorianCalendar>
    * hours because of leap seconds; this definition doesn't concur with the
    * definition of xsd:duration that states that a day is always exactly 24
    * hours long.
-   * <p/>
+   * <p>
    * Valid values include: 2001-10-26, 2001-10-26+02:00, 2001-10-26Z,
    * 2001-10-26+00:00, -2001-10-26, or -20000-04-01.
-   * <p/>
+   * <p>
    * The following values would be invalid: 2001-10 (all the parts must be
    * specified), 2001-10-32 (the days part—32—is out of range), 2001-13-26+02:00
    * (the month part—13—is out of range), or 01-10-26 (the century part is
    * missing).
-   * <p/>
+   *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
-   * <p>
+   *
    * @param v The xsd:date datatype string
    * @return a XMLGregorianCalendar instance, normalized to UTC, null if the
    *         input string is null or empty.
@@ -105,11 +105,10 @@ public class XmlAdapterXCalDate extends XmlAdapter<String, XMLGregorianCalendar>
   /**
    * Marshal a XMLGregorianCalendar instance into the xCal DATE format. This
    * differs from the xsd:date implementation with a more restrictive output
-   * pattern:
-   * <code>pattern = "\d\d\d\d-\d\d-\d\d"</code>
+   * pattern: <code>pattern = "\d\d\d\d-\d\d-\d\d"</code>
    * <p>
    * An example output value is: 2001-10-26
-   * <p>
+   *
    * @param v the XMLGregorianCalendar instance
    * @return a patterned date string, null if the input calendar is null
    * @throws Exception should not occur

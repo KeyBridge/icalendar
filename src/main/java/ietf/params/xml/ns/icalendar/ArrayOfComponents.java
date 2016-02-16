@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
@@ -12,10 +27,10 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Java class for ArrayOfComponents complex type.
- * <p/>
+ * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p/>
+ * <p>
  * <
  * pre> &lt;complexType name="ArrayOfComponents"> &lt;complexContent>
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
@@ -24,8 +39,8 @@ import javax.xml.bind.annotation.XmlType;
  * maxOccurs="unbounded" minOccurs="0"/> &lt;/sequence> &lt;/restriction>
  * &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p/>
- *
+ * <p>
+ * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArrayOfComponents", propOrder = {
@@ -38,20 +53,20 @@ public class ArrayOfComponents {
 
   /**
    * Gets the value of the baseComponent property.
-   * <p/>
+   * <p>
    * This accessor method returns a reference to the live list, not a snapshot.
    * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a
-   * <CODE>set</CODE> method for the baseComponent property.
-   * <p/>
+   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
+   * for the baseComponent property.
+   * <p>
    * For example, to add a new item, do as follows:
    * <pre>
    *    getBaseComponent().add(newItem);
    * </pre>
-   * <p/>
-   *
+   * <p>
+   * <p>
    * Objects of the following type(s) are allowed in the list null null null
-   * null null null null   {@link JAXBElement }{@code <}{@link VeventType }{@code >}
+   * null null null null null null   {@link JAXBElement }{@code <}{@link VeventType }{@code >}
      * {@link JAXBElement }{@code <}{@link BaseComponentType }{@code >}
    * {@link JAXBElement }{@code <}{@link StandardType }{@code >}
    * {@link JAXBElement }{@code <}{@link VjournalType }{@code >}
@@ -64,8 +79,8 @@ public class ArrayOfComponents {
    * {@link JAXBElement }{@code <}{@link VavailabilityType }{@code >}
    * {@link JAXBElement }{@code <}{@link WsCalendarGluonType }{@code >}
    * {@link JAXBElement }{@code <}{@link VtodoType }{@code >}
-   * <p/>
-   *
+   * <p>
+   * <p>
    */
   public List<JAXBElement<? extends BaseComponentType>> getBaseComponent() {
     if (baseComponent == null) {
@@ -84,9 +99,9 @@ public class ArrayOfComponents {
 
   /**
    * Method to add a jaXBElement to the baseProperty list.
-   * <p/>
+   * <p>
    * Developer note: Use the ObjectFactory to build jaXBElements.
-   * <p/>
+   *
    * @param jaXBElement
    */
   public void addComponent(JAXBElement<? extends BaseComponentType> jaXBElement) {
@@ -121,9 +136,9 @@ public class ArrayOfComponents {
     if (baseComponent != null) {
       for (JAXBElement<? extends BaseComponentType> jaxbElement : baseComponent) {
         sb.append("\n")
-          .append("  [").append(jaxbElement.getName()).append("]")
-          .append(" ")
-          .append(jaxbElement.getValue());
+                .append("  [").append(jaxbElement.getName()).append("]")
+                .append(" ")
+                .append(jaxbElement.getValue());
       }
       sb.append("\n");
     }

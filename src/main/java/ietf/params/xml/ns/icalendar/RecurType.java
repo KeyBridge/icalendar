@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Key Bridge LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ietf.params.xml.ns.icalendar;
 
 import java.io.Serializable;
@@ -60,10 +75,10 @@ import javax.xml.bind.annotation.XmlType;
  * specification.
  * <p>
  * The FREQ rule part is REQUIRED, but MUST NOT occur more than once.
- * <p/>
+ * <p>
  * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
  * same 'recur'.
- * <p/>
+ * <p>
  * The other rule parts are OPTIONAL, but MUST NOT occur more than once.
  * <p>
  * If observance is known to have an effective end date, the "UNTIL" recurrence
@@ -73,7 +88,7 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The "DTSTART" and the "TZOFFSETFROM" properties MUST be used when generating
  * the onset DATE-TIME values (instances) from the "RRULE".
- * <p>
+ *
  * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.10">Recurrence
  * Rule</a>
  */
@@ -126,7 +141,7 @@ public class RecurType implements Serializable {
    * or more; MONTHLY, to specify repeating events based on an interval of a
    * month or more; and YEARLY, to specify repeating events based on an interval
    * of a year or more.
-   * <p/>
+   * <p>
    * type-freq = element freq { "SECONDLY" | "MINUTELY" | "HOURLY" | "DAILY" |
    * "WEEKLY" | "MONTHLY" | "YEARLY" }
    */
@@ -150,7 +165,7 @@ public class RecurType implements Serializable {
    * date with UTC time. If specified as a DATE-TIME value, then it MUST be
    * specified in a UTC time format. If not present, and the COUNT rule part is
    * also not present, the "RRULE" is considered to repeat forever.
-   * <p/>
+   * <p>
    * type-until = element until { type-date | type-date-time }
    */
   protected UntilRecurType until;
@@ -161,7 +176,7 @@ public class RecurType implements Serializable {
    * The COUNT rule part defines the number of occurrences at which to
    * range-bound the recurrence. The "DTSTART" property value always counts as
    * the first occurrence.
-   * <p/>
+   * <p>
    * type-count = element count { xsd:positiveInteger }
    */
   protected Integer count;
@@ -317,9 +332,9 @@ public class RecurType implements Serializable {
   /**
    * Construct a new RecurType instance from an iCalendar-compliant RECUR
    * String.
-   * <p/>
+   * <p>
    * This method is forked from the iCal4j Recur class.
-   * <p/>
+   *
    * @param aValue an iCalendar RECUR String representation of a recurrence.
    * @throws Exception if the specified string contains an invalid
    *                   representation of an UNTIL date value or otherwise cannot
@@ -384,7 +399,7 @@ public class RecurType implements Serializable {
 
   /**
    * Internal tokenizer method supporting the String constructor.
-   * <p/>
+   *
    * @param t         a StringTokenizer instance
    * @param lastToken the last token
    * @return the next token
@@ -399,7 +414,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the freq property.
-   * <p/>
+   *
    * @return possible object is {@link EFreqRecurType }
    *
    */
@@ -409,7 +424,7 @@ public class RecurType implements Serializable {
 
   /**
    * Sets the value of the freq property.
-   * <p/>
+   *
    * @param value allowed object is {@link EFreqRecurType }
    *
    */
@@ -426,7 +441,7 @@ public class RecurType implements Serializable {
    * <p>
    * This getter ALWAYS returns a non-null instance. Call isSetUntil first to
    * determine if this field is set.
-   * <p/>
+   *
    * @return a non-null instance of {@link UntilRecurType }.
    */
   public UntilRecurType getUntil() {
@@ -438,11 +453,11 @@ public class RecurType implements Serializable {
 
   /**
    * Sets the value of the until property.
-   * <p/>
+   * <p>
    * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
    * same 'recur'. Therefore, if the input value is not null the COUNT field is
    * set to null.
-   * <p/>
+   *
    * @param value allowed object is {@link UntilRecurType }
    */
   public void setUntil(UntilRecurType value) {
@@ -454,7 +469,7 @@ public class RecurType implements Serializable {
 
   /**
    * Convenience indicator that the internal UNTIL parameter is not null;
-   * <p>
+   *
    * @return TRUE if the UNTIL field is not null.
    */
   public boolean isSetUntil() {
@@ -463,7 +478,7 @@ public class RecurType implements Serializable {
 
   /**
    * Helper method to get the UNTIL value as a DATE.
-   * <p>
+   *
    * @return the UNTIL date value.
    */
   public Date getUntilDate() {
@@ -480,7 +495,7 @@ public class RecurType implements Serializable {
    * <p>
    * Therefore, on success (if the input value is not null) the COUNT field is
    * set to null.
-   * <p>
+   *
    * @param until the UNTIL date value.
    */
   public void setUntilDate(Date until) {
@@ -490,7 +505,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the count property.
-   * <p/>
+   *
    * @return possible object is {@link Integer }
    *
    */
@@ -500,7 +515,7 @@ public class RecurType implements Serializable {
 
   /**
    * Sets the value of the count property.
-   * <p/>
+   * <p>
    * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
    * same 'recur'.
    * <p>
@@ -508,7 +523,7 @@ public class RecurType implements Serializable {
    * <p>
    * Therefore, on success (if the input value is not null and greater than
    * zero) the UNTIL field is set to null.
-   * <p>
+   *
    * @param value allowed object is {@link Integer }
    *
    */
@@ -523,7 +538,7 @@ public class RecurType implements Serializable {
 
   /**
    * Convenience indicator that the internal COUNT parameter is not null;
-   * <p>
+   *
    * @return TRUE if the count is not null.
    */
   public boolean isSetCount() {
@@ -532,7 +547,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the interval property.
-   * <p/>
+   *
    * @return possible object is {@link String }
    *
    */
@@ -542,7 +557,7 @@ public class RecurType implements Serializable {
 
   /**
    * Sets the value of the interval property.
-   * <p/>
+   *
    * @param value allowed object is {@link String }
    *
    */
@@ -556,7 +571,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the bysecond property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getBysecond() {
@@ -580,7 +595,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the byminute property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getByminute() {
@@ -604,7 +619,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the byhour property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getByhour() {
@@ -628,10 +643,10 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the byday property: a list of days.
-   * <p/>
+   * <p>
    * Recommend using the methods addByDay and removeByDay to manipulate this
    * list.
-   * <p>
+   *
    * @return a non-null ArrayList
    */
   public List<EWeekdayRecurType> getByday() {
@@ -665,7 +680,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the byyearday property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getByyearday() {
@@ -689,7 +704,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the bymonthday property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getBymonthday() {
@@ -713,7 +728,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the byweekno property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getByweekno() {
@@ -737,7 +752,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the bymonth property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getBymonth() {
@@ -761,7 +776,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the bysetpos property.
-   * <p/>
+   *
    * @return a non-null ArrayList
    */
   public List<Integer> getBysetpos() {
@@ -777,7 +792,7 @@ public class RecurType implements Serializable {
 
   /**
    * Inspect the bysetpos list and determine if it is null or empty.
-   * <p>
+   *
    * @return TRUE if bysetpos is not null and not empty
    */
   public boolean isSetBysetpos() {
@@ -790,7 +805,7 @@ public class RecurType implements Serializable {
 
   /**
    * Gets the value of the wkst property.
-   * <p/>
+   *
    * @return possible object is {@link EWeekdayRecurType }
    *
    */
@@ -800,7 +815,7 @@ public class RecurType implements Serializable {
 
   /**
    * Sets the value of the wkst property.
-   * <p/>
+   *
    * @param value allowed object is {@link EWeekdayRecurType }
    *
    */
@@ -846,33 +861,33 @@ public class RecurType implements Serializable {
 
   /**
    * Print all of this RecurType configuration fields.
-   * <p/>
+   *
    * @return
    */
   public String toStringFull() {
     return "RecurType"
-      + " freq [" + freq
-      + "] until [" + until
-      + "] count [" + count
-      + "] interval [" + interval
-      + "] bysecond [" + bysecond
-      + "] byminute [" + byminute
-      + "] byhour [" + byhour
-      + "] byday [" + byday
-      + "] byyearday [" + byyearday
-      + "] bymonthday [" + bymonthday
-      + "] byweekno [" + byweekno
-      + "] bymonth [" + bymonth
-      + "] bysetpos [" + bysetpos
-      + "] wkst [" + wkst
-      + ']';
+           + " freq [" + freq
+           + "] until [" + until
+           + "] count [" + count
+           + "] interval [" + interval
+           + "] bysecond [" + bysecond
+           + "] byminute [" + byminute
+           + "] byhour [" + byhour
+           + "] byday [" + byday
+           + "] byyearday [" + byyearday
+           + "] bymonthday [" + bymonthday
+           + "] byweekno [" + byweekno
+           + "] bymonth [" + bymonth
+           + "] bysetpos [" + bysetpos
+           + "] wkst [" + wkst
+           + ']';
   }
 
   /**
    * Print this RecurType object instance as a properly formatted RECUR string.
-   * <p/>
+   * <p>
    * This method is forked from the iCal4j Recur class.
-   * <p/>
+   *
    * @return an iCalendar-compliant RECUR string.
    */
   @Override
@@ -980,7 +995,7 @@ public class RecurType implements Serializable {
 
   /**
    * Parse a comma-delimited String into a list of Integers.
-   * <p/>
+   *
    * @param aString              a string representation of a number list
    * @param minValue             the minimum allowable value
    * @param maxValue             the maximum allowable value
@@ -997,7 +1012,7 @@ public class RecurType implements Serializable {
 
   /**
    * Parse a comma-delimited String into a list of Strings.
-   * <p/>
+   *
    * @param aString              a string representation of a number list
    * @param minValue             the minimum allowable value
    * @param maxValue             the maximum allowable value
@@ -1014,7 +1029,7 @@ public class RecurType implements Serializable {
 
   /**
    * Parse a comma-delimited String into a list of enumerated Weekday types.
-   * <p/>
+   *
    * @param aString a string representation of a number list
    */
   private List<EWeekdayRecurType> listParseWeekday(String aString) {
