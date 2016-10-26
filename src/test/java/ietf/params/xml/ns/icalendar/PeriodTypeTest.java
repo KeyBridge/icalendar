@@ -1,34 +1,40 @@
 /*
- * Copyright 2014 Jesse Caulfield <jesse@caulfield.org>.
+ * Copyright 2016 IETF.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * All rights reserved. Use is subject to license terms.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Software Code is protected by Copyrights. Author hereby
+ * reserves all rights in and to Copyrights and no license is
+ * granted under Copyrights in this Software License Agreement.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * IETF generally licenses Copyrights for commercialization
+ * pursuant to the terms of either a Standard Software Source Code
+ * License Agreement or a Standard Product License Agreement.
+ * A copy of either Agreement can be obtained upon request
+ * from: info@keybridgewireless.com
  */
-package ch.keybridge.test;
+package ietf.params.xml.ns.icalendar;
 
-import ietf.params.xml.ns.icalendar.PeriodType;
-import ietf.params.xml.ns.icalendar.RecurType;
 import ietf.params.xml.ns.icalendar.util.ICalendarUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TimeZone;
+import junit.framework.TestCase;
 
 /**
  *
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Key Bridge LLC
  */
-public class TestPeriodList {
+public class PeriodTypeTest extends TestCase {
 
-  public static void main(String[] args) throws Exception {
+  public PeriodTypeTest(String testName) {
+    super(testName);
+  }
+
+  public void testPeriodList() throws Exception {
     System.out.println("TestPeriodList");
 
     TimeZone TIMEZONE_UTC = TimeZone.getTimeZone("UTC");
@@ -77,4 +83,5 @@ public class TestPeriodList {
     }
 
   }
+
 }
