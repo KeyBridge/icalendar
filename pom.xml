@@ -25,7 +25,7 @@
     <name>IETF</name>
     <url>http://www.ietf.org</url>
   </organization>
-  
+
   <url>https://tools.ietf.org/html/rfc5545</url>
 
   <build>
@@ -59,8 +59,8 @@
 
   <distributionManagement>
     <repository>
-      <id>archiva.internal</id>
-      <url>${repository.url}</url>
+      <id>archiva.external</id>
+      <url>${archiva.external}</url>
     </repository>
   </distributionManagement>
 
