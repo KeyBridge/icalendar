@@ -56,11 +56,10 @@
     </dependency>
   </dependencies>
 
-
   <distributionManagement>
     <repository>
-      <id>archiva.external</id>
-      <url>${archiva.external}</url>
+      <id>${repository.name}</id>
+      <url>${repository.url}</url>
     </repository>
   </distributionManagement>
 
