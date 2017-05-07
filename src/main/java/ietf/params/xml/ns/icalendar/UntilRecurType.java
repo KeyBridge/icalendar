@@ -301,13 +301,7 @@ public class UntilRecurType implements Serializable {
     if (PATTERN_UTC.length() - 4 == untilString.length()) {
       dateTime(new SimpleDateFormat(PATTERN_UTC).parse(untilString));
     } else if (PATTERN_DATE.length() == untilString.length()) {
-      /**
-       * Telcordia and Google cannot read DATE patterned UNTIL fields.
-       * Accommodate this by always using the date-time field instead. Also, in
-       * most all implementations the DTSTART field is always a DATE-TIME.
-       */
-//      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
-      dateTime(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
     } else if (PATTERN_DATE_TIME.length() - 4 == untilString.length()) {
       dateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
     } else {
@@ -363,7 +357,7 @@ public class UntilRecurType implements Serializable {
    * @throws DatatypeConfigurationException if the calendar cannot be converted
    *                                        to a XMLGregorianCalendar
    */
-  public void setDateTime(Calendar calendar) throws DatatypeConfigurationException {
+  public final void setDateTime(Calendar calendar) throws DatatypeConfigurationException {
     this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize();
   }
 
@@ -374,7 +368,7 @@ public class UntilRecurType implements Serializable {
    * @param dateTime
    * @throws DatatypeConfigurationException
    */
-  private void dateTime(java.util.Date dateTime) throws DatatypeConfigurationException {
+  public final void dateTime(java.util.Date dateTime) throws DatatypeConfigurationException {
     if (dateTime != null) {
       Calendar calendar = Calendar.getInstance(TIMEZONE_UTC);
       calendar.setTime(dateTime);
@@ -400,7 +394,7 @@ public class UntilRecurType implements Serializable {
    *
    * @param date a DATE-TIME value
    */
-  public void setDate(Date date) {
+  public final void setDate(Date date) {
     try {
       dateTime(date);
     } catch (DatatypeConfigurationException ex) {
@@ -481,9 +475,9 @@ public class UntilRecurType implements Serializable {
    */
   public String toStringFull() {
     return "UntilRecurType"
-           + " dateTime [" + dateTime
-           + "] date [" + date
-           + ']';
+            + " dateTime [" + dateTime
+            + "] date [" + date
+            + ']';
   }
 
   /**
