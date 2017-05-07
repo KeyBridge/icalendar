@@ -35,7 +35,7 @@ including the original XSD are based on the excellent [Bedework](https://www.ape
 | ---- | ------------- |
 | iCalendar | [RFC 2445](http://tools.ietf.org/html/rfc2445) (deprecated) |
 | iCalendar | [RFC 5545](http://tools.ietf.org/html/rfc5545) |
-| Recuddence | [RFC 7229](http://tools.ietf.org/html/rfc7529) |
+| Recurrence | [RFC 7229](http://tools.ietf.org/html/rfc7529) |
 | xCal | [RFC 6321](http://tools.ietf.org/html/rfc6321) |
 | jCal | [RFC 7265](http://tools.ietf.org/html/rfc7265) |
 | Parameter Value Encoding | [RFC 6868](http://tools.ietf.org/html/rfc6868)
