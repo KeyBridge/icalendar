@@ -4,7 +4,7 @@
 
   <groupId>org.ietf.rfc</groupId>
   <artifactId>icalendar</artifactId>
-  <version>0.11</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
   <name>lib-icalendar</name>
   <description>Internet Calendaring and Scheduling
@@ -15,9 +15,22 @@
     such as an email client or calendar application) can respond to the sender easily
     or counter-propose another meeting date/time.
 
-    This is a compilation of the XML format for iCalendar (xCal) draft.
+    This project implements iCalendar and various other specifications to enable
+    calendar creation, manipulation, serialization and transfer.
 
-    See draft-daboo-et-al-icalendar-in-xml-11 for details.
+    See RFCs 5545, 6321, 6868 and 7529.
+
+    History:
+    v0.0.1 -    2011 - implement draft-daboo-et-al-icalendar-in-xml-11
+    v0.1.0 -    2013 - relicense from gpl to apache
+    repost to github
+    add TV whitespace customizations
+    v0.11 -   2014 - public release candidate
+    add icalendar utility to use this as back end for primefaces schedule widget
+    add recurrence
+    force default timezones to UTC
+    use maven build system
+    v1.0.0 -    2017 - check and confirm conformance with current RFC specs.
 
   </description>
 
@@ -49,9 +62,22 @@
 
   <dependencies>
     <dependency>
+      <groupId>keybridge.lib</groupId>
+      <artifactId>xml-adapter</artifactId>
+      <version>1.0.1</version>
+      <scope>test</scope>
+      <type>jar</type>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <version>1.3</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

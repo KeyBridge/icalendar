@@ -1,29 +1,43 @@
 #  iCalendar (RFC5545) XML Encoding (xCal)
 
 ## About
-This is a Java compiled implementation of the XML format for iCalendar (xCal) draft.
-Software comports with draft-daboo-et-al-icalendar-in-xml-11.
 
-The package is formatted and provided as a NetBeans project.
+This is a Java implementation of the XML format for iCalendar (xCal) specification: RFC 6321.
 
 ## Alternatives
 
 This project exists to provide a standards-based serializable iCalendar
-implementation. As such we have not spent a tremendous amount of time
-extending the basic bean containers with data-handling functionality. 
+implementation. While this library implements all basic functionality such as
+recurrence, etc. if you need a comprehensive iCalendar management utility
+that accommodates all configurations and circumstances then you might consider
+the excellent [iCal4j](https://github.com/ical4j/ical4j) project.
 
-If you need a comprehensive and fully-functional iCalendar management
-scheme then you might have better luck using iCal4j.
+## Timezone support
 
-  https://code.google.com/p/ical4j/
+By default all datetime instances are recorded in the **UTC** timezone.
+Other timezones are fully supported however. Note that datetime instances are
+fixed. When you change a timezone the datetimes are updated but not
+shifted. e.g. changing the timezone from EST (GMT-4) to PST (GTM-7) for
+a 9:00 AM (EST) datetime will provide a 06:00 AM (PST) datetime.
 
-## References / Requires
+## Supported specifications
 
 xCalendar and RFC5545 specifications are both available from the IETF RFC Tracker.
 These classes were originally compiled using XSDs from the Bedework project. See:
 
 - xCal: The XML format for iCalendar (draft-daboo-et-al-icalendar-in-xml-11)
 - iCalendar Internet Calendaring and Scheduling Core Object Specification (RFC5545)
+
+## Supported Specifications
+
+| Name | Specification |
+| ---- | ------------- |
+| iCalendar | [RFC 2445](http://tools.ietf.org/html/rfc2445) (deprecated) |
+| iCalendar | [RFC 5545](http://tools.ietf.org/html/rfc5545) |
+| Recuddence | [RFC 7229](http://tools.ietf.org/html/rfc7529) |
+| xCal | [RFC 6321](http://tools.ietf.org/html/rfc6321) |
+| jCal | [RFC 7265](http://tools.ietf.org/html/rfc7265) |
+| Parameter Value Encoding | [RFC 6868](http://tools.ietf.org/html/rfc6868)
 
 ## License
 

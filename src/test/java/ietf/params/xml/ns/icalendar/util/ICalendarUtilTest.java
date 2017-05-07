@@ -1,39 +1,38 @@
 /*
- * Copyright 2016 IETF.
+ * Copyright 2017 IETF. All rights reserved.
+ * Use is subject to license terms.
  *
- * All rights reserved. Use is subject to license terms.
+ * Software Code is protected by Copyrights. Author hereby reserves all rights
+ * in and to Copyrights and no license is granted under Copyrights in this
+ * Software License Agreement.
  *
- * Software Code is protected by Copyrights. Author hereby
- * reserves all rights in and to Copyrights and no license is
- * granted under Copyrights in this Software License Agreement.
- *
- * IETF generally licenses Copyrights for commercialization
- * pursuant to the terms of either a Standard Software Source Code
- * License Agreement or a Standard Product License Agreement.
- * A copy of either Agreement can be obtained upon request
- * from: info@keybridgewireless.com
+ * IETF generally licenses Copyrights for commercialization pursuant to
+ * the terms of either a Standard Software Source Code License Agreement or a
+ * Standard Product License Agreement. A copy of either Agreement can be
+ * obtained upon request from: info@keybridgewireless.com
  */
-package ietf.params.xml.ns.icalendar;
+package ietf.params.xml.ns.icalendar.util;
 
-import ietf.params.xml.ns.icalendar.util.ICalendarUtil;
+import ietf.params.xml.ns.icalendar.PeriodType;
+import ietf.params.xml.ns.icalendar.RecurType;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  *
- * @author Key Bridge LLC
+ * @author Key Bridge
  */
-public class PeriodTypeTest extends TestCase {
+public class ICalendarUtilTest {
 
-  public PeriodTypeTest(String testName) {
-    super(testName);
+  public ICalendarUtilTest() {
   }
 
+  @Test
   public void testPeriodList() throws Exception {
     System.out.println("TestPeriodList");
 
@@ -43,8 +42,10 @@ public class PeriodTypeTest extends TestCase {
     sdf.setTimeZone(TIMEZONE_UTC);
 
     Calendar dtstart = Calendar.getInstance(TIMEZONE_UTC);
+    dtstart.set(2014, 1, 29, 0, 0, 0);
     Calendar dtend = Calendar.getInstance(TIMEZONE_UTC);
-    dtend.add(Calendar.HOUR, 3);
+    dtend.add(Calendar.MONTH, 3);
+    dtend.set(2015, 12, 29, 0, 0, 0);
 
     System.out.println("dtstart      " + sdf.format(dtstart.getTime()));
     System.out.println("dtend        " + sdf.format(dtend.getTime()));
@@ -70,7 +71,7 @@ public class PeriodTypeTest extends TestCase {
 //    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
     RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
 
-    System.out.println("DEBUG recur " + recur.toStringFull());
+    System.out.println(" recur " + recur.toStringFull());
     Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart.getTime(),
                                                                     dtend.getTime(),
                                                                     recur,
