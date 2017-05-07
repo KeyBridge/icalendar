@@ -4,31 +4,32 @@
 
 This is a Java implementation of the XML format for iCalendar (xCal) specification: RFC 6321.
 
+We use this library in various web applications and protocols in our various
+spectrum administration system properties. Your bug reports and feature requests
+are welcome!
+
 ## Alternatives
 
-This project exists to provide a standards-based serializable iCalendar
+This library provides a standards-based serializable iCalendar
 implementation. While this library implements all basic functionality such as
-recurrence, etc. if you need a comprehensive iCalendar management utility
-that accommodates all configurations and circumstances then you might consider
-the excellent [iCal4j](https://github.com/ical4j/ical4j) project.
+recurrence, etc. if you need an iCalendar processing and management utility
+that accommodates related configurations such as vCard and various corner cases
+then you might also consider the excellent [iCal4j](https://github.com/ical4j/ical4j) project.
 
 ## Timezone support
 
-By default all datetime instances are recorded in the **UTC** timezone.
-Other timezones are fully supported however. Note that datetime instances are
-fixed. When you change a timezone the datetimes are updated but not
-shifted. e.g. changing the timezone from EST (GMT-4) to PST (GTM-7) for
-a 9:00 AM (EST) datetime will provide a 06:00 AM (PST) datetime.
+By default all datetime values are normalized and conveyed in the **UTC** timezone
+and internal datetime instances are fixed. To render datetimes in a local timezone
+we do not recommend shifting the datetime value, but instead recommend using a display
+converter.
+For example: the same datetime value may be displayed using a timezone EST (GMT-4) and timezone PST (GTM-7)
+display converter as 9:00 AM (EST) and 06:00 AM (PST), respectively, without modifying the underlying datetime value.
+Common display converters include _FacesConverter_, _SimpleDateFormat_, etc.
 
 ## Supported specifications
 
-xCalendar and RFC5545 specifications are both available from the IETF RFC Tracker.
-These classes were originally compiled using XSDs from the Bedework project. See:
-
-- xCal: The XML format for iCalendar (draft-daboo-et-al-icalendar-in-xml-11)
-- iCalendar Internet Calendaring and Scheduling Core Object Specification (RFC5545)
-
-## Supported Specifications
+RFC specifications are available from the IETF RFC Tracker. Many aspects of this project
+including the original XSD are based on the excellent [Bedework](https://www.apereo.org/projects/bedework) project.
 
 | Name | Specification |
 | ---- | ------------- |
@@ -43,7 +44,7 @@ These classes were originally compiled using XSDs from the Bedework project. See
 
   Apache License, Version 2.0
 
->  Copyright (C) 2013 Caulfield IP Holdings (Caulfield) and/or its affiliates.
+>  Copyright (C) Key Bridge and/or its affiliates.
 >
 >   Licensed under the Apache License, Version 2.0 (the "License");
 >   you may not use this file except in compliance with the License.
