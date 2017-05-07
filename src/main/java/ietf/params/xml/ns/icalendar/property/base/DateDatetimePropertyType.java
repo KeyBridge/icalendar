@@ -16,6 +16,7 @@
 package ietf.params.xml.ns.icalendar.property.base;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.datedatetime.*;
 import java.util.*;
@@ -101,7 +102,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
    *
    */
   @XmlElement(name = "date-time")
-//  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
+  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
   protected XMLGregorianCalendar dateTime;
   /**
    * xsd:date — Gregorian calendar date
@@ -155,6 +156,15 @@ public class DateDatetimePropertyType extends BasePropertyType {
   public DateDatetimePropertyType() {
   }
 
+  /**
+   * Default constructor.
+   * <p>
+   * Note: The provided dateTime parameter is normalized to UTC.
+   *
+   * @param dateTime the date time configuration
+   * @throws DatatypeConfigurationException if the datetime combination cannot
+   *                                        be parsed and copied
+   */
   public DateDatetimePropertyType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
     /**
      * Call normalize to Normalize this instance to UTC.
@@ -167,14 +177,15 @@ public class DateDatetimePropertyType extends BasePropertyType {
   }
 
   /**
-   * Set the DateTime parameter with a DATE. Since java.util.Date has no notion
-   * of TimeZone you must also provide the timezone for the DATE value.
+   * Set the DateTime parameter with a DATE in the default UTC timezone.
+   * <p>
+   * Note that java.util.Date has no notion of TimeZone and only contains the
+   * number of milliseconds since the epoch. Date instances are invariant across
+   * time zones.
    *
-   * @param date     a date
-   * @param timeZone the date timezone
-   * @throws DatatypeConfigurationException if the date/timezone combination
-   *                                        cannot be converted to an
-   *                                        XMLGregorianCalendar
+   * @param date a date
+   * @throws DatatypeConfigurationException if the date combination cannot be
+   *                                        converted to an XMLGregorianCalendar
    */
   public DateDatetimePropertyType(Date date) throws DatatypeConfigurationException {
     Calendar cal = Calendar.getInstance(TIME_ZONE);
@@ -285,8 +296,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
   @Override
   public String toString() {
     return "DateDatetimePropertyType"
-           + " dateTime [" + dateTime
-           + "] date [" + date
-           + ']';
+            + " dateTime [" + dateTime
+            + "] date [" + date
+            + ']';
   }
 }
