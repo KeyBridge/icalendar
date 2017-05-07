@@ -20,6 +20,8 @@ import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
@@ -35,6 +37,8 @@ import javax.xml.datatype.Duration;
  * @author Jesse Caulfield <jesse@caulfield.org> 07/07/14
  */
 public class ICalendarUtil {
+
+  private static final Logger LOGGER = Logger.getLogger(ICalendarUtil.class.getName());
 
   public static final java.util.TimeZone TIMEZONE_UTC = java.util.TimeZone.getTimeZone("UTC");
   private static final SimpleDateFormat sdf;
@@ -62,8 +66,8 @@ public class ICalendarUtil {
    * Also note that component transparency and anniversary-style dates do not
    * affect set calculation.
    *
-   * @param dtStart     the (master) event start date and mergeTime
-   * @param dtEnd       the (master) event end date and mergeTime
+   * @param eventStart  the (master) event start date and mergeTime
+   * @param eventEnd    the (master) event end date and mergeTime
    * @param recurType   the (master) event recurrence type
    * @param periodStart the period of interest start date. This should be on a
    *                    SUNDAY at or before the first day of a month.
@@ -73,21 +77,29 @@ public class ICalendarUtil {
    *         during the defined period (e.g. between the period start and end
    *         dates.)
    * @throws DatatypeConfigurationException if a PeriodType fails to build
+   * @throws Exception                      if the event does not contain the
+   *                                        period of interest
    */
-  public static Set<PeriodType> calculateRecurrenceSet(Date dtStart,
-                                                       Date dtEnd,
+  public static Set<PeriodType> calculateRecurrenceSet(Date eventStart,
+                                                       Date eventEnd,
                                                        RecurType recurType,
                                                        Date periodStart,
-                                                       Date periodEnd) throws DatatypeConfigurationException {
+                                                       Date periodEnd) throws DatatypeConfigurationException, Exception {
     /**
      * Initialize the period list. Use a HashSet to enforce uniqueness.
      */
     Set<PeriodType> periodSet = new HashSet<>();
     /**
+     * Confirm the period of interest is contained within the event
+     */
+    if (periodEnd.before(eventStart) || periodStart.after(eventEnd)) {
+      throw new Exception("Event does not contain period of interest.");
+    }
+    /**
      * Preserve the event duration. This is applied later to each calculated
      * PeriodType.
      */
-    Duration duration = duration(dtStart, dtEnd);
+    Duration duration = duration(eventStart, eventEnd);
     /**
      * Copy the period start datetime into calendar instances to facilitate
      * calculation. Calculating with java.util.Date is ... less than satisfying.
@@ -114,21 +126,21 @@ public class ICalendarUtil {
      * include any events that may have begun before the period start and end
      * during the period.
      */
-    while (pStart.getTime().after(dtStart) && pStart.getTime().before(dtEnd)) {
+    while (pStart.getTime().after(eventStart) && pStart.getTime().before(eventEnd)) {
       pStart.add(Calendar.MILLISECOND, -(int) duration.getTimeInMillis(pStart));
     }
     /**
      * Second: Add the initial event if it falls within the (adjusted) period.
      */
-    if (pStart.getTime().before(dtStart) && periodEnd.after(dtStart)) {
-      periodSet.add(new PeriodType(dtStart, duration));
+    if (pStart.getTime().before(eventStart) && periodEnd.after(eventStart)) {
+      periodSet.add(new PeriodType(eventStart, duration));
     }
     /**
      * Third: Fast forward PSTART to the EVENT start if the event begins within
      * the period. This will ensure only recurring events that are AFTER the
      * original EVENT are added.
      */
-    while (pStart.getTime().before(dtStart)) {
+    while (pStart.getTime().before(eventStart)) {
       pStart.add(Calendar.MILLISECOND, (int) duration.getTimeInMillis(pStart));
     }
     /**
@@ -136,7 +148,7 @@ public class ICalendarUtil {
      * the pStart DATE value set above but ensures that calculated recurring
      * events match the DTSTART TIME.
      */
-    pStart = mergeTime(pStart, dtStart);
+    pStart = mergeTime(pStart, eventStart);
     /**
      * Finally: Scan through the period of interest in FREQ increments. For each
      * increment calculate a list of candidate occurrence dates. Analyze each
@@ -166,25 +178,24 @@ public class ICalendarUtil {
           /**
            * INVALID: candidate is AFTER the UNTIL date.
            */
-//          System.err.println("   AFTER the UNTIL date " + sdf.format(candidateDtStart.getTime()));
+          LOGGER.log(Level.FINEST, "Warning: AFTER the UNTIL date {0}", sdf.format(startCandidate.getTime()));
         } else if (recurType.isSetCount() && periodSet.size() >= recurType.getCount()) {
           /**
            * INVALID: COUNT value is exceeded.
            */
-//          System.err.println("   COUNT EXCEEDED " + sdf.format(candidateDtStart.getTime()));
+          LOGGER.log(Level.FINEST, "Warning: COUNT EXCEEDED {0}", sdf.format(startCandidate.getTime()));
         } else if (startCandidate.getTime().after(periodStart)
-                   && startCandidate.getTime().after(dtStart)
-                   && startCandidate.getTime().before(periodEnd)) {
+                && startCandidate.getTime().after(eventStart)
+                && startCandidate.getTime().before(periodEnd)) {
           /**
            * VALID: CREATE and ADD and new PeriodType to the set.
            */
           periodSet.add(new PeriodType((GregorianCalendar) startCandidate, duration));
-//          System.out.println("   OK " + sdf.format(candidateDtStart.getTime()));
         } else {
           /**
            * INVALID: OUT OF RANGE or other UNKNOWN error.
            */
-//          System.err.println("   ERR " + sdf.format(candidateDtStart.getTime()));
+          LOGGER.log(Level.FINEST, "Warning: OUT OF RANGE or other UNKNOWN error {0}", sdf.format(startCandidate.getTime()));
         }
       }
       /**
