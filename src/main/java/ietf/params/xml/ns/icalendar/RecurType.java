@@ -191,7 +191,7 @@ public class RecurType implements Serializable {
    * <p>
    * element interval { xsd:positiveInteger }
    */
-  protected Integer interval;
+  protected Integer interval = 1;
   /**
    * The BYSECOND rule part specifies a COMMA-separated list of seconds within a
    * minute. Valid values are 0 to 60.
@@ -458,11 +458,11 @@ public class RecurType implements Serializable {
    * same 'recur'. Therefore, if the input value is not null the COUNT field is
    * set to null.
    *
-   * @param value allowed object is {@link UntilRecurType }
+   * @param until allowed object is {@link UntilRecurType }
    */
-  public void setUntil(UntilRecurType value) {
-    this.until = value;
-    if (value != null) {
+  public void setUntil(UntilRecurType until) {
+    this.until = until;
+    if (until != null) {
       this.count = null;
     }
   }
@@ -524,15 +524,13 @@ public class RecurType implements Serializable {
    * Therefore, on success (if the input value is not null and greater than
    * zero) the UNTIL field is set to null.
    *
-   * @param value allowed object is {@link Integer }
+   * @param count allowed object is {@link Integer }
    *
    */
-  public void setCount(Integer value) {
-    if (value > 0) {
-      this.count = value;
-      if (count != null) {
-        this.until = null;
-      }
+  public void setCount(Integer count) {
+    this.count = count;
+    if (count != null) {
+      this.until = null;
     }
   }
 
