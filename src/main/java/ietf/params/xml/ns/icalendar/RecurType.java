@@ -17,6 +17,7 @@ package ietf.params.xml.ns.icalendar;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -890,7 +891,7 @@ public class RecurType implements Serializable {
    */
   @Override
   public final String toString() {
-    final StringBuffer b = new StringBuffer();
+    final StringBuilder b = new StringBuilder();
     b.append(FREQ);
     b.append('=');
     b.append(freq);
@@ -981,40 +982,26 @@ public class RecurType implements Serializable {
    * comma-delimited String. {@inheritDoc}
    */
   private String listFormat(List<?> aList) {
-    final StringBuffer b = new StringBuffer();
-    for (final Iterator i = aList.iterator(); i.hasNext();) {
-      b.append(i.next());
-      if (i.hasNext()) {
-        b.append(',');
-      }
-    }
-    return b.toString();
+    return aList.stream()
+        .map(String::valueOf)
+        .collect(Collectors.joining(","));
   }
 
   /**
    * Parse a comma-delimited String into a list of Integers.
    *
    * @param aString              a string representation of a number list
-   * @param minValue             the minimum allowable value
-   * @param maxValue             the maximum allowable value
-   * @param allowsNegativeValues indicates whether negative values are allowed
    */
   private List<Integer> listParseInteger(String aString) {
-    List<Integer> list = new ArrayList<>();
-    final StringTokenizer t = new StringTokenizer(aString, ",");
-    while (t.hasMoreTokens()) {
-      list.add(Integer.valueOf(t.nextToken()));
-    }
-    return list;
+    return listParseString(aString).stream()
+        .map(Integer::valueOf)
+        .collect(Collectors.toList());
   }
 
   /**
    * Parse a comma-delimited String into a list of Strings.
    *
    * @param aString              a string representation of a number list
-   * @param minValue             the minimum allowable value
-   * @param maxValue             the maximum allowable value
-   * @param allowsNegativeValues indicates whether negative values are allowed
    */
   private List<String> listParseString(String aString) {
     List<String> list = new ArrayList<>();
