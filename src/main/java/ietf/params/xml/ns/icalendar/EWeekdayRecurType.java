@@ -74,7 +74,7 @@ public enum EWeekdayRecurType {
 
   private final int calendarValue;
 
-  private EWeekdayRecurType(int calendarValue) {
+  EWeekdayRecurType(int calendarValue) {
     this.calendarValue = calendarValue;
   }
 
