@@ -32,7 +32,7 @@
  -->  
    <xs:simpleType name="DateTimeType">
     <xs:restriction base="xs:dateTime">
-      <xs:pattern value="(\-|\+)?\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)?Z?"/>
+      <xs:pattern value="([-+])?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)?Z?"/>
     </xs:restriction>
   </xs:simpleType>
   
@@ -40,7 +40,7 @@
   
   <xs:simpleType name="UTCDateTimeType">
     <xs:restriction base="xs:dateTime">
-      <xs:pattern value="(\-|\+)?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)Z"/>
+      <xs:pattern value="([-+])?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)Z"/>
     </xs:restriction>
   </xs:simpleType>
   
@@ -86,7 +86,7 @@
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="(\+|\-)?P((\d+Y)?(\d+M)?(\d+D)?T?(\d+H)?(\d+M)?(\d+S)?)|(\d+W)"/>
+      <xs:pattern value="([+-])?P((\d+Y)?(\d+M)?(\d+D)?T?(\d+H)?(\d+M)?(\d+S)?)|(\d+W)"/>
     </xs:restriction>
   </xs:simpleType>
   
@@ -212,7 +212,7 @@
   <!-- 3.3.14 UTC-OFFSET -->
   <xs:simpleType name="UtcOffsetType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="(\-|\+)?\d{2}:\d{2}"/>
+      <xs:pattern value="[-+]?\d{2}:\d{2}"/>
     </xs:restriction>
   </xs:simpleType>
   
