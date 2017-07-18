@@ -16,12 +16,12 @@
 package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.DatatypeConfigurationException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Java class for RecurrenceIdPropType complex type.
@@ -45,11 +45,11 @@ public class RecurrenceIdPropType extends DateDatetimePropertyType {
   public RecurrenceIdPropType() {
   }
 
-  public RecurrenceIdPropType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
+  public RecurrenceIdPropType(LocalDateTime dateTime) {
     super(dateTime);
   }
 
-  public RecurrenceIdPropType(Date date) throws DatatypeConfigurationException {
+  public RecurrenceIdPropType(LocalDate date) {
     super(date);
   }
 

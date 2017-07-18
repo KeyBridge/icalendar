@@ -15,18 +15,21 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterDurationXCalDateTime;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
+
+import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_UTC;
 
 /**
  * Period of Time (RFC 5545, Section 3.3.9). This value type is used to identify
@@ -65,73 +68,28 @@ import javax.xml.datatype.XMLGregorianCalendar;
   "end",
   "duration"
 })
+
 public final class PeriodType implements Comparable<PeriodType> {
 
-  /**
-   * [ISO.8601.2004] International Organization for Standardization, "Data
-   * elements and interchange formats -- Information interchange --
-   * Representation of dates and times", 2004.
-   * <p>
-   * yyyyMMdd'T'HHmmss'Z' - the default date time formatting pattern
-   */
-  public static final String UTC_PATTERN = "yyyyMMdd'T'HHmmss'Z'";
-  private static final TimeZone TIMEZONE_UTC = TimeZone.getTimeZone("UTC");
-
   @XmlElement(required = true)
-  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
-  protected XMLGregorianCalendar start;
-  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
-  protected XMLGregorianCalendar end;
-  protected String duration;
+  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
+  protected LocalDateTime start;
+  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
+  protected LocalDateTime end;
+  @XmlJavaTypeAdapter(type = Duration.class, value = XmlAdapterDurationXCalDateTime.class)
+  protected Duration duration;
 
   public PeriodType() {
   }
 
-  public PeriodType(XMLGregorianCalendar start, XMLGregorianCalendar end) {
+  public PeriodType(LocalDateTime start, LocalDateTime end) {
     this.start = start;
     this.end = end;
   }
 
-  public PeriodType(XMLGregorianCalendar start, Duration duration) {
+  public PeriodType(LocalDateTime start, Duration duration) {
     this.start = start;
     setDuration(duration);
-  }
-
-  public PeriodType(GregorianCalendar start, GregorianCalendar end) throws DatatypeConfigurationException {
-    setStart(start);
-    setEnd(end);
-  }
-
-  public PeriodType(GregorianCalendar start, Duration duration) throws DatatypeConfigurationException {
-    setStart(start);
-    setDuration(duration);
-  }
-
-  public PeriodType(Date start, GregorianCalendar end) throws DatatypeConfigurationException {
-    Calendar calStart = Calendar.getInstance(TIMEZONE_UTC);
-    calStart.setTime(start);
-    setStart((GregorianCalendar) calStart);
-    setEnd(end);
-  }
-
-  public PeriodType(Date start, Duration duration) throws DatatypeConfigurationException {
-    Calendar calStart = Calendar.getInstance(TIMEZONE_UTC);
-    calStart.setTime(start);
-    setStart((GregorianCalendar) calStart);
-    setDuration(duration);
-  }
-
-  /**
-   * Set the TIME (Hour, Minute and Second) values for the start (and end time
-   * if set) to match the time (HMS) values of the given date value.
-   *
-   * @param time a date value - only the time values are extracted
-   * @throws DatatypeConfigurationException if the start date fails to set
-   */
-  public void setTime(Date time) throws DatatypeConfigurationException {
-    Calendar timeCal = Calendar.getInstance(TIMEZONE_UTC);
-    timeCal.setTime(time);
-    setTime(timeCal);
   }
 
   /**
@@ -139,24 +97,15 @@ public final class PeriodType implements Comparable<PeriodType> {
    * if set) to match the time (HMS) values of the given date value.
    *
    * @param time a calendar value - only the time values are extracted
-   * @throws DatatypeConfigurationException if the start date fails to set
    */
-  public void setTime(Calendar time) throws DatatypeConfigurationException {
-    Calendar dateStart = getStart();
+  public void setTime(LocalTime time) {
     /**
      * Set the START. Optionally set the END if it is configured. Note that the
      * DURATION does not need updating.
      */
-    Calendar dateEnd = end != null ? getEnd() : null;
-    for (int calendarField : new int[]{Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND}) {
-      dateStart.set(calendarField, time.get(calendarField));
-      if (dateEnd != null) {
-        dateEnd.set(calendarField, time.get(calendarField));
-      }
-    }
-    setStart((GregorianCalendar) dateStart);
-    if (dateEnd != null) {
-      setEnd((GregorianCalendar) dateEnd);
+    start = start.with(time);
+    if (end != null) {
+      end = end.with(time);
     }
   }
 
@@ -166,9 +115,8 @@ public final class PeriodType implements Comparable<PeriodType> {
    * @return possible object is {@link XMLGregorianCalendar }
    *
    */
-  public GregorianCalendar getStart() {
-//    return start;
-    return start.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null);
+  public LocalDateTime getStart() {
+    return start;
   }
 
   /**
@@ -177,16 +125,8 @@ public final class PeriodType implements Comparable<PeriodType> {
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */
-  public void setStart(XMLGregorianCalendar value) {
-    this.start = value;
-  }
-
-  public void setStart(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    this.start = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
-  }
-
-  public boolean isSetStart() {
-    return (this.start != null);
+  public void setStart(LocalDateTime value) {
+    start = value;
   }
 
   /**
@@ -197,20 +137,13 @@ public final class PeriodType implements Comparable<PeriodType> {
    *
    * @return possible object is {@link XMLGregorianCalendar }
    */
-  public GregorianCalendar getEnd() {
+  public LocalDateTime getEnd() {
     if (end != null) {
-      return end.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null);
+      return end;
     } else if (duration != null) {
-      try {
-        GregorianCalendar endTemp = (GregorianCalendar) getStart().clone();
-        endTemp.add(Calendar.MILLISECOND, (int) getDuration().getTimeInMillis(getStart()));
-        return endTemp;
-      } catch (DatatypeConfigurationException datatypeConfigurationException) {
-        System.err.println("PeriodType getEnd calculating error: " + datatypeConfigurationException.getMessage());
-      }
+      return start.plus(duration);
     }
     return null;
-//    return end;
   }
 
   /**
@@ -220,17 +153,13 @@ public final class PeriodType implements Comparable<PeriodType> {
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */
-  public void setEnd(XMLGregorianCalendar value) {
+  public void setEnd(LocalDateTime value) {
     if (value != null) {
       this.end = value;
       this.duration = null;
     } else {
       this.end = null;
     }
-  }
-
-  public void setEnd(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    setEnd(DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize());
   }
 
   public boolean isSetEnd() {
@@ -265,36 +194,28 @@ public final class PeriodType implements Comparable<PeriodType> {
    *
    * @return new Duration created from parsing the internal
    *         lexicalRepresentation.
-   * @throws DatatypeConfigurationException - if the XML datatype cannot be
-   *                                        generated
    * @throws IllegalArgumentException       - If lexicalRepresentation is not a
    *                                        valid representation of a Duration.
    * @throws UnsupportedOperationException  - If implementation cannot support
    *                                        requested values.
    * @throws NullPointerException           - if lexicalRepresentation is null.
    */
-  public Duration getDuration() throws DatatypeConfigurationException {
-    if (duration != null) {
-      return DatatypeFactory.newInstance().newDuration(duration);
-    } else if (end != null) {
-      return DatatypeFactory.newInstance().newDuration(getEnd().getTimeInMillis() - getStart().getTimeInMillis());
-    } else {
-      return null;
-    }
-//    return duration;
+  public Duration getDuration() {
+    return duration != null ? duration : Duration.between(start, end);
   }
 
   /**
    * Sets the value of the duration property.
    * <p>
-   * If the duration is valid then the internal 'end' field is set to null.
+   * If the duration is non-null then the internal 'end' field is set to null.
    *
-   * @param value allowed object is {@link String }
-   * @throws DatatypeConfigurationException if the string cannot be converted to
-   *                                        an XML Duration datatype
+   * @param duration a duration instance
    */
-  public void setDuration(String value) throws DatatypeConfigurationException {
-    setDuration(DatatypeFactory.newInstance().newDuration(value));
+  public final void setDuration(Duration duration) {
+    this.duration = duration;
+    if (duration != null) {
+      end = null;
+    }
   }
 
   /**
@@ -304,20 +225,15 @@ public final class PeriodType implements Comparable<PeriodType> {
    * The internal field is formatted according to the XML Schema 1.0 spec and
    * can be always parsed back later into the equivalent Duration Object by
    * DatatypeFactory.newDuration(String lexicalRepresentation).
+   * <p>
+   * If the duration is valid then the internal 'end' field is set to null.
    *
-   * @param value a duration instance
+   * @param value allowed object is {@link String }
+   * @throws DateTimeParseException in case the provided String cannot be parsed
+   *                                as java.time.Duration
    */
-  public final void setDuration(Duration value) {
-    if (value != null) {
-      this.duration = value.toString();
-      this.end = null;
-    } else {
-      this.duration = null;
-    }
-  }
-
-  public boolean isSetDuration() {
-    return (this.duration != null);
+  public void setDuration(String value) throws DateTimeParseException {
+    duration = Duration.parse(value);
   }
 
   /**
@@ -364,16 +280,12 @@ public final class PeriodType implements Comparable<PeriodType> {
      * If the START is equal then compare the END or DURATION, else compare the
      * START.
      */
-    if (this.start.compare(o.start) == 0) {
-      try {
-        return this.end != null
-               ? this.end.compare(o.end)
-               : this.getDuration().compare(o.getDuration());
-      } catch (DatatypeConfigurationException ex) {
-//        Logger.getLogger(PeriodType.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
-    return this.start.compare(o.start);
+    int startComparison = start.compareTo(o.start);
+    return startComparison != 0
+        ? startComparison
+        : end == null
+        ? duration.compareTo(o.duration) :
+        end.compareTo(o.end);
   }
 
   /**
@@ -388,10 +300,6 @@ public final class PeriodType implements Comparable<PeriodType> {
    */
   @Override
   public String toString() {
-    SimpleDateFormat sdf = new SimpleDateFormat(UTC_PATTERN);
-    sdf.setTimeZone(TIMEZONE_UTC);
-    return sdf.format(getStart().getTime()) + "/" + (end != null
-                                                     ? sdf.format(getEnd().getTime())
-                                                     : duration);
+    return start.format(FORMATTER_UTC) + "/" + (end != null ? end.format(FORMATTER_UTC) : duration);
   }
 }

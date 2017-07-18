@@ -16,12 +16,11 @@
 package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.DatatypeConfigurationException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Java class for DtstartPropType complex type.
@@ -45,21 +44,16 @@ public class DtstartPropType extends DateDatetimePropertyType {
   public DtstartPropType() {
   }
 
-  public DtstartPropType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
+  public DtstartPropType(LocalDateTime dateTime) {
     super(dateTime);
   }
 
   /**
-   * Set the DateTime parameter with a DATE. Since java.util.Date has no notion
-   * of TimeZone you must also provide the timezone for the DATE value.
+   * Set the DateTime parameter with a LocalDate.
    *
    * @param date     a date
-   * @param timeZone the date timezone
-   * @throws DatatypeConfigurationException if the date/timezone combination
-   *                                        cannot be converted to an
-   *                                        XMLGregorianCalendar
    */
-  public DtstartPropType(Date date) throws DatatypeConfigurationException {
+  public DtstartPropType(LocalDate date) {
     super(date);
   }
 

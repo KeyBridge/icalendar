@@ -17,12 +17,13 @@ package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
 import ietf.params.xml.ns.icalendar.component.EComponentName;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_UTC;
 
 /**
  * Java class for VeventType complex type.
@@ -48,12 +49,8 @@ public class VeventType extends BaseComponentType {
    */
   @Override
   public String toString() {
-    SimpleDateFormat sdf = new SimpleDateFormat(UTC_PATTERN, Locale.ENGLISH);
-    sdf.setTimeZone(TIME_ZONE);
-    StringBuilder b = new StringBuilder();
-    b.append("From ").append(getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "");
-    b.append("to ").append(getDTEND() != null ? sdf.format(getDTEND().getTime()) : "");
-    return b.toString();
+    return "From " + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "") +
+        "to " + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "");
   }
 
   /**
@@ -62,44 +59,33 @@ public class VeventType extends BaseComponentType {
    * @return
    */
   public String toStringMultiline() {
-//    SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
-    SimpleDateFormat sdf = new SimpleDateFormat(UTC_PATTERN, Locale.ENGLISH);
-    sdf.setTimeZone(TIME_ZONE);
-    StringBuilder b = new StringBuilder();
-    b.append(BEGIN).append(':').append(getName());
-    b.append(LINE_SEPARATOR);
-    b.append("DTSTAMP:").append(getDTSTAMP() != null ? sdf.format(getDTSTAMP().getTime()) : "");
-    b.append(LINE_SEPARATOR);
-    b.append("DTSTART:").append(getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "");
-    b.append(LINE_SEPARATOR);
-    b.append("DTEND:").append(getDTEND() != null ? sdf.format(getDTEND().getTime()) : "");
-    b.append(LINE_SEPARATOR);
-    b.append(END).append(':').append(getName());
-    b.append(LINE_SEPARATOR);
-    return b.toString();
+    return BEGIN + ':' + getName() +
+        LINE_SEPARATOR +
+        "DTSTAMP:" + (getDTSTAMP() != null ? getDTSTAMP().format(FORMATTER_UTC) : "") +
+        LINE_SEPARATOR +
+        "DTSTART:" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "") +
+        LINE_SEPARATOR +
+        "DTEND:" + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "") +
+        LINE_SEPARATOR +
+        END + ':' + getName() +
+        LINE_SEPARATOR;
   }
 
   public String toStringFull() {
-    SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
-    sdf.setTimeZone(TIME_ZONE);
-
     return "VeventType"
            + " uid " + getUID()
-           + "]\n dtstamp [" + (getDTSTAMP() != null ? sdf.format(getDTSTAMP().getTime()) : "")
-           + "]\n dtstart [" + (getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "")
-           + "]\n dtend   [" + (getDTEND() != null ? sdf.format(getDTEND().getTime()) : "")
+           + "]\n dtstamp [" + (getDTSTAMP() != null ? getDTSTAMP().format(FORMATTER_UTC) : "")
+           + "]\n dtstart [" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "")
+           + "]\n dtend   [" + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "")
            + "]\n duration [" + getDURATION()
            + "] rrule [" + getRRULE()
            + ']';
   }
 
   public String toStringBrief() {
-    SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
-    sdf.setTimeZone(TIME_ZONE);
-
     return "VeventType"
-           + " dtstart [" + (getDTSTART() != null ? sdf.format(getDTSTART().getTime()) : "")
-           + "] dtend [" + (getDTEND() != null ? sdf.format(getDTEND().getTime()) : "")
+           + " dtstart [" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "")
+           + "] dtend [" + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "")
            + "] rrule [" + getRRULE()
            + ']';
   }

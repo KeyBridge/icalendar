@@ -15,20 +15,20 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.Serializable;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+import static ietf.params.xml.ns.icalendar.Constants.*;
 
 /**
  * Java class for UntilRecurType complex type.
@@ -55,7 +55,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <p>
  * Developer note: In this implementation all values are recorded as DATE-TIME.
  * This implementation has therefore been modified to only support DATE-TIME.
- * The DATE getter and setter methods read and write java.util.Date values, but
+ * The DATE getter and setter methods read and write java.time.LocalDate values, but
  * the internal storage is always DATE-TIME.
  * <p>
  * The internal DATE field getter and setter methods have been renamed with a
@@ -70,112 +70,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class UntilRecurType implements Serializable {
 
   private static final long serialVersionUID = 1L;
-
-  /**
-   * RFC5545 3.3.4. DATE
-   * <p>
-   * Purpose: This value type is used to identify values that contain a calendar
-   * date.
-   * <p>
-   * Format Definition: This value type is defined by the following notation:
-   * <pre>
-   * date               = date-value
-   * date-value         = date-fullyear date-month date-mday
-   * date-fullyear      = 4DIGIT
-   * date-month         = 2DIGIT        ;01-12
-   * date-mday          = 2DIGIT        ;01-28, 01-29, 01-30, 01-31
-   *                                    ;based on month/year
-   * </pre> Description: If the property permits, multiple "date" values are
-   * specified as a COMMA-separated list of values. The format for the value
-   * type is based on the [ISO.8601.2004] complete representation, basic format
-   * for a calendar date. The textual format specifies a four-digit year,
-   * two-digit month, and two-digit day of the month. There are no separator
-   * characters between the year, month, and day component text.
-   * <p>
-   * No additional content value encoding (i.e., BACKSLASH character encoding,
-   * see Section 3.3.11) is defined for this value type.
-   * <p>
-   * RFC 6321: 3.3.4 DATE: The date encoding pattern is:
-   * <code>pattern-date = xsd:string { pattern = "\d\d\d\d-\d\d-\d\d" }</code>
-   * XML Definition: Appendix A # 3.3.4 Example:
-   * <date>2011-05-17</date>
-   *
-   * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.4">Date</a>
-   * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.4">RELAX NG
-   * Schema 3.6.4 DATE</a>
-   */
-  private static final String PATTERN_DATE = "yyyyMMdd";
-  /**
-   * RFC 5545 3.3.5. DATE-TIME
-   * <p>
-   * Purpose: This value type is used to identify values that specify a precise
-   * calendar date and time of day.
-   * <p>
-   * Format Definition: This value type is defined by the following notation:
-   * <pre>
-   * date-time  = date "T" time ;As specified in the DATE and TIME
-   *                            ;value definitions
-   * </pre> Description: If the property permits, multiple "DATE-TIME" values
-   * are specified as a COMMA-separated list of values. No additional content
-   * value encoding (i.e., BACKSLASH character encoding, see Section 3.3.11) is
-   * defined for this value type.
-   * <p>
-   * The "DATE-TIME" value type is used to identify values that contain a
-   * precise calendar date and time of day. The format is based on the
-   * [ISO.8601.2004] complete representation, basic format for a calendar date
-   * and time of day. The text format is a concatenation of the "date", followed
-   * by the LATIN CAPITAL LETTER T character, the time designator, followed by
-   * the "time" format.
-   * <p>
-   * The "DATE-TIME" value type expresses time values in three forms:
-   * <p>
-   * The form of date and time with UTC offset MUST NOT be used. For example,
-   * the following is not valid for a DATE-TIME value:
-   * <p>
-   * 19980119T230000-0800 ;Invalid time format
-   * <p>
-   * FORM #1: DATE WITH LOCAL TIME <em>NOT SUPPORTED</em>
-   * <p>
-   * FORM #2: DATE WITH UTC TIME
-   * <p>
-   * The date with UTC time, or absolute time, is identified by a LATIN CAPITAL
-   * LETTER Z suffix character, the UTC designator, appended to the time value.
-   * <p>
-   * RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
-   * <code>pattern-date-time = xsd:string { pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?" }</code>
-   * XML Definition: Appendix A # 3.3.5 Example:
-   * <date-time>2011-05-17T12:00:00</date-time>
-   * <p>
-   * The "TZID" property parameter MUST NOT be applied to DATE-TIME properties
-   * whose time values are specified in UTC.
-   * <p>
-   * FORM #3: DATE WITH LOCAL TIME AND TIME ZONE REFERENCE <em>NOT
-   * SUPPORTED</em>
-   *
-   * @see <a
-   * href="http://tools.ietf.org/html/rfc5545#section-3.3.5">Date-Time</a>
-   * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.5">RELAX NG
-   * Schema 3.6.5 DATE-TIME</a>
-   */
-  private static final String PATTERN_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-  /**
-   * RFC 2445 UTC date time pattern.
-   * <p>
-   * This pattern is to be used only when printing to String. The PATTERN_DATE
-   * and PATTERN_DATE_TIME are to be used when marshaling to XML.
-   *
-   * @see RFC 6321
-   */
-  public static final String PATTERN_UTC = "yyyyMMdd'T'HHmmss'Z'";
-  /**
-   * Coordinated Universal Time.
-   * <p>
-   * Used to normalize all calendar instances to UTC. e.g.
-   * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z. Implements
-   * W3C XML Schema Part 2, Section 3.2.7.3 (A)
-   */
-  public static final java.util.TimeZone TIMEZONE_UTC = java.util.TimeZone.getTimeZone("UTC");
-
   /**
    * xsd:date — Gregorian calendar date
    * <p>
@@ -222,8 +116,8 @@ public class UntilRecurType implements Serializable {
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    */
   @XmlElement
-  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDate.class)
-  protected XMLGregorianCalendar date;
+  @XmlJavaTypeAdapter(type = LocalDate.class, value = XmlAdapterLocalDateXCalDate.class)
+  protected LocalDate date;
   /**
    * xsd:dateTime — Instant of time (Gregorian calendar)
    * <p>
@@ -266,22 +160,18 @@ public class UntilRecurType implements Serializable {
    *
    */
   @XmlElement(name = "date-time")
-  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
-  protected XMLGregorianCalendar dateTime;
+  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
+  protected LocalDateTime dateTime;
 
   public UntilRecurType() {
   }
 
-  public UntilRecurType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
+  public UntilRecurType(LocalDateTime dateTime) {
+    this.dateTime = dateTime;
   }
 
-  public UntilRecurType(Calendar dateTime) throws DatatypeConfigurationException {
-    setDateTime((GregorianCalendar) dateTime);
-  }
-
-  public UntilRecurType(java.util.Date dateTime) throws DatatypeConfigurationException {
-    dateTime(dateTime);
+  public UntilRecurType(LocalDate date) {
+    this.date = date;
   }
 
   /**
@@ -299,42 +189,14 @@ public class UntilRecurType implements Serializable {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
     if (PATTERN_UTC.length() - 4 == untilString.length()) {
-      dateTime(new SimpleDateFormat(PATTERN_UTC).parse(untilString));
-    } else if (PATTERN_DATE.length() == untilString.length()) {
-      setDate(new SimpleDateFormat(PATTERN_DATE).parse(untilString));
+      setDateTime(LocalDateTime.parse(untilString, FORMATTER_UTC));
+    } else if (PATTERN_RFC5545_DATE.length() == untilString.length()) {
+      setDate(LocalDate.parse(untilString, FORMATTER_RFC5545_DATE));
     } else if (PATTERN_DATE_TIME.length() - 4 == untilString.length()) {
-      dateTime(new SimpleDateFormat(PATTERN_DATE_TIME).parse(untilString));
+      setDateTime(LocalDateTime.parse(untilString, FORMATTER_DATE_TIME));
     } else {
       throw new ParseException("Failed to parse UNTIL date string: " + untilString, 0);
     }
-  }
-
-  /**
-   * Gets the value of the date property. If the date field is null a new
-   * Calendar instance is created and returned, but the internal field will
-   * remain unset.
-   *
-   * @return a non-null Calendar instance.
-   */
-  public Calendar getDateXml() {
-    return date != null
-           ? date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
-           : Calendar.getInstance(TIMEZONE_UTC);
-  }
-
-  /**
-   * Sets the value of the date property.
-   *
-   * @param calendar the calendar value
-   * @throws DatatypeConfigurationException if the calendar cannot be converted
-   *                                        to a XMLGregorianCalendar
-   */
-  public void setDateXml(Calendar calendar) throws DatatypeConfigurationException {
-    this.date = DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize();
-  }
-
-  public boolean isSetDateXml() {
-    return (this.date != null);
   }
 
   /**
@@ -344,36 +206,17 @@ public class UntilRecurType implements Serializable {
    *
    * @return a non-null Calendar instance.
    */
-  public Calendar getDateTime() {
-    return dateTime != null
-           ? dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null)
-           : Calendar.getInstance(TIMEZONE_UTC);
+  public LocalDateTime getDateTime() {
+    return dateTime;
   }
 
   /**
    * Sets the value of the dateTime property.
    *
-   * @param calendar the calendar value
-   * @throws DatatypeConfigurationException if the calendar cannot be converted
-   *                                        to a XMLGregorianCalendar
+   * @param dateTime the calendar value
    */
-  public final void setDateTime(Calendar calendar) throws DatatypeConfigurationException {
-    this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) calendar).normalize();
-  }
-
-  /**
-   * Internal helper method to set the UNTIL DateTime using a conventional Date
-   * instance.
-   *
-   * @param dateTime
-   * @throws DatatypeConfigurationException
-   */
-  public final void dateTime(java.util.Date dateTime) throws DatatypeConfigurationException {
-    if (dateTime != null) {
-      Calendar calendar = Calendar.getInstance(TIMEZONE_UTC);
-      calendar.setTime(dateTime);
-      setDateTime(calendar);
-    }
+  public final void setDateTime(LocalDateTime dateTime) throws DatatypeConfigurationException {
+    this.dateTime = dateTime;
   }
 
   public boolean isSetDateTime() {
@@ -381,44 +224,22 @@ public class UntilRecurType implements Serializable {
   }
 
   /**
-   * Get the DATE-TIME field as a java.util.Date instance.
+   * Get the DATE-TIME field as a java.time.LocalDate instance.
    *
    * @return a DATE-TIME value
    */
-  public Date getDate() {
-    return getDateTime().getTime();
+  public LocalDate getDate() {
+    return getDateTime().toLocalDate();
   }
 
   /**
-   * Set the DATE-TIME field with a java.util.Date instance.
+   * Set the DATE-TIME field with a java.time.LocalDate instance.
    *
    * @param date a DATE-TIME value
    */
-  public final void setDate(Date date) {
-    try {
-      dateTime(date);
-    } catch (DatatypeConfigurationException ex) {
-      Logger.getLogger(UntilRecurType.class.getName()).log(Level.SEVERE, null, ex);
-    }
-  }
-
-  /**
-   * A convenience method to get either the dateTime or date fields converted to
-   * a java.util.Calendar. This method does not care which internal field is
-   * populated - it will grab the first available non-null value.
-   * <p>
-   * Developer note: This method should be used only for GETTING and not for
-   * inspection.
-   *
-   * @return a Calendar instance populated by EITHER the date or dateTime field.
-   */
-  public Calendar getCalendar() {
-    if (dateTime != null) {
-      return dateTime.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null);
-    } else if (date != null) {
-      return date.toGregorianCalendar(TIMEZONE_UTC, Locale.ENGLISH, null);
-    }
-    return null;
+  public final void setDate(LocalDate date) {
+    this.date = date;
+    dateTime = dateTime.with(date);
   }
 
   @Override
@@ -452,8 +273,8 @@ public class UntilRecurType implements Serializable {
    * @return true if the time of this Calendar is before the time represented by
    *         when; false otherwise.
    */
-  public boolean before(Calendar when) {
-    return date != null ? getDateXml().before(when) : getDateTime().before(when);
+  public boolean before(LocalDateTime when) {
+    return date != null ? getDate().isBefore(when.toLocalDate()) : getDateTime().isBefore(when);
   }
 
   /**
@@ -464,8 +285,8 @@ public class UntilRecurType implements Serializable {
    * @return true if the time of this Calendar is after the time represented by
    *         when; false otherwise.
    */
-  public boolean after(Calendar when) {
-    return date != null ? getDateXml().after(when) : getDateTime().after(when);
+  public boolean after(LocalDateTime when) {
+    return date != null ? getDate().isAfter(when.toLocalDate()) : getDateTime().isAfter(when);
   }
 
   /**
@@ -485,13 +306,10 @@ public class UntilRecurType implements Serializable {
    */
   @Override
   public String toString() {
-    DateFormat sdf;
     if (dateTime != null) {
-      sdf = new SimpleDateFormat(PATTERN_DATE_TIME);
-      return getCalendar() != null ? sdf.format(getCalendar().getTime()) : null;
+      return dateTime.format(FORMATTER_DATE_TIME);
     } else if (date != null) {
-      sdf = new SimpleDateFormat(PATTERN_DATE);
-      return getCalendar() != null ? sdf.format(getCalendar().getTime()) : null;
+      return date.format(FORMATTER_RFC5545_DATE);
     } else {
       return null;
     }

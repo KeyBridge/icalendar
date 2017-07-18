@@ -13,24 +13,26 @@
  */
 package ietf.params.xml.ns.icalendar.util;
 
+import ietf.params.xml.ns.icalendar.Constants;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
-import org.junit.Test;
 
 /**
  *
  * @author Key Bridge
  */
 public class ICalendarUtilTest {
-
-  public ICalendarUtilTest() {
-  }
 
   @Test
   public void testPeriodList() throws Exception {
@@ -72,15 +74,61 @@ public class ICalendarUtilTest {
     RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
 
     System.out.println(" recur " + recur.toStringFull());
-    Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart.getTime(),
-                                                                    dtend.getTime(),
+//    Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart.getTime(),
+//                                                                    dtend.getTime(),
+//                                                                    recur,
+//                                                                    periodStart.getTime(),
+//                                                                    periodEnd.getTime());
+    System.out.println("RecurSet");
+    int i = 0;
+//    for (PeriodType periodType : recurSet) {
+//      System.out.println(i++ + "   " + periodType);
+//    }
+
+  }
+  @Test
+  public void testPeriodListJavaTime() throws Exception {
+    System.out.println("TestPeriodList");
+
+    DateTimeFormatter format = Constants.FORMATTER_DATE_TIME;
+
+    LocalDateTime dtstart = LocalDateTime.of(2014, 1, 29, 0, 0, 0);
+    LocalDateTime dtend = LocalDateTime.of(2015, 12, 29, 0, 0, 0);
+
+    System.out.println("dtstart      " + dtstart.format(format));
+    System.out.println("dtend        " + dtend.format(format));
+
+//    Schedule s = new Schedule(start, end, null, timeZoneEst, null);
+//    s.setRecur(new Recur("FREQ=DAILY;INTERVAL=2"));
+    LocalDateTime periodStart = LocalDateTime.of(2014, 5, 29, 0, 0, 0);
+    LocalDateTime periodEnd = LocalDateTime.of(2014, 7, 2, 0, 0, 0);
+    System.out.println("period start " + periodStart.format(format));
+    System.out.println("period End   " + periodEnd.format(format));
+//    List<Schedule> list = s.getPeriodList(periodStart, periodEnd);
+//    for (Schedule schedule : list) {
+//      System.out.println("  period " + schedule);
+//    }
+
+//    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20140725T000000Z");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;UNTIL=20140730T000000Z;WKST=SU;BYDAY=TU,WE,TH,SA");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=15;INTERVAL=2;WKST=SU;BYDAY=TU,WE,TH");
+//    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
+    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
+
+    System.out.println(" recur " + recur);
+
+    System.out.println(recur.getFreq());
+    System.out.println(recur.getInterval());
+    Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart,
+                                                                    dtend,
                                                                     recur,
-                                                                    periodStart.getTime(),
-                                                                    periodEnd.getTime());
+                                                                    periodStart,
+                                                                    periodEnd);
     System.out.println("RecurSet");
     int i = 0;
     for (PeriodType periodType : recurSet) {
-      System.out.println(i++ + "   " + periodType);
+      System.out.println(i++ + "   " + periodType + "   " + periodType.getEnd());
     }
 
   }

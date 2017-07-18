@@ -27,15 +27,12 @@ import ietf.params.xml.ns.icalendar.property.base.datedatetime.DtstartPropType;
 import ietf.params.xml.ns.icalendar.property.base.recur.RrulePropType;
 import ietf.params.xml.ns.icalendar.property.base.text.UidPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.TimeZone;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.*;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.Duration;
 
 /**
  *
@@ -87,18 +84,6 @@ public abstract class BaseComponentType {
    */
   @XmlTransient
   public static final String EXPERIMENTAL_PREFIX = "X-";
-  /**
-   * [ISO.8601.2004] International Organization for Standardization, "Data
-   * elements and interchange formats -- Information interchange --
-   * Representation of dates and times", 2004.
-   * <p>
-   * yyyyMMdd'T'HHmmss'Z' - the default date time formatting pattern
-   */
-  public static final String UTC_PATTERN = "yyyyMMdd'T'HHmmss'Z'";
-  public static final String RELAXED_PATTERN = "yyyyMMdd";
-
-  @XmlTransient
-  protected static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
   /**
    * The iCalendar object name. This is set in the component constructor.
    */
@@ -236,20 +221,20 @@ public abstract class BaseComponentType {
    *
    * @return
    */
-  public Calendar getDTSTAMP() {
+  public LocalDateTime getDTSTAMP() {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtstamp is a DtstampPropType
      */
     JAXBElement<DtstampPropType> jAXBElement = findJaXBElement("DTSTAMP");
     if (jAXBElement != null) {
-      return jAXBElement.getValue().getCalendar();
+      return jAXBElement.getValue().getUtcDateTime().toLocalDateTime();
     } else {
       return null;
     }
   }
 
-  public void setDTSTAMP(Calendar calendar) throws DatatypeConfigurationException {
-    getProperties().addProperty(new ObjectFactory().createDtstamp(new DtstampPropType((GregorianCalendar) calendar)));
+  public void setDTSTAMP(LocalDateTime dateTime) {
+    getProperties().addProperty(new ObjectFactory().createDtstamp(new DtstampPropType(dateTime)));
   }
 
   /**
@@ -268,20 +253,20 @@ public abstract class BaseComponentType {
    *
    * @return
    */
-  public Calendar getDTSTART() {
+  public LocalDateTime getDTSTART() {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtstart is a DtstartPropType
      */
     JAXBElement<DtstartPropType> jAXBElement = findJaXBElement("DTSTART");
     if (jAXBElement != null) {
-      return jAXBElement.getValue().getCalendar();
+      return jAXBElement.getValue().getDateTime();
     } else {
       return null;
     }
   }
 
-  public void setDTSTART(Calendar calendar) throws DatatypeConfigurationException {
-    getProperties().addProperty(new ObjectFactory().createDtstart(new DtstartPropType((GregorianCalendar) calendar)));
+  public void setDTSTART(LocalDateTime dateTime) {
+    getProperties().addProperty(new ObjectFactory().createDtstart(new DtstartPropType(dateTime)));
   }
 
   /**
@@ -300,7 +285,7 @@ public abstract class BaseComponentType {
    *
    * @return
    */
-  public Calendar getDTEND() {
+  public LocalDateTime getDTEND() {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtend is a DtendPropType
      * <p>
@@ -309,24 +294,22 @@ public abstract class BaseComponentType {
      */
     JAXBElement<DtendPropType> jAXBElement = findJaXBElement("DTEND");
     if (jAXBElement != null) {
-      return jAXBElement.getValue().getCalendar();
+      return jAXBElement.getValue().getDateTime();
     } else if (findJaXBElement("DURATION") != null) {
       /**
        * If the dtEnd is not set then try to calculate it from the duration.
        */
-      Calendar dtEnd = (Calendar) getDTSTART().clone();
-      dtEnd.add(Calendar.MILLISECOND, (int) getDURATION().getTimeInMillis(dtEnd));
-      return dtEnd;
+      return getDTSTART().plus(getDURATION());
     } else {
       return null;
     }
   }
 
-  public void setDTEND(Calendar calendar) throws Exception {
+  public void setDTEND(LocalDateTime dateTime) throws Exception {
     if (findJaXBElement("DURATION") != null) {
       throw new Exception("DURATION is already set. RFC5545 says either 'dtend' or 'duration' may appear in a 'eventprop', but 'dtend' and 'duration' MUST NOT occur in the same 'eventprop'");
     }
-    getProperties().addProperty(new ObjectFactory().createDtend(new DtendPropType((GregorianCalendar) calendar)));
+    getProperties().addProperty(new ObjectFactory().createDtend(new DtendPropType(dateTime)));
   }
 
   /**
@@ -356,18 +339,14 @@ public abstract class BaseComponentType {
        * If the duration is not set then try to calculate it from the start/end
        * dates.
        */
-      try {
-        return DatatypeFactory.newInstance().newDuration(getDTEND().getTimeInMillis() - getDTSTART().getTimeInMillis());
-      } catch (DatatypeConfigurationException datatypeConfigurationException) {
-        return null;
-      }
+      return Duration.between(getDTSTART(), getDTEND());
     } else {
       return null;
     }
   }
 
   public void setDURATION(String duration) throws Exception {
-    setDURATION(DatatypeFactory.newInstance().newDuration(duration));
+    setDURATION(Duration.parse(duration));
   }
 
   public void setDURATION(Duration duration) throws Exception {

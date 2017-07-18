@@ -24,7 +24,7 @@ we do not recommend shifting the datetime value, but instead recommend using a d
 converter.
 For example: the same datetime value may be displayed using a timezone EST (GMT-4) and timezone PST (GTM-7)
 display converter as 9:00 AM (EST) and 06:00 AM (PST), respectively, without modifying the underlying datetime value.
-Common display converters include _FacesConverter_, _SimpleDateFormat_, etc.
+Common display converters include _FacesConverter_, _java.date.DateTimeFormatter_, etc.
 
 ## Supported specifications
 
@@ -35,7 +35,7 @@ including the original XSD are based on the excellent [Bedework](https://www.ape
 | ---- | ------------- |
 | iCalendar | [RFC 2445](http://tools.ietf.org/html/rfc2445) (deprecated) |
 | iCalendar | [RFC 5545](http://tools.ietf.org/html/rfc5545) |
-| Recurrence | [RFC 7229](http://tools.ietf.org/html/rfc7529) |
+| Recurrence | [RFC 7529](http://tools.ietf.org/html/rfc7529) |
 | xCal | [RFC 6321](http://tools.ietf.org/html/rfc6321) |
 | jCal | [RFC 7265](http://tools.ietf.org/html/rfc7265) |
 | Parameter Value Encoding | [RFC 6868](http://tools.ietf.org/html/rfc6868)

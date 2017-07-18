@@ -26,3 +26,6 @@ pom.xml.next
 release.properties
 
 /nbproject/
+
+*.iml
+.idea
