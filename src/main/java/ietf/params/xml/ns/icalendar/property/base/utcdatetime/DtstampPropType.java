@@ -15,12 +15,14 @@
  */
 package ietf.params.xml.ns.icalendar.property.base.utcdatetime;
 
+import ietf.params.xml.ns.icalendar.Constants;
 import ietf.params.xml.ns.icalendar.property.base.UtcDatetimePropertyType;
-import java.util.GregorianCalendar;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.DatatypeConfigurationException;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * Java class for DtstampPropType complex type.
@@ -44,7 +46,11 @@ public class DtstampPropType extends UtcDatetimePropertyType {
   public DtstampPropType() {
   }
 
-  public DtstampPropType(GregorianCalendar calendar) throws DatatypeConfigurationException {
-    super(calendar);
+  public DtstampPropType(ZonedDateTime dateTime) {
+    super(dateTime);
+  }
+
+  public DtstampPropType(LocalDateTime dateTime) {
+    super(ZonedDateTime.of(dateTime, Constants.TIMEZONE_UTC));
   }
 }

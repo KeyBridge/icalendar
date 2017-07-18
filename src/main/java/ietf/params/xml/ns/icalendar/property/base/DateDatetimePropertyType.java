@@ -15,16 +15,16 @@
  */
 package ietf.params.xml.ns.icalendar.property.base;
 
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDate;
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.datedatetime.*;
-import java.util.*;
+
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Java class for DateDatetimePropertyType complex type.
@@ -102,8 +102,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
    *
    */
   @XmlElement(name = "date-time")
-  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
-  protected XMLGregorianCalendar dateTime;
+  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
+  protected LocalDateTime dateTime;
   /**
    * xsd:date — Gregorian calendar date
    * <p>
@@ -150,8 +150,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    */
   @XmlElement
-  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDate.class)
-  protected XMLGregorianCalendar date;
+  @XmlJavaTypeAdapter(type = LocalDate.class, value = XmlAdapterLocalDateXCalDate.class)
+  protected LocalDate date;
 
   public DateDatetimePropertyType() {
   }
@@ -162,10 +162,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * Note: The provided dateTime parameter is normalized to UTC.
    *
    * @param dateTime the date time configuration
-   * @throws DatatypeConfigurationException if the datetime combination cannot
-   *                                        be parsed and copied
    */
-  public DateDatetimePropertyType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
+  public DateDatetimePropertyType(LocalDateTime dateTime) {
     /**
      * Call normalize to Normalize this instance to UTC.
      * <p>
@@ -173,63 +171,38 @@ public class DateDatetimePropertyType extends BasePropertyType {
      * <p>
      * Implements W3C XML Schema Part 2, Section 3.2.7.3 (A).
      */
-    this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
+    this.dateTime = dateTime;
+    this.date = dateTime.toLocalDate();
   }
 
   /**
    * Set the DateTime parameter with a DATE in the default UTC timezone.
-   * <p>
-   * Note that java.util.Date has no notion of TimeZone and only contains the
-   * number of milliseconds since the epoch. Date instances are invariant across
-   * time zones.
    *
    * @param date a date
-   * @throws DatatypeConfigurationException if the date combination cannot be
-   *                                        converted to an XMLGregorianCalendar
    */
-  public DateDatetimePropertyType(Date date) throws DatatypeConfigurationException {
-    Calendar cal = Calendar.getInstance(TIME_ZONE);
-    cal.setTime(date);
-    setDateTime((GregorianCalendar) cal);
+  public DateDatetimePropertyType(LocalDate date) {
+    setDate(date);
+    setDateTime(date.atStartOfDay());
   }
 
   /**
    * Gets the value of the dateTime property.
    *
-   * @return possible object is {@link XMLGregorianCalendar }
+   * @return possible object is {@link LocalDateTime }
    *
    */
-  public XMLGregorianCalendar getDateTime() {
+  public LocalDateTime getDateTime() {
     return dateTime;
   }
 
   /**
    * Sets the value of the dateTime property.
    *
-   * @param value allowed object is {@link XMLGregorianCalendar }
+   * @param value allowed object is {@link LocalDateTime }
    *
    */
-  public void setDateTime(XMLGregorianCalendar value) {
+  public void setDateTime(LocalDateTime value) {
     this.dateTime = value;
-  }
-
-  /**
-   * Sets the value of the dateTime property from a normal java.util.Calendar.
-   * The timezone of the input calendar is automatically normalized to UTC.
-   *
-   * @param dateTime a calendar instance.
-   * @throws DatatypeConfigurationException if the calendar instance cannot be
-   *                                        converted to an XMLGregorianCalendar
-   */
-  public final void setDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    /**
-     * Call normalize to Normalize this instance to UTC.
-     * <p>
-     * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z
-     * <p>
-     * Implements W3C XML Schema Part 2, Section 3.2.7.3 (A).
-     */
-    this.dateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
   }
 
   public boolean isSetDateTime() {
@@ -239,32 +212,25 @@ public class DateDatetimePropertyType extends BasePropertyType {
   /**
    * Gets the value of the date property.
    *
-   * @return possible object is {@link XMLGregorianCalendar }
+   * @return possible object is {@link LocalDate }
    *
    */
-  public XMLGregorianCalendar getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
   /**
    * Sets the value of the date property.
    *
-   * @param value allowed object is {@link XMLGregorianCalendar }
+   * @param value allowed object is {@link LocalDate }
    *
    */
-  public void setDate(XMLGregorianCalendar value) {
+  public void setDate(LocalDate value) {
     this.date = value;
   }
 
   public boolean isSetDate() {
     return (this.date != null);
-  }
-
-  public Calendar getCalendar() {
-    if (dateTime != null) {
-      return dateTime.toGregorianCalendar(TIME_ZONE, Locale.ENGLISH, null);
-    }
-    return null;
   }
 
   @Override

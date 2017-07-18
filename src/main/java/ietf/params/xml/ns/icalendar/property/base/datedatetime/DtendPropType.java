@@ -16,12 +16,11 @@
 package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.DatatypeConfigurationException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Java class for DtendPropType complex type.
@@ -44,11 +43,11 @@ public class DtendPropType extends DateDatetimePropertyType {
   public DtendPropType() {
   }
 
-  public DtendPropType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
+  public DtendPropType(LocalDateTime dateTime) {
     super(dateTime);
   }
 
-  public DtendPropType(Date date) throws DatatypeConfigurationException {
+  public DtendPropType(LocalDate date) {
     super(date);
   }
 

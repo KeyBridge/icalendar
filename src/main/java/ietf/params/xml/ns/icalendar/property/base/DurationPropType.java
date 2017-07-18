@@ -15,13 +15,16 @@
  */
 package ietf.params.xml.ns.icalendar.property.base;
 
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterDurationXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
+
+import java.time.Duration;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.Duration;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Java class for DurationPropType complex type.
@@ -83,6 +86,7 @@ public class DurationPropType extends BasePropertyType {
    * P15DT5H0M20S. A duration of 7 weeks would be: P7W
    */
   @XmlElement(required = true)
+  @XmlJavaTypeAdapter(type = java.time.Duration.class, value = XmlAdapterDurationXCalDateTime.class)
   protected Duration duration;
 
   public DurationPropType() {

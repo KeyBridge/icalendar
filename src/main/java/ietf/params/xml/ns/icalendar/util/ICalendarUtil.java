@@ -15,16 +15,20 @@
  */
 package ietf.params.xml.ns.icalendar.util;
 
-import ietf.params.xml.ns.icalendar.EWeekdayRecurType;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
-import java.text.SimpleDateFormat;
+
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.WeekFields;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.Duration;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A utility class to help interact and manipulate ICalendar classes and
@@ -39,18 +43,6 @@ import javax.xml.datatype.Duration;
 public class ICalendarUtil {
 
   private static final Logger LOGGER = Logger.getLogger(ICalendarUtil.class.getName());
-
-  public static final java.util.TimeZone TIMEZONE_UTC = java.util.TimeZone.getTimeZone("UTC");
-  private static final SimpleDateFormat sdf;
-
-  /**
-   * Populate the internal SimpleDateFormat.
-   */
-  static {
-    sdf = new SimpleDateFormat();
-    sdf.setTimeZone(TIMEZONE_UTC);
-  }
-
   /**
    * Calculate a recurrence set during the specified period for an event
    * beginning and ending on the specified days and having the specified
@@ -76,15 +68,15 @@ public class ICalendarUtil {
    * @return a non-null TreeSet containing calculated event instances occurring
    *         during the defined period (e.g. between the period start and end
    *         dates.)
-   * @throws DatatypeConfigurationException if a PeriodType fails to build
+//   * @throws DatatypeConfigurationException if a PeriodType fails to build
    * @throws Exception                      if the event does not contain the
    *                                        period of interest
    */
-  public static Set<PeriodType> calculateRecurrenceSet(Date eventStart,
-                                                       Date eventEnd,
-                                                       RecurType recurType,
-                                                       Date periodStart,
-                                                       Date periodEnd) throws DatatypeConfigurationException, Exception {
+  public static Set<PeriodType> calculateRecurrenceSet(final LocalDateTime eventStart,
+                                                       final LocalDateTime eventEnd,
+                                                       final RecurType recurType,
+                                                       final LocalDateTime periodStart,
+                                                       final LocalDateTime periodEnd) {
     /**
      * Initialize the period list. Use a HashSet to enforce uniqueness.
      */
@@ -92,19 +84,19 @@ public class ICalendarUtil {
     /**
      * Confirm the period of interest is contained within the event
      */
-    if (periodEnd.before(eventStart) || periodStart.after(eventEnd)) {
-      throw new Exception("Event does not contain period of interest.");
+    if (periodEnd.isBefore(eventStart) || periodStart.isAfter(eventEnd)) {
+      throw new IllegalArgumentException("Event does not contain period of interest.");
     }
     /**
      * Preserve the event duration. This is applied later to each calculated
      * PeriodType.
      */
-    Duration duration = duration(eventStart, eventEnd);
+    final Duration duration = Duration.between(eventStart, eventEnd);
     /**
      * Copy the period start datetime into calendar instances to facilitate
      * calculation. Calculating with java.util.Date is ... less than satisfying.
      */
-    Calendar pStart = Calendar.getInstance(TIMEZONE_UTC);
+    LocalDateTime pStart = LocalDateTime.from(periodStart);
     /**
      * Apply RFC 5545 Page 41: The BYWEEKNO rule corresponds to weeks according
      * to week numbering as defined in [ISO.8601.2004]. A week is defined as a
@@ -112,13 +104,12 @@ public class ICalendarUtil {
      * start (see WKST). Week number one of the calendar year is the first week
      * that contains at least four (4) days in that calendar year.
      */
-    pStart.setTime(periodStart);
-    pStart.setMinimalDaysInFirstWeek(4);
+    final WeekFields weekFields = WeekFields.of(
+        recurType.isSetWkst() ? recurType.getWkst().getDayOfWeek() : DayOfWeek.MONDAY, 4);
     /**
      * Copy the period end datetime into a calendar instance.
      */
-    Calendar pEnd = Calendar.getInstance(TIMEZONE_UTC);
-    pEnd.setTime(periodEnd);
+    LocalDateTime pEnd = LocalDateTime.from(periodEnd);
     /**
      * Now begin the recurrence set calculation.
      * <p>
@@ -126,13 +117,11 @@ public class ICalendarUtil {
      * include any events that may have begun before the period start and end
      * during the period.
      */
-    while (pStart.getTime().after(eventStart) && pStart.getTime().before(eventEnd)) {
-      pStart.add(Calendar.MILLISECOND, -(int) duration.getTimeInMillis(pStart));
-    }
+    if (eventStart.isBefore(pStart)) pStart = eventStart;
     /**
      * Second: Add the initial event if it falls within the (adjusted) period.
      */
-    if (pStart.getTime().before(eventStart) && periodEnd.after(eventStart)) {
+    if ((pStart.isBefore(eventStart) || pStart.isEqual(eventEnd)) && periodEnd.isAfter(eventStart)) {
       periodSet.add(new PeriodType(eventStart, duration));
     }
     /**
@@ -140,15 +129,9 @@ public class ICalendarUtil {
      * the period. This will ensure only recurring events that are AFTER the
      * original EVENT are added.
      */
-    while (pStart.getTime().before(eventStart)) {
-      pStart.add(Calendar.MILLISECOND, (int) duration.getTimeInMillis(pStart));
+    while (pStart.isBefore(eventStart)) {
+      pStart = pStart.minus(duration);
     }
-    /**
-     * Set the pStart TIME component to the dtStart TIME value. This preserves
-     * the pStart DATE value set above but ensures that calculated recurring
-     * events match the DTSTART TIME.
-     */
-    pStart = mergeTime(pStart, eventStart);
     /**
      * Finally: Scan through the period of interest in FREQ increments. For each
      * increment calculate a list of candidate occurrence dates. Analyze each
@@ -162,47 +145,50 @@ public class ICalendarUtil {
      * PeriodType list is the set of recurring events within the period of
      * inquiry.
      */
-    while (pStart.before(pEnd)) {
+    while (pStart.isBefore(pEnd)) {
       /**
        * Build a list of candidate DTSTART dates within the current FREQ period.
        * Each candidate Calendar has a unique DATE value and a TIME value
        * corresponding to the original event (or the hour if BYHOUR is set).
        */
-      Set<Calendar> startCandidateSet = buildCandidateList(recurType, pStart);
+      Set<LocalDateTime> startCandidateSet = buildCandidateList(recurType, pStart, weekFields);
       /**
        * Scan through the set of candidate START dates, evaluating their
        * validity and adding only those that match the recurrence rule.
        */
-      for (Calendar startCandidate : startCandidateSet) {
+      for (LocalDateTime startCandidate : startCandidateSet) {
         if (recurType.isSetUntil() && recurType.getUntil().before(startCandidate)) {
           /**
            * INVALID: candidate is AFTER the UNTIL date.
            */
-          LOGGER.log(Level.FINEST, "Warning: AFTER the UNTIL date {0}", sdf.format(startCandidate.getTime()));
+          LOGGER.log(Level.FINEST, "Warning: AFTER the UNTIL date {0}", startCandidate);
         } else if (recurType.isSetCount() && periodSet.size() >= recurType.getCount()) {
           /**
            * INVALID: COUNT value is exceeded.
            */
-          LOGGER.log(Level.FINEST, "Warning: COUNT EXCEEDED {0}", sdf.format(startCandidate.getTime()));
-        } else if (startCandidate.getTime().after(periodStart)
-                && startCandidate.getTime().after(eventStart)
-                && startCandidate.getTime().before(periodEnd)) {
+          LOGGER.log(Level.FINEST, "Warning: COUNT EXCEEDED {0}", startCandidate);
+        } else if (startCandidate.isAfter(periodStart)
+                && startCandidate.isAfter(eventStart)
+                && startCandidate.isBefore(periodEnd)) {
           /**
            * VALID: CREATE and ADD and new PeriodType to the set.
            */
-          periodSet.add(new PeriodType((GregorianCalendar) startCandidate, duration));
+          periodSet.add(new PeriodType(startCandidate, duration));
         } else {
           /**
            * INVALID: OUT OF RANGE or other UNKNOWN error.
            */
-          LOGGER.log(Level.FINEST, "Warning: OUT OF RANGE or other UNKNOWN error {0}", sdf.format(startCandidate.getTime()));
+          LOGGER.log(Level.FINEST, "Warning: OUT OF RANGE or other UNKNOWN error {0}", startCandidate);
         }
       }
       /**
        * Important: Increment the pStart value by the FREQ increment, multiplied
        * by the FREQ INTERVAL value if present.
        */
-      increment(recurType, pStart);
+      long amount = recurType.isSetInterval() && recurType.getInterval() >= 1
+          ? recurType.getInterval()
+          : 1;
+      pStart = pStart.plus(amount, recurType.getFreq().getTemporalUnit());
     } // END while loop
     /**
      * Return a sorted version of the period set.
@@ -220,28 +206,8 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> bySecond(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetBysecond()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (Integer integer : recurType.getBysecond()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.SECOND, integer);
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (Integer integer : recurType.getBysecond()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.SECOND, integer);
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> bySecond(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getBysecond(), periodStart, LocalDateTime::withSecond);
   }
 
   /**
@@ -253,28 +219,8 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> byMinute(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetByminute()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (Integer integer : recurType.getByminute()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.MINUTE, integer);
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (Integer integer : recurType.getByminute()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.MINUTE, integer);
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> byMinute(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getByminute(), periodStart, LocalDateTime::withMinute);
   }
 
   /**
@@ -286,56 +232,53 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> byHour(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetByhour()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (Integer integer : recurType.getByhour()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.HOUR_OF_DAY, integer);
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (Integer integer : recurType.getByhour()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.HOUR_OF_DAY, integer);
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> byHour(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getByhour(), periodStart, LocalDateTime::withHour);
   }
-
   /**
-   * Calculate the DAILY recurrence rule.
-   * <p>
-   * This is ONLY called for DAILY type recurrence.
-   * <p>
-   * The DAILY rule is very simple: just add the current day. Developer note:
-   * DAILY recurrence should (preferably) have an UNTIL or COUNT, which are
-   * handled in the WHILE loop wrapping this method. If UNTIL and COUNT are not
-   * specified then the DAILY will return every day in the period after the
-   * event start.
+   * Calculate a rule for a generic input.
    *
    * @param dateSet     the existing set of candidate dates
-   * @param recurType   the recurrence type (not used but present here for
-   *                    consistency with other date set generators.
+   * @param values      an Integer collection that represent the BY[TEMPORAL_AMOUNT] rule values
    * @param periodStart the period start
+   * @param function    a function that creates new LocalDateTimes given the cartesian product of
+   *                    input dates and BY[TEMPORAL_AMOUNT] rule values
    * @return a non-null HashSet
    */
-  private static Set<Calendar> day(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    Set<Calendar> set = new HashSet<>();
+  private static Set<LocalDateTime> byGeneric(Set<LocalDateTime> dateSet, Collection<Integer> values,
+                                              LocalDateTime periodStart,
+                                              BiFunction<LocalDateTime, Integer, LocalDateTime> function) {
+    if (values.isEmpty()) return dateSet;
+    return (dateSet.isEmpty() ? Stream.of(periodStart) : dateSet.stream())
+        .flatMap(date -> values.stream()
+            .map(integer -> function.apply(date, integer)))
+        .collect(Collectors.toSet());
+  }
+
+    /**
+     * Calculate the DAILY recurrence rule.
+     * <p>
+     * This is ONLY called for DAILY type recurrence.
+     * <p>
+     * The DAILY rule is very simple: just add the current day. Developer note:
+     * DAILY recurrence should (preferably) have an UNTIL or COUNT, which are
+     * handled in the WHILE loop wrapping this method. If UNTIL and COUNT are not
+     * specified then the DAILY will return every day in the period after the
+     * event start.
+     *
+     * @param dateSet     the existing set of candidate dates
+     * @param recurType   the recurrence type (not used but present here for
+     *                    consistency with other date set generators.
+     * @param periodStart the period start
+     * @return a non-null HashSet
+     */
+  private static Set<LocalDateTime> day(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    Set<LocalDateTime> set = new HashSet<>();
     if (dateSet.isEmpty()) {
-      final Calendar cal = (Calendar) periodStart.clone();
-      set.add(cal);
+      set.add(LocalDateTime.from(periodStart));
     } else {
-      for (Calendar calendar : dateSet) {
-        final Calendar cal = (Calendar) calendar.clone();
-        set.add(cal);
+      for (LocalDateTime calendar : dateSet) {
+        set.add(LocalDateTime.from(calendar));
       }
     }
     return set;
@@ -350,28 +293,8 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> byDay(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetByday()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (EWeekdayRecurType weekday : recurType.getByday()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.DAY_OF_WEEK, weekday.getCalendarValue());
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (EWeekdayRecurType weekday : recurType.getByday()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.DAY_OF_WEEK, weekday.getCalendarValue());
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> byDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getByhour(), periodStart, LocalDateTime::withHour);
   }
 
   /**
@@ -383,28 +306,9 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> byWeekNo(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetByweekno()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (Integer integer : recurType.getByweekno()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.WEEK_OF_YEAR, integer);
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (Integer integer : recurType.getByweekno()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.WEEK_OF_YEAR, integer);
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> byWeekNo(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+    return byGeneric(dateSet, recurType.getByweekno(), periodStart,
+        (date, integer) -> date.with(weekFields.weekOfYear(), integer));
   }
 
   /**
@@ -416,28 +320,8 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> byMonth(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetBymonth()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (Integer integer : recurType.getBymonth()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.MONTH, integer);
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (Integer integer : recurType.getBymonth()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.MONTH, integer);
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> byMonth(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getBymonth(), periodStart, LocalDateTime::withMonth);
   }
 
   /**
@@ -449,28 +333,8 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> byMonthDay(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetBymonthday()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (Integer integer : recurType.getBymonthday()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.DAY_OF_MONTH, integer);
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (Integer integer : recurType.getBymonthday()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.DAY_OF_MONTH, integer);
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> byMonthDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getBymonthday(), periodStart, LocalDateTime::withDayOfMonth);
   }
 
   /**
@@ -482,28 +346,8 @@ public class ICalendarUtil {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<Calendar> byYearDay(Set<Calendar> dateSet, RecurType recurType, Calendar periodStart) {
-    if (recurType.isSetByyearday()) {
-      Set<Calendar> set = new HashSet<>();
-      if (dateSet.isEmpty()) {
-        for (Integer integer : recurType.getByyearday()) {
-          final Calendar cal = (Calendar) periodStart.clone();
-          cal.set(Calendar.DAY_OF_YEAR, integer);
-          set.add(cal);
-        }
-      } else {
-        for (Calendar calendar : dateSet) {
-          for (Integer integer : recurType.getByyearday()) {
-            final Calendar cal = (Calendar) calendar.clone();
-            cal.set(Calendar.DAY_OF_YEAR, integer);
-            set.add(cal);
-          }
-        }
-      }
-      return set;
-    } else {
-      return dateSet;
-    }
+  private static Set<LocalDateTime> byYearDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getBymonthday(), periodStart, LocalDateTime::withDayOfYear);
   }
 
   /**
@@ -526,13 +370,13 @@ public class ICalendarUtil {
    * @param periodStart the PERIOD start DATE-TIME value.
    * @return a non-null TreeSet
    */
-  private static Set<Calendar> buildCandidateList(RecurType recurType, Calendar periodStart) {
+  private static Set<LocalDateTime> buildCandidateList(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
     /**
      * Initialize the set. Use a HashSet to enforce uniqueness. Each (cascaded)
      * calculating method called within the SWITCH statement inspects and is
      * able to initialize the dateSet.
      */
-    Set<Calendar> dateSet = new HashSet<>();
+    Set<LocalDateTime> dateSet = new HashSet<>();
     /**
      * Intercept invalid or incomplete RecurType entries.
      */
@@ -564,7 +408,7 @@ public class ICalendarUtil {
 
         break;
       case WEEKLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(dateSet, recurType, periodStart),
+        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(dateSet, recurType, periodStart, weekFields),
                                                       recurType, periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),
@@ -574,7 +418,7 @@ public class ICalendarUtil {
       case MONTHLY:
         dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(byMonthDay(byMonth(dateSet, recurType, periodStart),
                                                                           recurType, periodStart),
-                                                               recurType, periodStart),
+                                                               recurType, periodStart, weekFields),
                                                       recurType, periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),
@@ -584,7 +428,7 @@ public class ICalendarUtil {
         dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(byMonthDay(byMonth(byYearDay(dateSet, recurType, periodStart),
                                                                                   recurType, periodStart),
                                                                           recurType, periodStart),
-                                                               recurType, periodStart),
+                                                               recurType, periodStart, weekFields),
                                                       recurType, periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),
@@ -601,8 +445,8 @@ public class ICalendarUtil {
      * Recur.java ~785.
      */
     if (recurType.isSetBysetpos()) {
-      List<Calendar> dates = new ArrayList<>(new TreeSet<>(dateSet));
-      Set<Calendar> setPosDates = new TreeSet<>();
+      List<LocalDateTime> dates = new ArrayList<>(new TreeSet<>(dateSet));
+      Set<LocalDateTime> setPosDates = new TreeSet<>();
       for (Integer integer : recurType.getBysetpos()) {
         if (integer > 0 && integer <= dates.size()) {
           setPosDates.add(dates.get(integer));
@@ -628,12 +472,12 @@ public class ICalendarUtil {
    *
    * @param calendar a java.util.Calendar to increment
    */
-  private static void increment(RecurType recurType, final Calendar calendar) {
-    calendar.add(recurType.getFreq().getCalendarValue(),
-                 recurType.isSetInterval() && recurType.getInterval() >= 1
-                 ? recurType.getInterval()
-                 : 1);
-  }
+//  private static void increment(RecurType recurType, final Calendar calendar) {
+//    calendar.add(recurType.getFreq().getTemporalUnit(),
+//                 recurType.isSetInterval() && recurType.getInterval() >= 1
+//                 ? recurType.getInterval()
+//                 : 1);
+//  }
 
   /**
    * Obtain a new instance of a Duration specifying the Duration as
@@ -651,9 +495,9 @@ public class ICalendarUtil {
    * @return a Duration instance
    * @throws DatatypeConfigurationException
    */
-  public static Duration duration(long milliseconds) throws DatatypeConfigurationException {
-    return DatatypeFactory.newInstance().newDuration(milliseconds);
-  }
+//  public static Duration duration(long milliseconds) throws DatatypeConfigurationException {
+//    return DatatypeFactory.newInstance().newDuration(milliseconds);
+//  }
 
   /**
    * Obtain a new instance of a Duration between two dates.
@@ -671,9 +515,9 @@ public class ICalendarUtil {
    * @return a Duration instance
    * @throws DatatypeConfigurationException
    */
-  public static Duration duration(Calendar start, Calendar end) throws DatatypeConfigurationException {
-    return duration(end.getTimeInMillis() - start.getTimeInMillis());
-  }
+//  public static Duration duration(Calendar start, Calendar end) throws DatatypeConfigurationException {
+//    return duration(end.getTimeInMillis() - start.getTimeInMillis());
+//  }
 
   /**
    * Obtain a new instance of a Duration between two dates.
@@ -691,9 +535,9 @@ public class ICalendarUtil {
    * @return a Duration instance
    * @throws DatatypeConfigurationException
    */
-  public static Duration duration(Date start, Date end) throws DatatypeConfigurationException {
-    return duration(end.getTime() - start.getTime());
-  }
+//  public static Duration duration(Date start, Date end) throws DatatypeConfigurationException {
+//    return duration(end.getTime() - start.getTime());
+//  }
 
   /**
    * Set the TIME (Hour, Minute and Second) values for the start (and end
@@ -705,11 +549,11 @@ public class ICalendarUtil {
    * @return a calendar with date values from the date calendar and TIME values
    *         from the mergeTime calendar.
    */
-  private static Calendar mergeTime(Calendar date, Date time) {
-    Calendar timeCalendar = Calendar.getInstance(TIMEZONE_UTC);
-    timeCalendar.setTime(time);
-    return mergeTime(date, timeCalendar);
-  }
+//  private static Calendar mergeTime(Calendar date, Date time) {
+//    Calendar timeCalendar = Calendar.getInstance(TIMEZONE_UTC);
+//    timeCalendar.setTime(time);
+//    return mergeTime(date, timeCalendar);
+//  }
 
   /**
    * Set the TIME (Hour, Minute and Second) values for the start (and end
@@ -721,12 +565,12 @@ public class ICalendarUtil {
    * @return a calendar with date values from the date calendar and TIME values
    *         from the mergeTime calendar.
    */
-  private static Calendar mergeTime(Calendar date, Calendar time) {
-    final Calendar datetime = (Calendar) date.clone();
-    for (int calendarField : new int[]{Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND}) {
-      datetime.set(calendarField, time.get(calendarField));
-    }
-    return datetime;
-  }//</editor-fold>
+//  private static Calendar mergeTime(Calendar date, Calendar time) {
+//    final Calendar datetime = (Calendar) date.clone();
+//    for (int calendarField : new int[]{Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND}) {
+//      datetime.set(calendarField, time.get(calendarField));
+//    }
+//    return datetime;
+//  }//</editor-fold>
 
 }

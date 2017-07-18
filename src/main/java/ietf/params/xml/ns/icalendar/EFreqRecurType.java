@@ -15,9 +15,10 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import java.util.Calendar;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 /**
  * Java class for EFreqRecurType.
@@ -43,17 +44,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum EFreqRecurType {
 
-  SECONDLY(Calendar.SECOND),
-  MINUTELY(Calendar.MINUTE),
-  HOURLY(Calendar.HOUR),
-  DAILY(Calendar.DAY_OF_YEAR),
-  WEEKLY(Calendar.WEEK_OF_YEAR),
-  MONTHLY(Calendar.MONTH),
-  YEARLY(Calendar.YEAR);
-  private final int calendarValue;
+  SECONDLY(ChronoUnit.SECONDS),
+  MINUTELY(ChronoUnit.MINUTES),
+  HOURLY(ChronoUnit.HOURS),
+  DAILY(ChronoUnit.DAYS),
+  WEEKLY(ChronoUnit.WEEKS),
+  MONTHLY(ChronoUnit.MONTHS),
+  YEARLY(ChronoUnit.YEARS);
+  private final TemporalUnit temporalUnit;
 
-  private EFreqRecurType(int calendarValue) {
-    this.calendarValue = calendarValue;
+  private EFreqRecurType(TemporalUnit temporalField) {
+    this.temporalUnit = temporalField;
   }
 
   /**
@@ -62,8 +63,8 @@ public enum EFreqRecurType {
    *
    * @return a non-null Integer
    */
-  public int getCalendarValue() {
-    return calendarValue;
+  public TemporalUnit getTemporalUnit() {
+    return temporalUnit;
   }
 
   /**

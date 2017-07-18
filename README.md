@@ -24,7 +24,7 @@ we do not recommend shifting the datetime value, but instead recommend using a d
 converter.
 For example: the same datetime value may be displayed using a timezone EST (GMT-4) and timezone PST (GTM-7)
 display converter as 9:00 AM (EST) and 06:00 AM (PST), respectively, without modifying the underlying datetime value.
-Common display converters include _FacesConverter_, _SimpleDateFormat_, etc.
+Common display converters include _FacesConverter_, _java.date.DateTimeFormatter_, etc.
 
 ## Supported specifications
 

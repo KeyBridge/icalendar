@@ -16,6 +16,8 @@
 package ietf.params.xml.ns.icalendar;
 
 import java.io.Serializable;
+//import java.util.*;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -482,7 +484,7 @@ public class RecurType implements Serializable {
    *
    * @return the UNTIL date value.
    */
-  public Date getUntilDate() {
+  public LocalDate getUntilDate() {
     return getUntil().getDate();
   }
 
@@ -499,7 +501,7 @@ public class RecurType implements Serializable {
    *
    * @param until the UNTIL date value.
    */
-  public void setUntilDate(Date until) {
+  public void setUntilDate(LocalDate until) {
     getUntil().setDate(until);
     this.count = null;
   }

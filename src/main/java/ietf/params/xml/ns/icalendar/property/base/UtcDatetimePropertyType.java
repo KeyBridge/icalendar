@@ -15,18 +15,19 @@
  */
 package ietf.params.xml.ns.icalendar.property.base;
 
+import ietf.params.xml.ns.icalendar.Constants;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterZonedDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CompletedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CreatedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.LastModifiedPropType;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.xml.bind.annotation.*;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
@@ -58,14 +59,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class UtcDatetimePropertyType extends BasePropertyType {
 
   @XmlElement(name = "utc-date-time", required = true)
-//  @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
-  protected XMLGregorianCalendar utcDateTime;
+  @XmlJavaTypeAdapter(type = ZonedDateTime.class, value = XmlAdapterZonedDateTimeXCalDateTime.class)
+  protected ZonedDateTime utcDateTime;
 
   public UtcDatetimePropertyType() {
   }
 
-  public UtcDatetimePropertyType(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    this.utcDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
+  public UtcDatetimePropertyType(ZonedDateTime dateTime) {
+    this.utcDateTime = dateTime;
   }
 
   /**
@@ -74,7 +75,7 @@ public class UtcDatetimePropertyType extends BasePropertyType {
    * @return possible object is {@link XMLGregorianCalendar }
    *
    */
-  public XMLGregorianCalendar getUtcDateTime() {
+  public ZonedDateTime getUtcDateTime() {
     return utcDateTime;
   }
 
@@ -84,23 +85,16 @@ public class UtcDatetimePropertyType extends BasePropertyType {
    * @param value allowed object is {@link XMLGregorianCalendar }
    *
    */
-  public void setUtcDateTime(XMLGregorianCalendar value) {
+  public void setUtcDateTime(ZonedDateTime value) {
     this.utcDateTime = value;
   }
 
-  public void setUtcDateTime(GregorianCalendar dateTime) throws DatatypeConfigurationException {
-    this.utcDateTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime).normalize();
+  public void setUtcDateTime(LocalDateTime value) {
+    this.utcDateTime = ZonedDateTime.of(value, Constants.TIMEZONE_UTC);
   }
 
   public boolean isSetUtcDateTime() {
     return (this.utcDateTime != null);
-  }
-
-  public Calendar getCalendar() {
-    if (utcDateTime != null) {
-      return utcDateTime.toGregorianCalendar(TIME_ZONE, Locale.ENGLISH, null);
-    }
-    return null;
   }
 
   @Override
