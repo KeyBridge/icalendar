@@ -30,8 +30,8 @@
     add recurrence
     force default timezones to UTC
     use maven build system
-    v1.0.0 -    2017 - check and confirm conformance with current RFC specs.
-    v2.0.0 – a rewrite using date and time classes from java.time
+    v1.0.0 - 2017 - check and confirm conformance with current RFC specs.
+    v2.0.0 - rewrite using JDK8 date and time classes from java.time
 
   </description>
 

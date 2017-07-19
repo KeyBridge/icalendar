@@ -17,16 +17,14 @@ package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterXCalDateTime;
-
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.datatype.DatatypeConfigurationException;
 
 import static ietf.params.xml.ns.icalendar.Constants.*;
 
@@ -55,8 +53,8 @@ import static ietf.params.xml.ns.icalendar.Constants.*;
  * <p>
  * Developer note: In this implementation all values are recorded as DATE-TIME.
  * This implementation has therefore been modified to only support DATE-TIME.
- * The DATE getter and setter methods read and write java.time.LocalDate values, but
- * the internal storage is always DATE-TIME.
+ * The DATE getter and setter methods read and write java.time.LocalDate values,
+ * but the internal storage is always DATE-TIME.
  * <p>
  * The internal DATE field getter and setter methods have been renamed with a
  * 'Xml' suffix.
@@ -188,12 +186,12 @@ public class UntilRecurType implements Serializable {
     if (untilString == null || untilString.isEmpty()) {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
-    if (PATTERN_UTC.length() - 4 == untilString.length()) {
-      setDateTime(LocalDateTime.parse(untilString, FORMATTER_UTC));
+    if (PATTERN_RFC6321_DATE_TIME.length() - 4 == untilString.length()) {
+      setDateTime(LocalDateTime.parse(untilString, FORMATTER_RFC2245_DATE_TIME));
     } else if (PATTERN_RFC5545_DATE.length() == untilString.length()) {
       setDate(LocalDate.parse(untilString, FORMATTER_RFC5545_DATE));
-    } else if (PATTERN_DATE_TIME.length() - 4 == untilString.length()) {
-      setDateTime(LocalDateTime.parse(untilString, FORMATTER_DATE_TIME));
+    } else if (PATTERN_RFC5545_DATE_TIME.length() - 4 == untilString.length()) {
+      setDateTime(LocalDateTime.parse(untilString, FORMATTER_RFC5545_DATE_TIME));
     } else {
       throw new ParseException("Failed to parse UNTIL date string: " + untilString, 0);
     }
@@ -307,7 +305,7 @@ public class UntilRecurType implements Serializable {
   @Override
   public String toString() {
     if (dateTime != null) {
-      return dateTime.format(FORMATTER_DATE_TIME);
+      return dateTime.format(FORMATTER_RFC5545_DATE_TIME);
     } else if (date != null) {
       return date.format(FORMATTER_RFC5545_DATE);
     } else {

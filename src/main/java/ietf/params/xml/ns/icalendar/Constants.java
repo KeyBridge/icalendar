@@ -5,13 +5,31 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 /**
- * A collection of date(-time) formats, formatters, and the default time zone (UTC).
+ * A collection of date(-time) formats, formatters, and the default time zone
+ * (UTC).
  *
  * @author Andrius Druzinis-Vitkus
  * @since 0.0.1 created 15/07/2017
  */
 public class Constants {
+
   /**
+   * "UTC". Coordinated Universal Time.
+   * <p>
+   * Used to normalize all calendar instances to UTC. e.g.
+   * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z. Implements
+   * W3C XML Schema Part 2, Section 3.2.7.3 (A)
+   * <p>
+   * Coordinated Universal Time, abbreviated to UTC, is the primary time
+   * standard by which the world regulates clocks and time. It is within about 1
+   * second of mean solar time at 0° longitude; it does not observe daylight
+   * saving time.
+   */
+  public static final ZoneId ZONE_UTC = ZoneId.of("UTC");
+
+  /**
+   * "yyyyMMdd".
+   * <p>
    * RFC5545 3.3.4. DATE
    * <p>
    * Purpose: This value type is used to identify values that contain a calendar
@@ -37,16 +55,22 @@ public class Constants {
    * <p>
    * RFC 6321: 3.3.4 DATE: The date encoding pattern is:
    * <code>pattern-date = xsd:string { pattern = "\d\d\d\d-\d\d-\d\d" }</code>
-   * XML Definition: Appendix A # 3.3.4 Example:
-   * <date>2011-05-17</date>
+   * XML Definition: Appendix A # 3.3.4 Example: <code>2011-05-17</code>
    *
    * @see <a href="http://tools.ietf.org/html/rfc5545#section-3.3.4">Date</a>
    * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.4">RELAX NG
    * Schema 3.6.4 DATE</a>
    */
   public static final String PATTERN_RFC5545_DATE = "yyyyMMdd";
+  /**
+   * "yyyy-MM-dd".
+   * <p>
+   * RFC6321 date format.
+   */
   public static final String PATTERN_RFC6321_DATE = "yyyy-MM-dd";
   /**
+   * "yyyy-MM-dd'T'HH:mm:ss'Z'".
+   * <p>
    * RFC 5545 3.3.5. DATE-TIME
    * <p>
    * Purpose: This value type is used to identify values that specify a precise
@@ -98,27 +122,41 @@ public class Constants {
    * @see <a href="http://tools.ietf.org/html/rfc6321#section-3.6.5">RELAX NG
    * Schema 3.6.5 DATE-TIME</a>
    */
-  public static final String PATTERN_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+  public static final String PATTERN_RFC5545_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   /**
+   * "yyyyMMdd'T'HHmmss'Z'".
+   * <p>
    * RFC 2445 UTC date time pattern.
    * <p>
-   * This pattern is to be used only when printing to String. The PATTERN_RFC5545_DATE
-   * and PATTERN_DATE_TIME are to be used when marshaling to XML.
-   *
-   * @see RFC 6321
+   * This pattern is to be used only when printing to String. The
+   * PATTERN_RFC5545_DATE and PATTERN_RFC5545_DATE_TIME are to be used when
+   * marshaling to XML.
    */
-  public static final String PATTERN_UTC = "yyyyMMdd'T'HHmmss'Z'";
-  /**
-   * Coordinated Universal Time.
-   * <p>
-   * Used to normalize all calendar instances to UTC. e.g.
-   * 2000-03-04T23:00:00+03:00 normalizes to 2000-03-04T20:00:00Z. Implements
-   * W3C XML Schema Part 2, Section 3.2.7.3 (A)
-   */
-  public static final ZoneId TIMEZONE_UTC = ZoneId.of("UTC");
+  public static final String PATTERN_RFC6321_DATE_TIME = "yyyyMMdd'T'HHmmss'Z'";
 
+  /**
+   * "yyyyMMdd".
+   * <p>
+   * RFC5545 3.3.4. DATE formatter.
+   */
   public static final DateTimeFormatter FORMATTER_RFC5545_DATE = DateTimeFormatter.ofPattern(PATTERN_RFC5545_DATE, Locale.ENGLISH);
+  /**
+   * "yyyy-MM-dd".
+   * <p>
+   * RFC6321 date format.
+   */
   public static final DateTimeFormatter FORMATTER_RFC6321_DATE = DateTimeFormatter.ofPattern(PATTERN_RFC6321_DATE, Locale.ENGLISH);
-  public static final DateTimeFormatter FORMATTER_DATE_TIME = DateTimeFormatter.ofPattern(PATTERN_DATE_TIME, Locale.ENGLISH);
-  public static final DateTimeFormatter FORMATTER_UTC = DateTimeFormatter.ofPattern(PATTERN_UTC, Locale.ENGLISH);
+  /**
+   * "yyyy-MM-dd'T'HH:mm:ss'Z'".
+   * <p>
+   * RFC 5545 3.3.5. DATE-TIME.
+   */
+  public static final DateTimeFormatter FORMATTER_RFC5545_DATE_TIME = DateTimeFormatter.ofPattern(PATTERN_RFC5545_DATE_TIME, Locale.ENGLISH);
+  /**
+   * "yyyyMMdd'T'HHmmss'Z'".
+   * <p>
+   * RFC 2445 UTC date time pattern.
+   */
+  public static final DateTimeFormatter FORMATTER_RFC2245_DATE_TIME = DateTimeFormatter.ofPattern(PATTERN_RFC6321_DATE_TIME, Locale.ENGLISH);
+
 }

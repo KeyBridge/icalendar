@@ -39,6 +39,7 @@ import java.time.format.DateTimeParseException;
  * @author Jesse Caulfield
  */
 public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, ZonedDateTime> {
+
   /**
    * Unmarshal a string xCal DATE-TIME into a java.time.ZonedDateTime instance.
    * <p>
@@ -87,9 +88,15 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:date-time</a>
    *
    * @param v The xsd:date-time datatype string
+<<<<<<< HEAD
    * @return a ZonedDateTime instance, normalized to UTC, null if the
    *         input string is null or empty.
    * @throws DateTimeParseException if the text cannot be parsed
+=======
+   * @return a ZonedDateTime instance, normalized to UTC, null if the input
+   *         string is null or empty.
+   * @throws Exception if the datatype string fails to parse
+>>>>>>> master
    */
   @Override
   public ZonedDateTime unmarshal(String v) throws DateTimeParseException {
@@ -98,10 +105,10 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
     }
     return ZonedDateTime.parse(v);
   }
+
   /**
-   * Marshal a ZonedDateTime instance into the xCal DATE format. This
-   * differs from the xsd:date implementation with a more restrictive output
-   * pattern:
+   * Marshal a ZonedDateTime instance into the xCal DATE format. This differs
+   * from the xsd:date implementation with a more restrictive output pattern:
    * <p>
    * <code>pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?"</code>
    * <p>

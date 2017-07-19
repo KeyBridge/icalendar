@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_UTC;
+import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME;
 
 /**
  * Java class for VeventType complex type.
@@ -49,8 +49,8 @@ public class VeventType extends BaseComponentType {
    */
   @Override
   public String toString() {
-    return "From " + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "") +
-        "to " + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "");
+    return "From " + (getDTSTART() != null ? getDTSTART().format(FORMATTER_RFC2245_DATE_TIME) : "") +
+        "to " + (getDTEND() != null ? getDTEND().format(FORMATTER_RFC2245_DATE_TIME) : "");
   }
 
   /**
@@ -61,11 +61,11 @@ public class VeventType extends BaseComponentType {
   public String toStringMultiline() {
     return BEGIN + ':' + getName() +
         LINE_SEPARATOR +
-        "DTSTAMP:" + (getDTSTAMP() != null ? getDTSTAMP().format(FORMATTER_UTC) : "") +
+        "DTSTAMP:" + (getDTSTAMP() != null ? getDTSTAMP().format(FORMATTER_RFC2245_DATE_TIME) : "") +
         LINE_SEPARATOR +
-        "DTSTART:" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "") +
+        "DTSTART:" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_RFC2245_DATE_TIME) : "") +
         LINE_SEPARATOR +
-        "DTEND:" + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "") +
+        "DTEND:" + (getDTEND() != null ? getDTEND().format(FORMATTER_RFC2245_DATE_TIME) : "") +
         LINE_SEPARATOR +
         END + ':' + getName() +
         LINE_SEPARATOR;
@@ -74,9 +74,9 @@ public class VeventType extends BaseComponentType {
   public String toStringFull() {
     return "VeventType"
            + " uid " + getUID()
-           + "]\n dtstamp [" + (getDTSTAMP() != null ? getDTSTAMP().format(FORMATTER_UTC) : "")
-           + "]\n dtstart [" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "")
-           + "]\n dtend   [" + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "")
+           + "]\n dtstamp [" + (getDTSTAMP() != null ? getDTSTAMP().format(FORMATTER_RFC2245_DATE_TIME) : "")
+           + "]\n dtstart [" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_RFC2245_DATE_TIME) : "")
+           + "]\n dtend   [" + (getDTEND() != null ? getDTEND().format(FORMATTER_RFC2245_DATE_TIME) : "")
            + "]\n duration [" + getDURATION()
            + "] rrule [" + getRRULE()
            + ']';
@@ -84,8 +84,8 @@ public class VeventType extends BaseComponentType {
 
   public String toStringBrief() {
     return "VeventType"
-           + " dtstart [" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_UTC) : "")
-           + "] dtend [" + (getDTEND() != null ? getDTEND().format(FORMATTER_UTC) : "")
+           + " dtstart [" + (getDTSTART() != null ? getDTSTART().format(FORMATTER_RFC2245_DATE_TIME) : "")
+           + "] dtend [" + (getDTEND() != null ? getDTEND().format(FORMATTER_RFC2245_DATE_TIME) : "")
            + "] rrule [" + getRRULE()
            + ']';
   }

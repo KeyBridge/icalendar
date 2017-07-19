@@ -17,12 +17,11 @@ package ietf.params.xml.ns.icalendar.property.base.utcdatetime;
 
 import ietf.params.xml.ns.icalendar.Constants;
 import ietf.params.xml.ns.icalendar.property.base.UtcDatetimePropertyType;
-
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 /**
  * Java class for DtstampPropType complex type.
@@ -51,6 +50,6 @@ public class DtstampPropType extends UtcDatetimePropertyType {
   }
 
   public DtstampPropType(LocalDateTime dateTime) {
-    super(ZonedDateTime.of(dateTime, Constants.TIMEZONE_UTC));
+    super(ZonedDateTime.of(dateTime, Constants.ZONE_UTC));
   }
 }

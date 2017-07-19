@@ -22,7 +22,6 @@ import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CompletedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CreatedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.LastModifiedPropType;
-
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -90,7 +89,7 @@ public class UtcDatetimePropertyType extends BasePropertyType {
   }
 
   public void setUtcDateTime(LocalDateTime value) {
-    this.utcDateTime = ZonedDateTime.of(value, Constants.TIMEZONE_UTC);
+    this.utcDateTime = ZonedDateTime.of(value, Constants.ZONE_UTC);
   }
 
   public boolean isSetUtcDateTime() {

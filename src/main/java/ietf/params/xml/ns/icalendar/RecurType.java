@@ -16,7 +16,6 @@
 package ietf.params.xml.ns.icalendar;
 
 import java.io.Serializable;
-//import java.util.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -985,25 +984,25 @@ public class RecurType implements Serializable {
    */
   private String listFormat(List<?> aList) {
     return aList.stream()
-        .map(String::valueOf)
-        .collect(Collectors.joining(","));
+            .map(String::valueOf)
+            .collect(Collectors.joining(","));
   }
 
   /**
    * Parse a comma-delimited String into a list of Integers.
    *
-   * @param aString              a string representation of a number list
+   * @param aString a string representation of a number list
    */
   private List<Integer> listParseInteger(String aString) {
     return listParseString(aString).stream()
-        .map(Integer::valueOf)
-        .collect(Collectors.toList());
+            .map(Integer::valueOf)
+            .collect(Collectors.toList());
   }
 
   /**
    * Parse a comma-delimited String into a list of Strings.
    *
-   * @param aString              a string representation of a number list
+   * @param aString a string representation of a number list
    */
   private List<String> listParseString(String aString) {
     List<String> list = new ArrayList<>();

@@ -29,7 +29,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
-import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_UTC;
+import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME;
 
 /**
  * Period of Time (RFC 5545, Section 3.3.9). This value type is used to identify
@@ -300,6 +300,6 @@ public final class PeriodType implements Comparable<PeriodType> {
    */
   @Override
   public String toString() {
-    return start.format(FORMATTER_UTC) + "/" + (end != null ? end.format(FORMATTER_UTC) : duration);
+    return start.format(FORMATTER_RFC2245_DATE_TIME) + "/" + (end != null ? end.format(FORMATTER_RFC2245_DATE_TIME) : duration);
   }
 }
