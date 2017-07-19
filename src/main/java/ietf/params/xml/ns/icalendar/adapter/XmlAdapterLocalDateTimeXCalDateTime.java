@@ -96,7 +96,7 @@ public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, Loca
     if (v == null || v.isEmpty()) {
       return null;
     }
-    return LocalDateTime.parse(v, Constants.FORMATTER_DATE_TIME);
+    return LocalDateTime.parse(v, Constants.FORMATTER_RFC5545_DATE_TIME);
   }
 
   /**
@@ -121,6 +121,6 @@ public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, Loca
      * Ensure the calendar is always normalized to UTC as the 'Z' suffix is
      * permanently affixed.
      */
-    return v.format(Constants.FORMATTER_DATE_TIME);
+    return v.format(Constants.FORMATTER_RFC5545_DATE_TIME);
   }
 }

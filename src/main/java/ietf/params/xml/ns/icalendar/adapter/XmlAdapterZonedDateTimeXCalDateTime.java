@@ -16,9 +16,8 @@
 package ietf.params.xml.ns.icalendar.adapter;
 
 import ietf.params.xml.ns.icalendar.Constants;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.ZonedDateTime;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Java XML adapter to translate between the W3C xsd:date-time format and the
@@ -39,6 +38,7 @@ import java.time.ZonedDateTime;
  * @author Jesse Caulfield
  */
 public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, ZonedDateTime> {
+
   /**
    * Unmarshal a string xCal DATE-TIME into a java.time.ZonedDateTime instance.
    * <p>
@@ -87,8 +87,8 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:date-time</a>
    *
    * @param v The xsd:date-time datatype string
-   * @return a ZonedDateTime instance, normalized to UTC, null if the
-   *         input string is null or empty.
+   * @return a ZonedDateTime instance, normalized to UTC, null if the input
+   *         string is null or empty.
    * @throws Exception if the datatype string fails to parse
    */
   @Override
@@ -98,10 +98,10 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
     }
     return ZonedDateTime.parse(v);
   }
+
   /**
-   * Marshal a ZonedDateTime instance into the xCal DATE format. This
-   * differs from the xsd:date implementation with a more restrictive output
-   * pattern:
+   * Marshal a ZonedDateTime instance into the xCal DATE format. This differs
+   * from the xsd:date implementation with a more restrictive output pattern:
    * <p>
    * <code>pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?"</code>
    * <p>
@@ -116,6 +116,6 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
     if (v == null) {
       return null;
     }
-    return v.format(Constants.FORMATTER_UTC);
+    return v.format(Constants.FORMATTER_RFC2245_DATE_TIME);
   }
 }
