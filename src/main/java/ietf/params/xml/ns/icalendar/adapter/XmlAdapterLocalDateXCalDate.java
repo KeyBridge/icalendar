@@ -18,9 +18,9 @@ package ietf.params.xml.ns.icalendar.adapter;
 import ietf.params.xml.ns.icalendar.Constants;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.time.DateTimeException;
 import java.time.LocalDate;
-
-import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC6321_DATE;
+import java.time.format.DateTimeParseException;
 
 /**
  * Java XML adapter to translate between the W3C xsd:date format and the RelaxNG
@@ -93,14 +93,14 @@ public class XmlAdapterLocalDateXCalDate extends XmlAdapter<String, LocalDate> {
    * @param v The xsd:date datatype string
    * @return a LocalDate instance, normalized to UTC, null if the
    *         input string is null or empty.
-   * @throws Exception if the datatype string fails to parse
+   * @throws DateTimeParseException if the text cannot be parsed
    */
   @Override
-  public LocalDate unmarshal(String v) throws Exception {
+  public LocalDate unmarshal(String v) throws DateTimeParseException {
     if (v == null || v.isEmpty()) {
       return null;
     }
-    return LocalDate.parse(v, Constants.FORMATTER_RFC5545_DATE);
+    return LocalDate.parse(v, Constants.FORMATTER_RFC6321_DATE);
   }
 
   /**
@@ -112,13 +112,13 @@ public class XmlAdapterLocalDateXCalDate extends XmlAdapter<String, LocalDate> {
    *
    * @param v the LocalDate instance
    * @return a patterned date string, null if the input calendar is null
-   * @throws Exception should not occur
+   * @throws DateTimeException if an error occurs during formatting
    */
   @Override
-  public String marshal(LocalDate v) throws Exception {
+  public String marshal(LocalDate v) throws DateTimeException {
     if (v == null) {
       return null;
     }
-    return FORMATTER_RFC6321_DATE.format(v);
+    return Constants.FORMATTER_RFC6321_DATE.format(v);
   }
 }

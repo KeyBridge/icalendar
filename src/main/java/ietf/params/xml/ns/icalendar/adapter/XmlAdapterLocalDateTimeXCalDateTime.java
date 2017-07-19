@@ -18,7 +18,9 @@ package ietf.params.xml.ns.icalendar.adapter;
 import ietf.params.xml.ns.icalendar.Constants;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 /**
  * Java XML adapter to translate between the W3C xsd:date-time format and the
@@ -89,10 +91,10 @@ public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, Loca
    * @param v The xsd:date-time datatype string
    * @return a LocalDateTime instance, normalized to UTC, null if the
    *         input string is null or empty.
-   * @throws Exception if the datatype string fails to parse
+   * @throws DateTimeParseException if the datatype string fails to parse
    */
   @Override
-  public LocalDateTime unmarshal(String v) throws Exception {
+  public LocalDateTime unmarshal(String v) throws DateTimeParseException {
     if (v == null || v.isEmpty()) {
       return null;
     }
@@ -110,10 +112,10 @@ public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, Loca
    *
    * @param v the LocalDateTime instance
    * @return a patterned date string, null if the input calendar is null
-   * @throws Exception should not occur
+   * @throws DateTimeException if an error occurs during printing
    */
   @Override
-  public String marshal(LocalDateTime v) throws Exception {
+  public String marshal(LocalDateTime v) throws DateTimeException {
     if (v == null) {
       return null;
     }

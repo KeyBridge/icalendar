@@ -15,10 +15,10 @@
  */
 package ietf.params.xml.ns.icalendar.adapter;
 
-import ietf.params.xml.ns.icalendar.Constants;
-
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.time.DateTimeException;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 
 /**
  * Java XML adapter to translate between the W3C xsd:date-time format and the
@@ -89,10 +89,10 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
    * @param v The xsd:date-time datatype string
    * @return a ZonedDateTime instance, normalized to UTC, null if the
    *         input string is null or empty.
-   * @throws Exception if the datatype string fails to parse
+   * @throws DateTimeParseException if the text cannot be parsed
    */
   @Override
-  public ZonedDateTime unmarshal(String v) throws Exception {
+  public ZonedDateTime unmarshal(String v) throws DateTimeParseException {
     if (v == null || v.isEmpty()) {
       return null;
     }
@@ -109,13 +109,13 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
    *
    * @param v the ZonedDateTime instance
    * @return a patterned date string, null if the input calendar is null
-   * @throws Exception should not occur
+   * @throws DateTimeException if an error occurs during printing
    */
   @Override
-  public String marshal(ZonedDateTime v) throws Exception {
+  public String marshal(ZonedDateTime v) throws DateTimeException {
     if (v == null) {
       return null;
     }
-    return v.format(Constants.FORMATTER_UTC);
+    return v.toString();
   }
 }
