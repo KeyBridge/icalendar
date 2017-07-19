@@ -41,7 +41,9 @@ import java.time.format.DateTimeParseException;
 public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, ZonedDateTime> {
 
   /**
-   * Unmarshal a string xCal DATE-TIME into a java.time.ZonedDateTime instance.
+   * Unmarshal a string representing date-time with a time-zone  in the ISO-8601
+   * calendar system into a java.time.ZonedDateTime instance, such as
+   * 2007-12-03T10:15:30+01:00[Europe/Paris]
    * <p>
    * This method is extremely forgiving of the input pattern and accepts any
    * xsd:date-time — Instant of time (Gregorian calendar) formatted input string
@@ -87,16 +89,9 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:date-time</a>
    *
-   * @param v The xsd:date-time datatype string
-<<<<<<< HEAD
-   * @return a ZonedDateTime instance, normalized to UTC, null if the
-   *         input string is null or empty.
+   * @param v The ISO-8601 dateTime string
+   * @return a ZonedDateTime instance
    * @throws DateTimeParseException if the text cannot be parsed
-=======
-   * @return a ZonedDateTime instance, normalized to UTC, null if the input
-   *         string is null or empty.
-   * @throws Exception if the datatype string fails to parse
->>>>>>> master
    */
   @Override
   public ZonedDateTime unmarshal(String v) throws DateTimeParseException {
@@ -110,12 +105,12 @@ public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, Zone
    * Marshal a ZonedDateTime instance into the xCal DATE format. This differs
    * from the xsd:date implementation with a more restrictive output pattern:
    * <p>
-   * <code>pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?"</code>
+   * <code>pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d([+-]\d\d:\d\d)?(\[[A-Za-z/]\])?"</code>
    * <p>
-   * An example output value is: 2001-10-26
+   * An example output value is: 2007-12-03T10:15:30+01:00[Europe/Paris]
    *
    * @param v the ZonedDateTime instance
-   * @return a patterned date string, null if the input calendar is null
+   * @return a patterned date string, null if the input dateTime is null
    * @throws DateTimeException if an error occurs during printing
    */
   @Override
