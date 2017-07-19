@@ -17,11 +17,9 @@ package ietf.params.xml.ns.icalendar.util;
 
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
-
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalUnit;
 import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.function.BiFunction;
@@ -43,6 +41,7 @@ import java.util.stream.Stream;
 public class ICalendarUtil {
 
   private static final Logger LOGGER = Logger.getLogger(ICalendarUtil.class.getName());
+
   /**
    * Calculate a recurrence set during the specified period for an event
    * beginning and ending on the specified days and having the specified
@@ -67,10 +66,9 @@ public class ICalendarUtil {
    *                    SATURDAY at or after the last day of the month.
    * @return a non-null TreeSet containing calculated event instances occurring
    *         during the defined period (e.g. between the period start and end
-   *         dates.)
-//   * @throws DatatypeConfigurationException if a PeriodType fails to build
-   * @throws Exception                      if the event does not contain the
-   *                                        period of interest
+   *         dates.) // * @throws DatatypeConfigurationException if a PeriodType
+   *         fails to build
+   * @throws Exception if the event does not contain the period of interest
    */
   public static Set<PeriodType> calculateRecurrenceSet(final LocalDateTime eventStart,
                                                        final LocalDateTime eventEnd,
@@ -105,7 +103,7 @@ public class ICalendarUtil {
      * that contains at least four (4) days in that calendar year.
      */
     final WeekFields weekFields = WeekFields.of(
-        recurType.isSetWkst() ? recurType.getWkst().getDayOfWeek() : DayOfWeek.MONDAY, 4);
+            recurType.isSetWkst() ? recurType.getWkst().getDayOfWeek() : DayOfWeek.MONDAY, 4);
     /**
      * Copy the period end datetime into a calendar instance.
      */
@@ -117,7 +115,9 @@ public class ICalendarUtil {
      * include any events that may have begun before the period start and end
      * during the period.
      */
-    if (eventStart.isBefore(pStart)) pStart = eventStart;
+    if (eventStart.isBefore(pStart)) {
+      pStart = eventStart;
+    }
     /**
      * Second: Add the initial event if it falls within the (adjusted) period.
      */
@@ -186,8 +186,8 @@ public class ICalendarUtil {
        * by the FREQ INTERVAL value if present.
        */
       long amount = recurType.isSetInterval() && recurType.getInterval() >= 1
-          ? recurType.getInterval()
-          : 1;
+                    ? recurType.getInterval()
+                    : 1;
       pStart = pStart.plus(amount, recurType.getFreq().getTemporalUnit());
     } // END while loop
     /**
@@ -235,43 +235,48 @@ public class ICalendarUtil {
   private static Set<LocalDateTime> byHour(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
     return byGeneric(dateSet, recurType.getByhour(), periodStart, LocalDateTime::withHour);
   }
+
   /**
    * Calculate a rule for a generic input.
    *
    * @param dateSet     the existing set of candidate dates
-   * @param values      an Integer collection that represent the BY[TEMPORAL_AMOUNT] rule values
+   * @param values      an Integer collection that represent the
+   *                    BY[TEMPORAL_AMOUNT] rule values
    * @param periodStart the period start
-   * @param function    a function that creates new LocalDateTimes given the cartesian product of
-   *                    input dates and BY[TEMPORAL_AMOUNT] rule values
+   * @param function    a function that creates new LocalDateTimes given the
+   *                    cartesian product of input dates and BY[TEMPORAL_AMOUNT]
+   *                    rule values
    * @return a non-null HashSet
    */
   private static Set<LocalDateTime> byGeneric(Set<LocalDateTime> dateSet, Collection<Integer> values,
                                               LocalDateTime periodStart,
                                               BiFunction<LocalDateTime, Integer, LocalDateTime> function) {
-    if (values.isEmpty()) return dateSet;
+    if (values.isEmpty()) {
+      return dateSet;
+    }
     return (dateSet.isEmpty() ? Stream.of(periodStart) : dateSet.stream())
-        .flatMap(date -> values.stream()
-            .map(integer -> function.apply(date, integer)))
-        .collect(Collectors.toSet());
+            .flatMap(date -> values.stream()
+                    .map(integer -> function.apply(date, integer)))
+            .collect(Collectors.toSet());
   }
 
-    /**
-     * Calculate the DAILY recurrence rule.
-     * <p>
-     * This is ONLY called for DAILY type recurrence.
-     * <p>
-     * The DAILY rule is very simple: just add the current day. Developer note:
-     * DAILY recurrence should (preferably) have an UNTIL or COUNT, which are
-     * handled in the WHILE loop wrapping this method. If UNTIL and COUNT are not
-     * specified then the DAILY will return every day in the period after the
-     * event start.
-     *
-     * @param dateSet     the existing set of candidate dates
-     * @param recurType   the recurrence type (not used but present here for
-     *                    consistency with other date set generators.
-     * @param periodStart the period start
-     * @return a non-null HashSet
-     */
+  /**
+   * Calculate the DAILY recurrence rule.
+   * <p>
+   * This is ONLY called for DAILY type recurrence.
+   * <p>
+   * The DAILY rule is very simple: just add the current day. Developer note:
+   * DAILY recurrence should (preferably) have an UNTIL or COUNT, which are
+   * handled in the WHILE loop wrapping this method. If UNTIL and COUNT are not
+   * specified then the DAILY will return every day in the period after the
+   * event start.
+   *
+   * @param dateSet     the existing set of candidate dates
+   * @param recurType   the recurrence type (not used but present here for
+   *                    consistency with other date set generators.
+   * @param periodStart the period start
+   * @return a non-null HashSet
+   */
   private static Set<LocalDateTime> day(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
     Set<LocalDateTime> set = new HashSet<>();
     if (dateSet.isEmpty()) {
@@ -308,7 +313,7 @@ public class ICalendarUtil {
    */
   private static Set<LocalDateTime> byWeekNo(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
     return byGeneric(dateSet, recurType.getByweekno(), periodStart,
-        (date, integer) -> date.with(weekFields.weekOfYear(), integer));
+                     (date, integer) -> date.with(weekFields.weekOfYear(), integer));
   }
 
   /**
@@ -478,7 +483,6 @@ public class ICalendarUtil {
 //                 ? recurType.getInterval()
 //                 : 1);
 //  }
-
   /**
    * Obtain a new instance of a Duration specifying the Duration as
    * milliseconds.
@@ -498,7 +502,6 @@ public class ICalendarUtil {
 //  public static Duration duration(long milliseconds) throws DatatypeConfigurationException {
 //    return DatatypeFactory.newInstance().newDuration(milliseconds);
 //  }
-
   /**
    * Obtain a new instance of a Duration between two dates.
    * <p>
@@ -518,7 +521,6 @@ public class ICalendarUtil {
 //  public static Duration duration(Calendar start, Calendar end) throws DatatypeConfigurationException {
 //    return duration(end.getTimeInMillis() - start.getTimeInMillis());
 //  }
-
   /**
    * Obtain a new instance of a Duration between two dates.
    * <p>
@@ -538,7 +540,6 @@ public class ICalendarUtil {
 //  public static Duration duration(Date start, Date end) throws DatatypeConfigurationException {
 //    return duration(end.getTime() - start.getTime());
 //  }
-
   /**
    * Set the TIME (Hour, Minute and Second) values for the start (and end
    * mergeTime if set) to match the mergeTime (HMS) values of the given date
@@ -554,7 +555,6 @@ public class ICalendarUtil {
 //    timeCalendar.setTime(time);
 //    return mergeTime(date, timeCalendar);
 //  }
-
   /**
    * Set the TIME (Hour, Minute and Second) values for the start (and end
    * mergeTime if set) to match the mergeTime (HMS) values of the given date
@@ -572,5 +572,4 @@ public class ICalendarUtil {
 //    }
 //    return datetime;
 //  }//</editor-fold>
-
 }

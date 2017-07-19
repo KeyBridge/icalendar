@@ -90,7 +90,7 @@ public class ICalendarUtilTest {
   public void testPeriodListJavaTime() throws Exception {
     System.out.println("TestPeriodList");
 
-    DateTimeFormatter format = Constants.FORMATTER_DATE_TIME;
+    DateTimeFormatter format = Constants.FORMATTER_RFC5545_DATE_TIME;
 
     LocalDateTime dtstart = LocalDateTime.of(2014, 1, 29, 0, 0, 0);
     LocalDateTime dtend = LocalDateTime.of(2015, 12, 29, 0, 0, 0);
