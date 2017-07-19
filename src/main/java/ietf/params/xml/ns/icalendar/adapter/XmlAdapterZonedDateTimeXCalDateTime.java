@@ -15,10 +15,10 @@
  */
 package ietf.params.xml.ns.icalendar.adapter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.DateTimeException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Java XML adapter to translate between the W3C xsd:date-time format and the
@@ -41,7 +41,7 @@ import java.time.format.DateTimeParseException;
 public class XmlAdapterZonedDateTimeXCalDateTime extends XmlAdapter<String, ZonedDateTime> {
 
   /**
-   * Unmarshal a string representing date-time with a time-zone  in the ISO-8601
+   * Unmarshal a string representing date-time with a time-zone in the ISO-8601
    * calendar system into a java.time.ZonedDateTime instance, such as
    * 2007-12-03T10:15:30+01:00[Europe/Paris]
    * <p>

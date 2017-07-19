@@ -15,25 +15,27 @@
  */
 package ietf.params.xml.ns.icalendar.adapter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.Duration;
 import java.time.format.DateTimeParseException;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * Java XML adapter to translate between the a duration string as defined
- * in the W3C XML Schema 1.0 specification [ISO 8601] extended format
- * and a java.time.Duration
+ * Java XML adapter to translate between the a duration string as defined in the
+ * W3C XML Schema 1.0 specification [ISO 8601] extended format and a
+ * java.time.Duration
  *
  * @author Andrius Druzinis-Vitkus
  * @since 0.0.1 created 15/07/2017
  */
 public class XmlAdapterDurationXCalDateTime extends XmlAdapter<String, Duration> {
+
   /**
    * Unmarshal an ISO 8601 extended format duration string.
+   * <p>
+   * For example, P1347Y, P1347M and P1Y2MT2H are all allowed; P0Y1347M and
+   * P0Y1347M0D are allowed. P-1347M is not allowed although -P1347M is allowed.
+   * P1Y2MT is not allowed.
    *
-   * For example, P1347Y, P1347M and P1Y2MT2H are all allowed;
-   * P0Y1347M and P0Y1347M0D are allowed. P-1347M is not allowed
-   * although -P1347M is allowed. P1Y2MT is not allowed.
    * @param v input string
    * @return duration instance. Null if an empty string is provided.
    * @throws DateTimeParseException parsing failure
