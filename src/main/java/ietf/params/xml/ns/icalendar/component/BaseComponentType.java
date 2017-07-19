@@ -27,7 +27,6 @@ import ietf.params.xml.ns.icalendar.property.base.datedatetime.DtstartPropType;
 import ietf.params.xml.ns.icalendar.property.base.recur.RrulePropType;
 import ietf.params.xml.ns.icalendar.property.base.text.UidPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -227,7 +226,7 @@ public abstract class BaseComponentType {
      */
     JAXBElement<DtstampPropType> jAXBElement = findJaXBElement("DTSTAMP");
     if (jAXBElement != null) {
-      return jAXBElement.getValue().getUtcDateTime().toLocalDateTime();
+      return jAXBElement.getValue().getUtcDateTime();
     } else {
       return null;
     }
@@ -453,8 +452,8 @@ public abstract class BaseComponentType {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "]\n properties [" + properties
-           + "]\n components [" + components
-           + "]\n";
+            + "]\n properties [" + properties
+            + "]\n components [" + components
+            + "]\n";
   }
 }
