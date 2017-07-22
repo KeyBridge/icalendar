@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * @author Andrius Druzinis-Vitkus
@@ -61,6 +61,7 @@ public class XmlAdapterLocalDateXCalDateTest {
 
       assertEquals(date, unmarshalled);
     } catch (DateTimeException dateTimeException) {
+      fail(dateTimeException.getMessage());
     }
     if (logToConsole) {
       System.out.println();
