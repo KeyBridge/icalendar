@@ -16,11 +16,10 @@
 package ietf.params.xml.ns.icalendar.adapter;
 
 import ietf.params.xml.ns.icalendar.Constants;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Java XML adapter to translate between the W3C xsd:date-time format and the
@@ -41,6 +40,7 @@ import java.time.format.DateTimeParseException;
  * @author Jesse Caulfield
  */
 public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, LocalDateTime> {
+
   /**
    * Unmarshal a string xCal DATE-TIME into a java.time.LocalDateTime instance.
    * <p>
@@ -89,8 +89,8 @@ public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, Loca
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:date-time</a>
    *
    * @param v The xsd:date-time datatype string
-   * @return a LocalDateTime instance, normalized to UTC, null if the
-   *         input string is null or empty.
+   * @return a LocalDateTime instance, normalized to UTC, null if the input
+   *         string is null or empty.
    * @throws DateTimeParseException if the datatype string fails to parse
    */
   @Override
@@ -102,9 +102,8 @@ public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, Loca
   }
 
   /**
-   * Marshal a LocalDateTime instance into the xCal DATE format. This
-   * differs from the xsd:date implementation with a more restrictive output
-   * pattern:
+   * Marshal a LocalDateTime instance into the xCal DATE format. This differs
+   * from the xsd:date implementation with a more restrictive output pattern:
    * <p>
    * <code>pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?"</code>
    * <p>
