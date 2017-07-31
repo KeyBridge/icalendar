@@ -162,6 +162,7 @@ public class UntilRecurType implements Serializable {
   protected LocalDateTime dateTime;
 
   public UntilRecurType() {
+    this.date = LocalDate.now();
   }
 
   public UntilRecurType(LocalDateTime dateTime) {
@@ -177,23 +178,23 @@ public class UntilRecurType implements Serializable {
    * 2445 UTC standard "yyyyMMdd'T'HHmmss'Z'", RFC 5545 DATE-TIME
    * "yyyy-MM-dd'T'HH:mm:ss'Z'" or RFC 5545 DATE "yyyyMMdd"
    *
-   * @param untilString an encoded date time string
+   * @param untilDateTimeString an encoded date time string
    * @throws DatatypeConfigurationException if the parsed date is not valid.
    * @throws ParseException                 if the string cannot be parsed into
    *                                        a Date
    */
-  public UntilRecurType(String untilString) throws DatatypeConfigurationException, ParseException {
-    if (untilString == null || untilString.isEmpty()) {
+  public UntilRecurType(String untilDateTimeString) throws DatatypeConfigurationException, ParseException {
+    if (untilDateTimeString == null || untilDateTimeString.isEmpty()) {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
-    if (PATTERN_RFC6321_DATE_TIME.length() - 4 == untilString.length()) {
-      setDateTime(LocalDateTime.parse(untilString, FORMATTER_RFC2245_DATE_TIME));
-    } else if (PATTERN_RFC5545_DATE.length() == untilString.length()) {
-      setDate(LocalDate.parse(untilString, FORMATTER_RFC5545_DATE));
-    } else if (PATTERN_RFC5545_DATE_TIME.length() - 4 == untilString.length()) {
-      setDateTime(LocalDateTime.parse(untilString, FORMATTER_RFC5545_DATE_TIME));
+    if (PATTERN_RFC6321_DATE_TIME.length() - 4 == untilDateTimeString.length()) {
+      setDateTime(LocalDateTime.parse(untilDateTimeString, FORMATTER_RFC2245_DATE_TIME));
+    } else if (PATTERN_RFC5545_DATE.length() == untilDateTimeString.length()) {
+      setDate(LocalDate.parse(untilDateTimeString, FORMATTER_RFC5545_DATE));
+    } else if (PATTERN_RFC5545_DATE_TIME.length() - 4 == untilDateTimeString.length()) {
+      setDateTime(LocalDateTime.parse(untilDateTimeString, FORMATTER_RFC5545_DATE_TIME));
     } else {
-      throw new ParseException("Failed to parse UNTIL date string: " + untilString, 0);
+      throw new ParseException("Failed to parse UNTIL date string: " + untilDateTimeString, 0);
     }
   }
 
@@ -222,22 +223,25 @@ public class UntilRecurType implements Serializable {
   }
 
   /**
-   * Get the DATE-TIME field as a java.time.LocalDate instance.
+   * Get the DATE field as a java.time.LocalDate instance.
    *
-   * @return a DATE-TIME value
+   * @return a DATE value
    */
   public LocalDate getDate() {
-    return getDateTime().toLocalDate();
+    return date;
   }
 
   /**
-   * Set the DATE-TIME field with a java.time.LocalDate instance.
+   * Set the DATE field with a java.time.LocalDate instance.
    *
-   * @param date a DATE-TIME value
+   * @param date a DATE value
    */
   public final void setDate(LocalDate date) {
     this.date = date;
-    dateTime = dateTime.with(date);
+  }
+
+  public boolean isSetDate() {
+    return (this.date != null);
   }
 
   @Override
