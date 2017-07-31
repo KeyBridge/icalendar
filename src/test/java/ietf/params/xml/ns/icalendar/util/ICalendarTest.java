@@ -16,9 +16,6 @@ package ietf.params.xml.ns.icalendar.util;
 import ietf.params.xml.ns.icalendar.Constants;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -27,6 +24,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
+import org.junit.Test;
 
 /**
  *
@@ -86,6 +84,7 @@ public class ICalendarTest {
 //    }
 
   }
+
   @Test
   public void testPeriodListJavaTime() throws Exception {
     System.out.println("TestPeriodList");
@@ -120,11 +119,11 @@ public class ICalendarTest {
 
     System.out.println(recur.getFreq());
     System.out.println(recur.getInterval());
-    Set<PeriodType> recurSet = ICalendar.calculateRecurrenceSet(dtstart,
-                                                                    dtend,
-                                                                    recur,
-                                                                    periodStart,
-                                                                    periodEnd);
+    Set<PeriodType> recurSet = ICalendar.calculatePeriodSet(dtstart,
+                                                            dtend,
+                                                            recur,
+                                                            periodStart,
+                                                            periodEnd);
     System.out.println("RecurSet");
     int i = 0;
     for (PeriodType periodType : recurSet) {
