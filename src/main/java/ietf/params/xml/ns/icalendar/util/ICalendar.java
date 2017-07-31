@@ -38,9 +38,9 @@ import java.util.stream.Stream;
  *
  * @author Jesse Caulfield <jesse@caulfield.org> 07/07/14
  */
-public class ICalendarUtil {
+public class ICalendar {
 
-  private static final Logger LOGGER = Logger.getLogger(ICalendarUtil.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ICalendar.class.getName());
 
   /**
    * Calculate a recurrence set during the specified period for an event
@@ -254,8 +254,9 @@ public class ICalendarUtil {
     if (values.isEmpty()) {
       return dateSet;
     }
-    return (dateSet.isEmpty() ? Stream.of(periodStart) : dateSet.stream())
-            .flatMap(date -> values.stream()
+    return (dateSet.isEmpty()
+            ? Stream.of(periodStart)
+            : dateSet.stream()).flatMap(date -> values.stream()
                     .map(integer -> function.apply(date, integer)))
             .collect(Collectors.toSet());
   }

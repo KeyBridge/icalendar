@@ -32,7 +32,7 @@ import java.util.TimeZone;
  *
  * @author Key Bridge
  */
-public class ICalendarUtilTest {
+public class ICalendarTest {
 
   @Test
   public void testPeriodList() throws Exception {
@@ -74,7 +74,7 @@ public class ICalendarUtilTest {
     RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
 
     System.out.println(" recur " + recur.toStringFull());
-//    Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart.getTime(),
+//    Set<PeriodType> recurSet = ICalendar.calculateRecurrenceSet(dtstart.getTime(),
 //                                                                    dtend.getTime(),
 //                                                                    recur,
 //                                                                    periodStart.getTime(),
@@ -120,7 +120,7 @@ public class ICalendarUtilTest {
 
     System.out.println(recur.getFreq());
     System.out.println(recur.getInterval());
-    Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart,
+    Set<PeriodType> recurSet = ICalendar.calculateRecurrenceSet(dtstart,
                                                                     dtend,
                                                                     recur,
                                                                     periodStart,
