@@ -17,6 +17,8 @@ package ietf.params.xml.ns.icalendar;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -328,12 +330,24 @@ public class RecurType implements Serializable {
    */
   protected EWeekdayRecurType wkst;
 
+  /**
+   * Added helper field identifying the recurrence end strategy. Either "COUNT",
+   * "UNTIL" or "NONE" depending upon whether the recurrence has a count or
+   * until configuration (or neither). Default is NONE if not set.
+   */
+  protected ERecurEndType endType;
+
+  /**
+   * Construct a new DAILY recurrence type.
+   */
   public RecurType() {
+    freq = EFreqRecurType.DAILY;
   }
 
   /**
    * Construct a new RecurType instance from an iCalendar-compliant RECUR
-   * String.
+   * String. For example:
+   * {@code FREQ=WEEKLY;UNTIL=20170824;INTERVAL=2;BYDAY=SU,MO,TH}
    * <p>
    * This method is forked from the iCal4j Recur class.
    *
@@ -483,8 +497,8 @@ public class RecurType implements Serializable {
    *
    * @return the UNTIL date value.
    */
-  public LocalDate getUntilDate() {
-    return getUntil().getDate();
+  public Date getUntilDate() {
+    return Date.from(getUntil().getDate().atStartOfDay().toInstant(ZoneOffset.UTC));
   }
 
   /**
@@ -500,9 +514,8 @@ public class RecurType implements Serializable {
    *
    * @param until the UNTIL date value.
    */
-  public void setUntilDate(LocalDate until) {
-    getUntil().setDate(until);
-    this.count = null;
+  public void setUntilDate(Date until) {
+    getUntil().setDate(until.toInstant().atZone(ZoneId.of("UTC")).toLocalDate());
   }
 
   /**
@@ -827,6 +840,71 @@ public class RecurType implements Serializable {
     return (this.wkst != null);
   }
 
+  /**
+   * Get the recurrence end type.
+   * <p>
+   * ACTION: This inspects the count and until fields and auto-initializes the
+   * recurrence end type to the correct type.
+   *
+   * @return the recurrence end type. Default is NONE if not otherwise
+   *         configured.
+   */
+  public ERecurEndType getEndType() {
+    /**
+     * Initialize the recurrence end type if not already configured.
+     */
+    if (endType == null) {
+      if (isSetCount()) {
+        endType = ERecurEndType.COUNT;
+      } else if (isSetUntil()) {
+        endType = ERecurEndType.UNTIL;
+      } else {
+        endType = ERecurEndType.NONE;
+      }
+    }
+    return endType;
+  }
+
+  /**
+   * Set the recurrence end type.
+   * <p>
+   * ACTION: This will update the count and until fields if they are not
+   * compatible with the indicated end type.
+   *
+   * @param endType the end type strategy
+   */
+  public void setEndType(ERecurEndType endType) {
+
+    this.endType = endType;
+    switch (endType) {
+      case COUNT: {
+        /**
+         * Set the event count. This sets the [until] field to null.
+         */
+        setCount(1);
+        break;
+      }
+      case UNTIL: {
+        /**
+         * Set the end date. Also set the [count] field to null.
+         */
+        count = null;
+        getUntil().setDate(LocalDate.now());
+        break;
+      }
+      case NONE: {
+        /**
+         * Clear the end type configuration; recur infinitely.
+         */
+        setCount(null);
+        setUntil(null);
+        break;
+      }
+      default:
+        throw new AssertionError(endType.name());
+    }
+  }
+
   @Override
   public int hashCode() {
     int hash = 3;
@@ -860,9 +938,9 @@ public class RecurType implements Serializable {
   }
 
   /**
-   * Print all of this RecurType configuration fields.
+   * Dump this RecurType configuration.
    *
-   * @return
+   * @return a dump of the Recurrence internal configuration.
    */
   public String toStringFull() {
     return "RecurType"
@@ -885,7 +963,7 @@ public class RecurType implements Serializable {
 
   /**
    * Print this RecurType object instance as a properly formatted RECUR string.
-   * <p>
+   * For example: {@code FREQ=WEEKLY;UNTIL=20170824;INTERVAL=2;BYDAY=SU,MO,TH}
    * This method is forked from the iCal4j Recur class.
    *
    * @return an iCalendar-compliant RECUR string.
