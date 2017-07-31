@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="recur" type="ietf.params.xml.ns.icalendar.RecurType" required="true" displayName="The recurrence container POJO"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <p> #{cc.clientId} : #{cc.id} </p>
+    <div class="form-group">
+      <label>Repeat</label><br/>
+      <div class="form-inline d-flex align-items-start">
+        <div class="form-group">
+          <h:selectOneMenu id="selectRepeatFrequency"
+                           styleClass="form-control" converter="convertRecurFreq"
+                           value="#{cc.attrs.recur.freq}">
+            <f:selectItem itemLabel="Daily" itemValue="DAILY"/>
+            <f:selectItem itemLabel="Weekly" itemValue="WEEKLY" />
+            <p:ajax update="panelGroupRecurrence"
+                    process="@this" partialSubmit="true" global="false"/>
+          </h:selectOneMenu>
+          <h:outputText value=" every: " styleClass="mx-2"/>
+          <h:inputText styleClass="form-control"
+                       style="width: 7em !important;"
+                       value="#{cc.attrs.recur.interval}">
+            <f:passThroughAttribute name="type" value="number"/>
+            <f:passThroughAttribute name="min" value="1"/>
+            <f:passThroughAttribute name="max" value="#{cc.attrs.recur.freq.value() eq 'DAILY'?'365':'52'}"/>
+          </h:inputText>
+          <h:outputText value=" #{cc.attrs.recur.freq.value() eq 'DAILY'?'day(s)':'week(s) on'}" styleClass="mx-2"/>
+        </div>
+
+        <h:panelGroup id="panelGroupRecurrence">
+
+          <h:panelGroup id="weekly" rendered="#{cc.attrs.recur.freq.value() eq 'WEEKLY'}">
+            <div class="form-group">
+              <p:importEnum type="ietf.params.xml.ns.icalendar.EWeekdayRecurType" var="weekdayRecurType"/>
+              <p:selectManyButton value="#{cc.attrs.recur.byday}" styleClass="btn-toolbar mt-3"
+                                  converter="convertRecurWeekday">
+                <f:selectItems value="#{weekdayRecurType.ALL_VALUES}"/>
+              </p:selectManyButton>
+            </div>
+          </h:panelGroup>
+        </h:panelGroup>
+      </div>
+    </div>
+    <div class="form-group">
+      <h:panelGroup id="panelGroupRecurrenceEnd">
+        <label>End</label>
+        <div class="form-inline">
+          <div class="form-group">
+            <h:selectOneMenu styleClass="form-control mx-2"
+                             value="#{cc.attrs.recur.endType}"
+                             converter="convertRecurEndtype">
+              <f:selectItem id="until-none" itemLabel="Never " itemValue="NONE"/>
+              <f:selectItem id="until-count" itemLabel="After " itemValue="COUNT"/>
+              <f:selectItem id="until-until" itemLabel="On " itemValue="UNTIL"/>
+              <p:ajax update="panelGroupUntil" process="@this" partialSubmit="true" global="false"/>
+            </h:selectOneMenu>
+          </div>
+          <h:panelGroup id="panelGroupUntil">
+            <h:panelGroup rendered="#{cc.attrs.recur.endType.value() eq 'COUNT'}">
+              <div class="form-group">
+                <h:inputText styleClass="form-control mx-2"
+                             style="width: 7em !important;"
+                             value="#{cc.attrs.recur.count}">
+                  <f:passThroughAttribute name="type" value="number"/>
+                  <f:passThroughAttribute name="min" value="1"/>
+                  <f:passThroughAttribute name="max" value="#{cc.attrs.recur.freq.value() eq 'DAILY'?'365':'52'}"/>
+                </h:inputText>
+                <h:outputText value=" occurrence(s)"/>
+              </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{cc.attrs.recur.endType.value() eq 'UNTIL'}">
+              <div class="form-group">
+                <p:calendar id="inputUntil" pattern="MM/dd/yyyy"
+                            styleClass="form-control pcalendar"
+                            navigator="true"
+                            showButtonPanel="true"
+                            value="#{cc.attrs.recur.untilDate}"
+                            mindate="#{cc.attrs.recur.untilDate}">
+                </p:calendar>
+              </div>
+            </h:panelGroup>
+          </h:panelGroup>
+        </div>
+      </h:panelGroup>
+    </div>
+  </cc:implementation>
+</html>

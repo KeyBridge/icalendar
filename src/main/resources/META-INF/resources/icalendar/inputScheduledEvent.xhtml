@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="schedule" type="ch.keybridge.icalendar.jsf.dto.ScheduledEvent" required="true" displayName="The schedule event container POJO"/>
+    <cc:attribute name="timeZones" type="java.util.List" required="false" displayName="TimeZones to display in the timezone selector. Required if showTimezones is TRUE. This is used to provide a reduced set of timezones in the selector."/>
+    <cc:attribute name="showTimeZone" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the time zone selector should be shown."/>
+
+    <cc:attribute name="showAllDay" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the all-day selector should be shown."/>
+
+    <cc:attribute name="minStartDate" required="false" type="java.util.Date"  displayName="The minimum date that should be allowed in recurrence and calendar selection."/>
+    <cc:attribute name="maxStartDate" required="false" type="java.util.Date"  displayName="The maximum period into the future that an event may start (encoded as a duration)."/>
+    <cc:attribute name="maxEndDate" required="false" type="java.util.Date"  displayName="The maximum date into the future that an event may end."/>
+
+    <cc:attribute name="update" required="false" type="java.lang.String" displayName="Page components to update upon AJAX select/un-select event. This must be a fully qualified reference."/>
+    <cc:attribute name="oncomplete" required="false" type="java.lang.String" displayName="JS to execute upon AJAX select/un-select event. e.g. PF('calendarWidget').update(); "/>
+
+    <cc:attribute name="inline" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the START and END calendars should be displayed inline instead of the default popup."/>
+    <cc:attribute name="required" required="false" type="java.lang.Boolean" default="false" displayName="(Optional) Indicator that the form should mark necessary fields as required. This affects form submission."/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation id="#{cc.id}">
+    <div id="#{cc.clientId}">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>#{label.from_time}</label>
+            <p:calendar id="dtStart" pattern="MM/dd/yyyy HH:mm" styleClass="pcalendar #{cc.attrs.inline?'':'form-control'}"
+                        required="#{cc.attrs.required}" requiredMessage="Please select the start date"
+                        showButtonPanel="true"
+                        mode="#{cc.attrs.inline?'inline':'popup'}"
+                        value="#{cc.attrs.schedule.startDate}"
+                        timeZone="#{cc.attrs.schedule.timeZone}"
+                        navigator="true"
+                        mindate="#{cc.attrs.minStartDate}"
+                        maxdate="#{cc.attrs.maxStartDate}">
+              <p:ajax event="dateSelect" update="dtEnd, #{cc.attrs.update}"
+                      oncomplete="#{cc.attrs.oncomplete}"
+                      process="dtStart, dtEnd, tzid" partialSubmit="true" global="false"/>
+            </p:calendar>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>#{label.to_time}</label><br/>
+            <p:calendar id="dtEnd" pattern="MM/dd/yyyy HH:mm" styleClass="pcalendar #{cc.attrs.inline?'':'form-control'}"
+                        required="#{cc.attrs.required}" requiredMessage="Please select the end date"
+                        showButtonPanel="false"
+                        mode="#{cc.attrs.inline?'inline':'popup'}"
+                        value="#{cc.attrs.schedule.endDate}"
+                        timeZone="#{cc.attrs.schedule.timeZone}"
+                        navigator="true"
+                        mindate="#{cc.attrs.schedule.startDate}"
+                        maxdate="#{cc.attrs.maxEndDate}">
+              <p:ajax event="dateSelect" update="#{cc.attrs.update}"
+                      oncomplete="#{cc.attrs.oncomplete}"
+                      process="dtStart, dtEnd, tzid" partialSubmit="true" global="false"/>
+            </p:calendar>
+          </div>
+
+          <h:panelGroup rendered="#{cc.attrs.showAllDay}">
+            <div class="form-group">
+              <label>
+                <h:selectBooleanCheckbox value="#{cc.attrs.schedule.allDay}"/>  #{label.all_day}
+              </label>
+            </div>
+          </h:panelGroup>
+        </div>
+      </div>
+
+      <h:panelGroup rendered="#{cc.attrs.showTimeZone}">
+        <div class="form-group">
+          <label>#{label.timezone}</label><br/>
+          <h:selectOneMenu id="tzid" styleClass="form-control" style="width: 100%;"
+                           converter="convertTimezone"
+                           value="#{cc.attrs.schedule.timeZone}">
+            <f:selectItems value="#{cc.attrs.timeZones}" var="tz" itemLabel="#{tz.ID}" itemValue="#{tz}"/>
+            <p:ajax update="#{cc.attrs.update}"
+                    oncomplete="#{cc.attrs.oncomplete}"
+                    process="dtStart, dtEnd, tzid" partialSubmit="true" global="false"/>
+          </h:selectOneMenu>
+        </div>
+      </h:panelGroup>
+    </div>
+  </cc:implementation>
+</html>
