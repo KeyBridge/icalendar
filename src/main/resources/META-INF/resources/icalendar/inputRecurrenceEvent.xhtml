@@ -23,7 +23,7 @@
                            value="#{cc.attrs.recur.freq}">
             <f:selectItem itemLabel="Daily" itemValue="DAILY"/>
             <f:selectItem itemLabel="Weekly" itemValue="WEEKLY" />
-            <p:ajax update="panelGroupRecurrence"
+            <p:ajax update="panelGroupRecurrence, freqLabel"
                     process="@this" partialSubmit="true" global="false"/>
           </h:selectOneMenu>
           <h:outputText value=" every: " styleClass="mx-2"/>
@@ -34,7 +34,7 @@
             <f:passThroughAttribute name="min" value="1"/>
             <f:passThroughAttribute name="max" value="#{cc.attrs.recur.freq.value() eq 'DAILY'?'365':'52'}"/>
           </h:inputText>
-          <h:outputText value=" #{cc.attrs.recur.freq.value() eq 'DAILY'?'day(s)':'week(s) on'}" styleClass="mx-2"/>
+          <h:outputText id="freqLabel" value=" #{cc.attrs.recur.freq.value() eq 'DAILY'?'day(s)':'week(s) on'}" styleClass="mx-2"/>
         </div>
 
         <h:panelGroup id="panelGroupRecurrence">

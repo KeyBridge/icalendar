@@ -9,19 +9,18 @@
   <!-- INTERFACE -->
   <cc:interface>
     <cc:attribute name="schedule" type="ch.keybridge.icalendar.jsf.dto.ScheduledEvent" required="true" displayName="The schedule event container POJO"/>
-    <cc:attribute name="timeZones" type="java.util.List" required="false" displayName="TimeZones to display in the timezone selector. Required if showTimezones is TRUE. This is used to provide a reduced set of timezones in the selector."/>
-    <cc:attribute name="showTimeZone" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the time zone selector should be shown."/>
+    <cc:attribute name="timeZone" type="java.util.TimeZone" required="false" displayName="TimeZone for the selected date/ time. Default is system default (EDT)."/>
 
+    <cc:attribute name="timePicker" required="false" type="java.lang.Boolean" default="true" displayName="TimePicker functionality is enabled."/>
     <cc:attribute name="showAllDay" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the all-day selector should be shown."/>
 
     <cc:attribute name="minStartDate" required="false" type="java.util.Date"  displayName="The minimum date that should be allowed in recurrence and calendar selection."/>
     <cc:attribute name="maxStartDate" required="false" type="java.util.Date"  displayName="The maximum period into the future that an event may start (encoded as a duration)."/>
     <cc:attribute name="maxEndDate" required="false" type="java.util.Date"  displayName="The maximum date into the future that an event may end."/>
 
-    <cc:attribute name="update" required="false" type="java.lang.String" displayName="Page components to update upon AJAX select/un-select event. This must be a fully qualified reference."/>
-    <cc:attribute name="oncomplete" required="false" type="java.lang.String" displayName="JS to execute upon AJAX select/un-select event. e.g. PF('calendarWidget').update(); "/>
+    <cc:attribute name="timeZones" type="java.util.List" required="false" displayName="TimeZones to display in the timezone selector. Required if showTimezones is TRUE. This is used to provide a reduced set of timezones in the selector."/>
+    <cc:attribute name="showTimeZone" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the time zone selector should be shown."/>
 
-    <cc:attribute name="inline" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the START and END calendars should be displayed inline instead of the default popup."/>
     <cc:attribute name="required" required="false" type="java.lang.Boolean" default="false" displayName="(Optional) Indicator that the form should mark necessary fields as required. This affects form submission."/>
   </cc:interface>
 
@@ -32,36 +31,30 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>#{label.from_time}</label>
-            <p:calendar id="dtStart" pattern="MM/dd/yyyy HH:mm" styleClass="pcalendar #{cc.attrs.inline?'':'form-control'}"
+            <p:calendar id="dtStart" styleClass="pcalendar form-control"
+                        pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
                         required="#{cc.attrs.required}" requiredMessage="Please select the start date"
                         showButtonPanel="true"
-                        mode="#{cc.attrs.inline?'inline':'popup'}"
                         value="#{cc.attrs.schedule.startDate}"
                         timeZone="#{cc.attrs.schedule.timeZone}"
-                        navigator="true"
                         mindate="#{cc.attrs.minStartDate}"
                         maxdate="#{cc.attrs.maxStartDate}">
-              <p:ajax event="dateSelect" update="dtEnd, #{cc.attrs.update}"
-                      oncomplete="#{cc.attrs.oncomplete}"
-                      process="dtStart, dtEnd, tzid" partialSubmit="true" global="false"/>
+              <p:ajax event="dateSelect" update="dtEnd"
+                      process="@this" partialSubmit="true" global="false"/>
             </p:calendar>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label>#{label.to_time}</label><br/>
-            <p:calendar id="dtEnd" pattern="MM/dd/yyyy HH:mm" styleClass="pcalendar #{cc.attrs.inline?'':'form-control'}"
+            <p:calendar id="dtEnd" styleClass="pcalendar form-control"
+                        pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
                         required="#{cc.attrs.required}" requiredMessage="Please select the end date"
-                        showButtonPanel="false"
-                        mode="#{cc.attrs.inline?'inline':'popup'}"
+                        showButtonPanel="true"
                         value="#{cc.attrs.schedule.endDate}"
                         timeZone="#{cc.attrs.schedule.timeZone}"
-                        navigator="true"
                         mindate="#{cc.attrs.schedule.startDate}"
                         maxdate="#{cc.attrs.maxEndDate}">
-              <p:ajax event="dateSelect" update="#{cc.attrs.update}"
-                      oncomplete="#{cc.attrs.oncomplete}"
-                      process="dtStart, dtEnd, tzid" partialSubmit="true" global="false"/>
             </p:calendar>
           </div>
 
@@ -78,14 +71,20 @@
       <h:panelGroup rendered="#{cc.attrs.showTimeZone}">
         <div class="form-group">
           <label>#{label.timezone}</label><br/>
-          <h:selectOneMenu id="tzid" styleClass="form-control" style="width: 100%;"
-                           converter="convertTimezone"
-                           value="#{cc.attrs.schedule.timeZone}">
-            <f:selectItems value="#{cc.attrs.timeZones}" var="tz" itemLabel="#{tz.ID}" itemValue="#{tz}"/>
-            <p:ajax update="#{cc.attrs.update}"
-                    oncomplete="#{cc.attrs.oncomplete}"
-                    process="dtStart, dtEnd, tzid" partialSubmit="true" global="false"/>
-          </h:selectOneMenu>
+          <div class="form-inline">
+            <div class="form-group">
+              <h:selectOneMenu id="tzid" styleClass="form-control"
+                               converter="convertTimezone"
+                               value="#{cc.attrs.schedule.timeZone}">
+                <f:selectItems value="#{cc.attrs.timeZones}" var="tz" itemLabel="#{tz.ID}" itemValue="#{tz}"/>
+              </h:selectOneMenu>
+              <p:commandLink id="selectTzid" update="dtStart, dtEnd"
+                             process="dtStart, dtEnd, tzid, @this" partialSubmit="true" global="false"
+                             styleClass="btn btn-secondary input-group-addon">
+                Select
+              </p:commandLink>
+            </div>
+          </div>
         </div>
       </h:panelGroup>
     </div>
