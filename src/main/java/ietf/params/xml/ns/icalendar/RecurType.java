@@ -15,10 +15,12 @@
  */
 package ietf.params.xml.ns.icalendar;
 
+import ietf.params.xml.ns.icalendar.util.EWeekday;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -1054,6 +1056,233 @@ public class RecurType implements Serializable {
     }
     return b.toString();
   }
+
+  //<editor-fold defaultstate="collapsed" desc="Description builder">
+  /**
+   * Build and return a common English language description of this Recurrence
+   * configuration.
+   * <p>
+   * This method attempts to translate the iCalendar Recurrence configuration
+   * into a human readable, plain English description of the event recurrence.
+   *
+   * @return a non-null String, empty if no recurrence is configured
+   */
+  public String getDescription() {
+    /**
+     * Error check: Confirm the Recur has a FREQ entry.
+     */
+    if (freq == null) {
+      return "";
+    }
+    /**
+     * Initialize a StringBuilder to build an English description.
+     */
+    StringBuilder sb = new StringBuilder();
+    /**
+     * If the interval is greater than 1 then the recurrence has a SKIP.
+     */
+    if (isSetInterval() && getInterval() > 1) {
+      /**
+       * e.g. Every [X] day[s], Every [X] week[s]
+       */
+      sb.append("Every ").
+              append(getInterval() > 1 ? getInterval() + " " : "").
+              append(getFrequencyLabel(getFreq())).
+              append(getInterval() > 1 ? "s" : "");
+    } else {
+      /**
+       * Convert the FREQ to proper case. e.g. DAILY becomes Daily
+       */
+      sb.append(getFreq().name().substring(0, 1).toUpperCase()).append(getFreq().name().substring(1).toLowerCase());
+    }
+
+    /**
+     * Build a recurrence description based upon the FREQ type.
+     */
+    switch (getFreq()) {
+      case SECONDLY:
+        /**
+         * TODO: SECONDLY recurrence to English
+         */
+        break;
+      case MINUTELY:
+        /**
+         * TODO: MINUTELY recurrence to English
+         */
+        break;
+      case HOURLY:
+        /**
+         * TODO: HOURLY recurrence to English
+         */
+        break;
+      case DAILY: {
+        if (isSetByday()) {
+          if (getInterval() > 1) {
+            sb.append(" on ");
+          } else {
+            sb.append(" every ");
+          }
+          for (int d = 0; d < getByday().size(); d++) {
+            if (d == 0) {
+              sb.append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+            } else if (d == getByday().size() - 1) {
+              sb.append(" and ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+            } else {
+              sb.append(", ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+            }
+          }
+        }
+      }
+      break;
+      case WEEKLY: {
+        if (isSetByday()) {
+          if (getInterval() > 1) {
+            sb.append(" on ");
+          } else {
+            sb.append(" every ");
+          }
+          for (int d = 0; d < getByday().size(); d++) {
+            if (d == 0) {
+              sb.append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+            } else if (d == getByday().size() - 1) {
+              sb.append(" and ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+            } else {
+              sb.append(", ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+            }
+          }
+        }
+      }
+      break;
+      case MONTHLY: {
+        if (isSetBysetpos()) {
+          if (getInterval() > 1) {
+            sb.append(" on the ");
+          } else {
+            sb.append(" every ");
+          }
+          if (isSetBymonthday()) {
+            /**
+             * A list of days of the month.
+             */
+            for (int d = 0; d < getBymonthday().size(); d++) {
+              if (d == 0) {
+                sb.append(getOrdinal(getBymonthday().get(d)));
+              } else if (d == getBymonthday().size() - 1) {
+                sb.append(" and ").append(getOrdinal(getBymonthday().get(d)));
+              } else {
+                sb.append(", ").append(getOrdinal(getBymonthday().get(d)));
+              }
+            }
+          } else if (isSetBysetpos()) {
+            /**
+             * A descriptive day of the month. e.g. the First Saturday.
+             */
+            for (int d = 0; d < getBysetpos().size(); d++) {
+              if (d == 0) {
+                sb.append(getPosition(getBysetpos().get(d)));
+              } else if (d == getByday().size() - 1) {
+                sb.append(" and ").append(getPosition(getBysetpos().get(d)));
+              } else {
+                sb.append(", ").append(getPosition(getBysetpos().get(d)));
+              }
+            }
+            for (int d = 0; d < getByday().size(); d++) {
+              if (d == 0) {
+                sb.append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              } else if (d == getByday().size() - 1) {
+                sb.append(" and ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              } else {
+                sb.append(", ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              }
+            }
+          }
+        }
+      }
+      break;
+      case YEARLY:
+        /**
+         * @todo YEARLY recurrence to English
+         */
+        break;
+      default:
+        throw new AssertionError(getFreq().name());
+    }
+
+    /**
+     * Conclude the statement with either UNTIL or COUNT.
+     */
+    if (isSetUntil()) {
+      sb.append(" until ").append(getUntil().getDate().format(FORMATTER_UNTIL));
+    } else if (isSetCount()) {
+      sb.append(" for ").
+              append(getCount()).
+              append(" time").
+              append(getCount() > 1 ? "s" : "");
+    }
+    /**
+     * Clean up the string by removing any double spaces.
+     */
+    return sb.toString().replaceAll(" +", " ");
+  }
+
+  private final static DateTimeFormatter FORMATTER_UNTIL = DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH);
+
+  /**
+   * Translate bySetPos to English. The last (-1) and first through fourth are
+   * translated to ordinal numbers. All others are returned with a suffix.
+   *
+   * @param setPos the setPos number
+   * @return the setPos number with an ordinal suffix. e.g "5" becomes "5th"
+   */
+  private String getPosition(int setPos) {
+    switch (setPos) {
+      case -1:
+        return " last ";
+      case 1:
+        return " first ";
+      case 2:
+        return " second ";
+      case 3:
+        return " third ";
+      case 4:
+        return " fourth ";
+      default:
+        return getOrdinal(setPos);
+    }
+  }
+
+  /**
+   * Add an ordinal suffix to the number.
+   *
+   * @param number the number (as a string)
+   * @return the number (string) with an ordinal suffix. e.g "4" becomes "4th"
+   */
+  private String getOrdinal(int number) {
+    String string = String.valueOf(number);
+    if (string.endsWith("1") && !"11".equals(string)) {
+      return string + "st";
+    } else if (string.endsWith("2") && !"12".equals(string)) {
+      return string + "nd";
+    } else if (string.endsWith("3") && !"13".equals(string)) {
+      return string + "rd";
+    }
+    return string + "th";
+  }
+
+  /**
+   * Convert a frequency label to an English label. This method strips the "LY"
+   * suffix and converts to lower case.
+   *
+   * @param frequency the FREQ label. e.g. DAILY
+   * @return the English label equivalent. e.g. "day"
+   */
+  private String getFrequencyLabel(EFreqRecurType frequency) {
+    if (EFreqRecurType.DAILY.equals(frequency)) {
+      return "day";
+    } else {
+      return frequency.name().replace("LY", "").toLowerCase();
+    }
+  }//</editor-fold>
 
   //<editor-fold defaultstate="collapsed" desc="List Tokenizer Support Methods">
   /**
