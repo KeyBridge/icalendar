@@ -224,6 +224,15 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
     this.editable = editable;
   }//</editor-fold>
 
+  /**
+   * Indicator that the current configuration is valid and usable.
+   *
+   * @return TRUE when the start and end dates are both configured.
+   */
+  public boolean isValid() {
+    return startDate != null && endDate != null;
+  }
+
   @Override
   public String toString() {
     return "ScheduledEvent startDate [" + startDate
