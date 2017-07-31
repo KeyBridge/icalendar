@@ -14,6 +14,7 @@
  */
 package ch.keybridge.icalendar.jsf.dto;
 
+import ietf.params.xml.ns.icalendar.RecurType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
@@ -87,6 +88,11 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
    * Boolean flag indicating whether the event is editable or not.
    */
   private boolean editable;
+
+  /**
+   * Recurrence configuration.
+   */
+  private RecurType recur;
 
   public ScheduledEvent() {
   }
@@ -222,6 +228,17 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
 
   public void setEditable(boolean editable) {
     this.editable = editable;
+  }
+
+  public RecurType getRecur() {
+    if (recur == null) {
+      recur = new RecurType(); // DAILY
+    }
+    return recur;
+  }
+
+  public void setRecur(RecurType recur) {
+    this.recur = recur;
   }//</editor-fold>
 
   /**
