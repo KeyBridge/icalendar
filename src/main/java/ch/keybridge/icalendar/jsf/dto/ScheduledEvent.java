@@ -242,7 +242,7 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   }//</editor-fold>
 
   /**
-   * Indicator that the current configuration is valid and usable.
+   * Indicator that the start and end dates are configured.
    *
    * @return TRUE when the start and end dates are both configured.
    */
