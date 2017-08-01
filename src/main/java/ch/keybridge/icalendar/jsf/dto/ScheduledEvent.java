@@ -239,6 +239,10 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
 
   public void setRecur(RecurType recur) {
     this.recur = recur;
+  }
+
+  public boolean hasRecur() {
+    return this.recur != null;
   }//</editor-fold>
 
   /**
