@@ -18,7 +18,6 @@ import ietf.params.xml.ns.icalendar.RecurType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
-import org.primefaces.model.ScheduleEvent;
 
 /**
  * ScheduledEvent is a implementation of the the Primefaces ScheduleEvent
@@ -34,7 +33,7 @@ import org.primefaces.model.ScheduleEvent;
  * @author Jesse Caulfield
  * @since v7.5.0 created 12/10/2015
  */
-public class ScheduledEvent implements ScheduleEvent, Serializable {
+public class ScheduledEvent implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -113,7 +112,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getId() {
     return id;
   }
@@ -121,7 +119,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public void setId(String id) {
     this.id = id;
   }
@@ -129,7 +126,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getTitle() {
     return title;
   }
@@ -141,7 +137,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getDescription() {
     return description;
   }
@@ -153,7 +148,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public Object getData() {
     return data;
   }
@@ -165,7 +159,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public Date getEndDate() {
     return endDate;
   }
@@ -177,7 +170,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public Date getStartDate() {
     return startDate;
   }
@@ -197,7 +189,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getStyleClass() {
     return styleClass;
   }
@@ -209,7 +200,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public boolean isAllDay() {
     return allDay;
   }
@@ -221,7 +211,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public boolean isEditable() {
     return editable;
   }
@@ -254,7 +243,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
     return startDate != null && endDate != null;
   }
 
-  @Override
   public String toString() {
     return "ScheduledEvent startDate [" + startDate
             + "] endDate [" + endDate
