@@ -13,7 +13,6 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <p> #{cc.clientId} : #{cc.id} </p>
     <div class="form-group">
       <label>Repeat</label><br/>
       <div class="form-inline d-flex align-items-start">
@@ -23,7 +22,7 @@
                            value="#{cc.attrs.recur.freq}">
             <f:selectItem itemLabel="Daily" itemValue="DAILY"/>
             <f:selectItem itemLabel="Weekly" itemValue="WEEKLY" />
-            <p:ajax update="panelGroupRecurrence, freqLabel"
+            <p:ajax update="panelGroupRecurrence, freqLabel" 
                     process="@this" partialSubmit="true" global="false"/>
           </h:selectOneMenu>
           <h:outputText value=" every: " styleClass="mx-2"/>
