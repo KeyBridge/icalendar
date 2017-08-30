@@ -2,9 +2,10 @@ package ietf.params.xml.ns.icalendar.adapter;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * @author Andrius Druzinis-Vitkus
@@ -58,6 +59,7 @@ public class XmlAdapterLocalDateTimeXCalDateTimeTest {
 
       assertEquals(dateTime, unmarshalled);
     } catch (DateTimeException dateTimeException) {
+      fail(dateTimeException.getMessage());
     }
     if (logToConsole) {
       System.out.println();
