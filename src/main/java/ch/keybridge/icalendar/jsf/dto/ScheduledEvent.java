@@ -89,6 +89,12 @@ public class ScheduledEvent implements Serializable {
   private boolean editable;
 
   /**
+   * Indicator that there is a recurrence configuration that should be
+   * considered. If this is false then the {@code recur} field should be ignored
+   * even if configured.
+   */
+  private boolean hasRecur;
+  /**
    * Recurrence configuration.
    */
   private RecurType recur;
@@ -219,6 +225,14 @@ public class ScheduledEvent implements Serializable {
     this.editable = editable;
   }
 
+  public boolean isHasRecur() {
+    return hasRecur;
+  }
+
+  public void setHasRecur(boolean hasRecur) {
+    this.hasRecur = hasRecur;
+  }
+
   public RecurType getRecur() {
     if (recur == null) {
       recur = new RecurType(); // DAILY
@@ -230,7 +244,7 @@ public class ScheduledEvent implements Serializable {
     this.recur = recur;
   }
 
-  public boolean hasRecur() {
+  public boolean isSetRecur() {
     return this.recur != null;
   }//</editor-fold>
 
