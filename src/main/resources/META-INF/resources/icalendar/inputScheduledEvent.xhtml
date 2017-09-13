@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="schedule" type="ch.keybridge.icalendar.jsf.dto.ScheduledEvent" required="true" displayName="The schedule event container POJO"/>
+    <cc:attribute name="timeZone" type="java.util.TimeZone" required="false" displayName="TimeZone for the selected date/ time. Default is system default (EDT)."/>
+
+    <cc:attribute name="timePicker" required="false" type="java.lang.Boolean" default="true" displayName="TimePicker functionality is enabled."/>
+    <cc:attribute name="showAllDay" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the all-day selector should be shown."/>
+
+    <cc:attribute name="minStartDate" required="false" type="java.util.Date"  displayName="The minimum date that should be allowed in recurrence and calendar selection."/>
+    <cc:attribute name="maxStartDate" required="false" type="java.util.Date"  displayName="The maximum period into the future that an event may start (encoded as a duration)."/>
+    <cc:attribute name="maxEndDate" required="false" type="java.util.Date"  displayName="The maximum date into the future that an event may end."/>
+
+    <cc:attribute name="timeZones" type="java.util.List" required="false" displayName="TimeZones to display in the timezone selector. Required if showTimezones is TRUE. This is used to provide a reduced set of timezones in the selector."/>
+    <cc:attribute name="showTimeZone" required="false" type="java.lang.Boolean" default="false" displayName="Indicator that the time zone selector should be shown."/>
+
+    <cc:attribute name="required" required="false" type="java.lang.Boolean" default="false" displayName="(Optional) Indicator that the form should mark necessary fields as required. This affects form submission."/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation id="#{cc.id}">
+    <div id="#{cc.clientId}">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>#{label.from_time}</label>
+            <p:calendar id="dtStart" styleClass="pcalendar form-control"
+                        pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
+                        required="#{cc.attrs.required}" requiredMessage="Please select the start date"
+                        showButtonPanel="true"
+                        value="#{cc.attrs.schedule.startDate}"
+                        timeZone="#{cc.attrs.schedule.timeZone}"
+                        mindate="#{cc.attrs.minStartDate}"
+                        maxdate="#{cc.attrs.maxStartDate}">
+              <p:ajax event="dateSelect" update="dtEnd"
+                      process="@this" partialSubmit="true" global="false"/>
+            </p:calendar>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>#{label.to_time}</label><br/>
+            <p:calendar id="dtEnd" styleClass="pcalendar form-control"
+                        pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
+                        required="#{cc.attrs.required}" requiredMessage="Please select the end date"
+                        showButtonPanel="true"
+                        value="#{cc.attrs.schedule.endDate}"
+                        timeZone="#{cc.attrs.schedule.timeZone}"
+                        mindate="#{cc.attrs.schedule.startDate}"
+                        maxdate="#{cc.attrs.maxEndDate}">
+            </p:calendar>
+          </div>
+
+          <h:panelGroup rendered="#{cc.attrs.showAllDay}">
+            <div class="form-group">
+              <label>
+                <h:selectBooleanCheckbox value="#{cc.attrs.schedule.allDay}"/>  #{label.all_day}
+              </label>
+            </div>
+          </h:panelGroup>
+        </div>
+      </div>
+
+      <h:panelGroup rendered="#{cc.attrs.showTimeZone}">
+        <div class="form-group">
+          <label>#{label.timezone}</label><br/>
+          <div class="form-inline">
+            <div class="form-group">
+              <h:selectOneMenu id="tzid" styleClass="form-control"
+                               converter="convertTimezone"
+                               value="#{cc.attrs.schedule.timeZone}">
+                <f:selectItems value="#{cc.attrs.timeZones}" var="tz" itemLabel="#{tz.ID}" itemValue="#{tz}"/>
+              </h:selectOneMenu>
+              <p:commandLink id="selectTzid" update="dtStart, dtEnd"
+                             process="dtStart, dtEnd, tzid, @this" partialSubmit="true" global="false"
+                             styleClass="btn btn-secondary input-group-addon">
+                Select
+              </p:commandLink>
+            </div>
+          </div>
+        </div>
+      </h:panelGroup>
+    </div>
+  </cc:implementation>
+</html>

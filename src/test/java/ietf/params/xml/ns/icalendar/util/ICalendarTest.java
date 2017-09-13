@@ -16,9 +16,6 @@ package ietf.params.xml.ns.icalendar.util;
 import ietf.params.xml.ns.icalendar.Constants;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -27,12 +24,13 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
+import org.junit.Test;
 
 /**
  *
  * @author Key Bridge
  */
-public class ICalendarUtilTest {
+public class ICalendarTest {
 
   @Test
   public void testPeriodList() throws Exception {
@@ -74,7 +72,7 @@ public class ICalendarUtilTest {
     RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
 
     System.out.println(" recur " + recur.toStringFull());
-//    Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart.getTime(),
+//    Set<PeriodType> recurSet = ICalendar.calculateRecurrenceSet(dtstart.getTime(),
 //                                                                    dtend.getTime(),
 //                                                                    recur,
 //                                                                    periodStart.getTime(),
@@ -86,6 +84,7 @@ public class ICalendarUtilTest {
 //    }
 
   }
+
   @Test
   public void testPeriodListJavaTime() throws Exception {
     System.out.println("TestPeriodList");
@@ -120,11 +119,11 @@ public class ICalendarUtilTest {
 
     System.out.println(recur.getFreq());
     System.out.println(recur.getInterval());
-    Set<PeriodType> recurSet = ICalendarUtil.calculateRecurrenceSet(dtstart,
-                                                                    dtend,
-                                                                    recur,
-                                                                    periodStart,
-                                                                    periodEnd);
+    Set<PeriodType> recurSet = ICalendar.calculatePeriodSet(dtstart,
+                                                            dtend,
+                                                            recur,
+                                                            periodStart,
+                                                            periodEnd);
     System.out.println("RecurSet");
     int i = 0;
     for (PeriodType periodType : recurSet) {

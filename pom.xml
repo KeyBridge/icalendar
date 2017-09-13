@@ -31,7 +31,7 @@
     force default timezones to UTC
     use maven build system
     v1.0.0 - 2017 - check and confirm conformance with current RFC specs.
-    v2.0.0 - rewrite using JDK8 date and time classes from java.time
+    v2.0.0 - rewrite using JDK8 date and java.time classes
 
   </description>
 
@@ -63,18 +63,32 @@
 
   <dependencies>
     <dependency>
-      <groupId>keybridge.lib</groupId>
-      <artifactId>xml-adapter</artifactId>
-      <version>1.0.1</version>
-      <scope>test</scope>
-      <type>jar</type>
+      <groupId>org.primefaces</groupId>
+      <artifactId>primefaces</artifactId>
+      <version>6.0</version>
+      <!--<scope>provided</scope>-->
     </dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+      <version>7.0</version>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>keybridge.lib</groupId>
+      <artifactId>xml-adapter</artifactId>
+      <version>1.0.1</version>
+      <scope>test</scope>
+      <type>jar</type>
+    </dependency>
+
   </dependencies>
 
   <distributionManagement>

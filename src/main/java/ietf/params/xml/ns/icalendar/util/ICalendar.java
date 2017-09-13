@@ -15,11 +15,27 @@
  */
 package ietf.params.xml.ns.icalendar.util;
 
+import ietf.params.xml.ns.icalendar.ECalscaleValueType;
+import ietf.params.xml.ns.icalendar.ObjectFactory;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
-import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import ietf.params.xml.ns.icalendar.component.base.VcalendarType;
+import ietf.params.xml.ns.icalendar.component.base.VeventType;
+import ietf.params.xml.ns.icalendar.property.base.CalscalePropType;
+import ietf.params.xml.ns.icalendar.property.base.caladdress.OrganizerPropType;
+import ietf.params.xml.ns.icalendar.property.base.datedatetime.DtendPropType;
+import ietf.params.xml.ns.icalendar.property.base.datedatetime.DtstartPropType;
+import ietf.params.xml.ns.icalendar.property.base.integer.PriorityPropType;
+import ietf.params.xml.ns.icalendar.property.base.integer.SequencePropType;
+import ietf.params.xml.ns.icalendar.property.base.recur.RrulePropType;
+import ietf.params.xml.ns.icalendar.property.base.text.*;
+import ietf.params.xml.ns.icalendar.property.base.textlist.CategoriesPropType;
+import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CreatedPropType;
+import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.function.BiFunction;
@@ -27,6 +43,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.ejb.Schedule;
+
+import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
+import static ietf.params.xml.ns.icalendar.EFreqRecurType.*;
 
 /**
  * A utility class to help interact and manipulate ICalendar classes and
@@ -38,9 +58,9 @@ import java.util.stream.Stream;
  *
  * @author Jesse Caulfield <jesse@caulfield.org> 07/07/14
  */
-public class ICalendarUtil {
+public class ICalendar {
 
-  private static final Logger LOGGER = Logger.getLogger(ICalendarUtil.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ICalendar.class.getName());
 
   /**
    * Calculate a recurrence set during the specified period for an event
@@ -68,15 +88,15 @@ public class ICalendarUtil {
    *         during the defined period (e.g. between the period start and end
    *         dates.) // * @throws DatatypeConfigurationException if a PeriodType
    *         fails to build
-   * @throws Exception if the event does not contain the period of interest
    */
-  public static Set<PeriodType> calculateRecurrenceSet(final LocalDateTime eventStart,
-                                                       final LocalDateTime eventEnd,
-                                                       final RecurType recurType,
-                                                       final LocalDateTime periodStart,
-                                                       final LocalDateTime periodEnd) {
+  public static Set<PeriodType> calculatePeriodSet(final LocalDateTime eventStart,
+                                                   final LocalDateTime eventEnd,
+                                                   final RecurType recurType,
+                                                   final LocalDateTime periodStart,
+                                                   final LocalDateTime periodEnd) {
     /**
-     * Initialize the period list. Use a HashSet to enforce uniqueness.
+     * Initialize the period list. Use a HashSet for speed and to enforce
+     * uniqueness. This is copied into a TreeSet later to provide a sorted set.
      */
     Set<PeriodType> periodSet = new HashSet<>();
     /**
@@ -254,8 +274,9 @@ public class ICalendarUtil {
     if (values.isEmpty()) {
       return dateSet;
     }
-    return (dateSet.isEmpty() ? Stream.of(periodStart) : dateSet.stream())
-            .flatMap(date -> values.stream()
+    return (dateSet.isEmpty()
+            ? Stream.of(periodStart)
+            : dateSet.stream()).flatMap(date -> values.stream()
                     .map(integer -> function.apply(date, integer)))
             .collect(Collectors.toSet());
   }
@@ -465,111 +486,223 @@ public class ICalendarUtil {
      * Return a sorted Set of java.util.Calendar values.
      */
     return new TreeSet<>(dateSet);
+  }//</editor-fold>
+
+  //<editor-fold defaultstate="collapsed" desc="VCalendar builder">
+  /**
+   * Build a VCalendar object from a station and (optional) location
+   *
+   * @param vEvent the vEvent
+   * @return vCal formatted string
+   * @throws java.lang.Exception if the VeventType fails to build
+   */
+  public String buildVCalendar(VeventType vEvent) throws Exception {
+    String PRODID = "-//Key Bridge iCalendarFactory/2.00//EN";
+    VcalendarType vc = new VcalendarType();
+    ObjectFactory o = new ObjectFactory();
+    vc.getProperties().addProperty(o.createCalscale(new CalscalePropType(ECalscaleValueType.GREGORIAN)));
+    vc.getProperties().addProperty(o.createVersion(new VersionPropType("2.0")));
+    vc.getProperties().addProperty(o.createProdid(new ProdidPropType(PRODID)));
+    vc.getComponents().addComponent(o.createVevent(vEvent));
+    return vc.toString();
   }
 
   /**
-   * Increments the specified calendar according to the FREQ and INTERVAL
-   * specified in this recurrence rule.
+   * Build an iCalendar VEvent from a Schedule entity.
    * <p>
-   * If no INTERVAL value is set in the recurrence then the calendar is
-   * incremented by one FREQ period. Otherwise the calendar is incremented by
-   * INTERVAL FREQ periods.
-   *
-   * @param calendar a java.util.Calendar to increment
-   */
-//  private static void increment(RecurType recurType, final Calendar calendar) {
-//    calendar.add(recurType.getFreq().getTemporalUnit(),
-//                 recurType.isSetInterval() && recurType.getInterval() >= 1
-//                 ? recurType.getInterval()
-//                 : 1);
-//  }
-  /**
-   * Obtain a new instance of a Duration specifying the Duration as
-   * milliseconds.
+   * If a location is configured the location name will be recorded in the
+   * vEvent.location field.
    * <p>
-   * XML Schema Part 2: Datatypes, 3.2.6 duration, defines duration as: duration
-   * represents a duration of mergeTime. The value space of duration is a
-   * six-dimensional space where the coordinates designate the Gregorian year,
-   * month, day, hour, minute, and second components defined in Section 5.5.3.2
-   * of [ISO 8601], respectively. These components are ordered in their
-   * significance by their order of appearance i.e. as year, month, day, hour,
-   * minute, and second.
+   * Developer note: This method includes an indirect dependency upon the
+   * Apache.lang HashCodeBuilder method, which is not linked to the library by
+   * default.
    *
-   * @param milliseconds the duration in milliseconds.
-   * @return a Duration instance
-   * @throws DatatypeConfigurationException
+   * @return an iCalendar VEvent from this Schedule configuration
    */
-//  public static Duration duration(long milliseconds) throws DatatypeConfigurationException {
-//    return DatatypeFactory.newInstance().newDuration(milliseconds);
-//  }
+  public VeventType vEvent(LocalDate dateStart,
+                           LocalDate dateEnd,
+                           String uid,
+                           boolean allDay,
+                           String organizer,
+                           String summary,
+                           String description,
+                           List<String> categories,
+                           String classification,
+                           String transparency,
+                           String rrule,
+                           String tzid,
+                           String location) {
+    VeventType vEvent = new VeventType();
+
+    ObjectFactory o = new ObjectFactory();
+    /**
+     * Developer note: Set DTSTART/DTEND as DATE if the schedule is an all-day
+     * event. This will strip the time component. Otherwise set as a DATETIME,
+     * which preserves the time component.
+     */
+    if (allDay) {
+      vEvent.getProperties().addProperty(o.createDtstart(new DtstartPropType(dateStart)));
+      vEvent.getProperties().addProperty(o.createDtend(new DtendPropType(dateEnd)));
+    } else {
+      vEvent.getProperties().addProperty(o.createDtstart(new DtstartPropType(dateStart)));
+      vEvent.getProperties().addProperty(o.createDtend(new DtendPropType(dateEnd)));
+    }
+    vEvent.getProperties().addProperty(o.createDtstamp(new DtstampPropType(LocalDateTime.now(ZONE_UTC))));
+    vEvent.getProperties().addProperty(o.createCreated(new CreatedPropType(LocalDateTime.now(ZONE_UTC))));
+    vEvent.getProperties().addProperty(o.createPriority(new PriorityPropType(5)));
+    vEvent.getProperties().addProperty(o.createMethod(MethodPropType.PUBLISH));
+    vEvent.getProperties().addProperty(o.createSequence(new SequencePropType(0)));
+    vEvent.getProperties().addProperty(o.createUid(new UidPropType(uid)));
+    /**
+     * Conditionally set the following parameters only if they are present.
+     */
+    if (isSetProperty(summary)) {
+      vEvent.getProperties().addProperty(o.createSummary(new SummaryPropType(summary)));
+//      vEvent.getProperty(Property.SUMMARY).getParameters().add(new Language("en-us"));
+    }
+    if (isSetProperty(description)) {
+      vEvent.getProperties().addProperty(o.createDescription(new DescriptionPropType(description)));
+    }
+    if (isSetProperty(categories)) {
+      vEvent.getProperties().addProperty(o.createCategories(new CategoriesPropType(categories)));
+    }
+    if (classification != null) {
+      vEvent.getProperties().addProperty(o.createClass(new ClassPropType(classification)));
+    }
+    if (transparency != null) {
+      vEvent.getProperties().addProperty(o.createTransp(new TranspPropType(transparency)));
+    }
+    /**
+     * Surround the organizer with a try/catch to ensure correct handling of
+     * invalid URI entries. The add() method will fail if it cannot create a
+     * valid URI. Ignore the error.and keep going.
+     */
+    if (isSetProperty(organizer)) {
+      try {
+        vEvent.getProperties().addProperty(o.createOrganizer(new OrganizerPropType(new URI("mailto", organizer, null))));
+      } catch (URISyntaxException ex) {
+      }
+    }
+    /**
+     * Surround the RRULE with a try/catch to ensure correct handling of
+     * Recurrence parse errors. The add() method will fail if it cannot create a
+     * valid RRule object. Ignore the error.and keep going.
+     */
+    if (isSetProperty(rrule)) {
+      try {
+        vEvent.getProperties().addProperty(o.createRrule(new RrulePropType(new RecurType(rrule))));
+
+      } catch (Exception e) {
+        Logger.getLogger(Schedule.class.getName()).log(Level.WARNING, "Schedule recurrence error:  {0}", e.getMessage());
+      }
+    }
+    /**
+     * Set the Time Zone.
+     */
+    vEvent.getProperties().addProperty(o.createTzname(new TznamePropType(tzid)));
+    /**
+     * Set the location if present.
+     */
+    if (isSetProperty(location)) {
+      vEvent.getProperties().addProperty(o.createLocation(new LocationPropType(location)));
+    }
+    return vEvent;
+  }
+
+  private boolean isSetProperty(List<String> property) {
+    return property != null && !property.isEmpty();
+  }
+
+  private boolean isSetProperty(String property) {
+    return property != null && !property.isEmpty();
+  }//</editor-fold>
+
   /**
-   * Obtain a new instance of a Duration between two dates.
-   * <p>
-   * XML Schema Part 2: Datatypes, 3.2.6 duration, defines duration as: duration
-   * represents a duration of mergeTime. The value space of duration is a
-   * six-dimensional space where the coordinates designate the Gregorian year,
-   * month, day, hour, minute, and second components defined in Section 5.5.3.2
-   * of [ISO 8601], respectively. These components are ordered in their
-   * significance by their order of appearance i.e. as year, month, day, hour,
-   * minute, and second.
+   * Calculate and return the calculated expiration date (i.e. that last date)
+   * of a Scheduled event, accounting for recurrence if configured. If
+   * recurrence is not configured then the {@code dateEnd} field is returned.
    *
-   * @param start the start date and mergeTime
-   * @param end   the end date and mergeTime
-   * @return a Duration instance
-   * @throws DatatypeConfigurationException
+   * @param dateStart the event start date
+   * @param dateEnd   the event end date
+   * @param recur     a recurrence rule
+   * @return the last date of this Schedule (accounting for recurrence)
    */
-//  public static Duration duration(Calendar start, Calendar end) throws DatatypeConfigurationException {
-//    return duration(end.getTimeInMillis() - start.getTimeInMillis());
-//  }
+  public static ZonedDateTime calculateExpiration(ZonedDateTime dateStart,
+                                                  ZonedDateTime dateEnd,
+                                                  RecurType recur) {
+    return calculateExpiration(dateStart, dateEnd, recur, null);
+  }
+
   /**
-   * Obtain a new instance of a Duration between two dates.
-   * <p>
-   * XML Schema Part 2: Datatypes, 3.2.6 duration, defines duration as: duration
-   * represents a duration of mergeTime. The value space of duration is a
-   * six-dimensional space where the coordinates designate the Gregorian year,
-   * month, day, hour, minute, and second components defined in Section 5.5.3.2
-   * of [ISO 8601], respectively. These components are ordered in their
-   * significance by their order of appearance i.e. as year, month, day, hour,
-   * minute, and second.
+   * Calculate and return the calculated expiration date (i.e. that last date)
+   * of a Scheduled event, accounting for recurrence if configured. If
+   * recurrence is not configured then the {@code dateEnd} field is returned.
    *
-   * @param start the start date and mergeTime
-   * @param end   the end date and mergeTime
-   * @return a Duration instance
-   * @throws DatatypeConfigurationException
+   * @param dateStart      the event start date
+   * @param dateEnd        the event end date
+   * @param recur          a recurrence rule
+   * @param dateEndMaximum the maximum duration allowable (default is one year
+   *                       if not configured)
+   * @return the last date of this Schedule (accounting for recurrence)
    */
-//  public static Duration duration(Date start, Date end) throws DatatypeConfigurationException {
-//    return duration(end.getTime() - start.getTime());
-//  }
-  /**
-   * Set the TIME (Hour, Minute and Second) values for the start (and end
-   * mergeTime if set) to match the mergeTime (HMS) values of the given date
-   * value.
-   *
-   * @param date the DATETIME calendar - only the TIME values are extracted
-   * @param time the TIME calendar value - only the TIME values are extracted
-   * @return a calendar with date values from the date calendar and TIME values
-   *         from the mergeTime calendar.
-   */
-//  private static Calendar mergeTime(Calendar date, Date time) {
-//    Calendar timeCalendar = Calendar.getInstance(TIMEZONE_UTC);
-//    timeCalendar.setTime(time);
-//    return mergeTime(date, timeCalendar);
-//  }
-  /**
-   * Set the TIME (Hour, Minute and Second) values for the start (and end
-   * mergeTime if set) to match the mergeTime (HMS) values of the given date
-   * value.
-   *
-   * @param date the DATETIME calendar - only the TIME values are extracted
-   * @param time the TIME calendar value - only the TIME values are extracted
-   * @return a calendar with date values from the date calendar and TIME values
-   *         from the mergeTime calendar.
-   */
-//  private static Calendar mergeTime(Calendar date, Calendar time) {
-//    final Calendar datetime = (Calendar) date.clone();
-//    for (int calendarField : new int[]{Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND}) {
-//      datetime.set(calendarField, time.get(calendarField));
-//    }
-//    return datetime;
-//  }//</editor-fold>
+  public static ZonedDateTime calculateExpiration(ZonedDateTime dateStart,
+                                                  ZonedDateTime dateEnd,
+                                                  RecurType recur,
+                                                  ZonedDateTime dateEndMaximum) {
+    /**
+     * Sanity check.
+     */
+    if (recur == null) {
+      return dateEnd;
+    }
+    /**
+     * Schedule Recurrences should always have an UNTIL or COUNT association. If
+     * they do not then force the expiration to +1 year. If the recurrence
+     * specified a UNTIL date then use it. Otherwise verify that the COUNT is
+     * configured. If it is not configured then return the default expiry from
+     * above.
+     */
+    if (recur.isSetUntil()) {
+      return ZonedDateTime.of(recur.getUntil().getDateTime(), dateStart.getZone());
+    }
+    /**
+     * Add the number of events.
+     */
+    if (recur.isSetCount()) {
+      /**
+       * If an all-day event then set the externally visible time component to 0
+       * Internally keep the time component to preserve expected behavior in a
+       * scheduling UI when a user toggles allDayEvent on and off.
+       */
+      int amount = (recur.isSetInterval() ? recur.getInterval() : 0) * (recur.isSetCount() ? recur.getCount() : 0);
+      /**
+       * Calculate the UNTIL date by adding up each instance.
+       */
+      switch (recur.getFreq()) {
+        case SECONDLY:
+          return dateEnd.plus(amount, ChronoUnit.SECONDS);
+        case MINUTELY:
+          return dateEnd.plus(amount, ChronoUnit.MINUTES);
+        case HOURLY:
+          return dateEnd.plus(amount, ChronoUnit.HOURS);
+        case DAILY:
+          return dateEnd.plus(amount, ChronoUnit.DAYS);
+        case WEEKLY:
+          return dateEnd.plus(amount, ChronoUnit.WEEKS);
+        case MONTHLY:
+          return dateEnd.plus(amount, ChronoUnit.MONTHS);
+        case YEARLY:
+          return dateEnd.plus(amount, ChronoUnit.YEARS);
+        default:
+          throw new AssertionError(recur.getFreq().name());
+      }
+    }
+    /**
+     * Return dateEndMaximum if configured; else return the start date plus 1
+     * year.
+     */
+    return dateEndMaximum != null ? dateEndMaximum : dateStart.plus(1, ChronoUnit.YEARS);
+  }
+
+//  Schedule calculator methods
 }
