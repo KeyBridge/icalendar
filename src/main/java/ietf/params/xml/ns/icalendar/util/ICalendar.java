@@ -15,10 +15,7 @@
  */
 package ietf.params.xml.ns.icalendar.util;
 
-import ietf.params.xml.ns.icalendar.ECalscaleValueType;
-import ietf.params.xml.ns.icalendar.ObjectFactory;
-import ietf.params.xml.ns.icalendar.PeriodType;
-import ietf.params.xml.ns.icalendar.RecurType;
+import ietf.params.xml.ns.icalendar.*;
 import ietf.params.xml.ns.icalendar.component.base.VcalendarType;
 import ietf.params.xml.ns.icalendar.component.base.VeventType;
 import ietf.params.xml.ns.icalendar.property.base.CalscalePropType;
@@ -37,6 +34,7 @@ import javax.ejb.Schedule;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.*;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
 import java.util.*;
@@ -81,9 +79,9 @@ public class ICalendar {
    * @param eventEnd    the (master) event end date and mergeTime
    * @param recurType   the (master) event recurrence type
    * @param periodStart the period of interest start date. This should be on a
-   *                    SUNDAY at or before the first day of a month.
+   *                    SUNDAY at or before the first daily of a month.
    * @param periodEnd   the period of interest end date. This should be on a
-   *                    SATURDAY at or after the last day of the month.
+   *                    SATURDAY at or after the last daily of the month.
    * @return a non-null TreeSet containing calculated event instances occurring
    *         during the defined period (e.g. between the period start and end
    *         dates.) // * @throws DatatypeConfigurationException if a PeriodType
@@ -100,9 +98,9 @@ public class ICalendar {
      */
     Set<PeriodType> periodSet = new HashSet<>();
     /**
-     * Confirm the period of interest is contained within the event
+     * Confirm the period of interest contains the event.
      */
-    if (periodEnd.isBefore(eventStart) || periodStart.isAfter(eventEnd)) {
+    if (periodEnd.isBefore(eventStart) || periodStart.isAfter(calculateExpiration(ZonedDateTime.of(eventEnd, ZONE_UTC), recurType).toLocalDateTime())) {
       throw new IllegalArgumentException("Event does not contain period of interest.");
     }
     /**
@@ -111,29 +109,16 @@ public class ICalendar {
      */
     final Duration duration = Duration.between(eventStart, eventEnd);
     /**
-     * Copy the period start datetime into calendar instances to facilitate
-     * calculation. Calculating with java.util.Date is ... less than satisfying.
+     * Copy the period start datetime into a local variable to facilitate
+     * calculation. This local variable will be internally manipulated.
      */
     LocalDateTime pStart = LocalDateTime.from(periodStart);
     /**
-     * Apply RFC 5545 Page 41: The BYWEEKNO rule corresponds to weeks according
-     * to week numbering as defined in [ISO.8601.2004]. A week is defined as a
-     * seven day period, starting on the day of the week defined to be the week
-     * start (see WKST). Week number one of the calendar year is the first week
-     * that contains at least four (4) days in that calendar year.
-     */
-    final WeekFields weekFields = WeekFields.of(
-            recurType.isSetWkst() ? recurType.getWkst().getDayOfWeek() : DayOfWeek.MONDAY, 4);
-    /**
-     * Copy the period end datetime into a calendar instance.
-     */
-    LocalDateTime pEnd = LocalDateTime.from(periodEnd);
-    /**
      * Now begin the recurrence set calculation.
      * <p>
-     * First: Back up (reverse) the period start by the event DURATION to
-     * include any events that may have begun before the period start and end
-     * during the period.
+     * First: If the event starts before the period then back up (reverse) the
+     * period by the event DURATION. This will include any events that may have
+     * begun before the period started and that end during the period.
      */
     if (eventStart.isBefore(pStart)) {
       pStart = eventStart;
@@ -145,13 +130,33 @@ public class ICalendar {
       periodSet.add(new PeriodType(eventStart, duration));
     }
     /**
-     * Third: Fast forward PSTART to the EVENT start if the event begins within
-     * the period. This will ensure only recurring events that are AFTER the
+     * Third: Set the pStart TIME component to the dtStart TIME value. This
+     * preserves the pStart DATE value set above but ensures that calculated
+     * recurring events match the DTSTART TIME. Sets the TIME (Hour, Minute and
+     * Second) values.
+     */
+    pStart = pStart
+            .withHour(eventStart.getHour())
+            .withMinute(eventStart.getMinute())
+            .withSecond(eventStart.getSecond());
+    /**
+     * Fourth: Fast forward PSTART to the EVENT start if the event begins within
+     * the period. This will ensure only recurring events that occur AFTER the
      * original EVENT are added.
      */
     while (pStart.isBefore(eventStart)) {
       pStart = pStart.plus(duration);
     }
+    /**
+     * Apply RFC 5545 Page 41: The BYWEEKNO rule corresponds to weeks according
+     * to week numbering as defined in [ISO.8601.2004]. A week is defined as a
+     * seven day period, starting on the day of the week defined to be the week
+     * start (see WKST). Week number one of the calendar year is the first week
+     * that contains at least four (4) days in that calendar year.
+     */
+    final WeekFields weekFields = WeekFields.of(recurType.isSetWkst()
+                                                ? recurType.getWkst().getDayOfWeek()
+                                                : DayOfWeek.MONDAY, 4);
     /**
      * Finally: Scan through the period of interest in FREQ increments. For each
      * increment calculate a list of candidate occurrence dates. Analyze each
@@ -165,11 +170,11 @@ public class ICalendar {
      * PeriodType list is the set of recurring events within the period of
      * inquiry.
      */
-    while (pStart.isBefore(pEnd)) {
+    while (pStart.isBefore(periodEnd)) {
       /**
        * Build a list of candidate DTSTART dates within the current FREQ period.
-       * Each candidate Calendar has a unique DATE value and a TIME value
-       * corresponding to the original event (or the hour if BYHOUR is set).
+       * Each candidate LocalDateTime entry corresponding to the original event
+       * (or the hour if BYHOUR is set).
        */
       Set<LocalDateTime> startCandidateSet = buildCandidateList(recurType, pStart, weekFields);
       /**
@@ -203,7 +208,11 @@ public class ICalendar {
       }
       /**
        * Important: Increment the pStart value by the FREQ increment, multiplied
-       * by the FREQ INTERVAL value if present.
+       * by the FREQ INTERVAL value if present. This tncrements the specified
+       * calendar according to the FREQ and INTERVAL specified in this
+       * recurrence rule. If no INTERVAL value is set in the recurrence then the
+       * calendar is incremented by one FREQ period. Otherwise the calendar is
+       * incremented by INTERVAL FREQ periods.
        */
       long amount = recurType.isSetInterval() && recurType.getInterval() >= 1
                     ? recurType.getInterval()
@@ -218,45 +227,6 @@ public class ICalendar {
 
   //<editor-fold defaultstate="collapsed" desc="RRULE Calculators">
   /**
-   * Calculate the BYSECOND rule.
-   *
-   * @param dateSet     the existing set of candidate dates
-   * @param recurType   the recurrence type (not used but present here for
-   *                    consistency with other date set generators.
-   * @param periodStart the period start
-   * @return a non-null HashSet
-   */
-  private static Set<LocalDateTime> bySecond(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.getBysecond(), periodStart, LocalDateTime::withSecond);
-  }
-
-  /**
-   * Calculate the BYMINUTE rule.
-   *
-   * @param dateSet     the existing set of candidate dates
-   * @param recurType   the recurrence type (not used but present here for
-   *                    consistency with other date set generators.
-   * @param periodStart the period start
-   * @return a non-null HashSet
-   */
-  private static Set<LocalDateTime> byMinute(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.getByminute(), periodStart, LocalDateTime::withMinute);
-  }
-
-  /**
-   * Calculate the BYHOUR rule.
-   *
-   * @param dateSet     the existing set of candidate dates
-   * @param recurType   the recurrence type (not used but present here for
-   *                    consistency with other date set generators.
-   * @param periodStart the period start
-   * @return a non-null HashSet
-   */
-  private static Set<LocalDateTime> byHour(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.getByhour(), periodStart, LocalDateTime::withHour);
-  }
-
-  /**
    * Calculate a rule for a generic input.
    *
    * @param dateSet     the existing set of candidate dates
@@ -268,12 +238,20 @@ public class ICalendar {
    *                    rule values
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> byGeneric(Set<LocalDateTime> dateSet, Collection<Integer> values,
+  private static Set<LocalDateTime> byGeneric(Set<LocalDateTime> dateSet,
+                                              Collection<Integer> values,
                                               LocalDateTime periodStart,
                                               BiFunction<LocalDateTime, Integer, LocalDateTime> function) {
     if (values.isEmpty()) {
       return dateSet;
     }
+    /**
+     * The function indicates a LocalDatetime field and value that should be set
+     * in each entry in the dateSet. e.g. LocalDateTime::withDayOfYear
+     * <p>
+     * byWeekNo: (date, integer) -> date.with(weekFields.weekOfYear(), integer)
+     */
+
     return (dateSet.isEmpty()
             ? Stream.of(periodStart)
             : dateSet.stream()).flatMap(date -> values.stream()
@@ -282,15 +260,8 @@ public class ICalendar {
   }
 
   /**
-   * Calculate the DAILY recurrence rule.
-   * <p>
-   * This is ONLY called for DAILY type recurrence.
-   * <p>
-   * The DAILY rule is very simple: just add the current day. Developer note:
-   * DAILY recurrence should (preferably) have an UNTIL or COUNT, which are
-   * handled in the WHILE loop wrapping this method. If UNTIL and COUNT are not
-   * specified then the DAILY will return every day in the period after the
-   * event start.
+   * Calculate the BYSECOND rule. The BYSECOND rule part specifies a
+   * COMMA-separated list of seconds within a minute. Valid values are 0 to 60.
    *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
@@ -298,20 +269,73 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> day(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<LocalDateTime> bySecond(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getBysecond(), periodStart, LocalDateTime::withSecond);
+  }
+
+  /**
+   * Calculate the BYMINUTE rule. The BYMINUTE rule part specifies a
+   * COMMA-separated list of minutes within an hour. Valid values are 0 to 59.
+   *
+   * @param dateSet     the existing set of candidate dates
+   * @param recurType   the recurrence type (not used but present here for
+   *                    consistency with other date set generators.
+   * @param periodStart the period start
+   * @return a non-null HashSet
+   */
+  protected static Set<LocalDateTime> byMinute(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getByminute(), periodStart, LocalDateTime::withMinute);
+  }
+
+  /**
+   * Calculate the BYHOUR rule. The BYHOUR rule part specifies a COMMA-
+   * separated list of hours of the daily. Valid values are 0 to 23.
+   *
+   * @param dateSet     the existing set of candidate dates
+   * @param recurType   the recurrence type (not used but present here for
+   *                    consistency with other date set generators.
+   * @param periodStart the period start
+   * @return a non-null HashSet
+   */
+  protected static Set<LocalDateTime> byHour(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return byGeneric(dateSet, recurType.getByhour(), periodStart, LocalDateTime::withHour);
+  }
+
+  /**
+   * Calculate the DAILY recurrence rule. The DAILY rule is very simple: just
+   * add the current daily. Developer note: DAILY recurrence should (preferably)
+   * have an UNTIL or COUNT, which are handled in the WHILE loop wrapping this
+   * method. If UNTIL and COUNT are not specified then the DAILY will return
+   * every daily in the period after the event start.
+   * <p>
+   * This is ONLY called for DAILY type recurrence.
+   *
+   * @param dateSet     the existing set of candidate dates
+   * @param recurType   the recurrence type (not used but present here for
+   *                    consistency with other date set generators.
+   * @param periodStart the period start
+   * @return a non-null HashSet
+   */
+  protected static Set<LocalDateTime> daily(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
     Set<LocalDateTime> set = new HashSet<>();
     if (dateSet.isEmpty()) {
       set.add(LocalDateTime.from(periodStart));
     } else {
-      for (LocalDateTime calendar : dateSet) {
-        set.add(LocalDateTime.from(calendar));
+      for (LocalDateTime localDateTime : dateSet) {
+        set.add(LocalDateTime.from(localDateTime));
       }
     }
     return set;
   }
 
   /**
-   * Calculate the BYDAY rule.
+   * Calculate the BYDAY rule. The BYDAY rule part specifies a COMMA character
+   * (US-ASCII decimal 44) separated list of days of the week; MO indicates
+   * Monday; TU indicates Tuesday; WE indicates Wednesday; TH indicates
+   * Thursday; FR indicates Friday; SA indicates Saturday; SU indicates Sunday.
+   * <p>
+   * This rule is handled differently then others as it specifies the enumerated
+   * daily of week and not an integer reference.
    *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
@@ -319,12 +343,35 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> byDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.getByhour(), periodStart, LocalDateTime::withHour);
+  protected static Set<LocalDateTime> byDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    if (!recurType.isSetByday()) {
+      return dateSet;
+    }
+    Set<LocalDateTime> set = new HashSet<>();
+    if (dateSet.isEmpty()) {
+      for (EWeekdayRecurType weekday : recurType.getByday()) {
+        set.add(periodStart.with(ChronoField.DAY_OF_WEEK, weekday.getDayOfWeek().getValue()));
+      }
+    } else {
+      for (LocalDateTime localDateTime : dateSet) {
+        for (EWeekdayRecurType weekday : recurType.getByday()) {
+          set.add(localDateTime.with(ChronoField.DAY_OF_WEEK, weekday.getDayOfWeek().getValue()));
+        }
+      }
+    }
+    return set;
   }
 
   /**
-   * Calculate the BYWEEKNO rule.
+   * Calculate the BYWEEKNO rule. The BYWEEKNO rule part specifies a
+   * COMMA-separated list of ordinals specifying weeks of the year. Valid values
+   * are 1 to 53 or -53 to -1. This corresponds to weeks according to week
+   * numbering as defined in [ISO.8601.2004]. A week is defined as a seven daily
+   * period, starting on the daily of the week defined to be the week start (see
+   * WKST). Week number one of the calendar year is the first week that contains
+   * at least four (4) days in that calendar year. This rule part MUST NOT be
+   * used when the FREQ rule part is set to anything other than YEARLY. For
+   * example, 3 represents the third week of the year.
    *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
@@ -332,13 +379,16 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> byWeekNo(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
-    return byGeneric(dateSet, recurType.getByweekno(), periodStart,
+  protected static Set<LocalDateTime> byWeekNo(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+    return byGeneric(dateSet,
+                     recurType.getByweekno(),
+                     periodStart,
                      (date, integer) -> date.with(weekFields.weekOfYear(), integer));
   }
 
   /**
-   * Calculate the BYMONTH rule.
+   * Calculate the BYMONTH rule. The BYMONTH rule part specifies a
+   * COMMA-separated list of months of the year. Valid values are 1 to 12.
    *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
@@ -346,7 +396,7 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> byMonth(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<LocalDateTime> byMonth(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
     return byGeneric(dateSet, recurType.getBymonth(), periodStart, LocalDateTime::withMonth);
   }
 
@@ -359,12 +409,17 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> byMonthDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<LocalDateTime> byMonthDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
     return byGeneric(dateSet, recurType.getBymonthday(), periodStart, LocalDateTime::withDayOfMonth);
   }
 
   /**
-   * Calculate the BYYEARDAY rule.
+   * Calculate the BYYEARDAY rule. The BYYEARDAY rule part specifies a
+   * COMMA-separated list of days of the year. Valid values are 1 to 366 or -366
+   * to -1. For example, -1 represents the last daily of the year (December
+   * 31st) and -306 represents the 306th to the last daily of the year (March
+   * 1st). The BYYEARDAY rule part MUST NOT be specified when the FREQ rule part
+   * is set to DAILY, WEEKLY, or MONTHLY.
    *
    * @param dateSet     the existing set of candidate dates
    * @param recurType   the recurrence type (not used but present here for
@@ -372,7 +427,7 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> byYearDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<LocalDateTime> byYearDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
     return byGeneric(dateSet, recurType.getBymonthday(), periodStart, LocalDateTime::withDayOfYear);
   }
 
@@ -394,9 +449,11 @@ public class ICalendar {
    * @param recurType   the event recurrence. If null or invalid then a empty
    *                    HashSet is returned.
    * @param periodStart the PERIOD start DATE-TIME value.
+   * @param weekFields  the definitions of the daily-of-week, week-of-month and
+   *                    week-of-year fields.
    * @return a non-null TreeSet
    */
-  private static Set<LocalDateTime> buildCandidateList(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+  public static Set<LocalDateTime> buildCandidateList(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
     /**
      * Initialize the set. Use a HashSet to enforce uniqueness. Each (cascaded)
      * calculating method called within the SWITCH statement inspects and is
@@ -427,7 +484,7 @@ public class ICalendar {
                                 recurType, periodStart));
         break;
       case DAILY:
-        dateSet.addAll(bySecond(byMinute(byHour(day(dateSet, recurType, periodStart),
+        dateSet.addAll(bySecond(byMinute(byHour(daily(dateSet, recurType, periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),
                                 recurType, periodStart));
@@ -464,20 +521,41 @@ public class ICalendar {
         throw new AssertionError(recurType.getFreq().name());
     }
     /**
-     * Apply the BYSETPOS rule.
+     * Apply the BYSETPOS rule. Each BYSETPOS value can include a positive (+n)
+     * or negative (-n) integer. If present, this indicates the nth occurrence
+     * of the specific occurrence within the set of occurrences specified by the
+     * rule. The BYSETPOS rule part specifies a COMMA-separated list of values
+     * that corresponds to the nth occurrence within the set of recurrence
+     * instances specified by the rule. BYSETPOS operates on a set of recurrence
+     * instances in one interval of the recurrence rule. For example, in a
+     * WEEKLY rule, the interval would be one week A set of recurrence instances
+     * starts at the beginning of the interval defined by the FREQ rule part.
+     * Valid values are 1 to 366 or -366 to -1. It MUST only be used in
+     * conjunction with another BYxxx rule part. For example "the last work day
+     * of the month" could be represented as:
      * <p>
-     * This is a filter, returning ONLY matched entries. Valid positions are
+     * This is a filter that return ONLY matched entries. Valid positions are
      * from 1 to the size of the date list. Invalid positions are ignored. See
      * Recur.java ~785.
      */
     if (recurType.isSetBysetpos()) {
+      /**
+       * Organize the dataSet into a sorted ArrayList, then extract entries
+       * based upon their position in the list.
+       */
       List<LocalDateTime> dates = new ArrayList<>(new TreeSet<>(dateSet));
       Set<LocalDateTime> setPosDates = new TreeSet<>();
-      for (Integer integer : recurType.getBysetpos()) {
-        if (integer > 0 && integer <= dates.size()) {
-          setPosDates.add(dates.get(integer));
-        } else if (integer < 0 && integer >= -dates.size()) {
-          setPosDates.add((dates.get(dates.size() + integer)));
+      for (Integer setPosition : recurType.getBysetpos()) {
+        if (setPosition > 0 && setPosition <= dates.size()) {
+          /**
+           * Get the nth entry from the START of the list.
+           */
+          setPosDates.add(dates.get(setPosition));
+        } else if (setPosition < 0 && setPosition >= -dates.size()) {
+          /**
+           * Get the nth entry from the END of the list.
+           */
+          setPosDates.add((dates.get(dates.size() + setPosition))); // setPosition is negative
         }
       }
       return setPosDates;
@@ -622,15 +700,13 @@ public class ICalendar {
    * of a Scheduled event, accounting for recurrence if configured. If
    * recurrence is not configured then the {@code dateEnd} field is returned.
    *
-   * @param dateStart the event start date
-   * @param dateEnd   the event end date
-   * @param recur     a recurrence rule
+   * @param dateTime the event start date
+   * @param dateEnd  the event end date
+   * @param recur    a recurrence rule
    * @return the last date of this Schedule (accounting for recurrence)
    */
-  public static ZonedDateTime calculateExpiration(ZonedDateTime dateStart,
-                                                  ZonedDateTime dateEnd,
-                                                  RecurType recur) {
-    return calculateExpiration(dateStart, dateEnd, recur, null);
+  public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, RecurType recur) {
+    return calculateExpiration(dateTime, recur, null);
   }
 
   /**
@@ -638,22 +714,18 @@ public class ICalendar {
    * of a Scheduled event, accounting for recurrence if configured. If
    * recurrence is not configured then the {@code dateEnd} field is returned.
    *
-   * @param dateStart      the event start date
-   * @param dateEnd        the event end date
+   * @param dateTime       the event end date
    * @param recur          a recurrence rule
    * @param dateEndMaximum the maximum duration allowable (default is one year
    *                       if not configured)
    * @return the last date of this Schedule (accounting for recurrence)
    */
-  public static ZonedDateTime calculateExpiration(ZonedDateTime dateStart,
-                                                  ZonedDateTime dateEnd,
-                                                  RecurType recur,
-                                                  ZonedDateTime dateEndMaximum) {
+  public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, RecurType recur, ZonedDateTime dateEndMaximum) {
     /**
      * Sanity check.
      */
     if (recur == null) {
-      return dateEnd;
+      return dateTime;
     }
     /**
      * Schedule Recurrences should always have an UNTIL or COUNT association. If
@@ -663,7 +735,7 @@ public class ICalendar {
      * above.
      */
     if (recur.isSetUntil()) {
-      return ZonedDateTime.of(recur.getUntil().getDateTime(), dateStart.getZone());
+      return ZonedDateTime.of(recur.getUntil().getDateTime(), dateTime.getZone());
     }
     /**
      * Add the number of events.
@@ -680,19 +752,19 @@ public class ICalendar {
        */
       switch (recur.getFreq()) {
         case SECONDLY:
-          return dateEnd.plus(amount, ChronoUnit.SECONDS);
+          return dateTime.plus(amount, ChronoUnit.SECONDS);
         case MINUTELY:
-          return dateEnd.plus(amount, ChronoUnit.MINUTES);
+          return dateTime.plus(amount, ChronoUnit.MINUTES);
         case HOURLY:
-          return dateEnd.plus(amount, ChronoUnit.HOURS);
+          return dateTime.plus(amount, ChronoUnit.HOURS);
         case DAILY:
-          return dateEnd.plus(amount, ChronoUnit.DAYS);
+          return dateTime.plus(amount, ChronoUnit.DAYS);
         case WEEKLY:
-          return dateEnd.plus(amount, ChronoUnit.WEEKS);
+          return dateTime.plus(amount, ChronoUnit.WEEKS);
         case MONTHLY:
-          return dateEnd.plus(amount, ChronoUnit.MONTHS);
+          return dateTime.plus(amount, ChronoUnit.MONTHS);
         case YEARLY:
-          return dateEnd.plus(amount, ChronoUnit.YEARS);
+          return dateTime.plus(amount, ChronoUnit.YEARS);
         default:
           throw new AssertionError(recur.getFreq().name());
       }
@@ -701,7 +773,7 @@ public class ICalendar {
      * Return dateEndMaximum if configured; else return the start date plus 1
      * year.
      */
-    return dateEndMaximum != null ? dateEndMaximum : dateStart.plus(1, ChronoUnit.YEARS);
+    return dateEndMaximum != null ? dateEndMaximum : dateTime.plus(1, ChronoUnit.YEARS);
   }
 
 //  Schedule calculator methods

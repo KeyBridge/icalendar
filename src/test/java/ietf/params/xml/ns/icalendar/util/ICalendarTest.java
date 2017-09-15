@@ -13,17 +13,17 @@
  */
 package ietf.params.xml.ns.icalendar.util;
 
-import ietf.params.xml.ns.icalendar.Constants;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TimeZone;
+import java.time.temporal.WeekFields;
+import java.util.*;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -32,8 +32,8 @@ import org.junit.Test;
  */
 public class ICalendarTest {
 
-  @Test
-  public void testPeriodList() throws Exception {
+//  @Test
+  public void testPeriodListX() throws Exception {
     System.out.println("TestPeriodList");
 
     TimeZone TIMEZONE_UTC = TimeZone.getTimeZone("UTC");
@@ -86,50 +86,118 @@ public class ICalendarTest {
   }
 
   @Test
-  public void testPeriodListJavaTime() throws Exception {
+  public void testPeriodList() throws Exception {
     System.out.println("TestPeriodList");
 
-    DateTimeFormatter format = Constants.FORMATTER_RFC5545_DATE_TIME;
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("EEEE, MMMM dd yyyy KK:mm a");
 
-    LocalDateTime dtstart = LocalDateTime.of(2014, 1, 29, 0, 0, 0);
-    LocalDateTime dtend = LocalDateTime.of(2015, 12, 29, 0, 0, 0);
+    LocalDateTime eventStart = LocalDateTime.of(2014, 1, 5, 0, 0, 0);
+    LocalDateTime eventEnd = LocalDateTime.of(2014, 1, 6, 0, 0, 0);
 
-    System.out.println("dtstart      " + dtstart.format(format));
-    System.out.println("dtend        " + dtend.format(format));
-
-//    Schedule s = new Schedule(start, end, null, timeZoneEst, null);
-//    s.setRecur(new Recur("FREQ=DAILY;INTERVAL=2"));
-    LocalDateTime periodStart = LocalDateTime.of(2014, 5, 29, 0, 0, 0);
-    LocalDateTime periodEnd = LocalDateTime.of(2014, 7, 2, 0, 0, 0);
-    System.out.println("period start " + periodStart.format(format));
-    System.out.println("period End   " + periodEnd.format(format));
-//    List<Schedule> list = s.getPeriodList(periodStart, periodEnd);
-//    for (Schedule schedule : list) {
-//      System.out.println("  period " + schedule);
-//    }
+    System.out.println("  event Start      " + eventStart.format(format));
+    System.out.println("  event End        " + eventEnd.format(format));
 
 //    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20140725T000000Z");
 //    RecurType recur = new RecurType("FREQ=WEEKLY;UNTIL=20140730T000000Z;WKST=SU;BYDAY=TU,WE,TH,SA");
 //    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=15;INTERVAL=2;WKST=SU;BYDAY=TU,WE,TH");
 //    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5");
-//    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
-    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
-
-    System.out.println(" recur " + recur);
+    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
+    System.out.println("  event Recur      " + recur);
 
     System.out.println(recur.getFreq());
     System.out.println(recur.getInterval());
-    Set<PeriodType> recurSet = ICalendar.calculatePeriodSet(dtstart,
-                                                            dtend,
-                                                            recur,
-                                                            periodStart,
-                                                            periodEnd);
-    System.out.println("RecurSet");
+
+    LocalDateTime periodStart = LocalDateTime.of(2014, 1, 1, 0, 0, 0);
+    LocalDateTime periodEnd = LocalDateTime.of(2014, 2, 28, 0, 0, 0);
+    System.out.println("  period start     " + periodStart.format(format));
+    System.out.println("  period End       " + periodEnd.format(format));
+//    List<Schedule> list = s.getPeriodList(periodStart, periodEnd);
+//    for (Schedule schedule : list) {
+//      System.out.println("  period " + schedule);
+//    }
+
+    Set<PeriodType> periodSet = ICalendar.calculatePeriodSet(eventStart,
+                                                             eventEnd,
+                                                             recur,
+                                                             periodStart,
+                                                             periodEnd);
+    System.out.println("  PeriodSet");
     int i = 0;
-    for (PeriodType periodType : recurSet) {
-      System.out.println(i++ + "   " + periodType + "   " + periodType.getEnd());
+    for (PeriodType periodType : periodSet) {
+      System.out.println("    " + i++
+              + " " + Duration.between(periodType.getStart(), periodType.getEnd())
+              + "   " + periodType.getStart().format(format)
+              + "   " + periodType.getEnd().format(format)
+      );
     }
 
+  }
+
+  @Test
+  public void testDaily() throws Exception {
+    System.out.println("TestDaily");
+    Set<LocalDateTime> dateSet = new HashSet<>();
+    RecurType recurType = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20171025T000000Z");
+
+    Set<LocalDateTime> daily = ICalendar.daily(dateSet, recurType, LocalDateTime.now());
+
+    System.out.println("  daily size " + daily.size());
+    for (LocalDateTime localDateTime : daily) {
+      System.out.println("   " + localDateTime);
+    }
+
+  }
+
+  @Test
+  public void testWeekly() throws Exception {
+    System.out.println("TestWeekly");
+    Set<LocalDateTime> dateSet = new HashSet<>();
+//    RecurType recurType = new RecurType("FREQ=WEEKLY;INTERVAL=2;UNTIL=20171025T000000Z");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=15;INTERVAL=2;BYDAY=TU,WE,TH");
+    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;UNTIL=20140730T000000Z;WKST=SU;BYDAY=TU,WE,TH,SA");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=15;INTERVAL=2;WKST=SU;BYDAY=TU,WE,TH");
+//    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5");
+//    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
+
+    WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 4);
+
+    Set<LocalDateTime> daily = ICalendar.daily(dateSet, recur, LocalDateTime.now());
+
+    System.out.println("  weekly size  " + daily.size());
+    for (LocalDateTime localDateTime : daily) {
+      System.out.println("   " + localDateTime);
+    }
+    for (Integer integer : recur.getByweekno()) {
+      System.out.println("  by week no " + integer);
+    }
+
+  }
+
+  @Test
+  public void testBuildCandidateList() throws Exception {
+    System.out.println("TestBuildCandidateList");
+
+    WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 4);
+
+//    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=10");
+//    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z");
+    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5");
+
+    System.out.println("  RecurType " + recur);
+
+    LocalDateTime periodStart = LocalDateTime.now();
+
+    Set<LocalDateTime> candidates = ICalendar.buildCandidateList(recur, periodStart, weekFields);
+
+    for (LocalDateTime candidate : candidates) {
+      System.out.println("  candidate  " + candidate);
+    }
+    /**
+     * At least one candidate should always be returned.
+     */
+    Assert.assertTrue(candidates.size() > 0);
   }
 
 }

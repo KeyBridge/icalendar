@@ -766,7 +766,8 @@ public class RecurType implements Serializable {
   }
 
   /**
-   * Gets the value of the bymonth property.
+   * Gets the value of the bymonth property. The BYMONTH rule part specifies a
+   * COMMA-separated list of months of the year. Valid values are 1 to 12.
    *
    * @return a non-null ArrayList
    */

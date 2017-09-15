@@ -18,7 +18,6 @@ import ietf.params.xml.ns.icalendar.RecurType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
-import org.primefaces.model.ScheduleEvent;
 
 /**
  * ScheduledEvent is a implementation of the the Primefaces ScheduleEvent
@@ -34,7 +33,7 @@ import org.primefaces.model.ScheduleEvent;
  * @author Jesse Caulfield
  * @since v7.5.0 created 12/10/2015
  */
-public class ScheduledEvent implements ScheduleEvent, Serializable {
+public class ScheduledEvent implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -90,6 +89,12 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   private boolean editable;
 
   /**
+   * Indicator that there is a recurrence configuration that should be
+   * considered. If this is false then the {@code recur} field should be ignored
+   * even if configured.
+   */
+  private boolean hasRecur;
+  /**
    * Recurrence configuration.
    */
   private RecurType recur;
@@ -113,7 +118,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getId() {
     return id;
   }
@@ -121,7 +125,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public void setId(String id) {
     this.id = id;
   }
@@ -129,7 +132,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getTitle() {
     return title;
   }
@@ -141,7 +143,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getDescription() {
     return description;
   }
@@ -153,7 +154,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public Object getData() {
     return data;
   }
@@ -165,7 +165,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public Date getEndDate() {
     return endDate;
   }
@@ -177,7 +176,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public Date getStartDate() {
     return startDate;
   }
@@ -197,7 +195,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public String getStyleClass() {
     return styleClass;
   }
@@ -209,7 +206,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public boolean isAllDay() {
     return allDay;
   }
@@ -221,13 +217,20 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
   /**
    * {@inheritDoc
    */
-  @Override
   public boolean isEditable() {
     return editable;
   }
 
   public void setEditable(boolean editable) {
     this.editable = editable;
+  }
+
+  public boolean isHasRecur() {
+    return hasRecur;
+  }
+
+  public void setHasRecur(boolean hasRecur) {
+    this.hasRecur = hasRecur;
   }
 
   public RecurType getRecur() {
@@ -241,7 +244,7 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
     this.recur = recur;
   }
 
-  public boolean hasRecur() {
+  public boolean isSetRecur() {
     return this.recur != null;
   }//</editor-fold>
 
@@ -254,7 +257,6 @@ public class ScheduledEvent implements ScheduleEvent, Serializable {
     return startDate != null && endDate != null;
   }
 
-  @Override
   public String toString() {
     return "ScheduledEvent startDate [" + startDate
             + "] endDate [" + endDate
