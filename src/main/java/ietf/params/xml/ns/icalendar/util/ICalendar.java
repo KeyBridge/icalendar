@@ -44,7 +44,6 @@ import java.util.stream.Stream;
 import javax.ejb.Schedule;
 
 import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
-import static ietf.params.xml.ns.icalendar.EFreqRecurType.*;
 
 /**
  * A utility class to help interact and manipulate ICalendar classes and
@@ -706,7 +705,7 @@ public class ICalendar {
    * @return the last date of this Schedule (accounting for recurrence)
    */
   public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, RecurType recur) {
-    return calculateExpiration(dateTime, recur, null);
+    return calculateExpiration(dateTime, null, recur);
   }
 
   /**
@@ -720,7 +719,7 @@ public class ICalendar {
    *                       if not configured)
    * @return the last date of this Schedule (accounting for recurrence)
    */
-  public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, RecurType recur, ZonedDateTime dateEndMaximum) {
+  public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, ZonedDateTime dateEndMaximum, RecurType recur) {
     /**
      * Sanity check.
      */
