@@ -29,6 +29,8 @@ import ietf.params.xml.ns.icalendar.property.base.text.*;
 import ietf.params.xml.ns.icalendar.property.base.textlist.CategoriesPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CreatedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
+
+import javax.ejb.Schedule;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.*;
@@ -41,10 +43,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.ejb.Schedule;
 
 import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
-import static ietf.params.xml.ns.icalendar.EFreqRecurType.*;
 
 /**
  * A utility class to help interact and manipulate ICalendar classes and
