@@ -32,7 +32,7 @@
     use maven build system
     v1.0.0 - 2017 - check and confirm conformance with current RFC specs.
     v2.0.0 - rewrite using JDK8 date and java.time classes
-    v2.0.1 - Infinite loop bugfix
+    v2.0.1 - change method signature for calculateExpiration
 
   </description>
 
