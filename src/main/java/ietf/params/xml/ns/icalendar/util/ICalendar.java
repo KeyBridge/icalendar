@@ -727,19 +727,31 @@ public class ICalendar {
       return dateTime;
     }
     /**
-     * Schedule Recurrences should always have an UNTIL or COUNT association. If
-     * they do not then force the expiration to +1 year. If the recurrence
-     * specified a UNTIL date then use it. Otherwise verify that the COUNT is
-     * configured. If it is not configured then return the default expiry from
-     * above.
+     * Schedule Recurrences should always have an UNTIL or COUNT association but
+     * never both. If they do not then force the expiration to +1 year. If the
+     * recurrence specified a UNTIL date then use it. Otherwise verify that the
+     * COUNT is configured. If it is not configured then return the default
+     * expiry from above.
      */
     if (recur.isSetUntil()) {
-      return ZonedDateTime.of(recur.getUntil().getDateTime(), dateTime.getZone());
-    }
-    /**
-     * Add the number of events.
-     */
-    if (recur.isSetCount()) {
+      if (recur.getUntil().isSetDate()) {
+        /**
+         * Only a date is provided with no time. We must convert a date to a
+         * ZonedDateTime. Set the time to midnight tonight.
+         */
+        return ZonedDateTime.of(recur.getUntil().getDate(),
+                                LocalTime.of(23, 59), // midnight tonight
+                                dateTime.getZone());
+      } else {
+        /**
+         * The until is a date-time; easily to transform to a ZonedDateTime.
+         */
+        return ZonedDateTime.of(recur.getUntil().getDateTime(), dateTime.getZone());
+      }
+    } else if (recur.isSetCount()) {
+      /**
+       * Add the number of events.
+       */
       /**
        * If an all-day event then set the externally visible time component to 0
        * Internally keep the time component to preserve expected behavior in a
