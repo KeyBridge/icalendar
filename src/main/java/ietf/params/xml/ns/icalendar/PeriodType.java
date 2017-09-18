@@ -17,6 +17,7 @@ package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterDurationXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -281,11 +282,12 @@ public final class PeriodType implements Comparable<PeriodType> {
      * START.
      */
     int startComparison = start.compareTo(o.start);
-    return startComparison != 0
-        ? startComparison
-        : end == null
-        ? duration.compareTo(o.duration) :
-        end.compareTo(o.end);
+    if (startComparison != 0) return startComparison;
+    if (end == null) {
+      return duration.compareTo(o.duration == null ? Duration.between(o.start, o.end) : o.duration);
+    } else {
+      return end.compareTo(o.end == null ? o.start.plus(o.duration) : o.end);
+    }
   }
 
   /**
