@@ -156,7 +156,7 @@ public class ICalendar {
      */
     final WeekFields weekFields = WeekFields.of(recurType.isSetWkst()
                                                 ? recurType.getWkst().getDayOfWeek()
-                                                : DayOfWeek.MONDAY, 4);
+                                                : DayOfWeek.SUNDAY, 4);
     /**
      * Finally: Scan through the period of interest in FREQ increments. For each
      * increment calculate a list of candidate occurrence dates. Analyze each
