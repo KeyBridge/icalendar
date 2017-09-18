@@ -112,13 +112,13 @@ public class ScheduledEventTest {
     LocalDateTime eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0),
         eventEnd = eventStart.plus(2, ChronoUnit.HOURS),
         periodStart = eventStart,
-        periodEnd = eventStart.plus(1, ChronoUnit.YEARS);
+        periodEnd = periodStart.plus(1, ChronoUnit.WEEKS);
 
     System.out.println("eventStart = " + eventStart);
     System.out.println("eventEnd = " + eventEnd);
     System.out.println("periodStart = " + periodStart);
     System.out.println("periodEnd = " + periodEnd);
-    Assert.assertEquals(4, ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodStart.plus(1, ChronoUnit.WEEKS)).size());
+    Assert.assertEquals(4, ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd).size());
   }
 
 }
