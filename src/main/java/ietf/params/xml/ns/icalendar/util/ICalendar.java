@@ -170,7 +170,7 @@ public class ICalendar {
      * PeriodType list is the set of recurring events within the period of
      * inquiry.
      */
-    while (pStart.isBefore(periodEnd)) {
+    while (pStart.plus(duration).compareTo(periodEnd) <= 0) {
       /**
        * Build a list of candidate DTSTART dates within the current FREQ period.
        * Each candidate LocalDateTime entry corresponding to the original event
@@ -192,8 +192,8 @@ public class ICalendar {
            * INVALID: COUNT value is exceeded.
            */
           LOGGER.log(Level.FINEST, "Warning: COUNT EXCEEDED {0}", startCandidate);
-        } else if (startCandidate.isAfter(periodStart)
-                && startCandidate.isAfter(eventStart)
+        } else if (!startCandidate.isBefore(periodStart)
+                && !startCandidate.isBefore(eventStart)
                 && startCandidate.isBefore(periodEnd)) {
           /**
            * VALID: CREATE and ADD and new PeriodType to the set.
@@ -302,29 +302,13 @@ public class ICalendar {
   }
 
   /**
-   * Calculate the DAILY recurrence rule. The DAILY rule is very simple: just
-   * add the current daily. Developer note: DAILY recurrence should (preferably)
-   * have an UNTIL or COUNT, which are handled in the WHILE loop wrapping this
-   * method. If UNTIL and COUNT are not specified then the DAILY will return
-   * every daily in the period after the event start.
-   * <p>
-   * This is ONLY called for DAILY type recurrence.
-   *
-   * @param dateSet     the existing set of candidate dates
-   * @param recurType   the recurrence type (not used but present here for
-   *                    consistency with other date set generators.
-   * @param periodStart the period start
-   * @return a non-null HashSet
+   * Utility method that creates a HashSet containing one LocalDateTime
+   * @param dateTime some LocalDateTime
+   * @return a HashSet containing only dateTime
    */
-  protected static Set<LocalDateTime> daily(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<LocalDateTime> asSet(LocalDateTime dateTime) {
     Set<LocalDateTime> set = new HashSet<>();
-    if (dateSet.isEmpty()) {
-      set.add(LocalDateTime.from(periodStart));
-    } else {
-      for (LocalDateTime localDateTime : dateSet) {
-        set.add(LocalDateTime.from(localDateTime));
-      }
-    }
+    set.add(Objects.requireNonNull(dateTime));
     return set;
   }
 
@@ -472,26 +456,26 @@ public class ICalendar {
      */
     switch (recurType.getFreq()) {
       case SECONDLY:
-        dateSet.addAll(bySecond(dateSet, recurType, periodStart));
+        dateSet.addAll(bySecond(asSet(periodStart), recurType, periodStart));
         break;
       case MINUTELY:
-        dateSet.addAll(bySecond(byMinute(dateSet, recurType, periodStart),
+        dateSet.addAll(bySecond(byMinute(asSet(periodStart), recurType, periodStart),
                                 recurType, periodStart));
         break;
       case HOURLY:
-        dateSet.addAll(bySecond(byMinute(byHour(dateSet, recurType, periodStart),
+        dateSet.addAll(bySecond(byMinute(byHour(asSet(periodStart), recurType, periodStart),
                                          recurType, periodStart),
                                 recurType, periodStart));
         break;
       case DAILY:
-        dateSet.addAll(bySecond(byMinute(byHour(daily(dateSet, recurType, periodStart),
+        dateSet.addAll(bySecond(byMinute(byHour(asSet(periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),
                                 recurType, periodStart));
 
         break;
       case WEEKLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(dateSet, recurType, periodStart, weekFields),
+        dateSet.addAll(bySecond(byMinute(byHour(byDay(asSet(periodStart),
                                                       recurType, periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),
@@ -499,16 +483,16 @@ public class ICalendar {
 
         break;
       case MONTHLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(byMonthDay(byMonth(dateSet, recurType, periodStart),
+        dateSet.addAll(bySecond(byMinute(byHour(byDay(byMonthDay(byMonth(asSet(periodStart), recurType, periodStart),
                                                                           recurType, periodStart),
-                                                               recurType, periodStart, weekFields),
+//                                                               recurType, periodStart, weekFields),
                                                       recurType, periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),
                                 recurType, periodStart));
         break;
       case YEARLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(byMonthDay(byMonth(byYearDay(dateSet, recurType, periodStart),
+        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(byMonthDay(byMonth(byYearDay(asSet(periodStart), recurType, periodStart),
                                                                                   recurType, periodStart),
                                                                           recurType, periodStart),
                                                                recurType, periodStart, weekFields),
@@ -701,7 +685,6 @@ public class ICalendar {
    * recurrence is not configured then the {@code dateEnd} field is returned.
    *
    * @param dateTime the event start date
-   * @param dateEnd  the event end date
    * @param recur    a recurrence rule
    * @return the last date of this Schedule (accounting for recurrence)
    */
@@ -762,24 +745,7 @@ public class ICalendar {
       /**
        * Calculate the UNTIL date by adding up each instance.
        */
-      switch (recur.getFreq()) {
-        case SECONDLY:
-          return dateTime.plus(amount, ChronoUnit.SECONDS);
-        case MINUTELY:
-          return dateTime.plus(amount, ChronoUnit.MINUTES);
-        case HOURLY:
-          return dateTime.plus(amount, ChronoUnit.HOURS);
-        case DAILY:
-          return dateTime.plus(amount, ChronoUnit.DAYS);
-        case WEEKLY:
-          return dateTime.plus(amount, ChronoUnit.WEEKS);
-        case MONTHLY:
-          return dateTime.plus(amount, ChronoUnit.MONTHS);
-        case YEARLY:
-          return dateTime.plus(amount, ChronoUnit.YEARS);
-        default:
-          throw new AssertionError(recur.getFreq().name());
-      }
+      return dateTime.plus(amount, recur.getFreq().getTemporalUnit());
     }
     /**
      * Return dateEndMaximum if configured; else return the start date plus 1
