@@ -99,7 +99,7 @@ public class ScheduledEventTest {
     int count = 0;
     Duration eventLength = firstEvent.getDuration();
     LocalDateTime testDate = firstEvent.getStart();
-    while (testDate.plus(eventLength).compareTo(periodEnd) <= 0) {
+    while (testDate.compareTo(periodEnd) <= 0) {
       count++;
       Assert.assertTrue(periodsToTest.contains(new PeriodType(testDate, testDate.plus(eventLength))));
       testDate = testDate.plus(interval, temporalUnit);
@@ -118,7 +118,7 @@ public class ScheduledEventTest {
     System.out.println("eventEnd = " + eventEnd);
     System.out.println("periodStart = " + periodStart);
     System.out.println("periodEnd = " + periodEnd);
-    Assert.assertEquals(4, ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd).size());
+    Assert.assertEquals(5, ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd).size());
   }
 
 }
