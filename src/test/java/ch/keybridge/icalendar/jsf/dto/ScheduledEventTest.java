@@ -13,13 +13,22 @@
  */
 package ch.keybridge.icalendar.jsf.dto;
 
+import ietf.params.xml.ns.icalendar.PeriodType;
+import ietf.params.xml.ns.icalendar.RecurType;
+import ietf.params.xml.ns.icalendar.util.ICalendar;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.Set;
 import java.util.TimeZone;
-import org.junit.Test;
 
 /**
  *
@@ -46,6 +55,70 @@ public class ScheduledEventTest {
 
     System.out.println("format " + zdt.format(formatter));
 
+  }
+
+  @Test
+  public void testPeriodList() throws Exception {
+    LocalDateTime eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0),
+        eventEnd = eventStart.plus(2, ChronoUnit.HOURS),
+        periodStart = eventStart,
+        periodEnd = eventStart.plus(1, ChronoUnit.YEARS);
+
+    System.out.println("eventStart = " + eventStart);
+    System.out.println("eventEnd = " + eventEnd);
+    System.out.println("periodStart = " + periodStart);
+    System.out.println("periodEnd = " + periodEnd);
+
+    Set<PeriodType> periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1"), periodStart, periodEnd);
+    Assert.assertTrue(!periods.isEmpty());
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart, eventEnd), 1, ChronoUnit.WEEKS);
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MONTHLY;INTERVAL=1"), periodStart, periodEnd);
+    Assert.assertTrue(!periods.isEmpty());
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart, eventEnd), 1, ChronoUnit.MONTHS);
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;BYDAY=FR"), periodStart, periodEnd);
+    Assert.assertTrue(!periods.isEmpty());
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart, eventEnd), 1, ChronoUnit.WEEKS);
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;BYDAY=SU"), periodStart, periodEnd);
+    Assert.assertTrue(!periods.isEmpty());
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart.plus(2, ChronoUnit.DAYS), eventEnd.plus(2, ChronoUnit.DAYS)), 1, ChronoUnit.WEEKS);
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=DAILY;INTERVAL=1"), periodStart, periodEnd);
+    Assert.assertTrue(!periods.isEmpty());
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart, eventEnd), 1, ChronoUnit.DAYS);
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=HOURLY;INTERVAL=1"), periodStart, periodEnd);
+    Assert.assertTrue(!periods.isEmpty());
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart, eventEnd), 1, ChronoUnit.HOURS);
+
+  }
+
+  public static void testEveryEventInSet(Set<PeriodType> periodsToTest, LocalDateTime periodEnd, PeriodType firstEvent, int interval, TemporalUnit temporalUnit) {
+    int count = 0;
+    Duration eventLength = firstEvent.getDuration();
+    LocalDateTime testDate = firstEvent.getStart();
+    while (testDate.compareTo(periodEnd) <= 0) {
+      count++;
+      Assert.assertTrue(periodsToTest.contains(new PeriodType(testDate, testDate.plus(eventLength))));
+      testDate = testDate.plus(interval, temporalUnit);
+    }
+    Assert.assertEquals(count, periodsToTest.size());
+  }
+
+//  @Test //todo
+  public void testByDay() throws Exception {
+    LocalDateTime eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0),
+        eventEnd = eventStart.plus(2, ChronoUnit.HOURS),
+        periodStart = eventStart,
+        periodEnd = periodStart.plus(1, ChronoUnit.WEEKS);
+
+    System.out.println("eventStart = " + eventStart);
+    System.out.println("eventEnd = " + eventEnd);
+    System.out.println("periodStart = " + periodStart);
+    System.out.println("periodEnd = " + periodEnd);
+    Assert.assertEquals(5, ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd).size());
   }
 
 }

@@ -15,6 +15,9 @@ package ietf.params.xml.ns.icalendar.util;
 
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -23,8 +26,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
@@ -135,21 +136,6 @@ public class ICalendarTest {
   }
 
   @Test
-  public void testDaily() throws Exception {
-    System.out.println("TestDaily");
-    Set<LocalDateTime> dateSet = new HashSet<>();
-    RecurType recurType = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20171025T000000Z");
-
-    Set<LocalDateTime> daily = ICalendar.daily(dateSet, recurType, LocalDateTime.now());
-
-    System.out.println("  daily size " + daily.size());
-    for (LocalDateTime localDateTime : daily) {
-      System.out.println("   " + localDateTime);
-    }
-
-  }
-
-  @Test
   public void testWeekly() throws Exception {
     System.out.println("TestWeekly");
     Set<LocalDateTime> dateSet = new HashSet<>();
@@ -163,7 +149,7 @@ public class ICalendarTest {
 
     WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 4);
 
-    Set<LocalDateTime> daily = ICalendar.daily(dateSet, recur, LocalDateTime.now());
+    Set<LocalDateTime> daily = ICalendar.asSet(LocalDateTime.now());
 
     System.out.println("  weekly size  " + daily.size());
     for (LocalDateTime localDateTime : daily) {

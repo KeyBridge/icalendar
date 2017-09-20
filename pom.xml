@@ -4,7 +4,7 @@
 
   <groupId>org.ietf.rfc</groupId>
   <artifactId>icalendar</artifactId>
-  <version>2.0.1</version>
+  <version>2.0.2</version>
   <packaging>jar</packaging>
   <name>lib-icalendar</name>
   <description>Internet Calendaring and Scheduling
@@ -33,6 +33,7 @@
     v1.0.0 - 2017 - check and confirm conformance with current RFC specs.
     v2.0.0 - rewrite using JDK8 date and java.time classes
     v2.0.1 - change method signature for calculateExpiration; fix until configuration
+    v2.0.2 - recurrence rule logic fix
 
   </description>
 
