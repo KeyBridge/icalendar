@@ -59,25 +59,6 @@ public class WsCalendarAttachType extends BasePropertyType {
 
   /**
    * Gets the value of the artifactOrArtifactBaseOrUri property.
-   * <p>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the artifactOrArtifactBaseOrUri property.
-   * <p>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getArtifactOrArtifactBaseOrUri().add(newItem);
-   * </pre>
-   * <p>
-   * <p>
-   * Objects of the following type(s) are allowed in the list null null null
-   * null null   {@link JAXBElement }{@code <}{@link ArtifactBaseType }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-   * {@link JAXBElement }{@code <}{@link ArtifactType }{@code >}
-   * {@link JAXBElement }{@code <}{@link String }{@code >}
-   * <p>
-   * <p>
    */
   public List<JAXBElement<?>> getArtifactOrArtifactBaseOrUri() {
     if (artifactOrArtifactBaseOrUri == null) {

@@ -16,11 +16,10 @@
 package ietf.params.xml.ns.icalendar.adapter;
 
 import ietf.params.xml.ns.icalendar.Constants;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Java XML adapter to translate between the W3C xsd:date format and the RelaxNG
@@ -91,8 +90,8 @@ public class XmlAdapterLocalDateXCalDate extends XmlAdapter<String, LocalDate> {
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    *
    * @param v The xsd:date datatype string
-   * @return a LocalDate instance, normalized to UTC, null if the
-   *         input string is null or empty.
+   * @return a LocalDate instance, normalized to UTC, null if the input string
+   *         is null or empty.
    * @throws DateTimeParseException if the text cannot be parsed
    */
   @Override
@@ -104,9 +103,9 @@ public class XmlAdapterLocalDateXCalDate extends XmlAdapter<String, LocalDate> {
   }
 
   /**
-   * Marshal a LocalDate instance into the xCal DATE format. This
-   * differs from the xsd:date implementation with a more restrictive output
-   * pattern: <code>pattern = "\d\d\d\d-\d\d-\d\d"</code>
+   * Marshal a LocalDate instance into the xCal DATE format. This differs from
+   * the xsd:date implementation with a more restrictive output pattern:
+   * <code>pattern = "\d\d\d\d-\d\d-\d\d"</code>
    * <p>
    * An example output value is: 2001-10-26
    *

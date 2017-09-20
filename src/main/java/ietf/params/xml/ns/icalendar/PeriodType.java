@@ -17,18 +17,17 @@ package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterDurationXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
-
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
-import java.util.Objects;
 
 import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME;
 
@@ -195,11 +194,11 @@ public final class PeriodType implements Comparable<PeriodType> {
    *
    * @return new Duration created from parsing the internal
    *         lexicalRepresentation.
-   * @throws IllegalArgumentException       - If lexicalRepresentation is not a
-   *                                        valid representation of a Duration.
-   * @throws UnsupportedOperationException  - If implementation cannot support
-   *                                        requested values.
-   * @throws NullPointerException           - if lexicalRepresentation is null.
+   * @throws IllegalArgumentException      - If lexicalRepresentation is not a
+   *                                       valid representation of a Duration.
+   * @throws UnsupportedOperationException - If implementation cannot support
+   *                                       requested values.
+   * @throws NullPointerException          - if lexicalRepresentation is null.
    */
   public Duration getDuration() {
     return duration != null ? duration : Duration.between(start, end);
@@ -282,8 +281,9 @@ public final class PeriodType implements Comparable<PeriodType> {
      * START.
      */
     int startComparison = start.compareTo(o.start);
-    if (startComparison != 0) return startComparison;
-    if (end == null) {
+    if (startComparison != 0) {
+      return startComparison;
+    } else if (end == null) {
       return duration.compareTo(o.duration == null ? Duration.between(o.start, o.end) : o.duration);
     } else {
       return end.compareTo(o.end == null ? o.start.plus(o.duration) : o.end);

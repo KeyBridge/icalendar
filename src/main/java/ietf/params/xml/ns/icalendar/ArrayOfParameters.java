@@ -53,46 +53,6 @@ public class ArrayOfParameters {
 
   /**
    * Gets the value of the baseParameter property.
-   * <p>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the baseParameter property.
-   * <p>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getBaseParameter().add(newItem);
-   * </pre>
-   * <p>
-   * <p>
-   * Objects of the following type(s) are allowed in the list null null null null   {@link JAXBElement }{@code <}{@link TextParameterType }{@code >}
-     * {@link JAXBElement }{@code <}{@link RelatedParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link RoleParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link FbtypeParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link CutypeParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link MemberParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link LanguageParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link DirParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link DelegatedFromParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link ScheduleAgentParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link RangeParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link DelegatedToParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link ScheduleForceSendParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link RsvpParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link DurationParameterType }{@code >}
-   * {@link JAXBElement }{@code <}{@link ReltypeParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link CnParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link SentByParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link AltrepParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link EncodingParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link ScheduleStatusParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link TzidParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link XBedeworkUidParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link BaseParameterType }{@code >}
-   * {@link JAXBElement }{@code <}{@link FmttypeParamType }{@code >}
-   * {@link JAXBElement }{@code <}{@link PartstatParamType }{@code >}
-   * <p>
-   * <p>
    */
   public List<JAXBElement<? extends BaseParameterType>> getBaseParameter() {
     if (baseParameter == null) {

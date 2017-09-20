@@ -29,8 +29,6 @@ import ietf.params.xml.ns.icalendar.property.base.text.*;
 import ietf.params.xml.ns.icalendar.property.base.textlist.CategoriesPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CreatedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
-
-import javax.ejb.Schedule;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.*;
@@ -43,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.ejb.Schedule;
 
 import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
 
@@ -305,6 +304,7 @@ public class ICalendar {
 
   /**
    * Utility method that creates a HashSet containing one LocalDateTime
+   *
    * @param dateTime some LocalDateTime
    * @return a HashSet containing only dateTime
    */
@@ -487,8 +487,8 @@ public class ICalendar {
         break;
       case MONTHLY:
         dateSet.addAll(bySecond(byMinute(byHour(byDay(byMonthDay(byMonth(asSet(periodStart), recurType, periodStart),
-                                                                          recurType, periodStart),
-//                                                               recurType, periodStart, weekFields),
+                                                                 recurType, periodStart),
+                                                      //                                                               recurType, periodStart, weekFields),
                                                       recurType, periodStart),
                                                 recurType, periodStart),
                                          recurType, periodStart),

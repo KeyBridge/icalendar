@@ -53,34 +53,6 @@ public class ArrayOfComponents {
 
   /**
    * Gets the value of the baseComponent property.
-   * <p>
-   * This accessor method returns a reference to the live list, not a snapshot.
-   * Therefore any modification you make to the returned list will be present
-   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
-   * for the baseComponent property.
-   * <p>
-   * For example, to add a new item, do as follows:
-   * <pre>
-   *    getBaseComponent().add(newItem);
-   * </pre>
-   * <p>
-   * <p>
-   * Objects of the following type(s) are allowed in the list null null null
-   * null null null null null null   {@link JAXBElement }{@code <}{@link VeventType }{@code >}
-     * {@link JAXBElement }{@code <}{@link BaseComponentType }{@code >}
-   * {@link JAXBElement }{@code <}{@link StandardType }{@code >}
-   * {@link JAXBElement }{@code <}{@link VjournalType }{@code >}
-   * {@link JAXBElement }{@code <}{@link AvailableType }{@code >}
-   * {@link JAXBElement }{@code <}{@link VfreebusyType }{@code >}
-   * {@link JAXBElement }{@code <}{@link VtimezoneType }{@code >}
-   * {@link JAXBElement }{@code <}{@link ValarmType }{@code >}
-   * {@link JAXBElement }{@code <}{@link WsCalendarIntervalType }{@code >}
-   * {@link JAXBElement }{@code <}{@link DaylightType }{@code >}
-   * {@link JAXBElement }{@code <}{@link VavailabilityType }{@code >}
-   * {@link JAXBElement }{@code <}{@link WsCalendarGluonType }{@code >}
-   * {@link JAXBElement }{@code <}{@link VtodoType }{@code >}
-   * <p>
-   * <p>
    */
   public List<JAXBElement<? extends BaseComponentType>> getBaseComponent() {
     if (baseComponent == null) {
