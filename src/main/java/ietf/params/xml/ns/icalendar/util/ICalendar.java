@@ -446,7 +446,7 @@ public class ICalendar {
      * calculating method called within the SWITCH statement inspects and is
      * able to initialize the dateSet.
      */
-    Set<LocalDateTime> dateSet = new HashSet<>();
+    Set<LocalDateTime> dateSet = asSet(periodStart);
     /**
      * Intercept invalid or incomplete RecurType entries.
      */
@@ -458,51 +458,21 @@ public class ICalendar {
      * configuration.
      */
     switch (recurType.getFreq()) {
-      case SECONDLY:
-        dateSet.addAll(bySecond(asSet(periodStart), recurType, periodStart));
-        break;
-      case MINUTELY:
-        dateSet.addAll(bySecond(byMinute(asSet(periodStart), recurType, periodStart),
-                                recurType, periodStart));
-        break;
-      case HOURLY:
-        dateSet.addAll(bySecond(byMinute(byHour(asSet(periodStart), recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-        break;
-      case DAILY:
-        dateSet.addAll(bySecond(byMinute(byHour(asSet(periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-
-        break;
-      case WEEKLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(asSet(periodStart),
-                                                      recurType, periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-
-        break;
-      case MONTHLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byMonthDay(byMonth(asSet(periodStart), recurType, periodStart),
-                                                                          recurType, periodStart),
-//                                                               recurType, periodStart, weekFields),
-                                                      recurType, periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-        break;
       case YEARLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(byMonthDay(byMonth(byYearDay(asSet(periodStart), recurType, periodStart),
-                                                                                  recurType, periodStart),
-                                                                          recurType, periodStart),
-                                                               recurType, periodStart, weekFields),
-                                                      recurType, periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
+        dateSet = byYearDay(dateSet, recurType, periodStart);
+        dateSet = byWeekNo(dateSet, recurType, periodStart, weekFields);
+      case MONTHLY:
+        dateSet = byMonth(dateSet, recurType, periodStart);
+        dateSet = byMonthDay(dateSet, recurType, periodStart);
+      case WEEKLY:
+      case DAILY:
+        dateSet = byDay(dateSet, recurType, periodStart);
+      case HOURLY:
+        dateSet = byHour(dateSet, recurType, periodStart);
+      case MINUTELY:
+        dateSet = byMinute(dateSet, recurType, periodStart);
+      case SECONDLY:
+        dateSet = bySecond(dateSet, recurType, periodStart);
         break;
       default:
         throw new AssertionError(recurType.getFreq().name());
@@ -530,7 +500,7 @@ public class ICalendar {
        * Organize the dataSet into a sorted ArrayList, then extract entries
        * based upon their position in the list.
        */
-      List<LocalDateTime> dates = new ArrayList<>(new TreeSet<>(dateSet));
+      List<LocalDateTime> dates = dateSet.stream().sorted().collect(Collectors.toList());
       Set<LocalDateTime> setPosDates = new TreeSet<>();
       for (Integer setPosition : recurType.getBysetpos()) {
         if (setPosition > 0 && setPosition <= dates.size()) {
