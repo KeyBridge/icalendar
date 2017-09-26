@@ -83,6 +83,8 @@ public class ScheduledEventTest {
 
     periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;BYDAY=SU"), periodStart, periodEnd);
     Assert.assertTrue(!periods.isEmpty());
+    // remove the original event so that testEveryEventInSet() can check only the recurring events
+    periods.remove(new PeriodType(eventStart, eventEnd));
     testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart.plus(2, ChronoUnit.DAYS), eventEnd.plus(2, ChronoUnit.DAYS)), 1, ChronoUnit.WEEKS);
 
     periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=DAILY;INTERVAL=1"), periodStart, periodEnd);
@@ -107,7 +109,7 @@ public class ScheduledEventTest {
     Assert.assertEquals(count, periodsToTest.size());
   }
 
-//  @Test //todo
+  @Test //todo
   public void testByDay() throws Exception {
     LocalDateTime eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0),
         eventEnd = eventStart.plus(2, ChronoUnit.HOURS),
@@ -118,7 +120,87 @@ public class ScheduledEventTest {
     System.out.println("eventEnd = " + eventEnd);
     System.out.println("periodStart = " + periodStart);
     System.out.println("periodEnd = " + periodEnd);
-    Assert.assertEquals(5, ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd).size());
+
+    Set<PeriodType> periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd);
+    periods.forEach(System.out::println);
+    Assert.assertEquals(5, periods.size());
+    // check if the original Friday event is in the set
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart, eventEnd)));
+    // check if the Sunday (+2 days from Friday) event is in the set
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plus(2, ChronoUnit.DAYS), eventEnd.plus(2, ChronoUnit.DAYS))));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plus(3, ChronoUnit.DAYS), eventEnd.plus(3, ChronoUnit.DAYS))));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plus(4, ChronoUnit.DAYS), eventEnd.plus(4, ChronoUnit.DAYS))));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plus(6, ChronoUnit.DAYS), eventEnd.plus(6, ChronoUnit.DAYS))));
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH;BYHOUR=12,16"), periodStart, periodEnd);
+    periods.forEach(System.out::println);
+    Assert.assertEquals(9, periods.size());
+    // check if the original Friday event is in the set
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart, eventEnd)));
+    // check if the Sunday (+2 days from Friday) 12:00 and 16:00 events are in the set
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(2, ChronoUnit.DAYS).withHour(12),
+            eventStart.plus(2, ChronoUnit.DAYS).withHour(14))));
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(2, ChronoUnit.DAYS).withHour(16),
+            eventStart.plus(2, ChronoUnit.DAYS).withHour(18))));
+
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(3, ChronoUnit.DAYS).withHour(12),
+            eventStart.plus(3, ChronoUnit.DAYS).withHour(14))));
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(3, ChronoUnit.DAYS).withHour(16),
+            eventStart.plus(3, ChronoUnit.DAYS).withHour(18))));
+
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(4, ChronoUnit.DAYS).withHour(12),
+            eventStart.plus(4, ChronoUnit.DAYS).withHour(14))));
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(4, ChronoUnit.DAYS).withHour(16),
+            eventStart.plus(4, ChronoUnit.DAYS).withHour(18))));
+
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(6, ChronoUnit.DAYS).withHour(12),
+            eventStart.plus(6, ChronoUnit.DAYS).withHour(14))));
+    Assert.assertTrue(periods.contains(
+        new PeriodType(
+            eventStart.plus(6, ChronoUnit.DAYS).withHour(16),
+            eventStart.plus(6, ChronoUnit.DAYS).withHour(18))));
+
+    eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0);
+    eventEnd = eventStart.plus(2, ChronoUnit.HOURS);
+    periodStart = eventStart;
+    periodEnd = periodStart.plus(6, ChronoUnit.DAYS);
+
+    System.out.println("eventStart = " + eventStart);
+    System.out.println("eventEnd = " + eventEnd);
+    System.out.println("periodStart = " + periodStart);
+    System.out.println("periodEnd = " + periodEnd);
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd);
+    periods.forEach(System.out::println);
+    Assert.assertEquals(5, periods.size());
+
+    eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0);
+    eventEnd = eventStart.plus(2, ChronoUnit.HOURS);
+    periodStart = eventStart.minus(2, ChronoUnit.HOURS);
+    periodEnd = periodStart.plus(1, ChronoUnit.WEEKS);
+
+    System.out.println("eventStart = " + eventStart);
+    System.out.println("eventEnd = " + eventEnd);
+    System.out.println("periodStart = " + periodStart);
+    System.out.println("periodEnd = " + periodEnd);
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH"), periodStart, periodEnd);
+    periods.forEach(System.out::println);
+    Assert.assertEquals(5, periods.size());
   }
 
 }
