@@ -109,8 +109,8 @@ public class ScheduledEventTest {
     Assert.assertEquals(count, periodsToTest.size());
   }
 
-  @Test //todo
-  public void testByDay() throws Exception {
+  @Test
+  public void testByDayAndMinute() throws Exception {
     LocalDateTime eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0),
         eventEnd = eventStart.plus(2, ChronoUnit.HOURS),
         periodStart = eventStart,
