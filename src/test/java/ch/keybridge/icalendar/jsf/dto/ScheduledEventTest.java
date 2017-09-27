@@ -19,13 +19,11 @@ import ietf.params.xml.ns.icalendar.util.ICalendar;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 import java.util.TimeZone;
@@ -203,4 +201,144 @@ public class ScheduledEventTest {
     Assert.assertEquals(5, periods.size());
   }
 
+  @Test
+  public void testByTemporalUnit() throws Exception {
+    LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0),
+        eventEnd = eventStart.plus(1, ChronoUnit.MINUTES),
+        periodStart = eventStart,
+        periodEnd = periodStart.plus(50, ChronoUnit.YEARS);
+
+    // BYYEARDAY
+    Set<PeriodType> periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=YEARLY;INTERVAL=1;BYYEARDAY=20"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart.withDayOfYear(20), eventEnd.withDayOfYear(20)), 1, ChronoUnit.YEARS);
+
+    // BYYEARDAY (negative)
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=YEARLY;INTERVAL=1;BYYEARDAY=-5"), periodStart.minus(10, ChronoUnit.DAYS), periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    // the fifth last day of the year is always the 26 of December.
+    testEveryEventInSet(periods, periodEnd, new PeriodType(eventStart.withMonth(12).withDayOfMonth(26), eventEnd.withMonth(12).withDayOfMonth(26)), 1, ChronoUnit.YEARS);
+
+    // BYWEEKNO
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=YEARLY;INTERVAL=1;BYWEEKNO=2,4"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    // There should be two events in each year plus the original event since it happened on week 1.
+    Assert.assertEquals(101, periods.size());
+    // All periods should happen in January
+    Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMonth().equals(Month.JANUARY)));
+
+    //BYWEEKNO (negative)
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=YEARLY;INTERVAL=1;BYWEEKNO=-2,-4"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    // There should be two events in each year plus the original event since it happened on week 1.
+    Assert.assertEquals(101, periods.size());
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    // All periods should happen in January (having removed the original January event)
+    Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMonth().equals(Month.DECEMBER)));
+
+    // BYMONTH
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=YEARLY;INTERVAL=1;BYMONTH=2,4"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    // There should be two events in each year plus the original event since it happened in January.
+    Assert.assertEquals(101, periods.size());
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    // All periods should happen in January or February
+    Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMonth().equals(Month.FEBRUARY) || period.getStart().getMonth().equals(Month.APRIL)));
+
+    // BYMONTH (negative)
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=YEARLY;INTERVAL=1;BYMONTH=-2,-4"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    // There should be two events in each year plus the original event since it happened in January.
+    Assert.assertEquals(101, periods.size());
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    // All periods should happen in January or February
+    Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMonth().equals(Month.OCTOBER) || period.getStart().getMonth().equals(Month.AUGUST)));
+
+    // BYMONTHDAY
+    periodEnd = periodStart.plus(2, ChronoUnit.YEARS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=2,4"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    // There should be two events in each month plus the original event.
+    Assert.assertEquals(49, periods.size());
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getDayOfMonth() == 2 || period.getStart().getDayOfMonth() == 4));
+
+    // BYMONTHDAY (negative)
+    periodEnd = periodStart.plus(2, ChronoUnit.YEARS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=-2"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(25, periods.size());
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(26, 27, 28, 29).contains(period.getStart().getDayOfMonth())));
+
+    // BYDAY
+    periodEnd = periodStart.plus(2, ChronoUnit.YEARS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY).contains(period.getStart().getDayOfWeek())));
+
+    // BYHOUR
+    periodEnd = periodStart.plus(2, ChronoUnit.MONTHS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=DAILY;INTERVAL=1;BYHOUR=14,16"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(14, 16).contains(period.getStart().getHour())));
+
+    // BYHOUR (negative)
+    periodEnd = periodStart.plus(2, ChronoUnit.MONTHS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=DAILY;INTERVAL=1;BYHOUR=-10,-8"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(14, 16).contains(period.getStart().getHour())));
+
+    // BYMINUTE
+    periodEnd = periodStart.plus(2, ChronoUnit.DAYS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=HOURLY;INTERVAL=1;BYMINUTE=10,30"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(10, 30).contains(period.getStart().getMinute())));
+
+    // BYMINUTE (negative)
+    periodEnd = periodStart.plus(2, ChronoUnit.DAYS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=HOURLY;INTERVAL=1;BYMINUTE=-50,-30"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(10, 30).contains(period.getStart().getMinute())));
+
+    // BYSECOND
+    periodEnd = periodStart.plus(2, ChronoUnit.HOURS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MINUTELY;INTERVAL=1;BYSECOND=10,30"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(10, 30).contains(period.getStart().getSecond())));
+
+    // BYSECOND (negative)
+    periodEnd = periodStart.plus(2, ChronoUnit.HOURS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MINUTELY;INTERVAL=1;BYSECOND=-50,-30"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(10, 30).contains(period.getStart().getSecond())));
+
+    /**
+     * A mixed BYxxx case from https://tools.ietf.org/html/rfc5545, page 44:
+     *
+     *     19970105T083000
+     *     RRULE:FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;BYMINUTE=30
+     */
+    eventStart = LocalDateTime.of(1997, 1, 5, 8, 30, 0);
+    eventEnd = eventStart.plus(1, ChronoUnit.MINUTES);
+    periodStart = eventStart;
+    periodEnd = periodStart.plus(50, ChronoUnit.YEARS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;BYMINUTE=30"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(50, periods.size()); // two events every two years
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    // All periods should happen in January
+    Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMonth().equals(Month.JANUARY)));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(8, 9).contains(period.getStart().getHour())));
+    Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMinute() == 30));
+  }
 }

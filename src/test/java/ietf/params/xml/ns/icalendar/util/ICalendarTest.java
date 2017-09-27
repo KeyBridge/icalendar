@@ -175,7 +175,7 @@ public class ICalendarTest {
 
     LocalDateTime periodStart = LocalDateTime.now();
 
-    Set<LocalDateTime> candidates = ICalendar.buildCandidateList(recur, periodStart, weekFields);
+    Set<LocalDateTime> candidates = ICalendar.expandByRecurrenceRule(recur, periodStart, weekFields);
 
     for (LocalDateTime candidate : candidates) {
       System.out.println("  candidate  " + candidate);
