@@ -34,11 +34,11 @@ import javax.ejb.Schedule;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.*;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.WeekFields;
+import java.time.temporal.*;
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -126,7 +126,8 @@ public class ICalendar {
     /**
      * Second: Add the initial event if it falls within the (adjusted) period.
      */
-    if ((pStart.isBefore(eventStart) || pStart.isEqual(eventEnd)) && periodEnd.isAfter(eventStart)) {
+    if ((pStart.isBefore(eventStart) || pStart.isEqual(eventStart))
+        && (periodEnd.isAfter(eventStart) || periodEnd.isEqual(eventStart))) {
       periodSet.add(new PeriodType(eventStart, duration));
     }
     /**
@@ -144,8 +145,8 @@ public class ICalendar {
      * the period. This will ensure only recurring events that occur AFTER the
      * original EVENT are added.
      */
-    while (pStart.isBefore(eventStart)) {
-      pStart = pStart.plus(duration);
+    if (pStart.isBefore(eventStart)) {
+      pStart = eventStart;
     }
     /**
      * Apply RFC 5545 Page 41: The BYWEEKNO rule corresponds to weeks according
@@ -176,7 +177,7 @@ public class ICalendar {
        * Each candidate LocalDateTime entry corresponding to the original event
        * (or the hour if BYHOUR is set).
        */
-      Set<LocalDateTime> startCandidateSet = buildCandidateList(recurType, pStart, weekFields);
+      Set<LocalDateTime> startCandidateSet = expandByRecurrenceRule(recurType, pStart, weekFields);
       /**
        * Scan through the set of candidate START dates, evaluating their
        * validity and adding only those that match the recurrence rule.
@@ -229,21 +230,24 @@ public class ICalendar {
   /**
    * Calculate a rule for a generic input.
    *
-   * @param dateSet     the existing set of candidate dates
-   * @param isSet       is this rule set?
-   * @param values      an Integer collection that represent the
-   *                    BY[TEMPORAL_AMOUNT] rule values
-   * @param periodStart the period start
-   * @param function    a function that creates new LocalDateTimes given the
-   *                    cartesian product of input dates and BY[TEMPORAL_AMOUNT]
-   *                    rule values
+   * @param dateSet            the existing set of candidate dates
+   * @param isSet              is this rule set?
+   * @param byValueSupplier    a supplier for an Integer collection that represent the
+   *                           BY[TEMPORAL_AMOUNT] rule values
+   * @param temporalUnitLength a function providing the length of the
+   * @param periodStart        the period start
+   * @param function           a function that creates new LocalDateTimes given the
+   *                           cartesian product of input dates and BY[TEMPORAL_AMOUNT]
+   *                           rule values
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> byGeneric(Set<LocalDateTime> dateSet,
-                                              boolean isSet,
-                                              Collection<Integer> values,
-                                              LocalDateTime periodStart,
-                                              BiFunction<LocalDateTime, Integer, LocalDateTime> function) {
+  private static Set<LocalDateTime> expandByGeneric(Set<LocalDateTime> dateSet,
+                                                    boolean isSet,
+                                                    Supplier<Collection<Integer>> byValueSupplier,
+                                                    Function<LocalDateTime, Integer> temporalUnitLength,
+                                                    LocalDateTime periodStart,
+                                                    BiFunction<LocalDateTime, Integer, LocalDateTime> function,
+                                                    TemporalUnit forwardAdjustment) {
     if (!isSet) {
       return dateSet;
     }
@@ -251,13 +255,13 @@ public class ICalendar {
      * The function indicates a LocalDatetime field and value that should be set
      * in each entry in the dateSet. e.g. LocalDateTime::withDayOfYear
      * <p>
-     * byWeekNo: (date, integer) -> date.with(weekFields.weekOfYear(), integer)
+     * expandByWeekNo: (date, integer) -> date.with(weekFields.weekOfYear(), integer)
      */
-
     return (dateSet.isEmpty()
             ? Stream.of(periodStart)
-            : dateSet.stream()).flatMap(date -> values.stream()
-                    .map(integer -> function.apply(date, integer)))
+            : dateSet.stream()).flatMap(date -> byValueSupplier.get().stream()
+                    .map(integer -> function.apply(date, integer > 0 ? integer : temporalUnitLength.apply(date) + integer)))
+                    .map(date -> date.isBefore(periodStart) ? date.plus(1, forwardAdjustment) : date)
             .collect(Collectors.toSet());
   }
 
@@ -271,8 +275,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> bySecond(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.isSetBysecond(), recurType.getBysecond(), periodStart, LocalDateTime::withSecond);
+  protected static Set<LocalDateTime> expandBySecond(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetBysecond(), recurType::getBysecond, date -> 60, periodStart, LocalDateTime::withSecond, ChronoUnit.MINUTES);
   }
 
   /**
@@ -285,8 +289,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> byMinute(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.isSetByminute(), recurType.getByminute(), periodStart, LocalDateTime::withMinute);
+  protected static Set<LocalDateTime> expandByMinute(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetByminute(), recurType::getByminute, date -> 60, periodStart, LocalDateTime::withMinute, ChronoUnit.HOURS);
   }
 
   /**
@@ -299,8 +303,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> byHour(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.isSetByhour(), recurType.getByhour(), periodStart, LocalDateTime::withHour);
+  protected static Set<LocalDateTime> expandByHour(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetByhour(), recurType::getByhour, date -> 24, periodStart, LocalDateTime::withHour, ChronoUnit.DAYS);
   }
 
   /**
@@ -329,23 +333,17 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> byDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<LocalDateTime> expandByDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
     if (!recurType.isSetByday()) {
       return dateSet;
     }
-    Set<LocalDateTime> set = new HashSet<>();
-    if (dateSet.isEmpty()) {
-      for (EWeekdayRecurType weekday : recurType.getByday()) {
-        set.add(periodStart.with(ChronoField.DAY_OF_WEEK, weekday.getDayOfWeek().getValue()));
-      }
-    } else {
-      for (LocalDateTime localDateTime : dateSet) {
-        for (EWeekdayRecurType weekday : recurType.getByday()) {
-          set.add(localDateTime.with(ChronoField.DAY_OF_WEEK, weekday.getDayOfWeek().getValue()));
-        }
-      }
-    }
-    return set;
+    return (dateSet.isEmpty()
+        ? Stream.of(periodStart)
+        : dateSet.stream())
+        .flatMap(date -> recurType.getByday().stream()
+            .map(dayOfWeek -> date.with(ChronoField.DAY_OF_WEEK, dayOfWeek.getDayOfWeek().getValue())))
+        .map(date -> date.isBefore(periodStart) ? date.plus(1, ChronoUnit.WEEKS) : date)
+        .collect(Collectors.toSet());
   }
 
   /**
@@ -365,12 +363,13 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> byWeekNo(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
-    return byGeneric(dateSet,
+  protected static Set<LocalDateTime> expandByWeekNo(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+    return expandByGeneric(dateSet,
                      recurType.isSetByweekno(),
-                     recurType.getByweekno(),
+                     recurType::getByweekno,
+                     date -> (int)weekFields.weekOfYear().getFrom(date.with(TemporalAdjusters.lastDayOfYear())),
                      periodStart,
-                     (date, integer) -> date.with(weekFields.weekOfYear(), integer));
+                     (date, integer) -> date.with(weekFields.weekOfYear(), integer), ChronoUnit.YEARS);
   }
 
   /**
@@ -383,8 +382,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> byMonth(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.isSetBymonth(), recurType.getBymonth(), periodStart, LocalDateTime::withMonth);
+  protected static Set<LocalDateTime> expandByMonth(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetBymonth(), recurType::getBymonth, date -> 12, periodStart, LocalDateTime::withMonth, ChronoUnit.YEARS);
   }
 
   /**
@@ -396,8 +395,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> byMonthDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.isSetBymonthday(), recurType.getBymonthday(), periodStart, LocalDateTime::withDayOfMonth);
+  protected static Set<LocalDateTime> expandByMonthDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetBymonthday(), recurType::getBymonthday, date -> Month.from(date).length(Year.from(date).isLeap()),  periodStart, LocalDateTime::withDayOfMonth, ChronoUnit.MONTHS);
   }
 
   /**
@@ -414,8 +413,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> byYearDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return byGeneric(dateSet, recurType.isSetBymonthday(), recurType.getBymonthday(), periodStart, LocalDateTime::withDayOfYear);
+  protected static Set<LocalDateTime> expandByYearDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetByyearday(), recurType::getByyearday, date -> Year.from(date).length(), periodStart, LocalDateTime::withDayOfYear, ChronoUnit.YEARS);
   }
 
   /**
@@ -440,13 +439,13 @@ public class ICalendar {
    *                    week-of-year fields.
    * @return a non-null TreeSet
    */
-  public static Set<LocalDateTime> buildCandidateList(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+  public static Set<LocalDateTime> expandByRecurrenceRule(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
     /**
      * Initialize the set. Use a HashSet to enforce uniqueness. Each (cascaded)
      * calculating method called within the SWITCH statement inspects and is
      * able to initialize the dateSet.
      */
-    Set<LocalDateTime> dateSet = new HashSet<>();
+    Set<LocalDateTime> dateSet = asSet(periodStart);
     /**
      * Intercept invalid or incomplete RecurType entries.
      */
@@ -458,51 +457,21 @@ public class ICalendar {
      * configuration.
      */
     switch (recurType.getFreq()) {
-      case SECONDLY:
-        dateSet.addAll(bySecond(asSet(periodStart), recurType, periodStart));
-        break;
-      case MINUTELY:
-        dateSet.addAll(bySecond(byMinute(asSet(periodStart), recurType, periodStart),
-                                recurType, periodStart));
-        break;
-      case HOURLY:
-        dateSet.addAll(bySecond(byMinute(byHour(asSet(periodStart), recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-        break;
-      case DAILY:
-        dateSet.addAll(bySecond(byMinute(byHour(asSet(periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-
-        break;
-      case WEEKLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(asSet(periodStart),
-                                                      recurType, periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-
-        break;
-      case MONTHLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byMonthDay(byMonth(asSet(periodStart), recurType, periodStart),
-                                                                          recurType, periodStart),
-//                                                               recurType, periodStart, weekFields),
-                                                      recurType, periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
-        break;
       case YEARLY:
-        dateSet.addAll(bySecond(byMinute(byHour(byDay(byWeekNo(byMonthDay(byMonth(byYearDay(asSet(periodStart), recurType, periodStart),
-                                                                                  recurType, periodStart),
-                                                                          recurType, periodStart),
-                                                               recurType, periodStart, weekFields),
-                                                      recurType, periodStart),
-                                                recurType, periodStart),
-                                         recurType, periodStart),
-                                recurType, periodStart));
+        dateSet = expandByMonth(dateSet, recurType, periodStart);
+        dateSet = expandByWeekNo(dateSet, recurType, periodStart, weekFields);
+        dateSet = expandByYearDay(dateSet, recurType, periodStart);
+      case MONTHLY:
+        dateSet = expandByMonthDay(dateSet, recurType, periodStart);
+      case WEEKLY:
+        dateSet = expandByDay(dateSet, recurType, periodStart);
+      case DAILY:
+        dateSet = expandByHour(dateSet, recurType, periodStart);
+      case HOURLY:
+        dateSet = expandByMinute(dateSet, recurType, periodStart);
+      case MINUTELY:
+        dateSet = expandBySecond(dateSet, recurType, periodStart);
+      case SECONDLY:
         break;
       default:
         throw new AssertionError(recurType.getFreq().name());
@@ -530,7 +499,7 @@ public class ICalendar {
        * Organize the dataSet into a sorted ArrayList, then extract entries
        * based upon their position in the list.
        */
-      List<LocalDateTime> dates = new ArrayList<>(new TreeSet<>(dateSet));
+      List<LocalDateTime> dates = dateSet.stream().sorted().collect(Collectors.toList());
       Set<LocalDateTime> setPosDates = new TreeSet<>();
       for (Integer setPosition : recurType.getBysetpos()) {
         if (setPosition > 0 && setPosition <= dates.size()) {
