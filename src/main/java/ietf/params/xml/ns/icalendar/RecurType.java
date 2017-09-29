@@ -16,6 +16,8 @@
 package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.util.EWeekday;
+
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -23,10 +25,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * Recurrence Rule (RFC5545 section 3.3.10)
@@ -116,6 +114,7 @@ import javax.xml.bind.annotation.XmlType;
   "wkst"
 })
 @SuppressWarnings("ProtectedField")
+@XmlRootElement
 public class RecurType implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -337,6 +336,7 @@ public class RecurType implements Serializable {
    * "UNTIL" or "NONE" depending upon whether the recurrence has a count or
    * until configuration (or neither). Default is NONE if not set.
    */
+  @XmlTransient
   protected ERecurEndType endType;
 
   /**
@@ -464,7 +464,7 @@ public class RecurType implements Serializable {
    */
   public UntilRecurType getUntil() {
     if (until == null) {
-      until = new UntilRecurType();
+      until = UntilRecurType.getInstance();
     }
     return until;
   }
@@ -910,34 +910,46 @@ public class RecurType implements Serializable {
 
   @Override
   public int hashCode() {
-    int hash = 3;
-    hash = 31 * hash + (this.freq != null ? this.freq.hashCode() : 0);
-    hash = 31 * hash + Objects.hashCode(this.until);
-    hash = 31 * hash + Objects.hashCode(this.count);
-    hash = 31 * hash + Objects.hashCode(this.interval);
-    hash = 31 * hash + Objects.hashCode(this.bysecond);
-    hash = 31 * hash + Objects.hashCode(this.byminute);
-    hash = 31 * hash + Objects.hashCode(this.byhour);
-    hash = 31 * hash + Objects.hashCode(this.byday);
-    hash = 31 * hash + Objects.hashCode(this.byyearday);
-    hash = 31 * hash + Objects.hashCode(this.bymonthday);
-    hash = 31 * hash + Objects.hashCode(this.byweekno);
-    hash = 31 * hash + Objects.hashCode(this.bymonth);
-    hash = 31 * hash + Objects.hashCode(this.bysetpos);
-    hash = 31 * hash + (this.wkst != null ? this.wkst.hashCode() : 0);
-    return hash;
+    int result = freq.hashCode();
+    result = 31 * result + (until != null ? until.hashCode() : 0);
+    result = 31 * result + (count != null ? count.hashCode() : 0);
+    result = 31 * result + (interval != null ? interval.hashCode() : 0);
+    result = 31 * result + (bysecond != null ? bysecond.hashCode() : 0);
+    result = 31 * result + (byminute != null ? byminute.hashCode() : 0);
+    result = 31 * result + (byhour != null ? byhour.hashCode() : 0);
+    result = 31 * result + (byday != null ? byday.hashCode() : 0);
+    result = 31 * result + (bymonthday != null ? bymonthday.hashCode() : 0);
+    result = 31 * result + (byyearday != null ? byyearday.hashCode() : 0);
+    result = 31 * result + (byweekno != null ? byweekno.hashCode() : 0);
+    result = 31 * result + (bymonth != null ? bymonth.hashCode() : 0);
+    result = 31 * result + (bysetpos != null ? bysetpos.hashCode() : 0);
+    result = 31 * result + (wkst != null ? wkst.hashCode() : 0);
+    result = 31 * result + (endType != null ? endType.hashCode() : 0);
+    return result;
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final RecurType other = (RecurType) obj;
-    return this.hashCode() == other.hashCode();
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    RecurType recurType = (RecurType) o;
+
+    if (freq != recurType.freq) return false;
+    if (until != null ? !until.equals(recurType.until) : recurType.until != null) return false;
+    if (count != null ? !count.equals(recurType.count) : recurType.count != null) return false;
+    if (interval != null ? !interval.equals(recurType.interval) : recurType.interval != null) return false;
+    if (bysecond != null ? !bysecond.equals(recurType.bysecond) : recurType.bysecond != null) return false;
+    if (byminute != null ? !byminute.equals(recurType.byminute) : recurType.byminute != null) return false;
+    if (byhour != null ? !byhour.equals(recurType.byhour) : recurType.byhour != null) return false;
+    if (byday != null ? !byday.equals(recurType.byday) : recurType.byday != null) return false;
+    if (bymonthday != null ? !bymonthday.equals(recurType.bymonthday) : recurType.bymonthday != null) return false;
+    if (byyearday != null ? !byyearday.equals(recurType.byyearday) : recurType.byyearday != null) return false;
+    if (byweekno != null ? !byweekno.equals(recurType.byweekno) : recurType.byweekno != null) return false;
+    if (bymonth != null ? !bymonth.equals(recurType.bymonth) : recurType.bymonth != null) return false;
+    if (bysetpos != null ? !bysetpos.equals(recurType.bysetpos) : recurType.bysetpos != null) return false;
+    if (wkst != recurType.wkst) return false;
+    return endType == recurType.endType;
   }
 
   /**
