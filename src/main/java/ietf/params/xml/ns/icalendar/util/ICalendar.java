@@ -319,7 +319,8 @@ public class ICalendar {
   }
 
   /**
-   * Calculate the BYDAY rule. The BYDAY rule part specifies a COMMA character
+   * Calculate the BYDAY rule with no integer prefixes, i.e. rules like SU,MO,TU,
+   * and not 2SU,3WE. The BYDAY rule part specifies a COMMA character
    * (US-ASCII decimal 44) separated list of days of the week; MO indicates
    * Monday; TU indicates Tuesday; WE indicates Wednesday; TH indicates
    * Thursday; FR indicates Friday; SA indicates Saturday; SU indicates Sunday.
@@ -334,16 +335,62 @@ public class ICalendar {
    * @return a non-null HashSet
    */
   protected static Set<LocalDateTime> expandByDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    if (!recurType.isSetByday()) {
+    if (!recurType.isSetByday() || recurType.getByday().stream().allMatch(NthWeekdayRecurType::isMonthly)) {
       return dateSet;
     }
     return (dateSet.isEmpty()
         ? Stream.of(periodStart)
         : dateSet.stream())
         .flatMap(date -> recurType.getByday().stream()
-            .map(dayOfWeek -> date.with(ChronoField.DAY_OF_WEEK, dayOfWeek.getDayOfWeek().getValue())))
+            .filter(nthWeekDay -> !nthWeekDay.isMonthly())
+            .map(dayOfWeek -> date.with(ChronoField.DAY_OF_WEEK, dayOfWeek.getWeekdayRecurType().getDayOfWeek().getValue())))
         .map(date -> date.isBefore(periodStart) ? date.plus(1, ChronoUnit.WEEKS) : date)
         .collect(Collectors.toSet());
+  }
+
+  /**
+   * Calculate the BYDAY rule with integer prefixes, i.e. rules like 2SU,-1MO,4TU,
+   * and not SU,WE. The BYDAY rule part specifies a COMMA character
+   * (US-ASCII decimal 44) separated list of days of the week; MO indicates
+   * Monday; TU indicates Tuesday; WE indicates Wednesday; TH indicates
+   * Thursday; FR indicates Friday; SA indicates Saturday; SU indicates Sunday.
+   * <p>
+   * This rule is handled differently then others as it specifies the enumerated
+   * daily of week with associated integer and not an integer reference.
+   *
+   * @param dateSet     the existing set of candidate dates
+   * @param recurType   the recurrence type (not used but present here for
+   *                    consistency with other date set generators.
+   * @param periodStart the period start
+   * @return a non-null HashSet
+   */
+  protected static Set<LocalDateTime> expandByNthWeekday(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+    if (!recurType.isSetByday() || recurType.getByday().stream().noneMatch(NthWeekdayRecurType::isMonthly)) {
+      return dateSet;
+    }
+    return (dateSet.isEmpty()
+        ? Stream.of(periodStart)
+        : dateSet.stream())
+        .flatMap(date -> recurType.getByday().stream()
+            .filter(NthWeekdayRecurType::isMonthly)
+            .map(dayOfWeek -> calculate(date, dayOfWeek)))
+        .map(date -> date.isBefore(periodStart) ? date.plus(1, ChronoUnit.MONTHS) : date)
+        .collect(Collectors.toSet());
+  }
+
+  /**
+   * Utility method for obtaining the n'th weekday in a month
+   * @param date original date
+   * @param weekdayRecurType NthWeekdayRecurType containing the weekday (Monday, Tuesday, etc...)
+   *                         and an integer specifying which (1st, 2nd, ..., second last, last)
+   *                         one to pick
+   * @return LocalDateTime with the day field set accordingly and all other fields the same
+   * as in the input date
+   */
+  private static LocalDateTime calculate(LocalDateTime date, NthWeekdayRecurType weekdayRecurType) {
+    return date.with(
+        TemporalAdjusters.dayOfWeekInMonth(weekdayRecurType.getInteger(),
+            weekdayRecurType.getWeekdayRecurType().getDayOfWeek()));
   }
 
   /**
@@ -463,6 +510,7 @@ public class ICalendar {
         dateSet = expandByYearDay(dateSet, recurType, periodStart);
       case MONTHLY:
         dateSet = expandByMonthDay(dateSet, recurType, periodStart);
+        dateSet = expandByNthWeekday(dateSet, recurType, periodStart);
       case WEEKLY:
         dateSet = expandByDay(dateSet, recurType, periodStart);
       case DAILY:

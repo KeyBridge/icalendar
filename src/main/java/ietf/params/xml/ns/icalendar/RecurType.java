@@ -15,9 +15,11 @@
  */
 package ietf.params.xml.ns.icalendar;
 
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterNthWeekday;
 import ietf.params.xml.ns.icalendar.util.EWeekday;
 
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -255,7 +257,8 @@ public class RecurType implements Serializable {
    * <p>
    * type-byday = element byday { xsd:integer?, type-weekday }
    */
-  protected List<EWeekdayRecurType> byday;
+  @XmlJavaTypeAdapter(type = NthWeekdayRecurType.class, value = XmlAdapterNthWeekday.class)
+  protected List<NthWeekdayRecurType> byday;
   /**
    * The BYMONTHDAY rule part specifies a COMMA-separated list of days of the
    * month. Valid values are 1 to 31 or -31 to -1. For example, -10 represents
@@ -664,14 +667,14 @@ public class RecurType implements Serializable {
    *
    * @return a non-null ArrayList
    */
-  public List<EWeekdayRecurType> getByday() {
+  public List<NthWeekdayRecurType> getByday() {
     if (byday == null) {
       byday = new ArrayList<>();
     }
     return this.byday;
   }
 
-  public void setByday(List<EWeekdayRecurType> byday) {
+  public void setByday(List<NthWeekdayRecurType> byday) {
     this.byday = byday;
   }
 
@@ -684,8 +687,9 @@ public class RecurType implements Serializable {
   }
 
   public void addByDay(EWeekdayRecurType weekday) {
-    if (!getByday().contains(weekday)) {
-      getByday().add(weekday);
+    NthWeekdayRecurType nthWeekdayRecurType = new NthWeekdayRecurType(weekday);
+    if (!getByday().contains(nthWeekdayRecurType)) {
+      getByday().add(nthWeekdayRecurType);
     }
   }
 
@@ -1137,11 +1141,11 @@ public class RecurType implements Serializable {
           }
           for (int d = 0; d < getByday().size(); d++) {
             if (d == 0) {
-              sb.append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              sb.append(getNthWeekdayString(getByday().get(d)));
             } else if (d == getByday().size() - 1) {
-              sb.append(" and ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              sb.append(" and ").append(getNthWeekdayString(getByday().get(d)));
             } else {
-              sb.append(", ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              sb.append(", ").append(getNthWeekdayString(getByday().get(d)));
             }
           }
         }
@@ -1156,11 +1160,11 @@ public class RecurType implements Serializable {
           }
           for (int d = 0; d < getByday().size(); d++) {
             if (d == 0) {
-              sb.append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              sb.append(getNthWeekdayString(getByday().get(d)));
             } else if (d == getByday().size() - 1) {
-              sb.append(" and ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              sb.append(" and ").append(getNthWeekdayString(getByday().get(d)));
             } else {
-              sb.append(", ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+              sb.append(", ").append(getNthWeekdayString(getByday().get(d)));
             }
           }
         }
@@ -1201,11 +1205,11 @@ public class RecurType implements Serializable {
             }
             for (int d = 0; d < getByday().size(); d++) {
               if (d == 0) {
-                sb.append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+                sb.append(getNthWeekdayString(getByday().get(d)));
               } else if (d == getByday().size() - 1) {
-                sb.append(" and ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+                sb.append(" and ").append(getNthWeekdayString(getByday().get(d)));
               } else {
-                sb.append(", ").append(EWeekday.valueOf((getByday().get(d).name())).getLabel());
+                sb.append(", ").append(getNthWeekdayString(getByday().get(d)));
               }
             }
           }
@@ -1238,6 +1242,22 @@ public class RecurType implements Serializable {
     return sb.toString().replaceAll(" +", " ");
   }
 
+  /**
+   * Convert NthWeekday to a reader-friendly string. Examples:
+   *  SU -> Sunday
+   *  -1SU -> last Sunday
+   *  2WE -> second Wednesday
+   *
+   * @param recurType NthWeekdayRecurType instance
+   * @return a reader-friendly NthWeekday string
+   */
+  private static String getNthWeekdayString(NthWeekdayRecurType recurType) {
+    final String weekday = EWeekday.valueOf((recurType.getWeekdayRecurType().name())).getLabel();
+    return recurType.getInteger() == null || recurType.getInteger() == 0
+        ? weekday
+        : getPosition(recurType.getInteger()) + " " + weekday;
+  }
+
   private final static DateTimeFormatter FORMATTER_UNTIL = DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH);
 
   /**
@@ -1247,7 +1267,7 @@ public class RecurType implements Serializable {
    * @param setPos the setPos number
    * @return the setPos number with an ordinal suffix. e.g "5" becomes "5th"
    */
-  private String getPosition(int setPos) {
+  private static String getPosition(int setPos) {
     switch (setPos) {
       case -1:
         return " last ";
@@ -1270,7 +1290,7 @@ public class RecurType implements Serializable {
    * @param number the number (as a string)
    * @return the number (string) with an ordinal suffix. e.g "4" becomes "4th"
    */
-  private String getOrdinal(int number) {
+  private static String getOrdinal(int number) {
     String string = String.valueOf(number);
     if (string.endsWith("1") && !"11".equals(string)) {
       return string + "st";
@@ -1338,13 +1358,15 @@ public class RecurType implements Serializable {
    *
    * @param aString a string representation of a number list
    */
-  private List<EWeekdayRecurType> listParseWeekday(String aString) {
-    List<EWeekdayRecurType> list = new ArrayList<>();
+  private List<NthWeekdayRecurType> listParseWeekday(String aString) {
+    XmlAdapterNthWeekday converter = new XmlAdapterNthWeekday();
+    List<NthWeekdayRecurType> list = new ArrayList<>();
     final StringTokenizer t = new StringTokenizer(aString, ",");
     while (t.hasMoreTokens()) {
       try {
-        list.add(EWeekdayRecurType.valueOf(t.nextToken()));
+        list.add(converter.unmarshal(t.nextToken()));
       } catch (Exception e) {
+        e.printStackTrace();
       }
     }
     return list;

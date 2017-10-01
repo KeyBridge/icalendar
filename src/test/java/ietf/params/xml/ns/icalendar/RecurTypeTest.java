@@ -56,11 +56,12 @@ public class RecurTypeTest {
 
   @Test
   public void xmlMarshalUnmarshalTest() throws Exception {
-//    System.out.println(new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z").equals(new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z")));
     testMarshalUnmarshal(new RecurType());
     testMarshalUnmarshal(new RecurType("FREQ=WEEKLY;COUNT=10"));
     testMarshalUnmarshal(new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z"));
     testMarshalUnmarshal(new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5"));
+    testMarshalUnmarshal(new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5;BYDAY=MO,SU"));
+    testMarshalUnmarshal(new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5;BYDAY=1MO,-2SU"));
   }
 
   private static void testMarshalUnmarshal(RecurType recur) {
@@ -72,6 +73,7 @@ public class RecurTypeTest {
       Unmarshaller um = context.createUnmarshaller();
       Assert.assertEquals(recur, um.unmarshal(new StringReader(writer.toString())));
     } catch (JAXBException e) {
+      e.printStackTrace();
       Assert.fail("Failed to marshal or unmarshal: " + e.getMessage());
     }
   }

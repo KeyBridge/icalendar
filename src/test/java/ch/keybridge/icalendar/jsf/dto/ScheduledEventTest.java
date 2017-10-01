@@ -23,6 +23,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.time.temporal.WeekFields;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
@@ -279,6 +280,30 @@ public class ScheduledEventTest {
 //    periods.forEach(System.out::println);
     periods.remove(new PeriodType(eventStart, eventEnd));
     Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY).contains(period.getStart().getDayOfWeek())));
+
+    // BYDAY
+    periodEnd = periodStart.plus(2, ChronoUnit.YEARS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MONTHLY;INTERVAL=1;BYDAY=1MO,2TU"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY).contains(period.getStart().getDayOfWeek())));
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(date -> date.get(WeekFields.of(DayOfWeek.SUNDAY, 4).weekOfMonth()) <= 3));
+
+    // BYDAY
+    periodEnd = periodStart.plus(2, ChronoUnit.YEARS);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MONTHLY;INTERVAL=1;BYDAY=-1FR"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    periods.remove(new PeriodType(eventStart, eventEnd));
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(date -> date.getDayOfWeek() == DayOfWeek.FRIDAY));
+
+
+    // Developer note: the last Friday that falls on 2018-02-23T07:00 is on the third week of the month, hence the 3.
+    // Most often though, it's wither the 4th or the 5th week
+//    periods.stream().map(PeriodType::getStart)
+//        .filter(d -> d.get(WeekFields.of(DayOfWeek.SUNDAY, 4).weekOfMonth()) == 3)
+//        .forEach(System.out::println);
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(date -> date.get(WeekFields.of(DayOfWeek.SUNDAY, 4).weekOfMonth()) >= 3));
+
 
     // BYHOUR
     periodEnd = periodStart.plus(2, ChronoUnit.MONTHS);
