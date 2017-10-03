@@ -22,6 +22,7 @@ import org.junit.Test;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalUnit;
 import java.time.temporal.WeekFields;
 import java.util.Arrays;
@@ -34,9 +35,6 @@ import java.util.TimeZone;
  * @author Key Bridge
  */
 public class ScheduledEventTest {
-
-  public ScheduledEventTest() {
-  }
 
   @Test
   public void testToString() {
@@ -365,5 +363,201 @@ public class ScheduledEventTest {
     Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMonth().equals(Month.JANUARY)));
     Assert.assertTrue(periods.stream().allMatch(period -> Arrays.asList(8, 9).contains(period.getStart().getHour())));
     Assert.assertTrue(periods.stream().allMatch(period -> period.getStart().getMinute() == 30));
+  }
+
+  @Test
+  public void testLimitByTemporalUnit() throws Exception {
+    LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0),
+        eventEnd = eventStart.plus(1, ChronoUnit.SECONDS),
+        periodStart = eventStart,
+        periodEnd = periodStart.plus(2, ChronoUnit.MINUTES);
+    final Duration duration = Duration.ofSeconds(1);
+    PeriodType originalEvent = new PeriodType(eventStart, duration);
+    Set<PeriodType> periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=SECONDLY;INTERVAL=2;BYSECOND=1,2,3,4"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(5, periods.size());
+    Assert.assertTrue(periods.contains(originalEvent));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(2), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(4), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(2).plusMinutes(1), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(4).plusMinutes(1), duration)));
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=SECONDLY;INTERVAL=2;BYSECOND=1,3"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(1, periods.size());
+    Assert.assertTrue(periods.contains(originalEvent));
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=SECONDLY;INTERVAL=2;BYSECOND=-2,-4"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(5, periods.size());
+    Assert.assertTrue(periods.contains(originalEvent));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(56), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(58), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(56).plusMinutes(1), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(58).plusMinutes(1), duration)));
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=SECONDLY;INTERVAL=1;BYMINUTE=1"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(61, periods.size());
+    Assert.assertTrue(periods.contains(originalEvent));
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=SECONDLY;INTERVAL=2;BYSECOND=-2,-4;BYMINUTE=1"), periodStart, periodEnd);
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(3, periods.size());
+    Assert.assertTrue(periods.contains(originalEvent));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(56).plusMinutes(1), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusSeconds(58).plusMinutes(1), duration)));
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=MINUTELY;INTERVAL=2;BYMINUTE=2,-4"),
+        eventStart, eventStart.plus(2, ChronoUnit.HOURS));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(5, periods.size());
+    Assert.assertTrue(periods.contains(originalEvent));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusMinutes(2), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusMinutes(56), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusMinutes(2).plusHours(1), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.plusMinutes(56).plusHours(1), duration)));
+
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd, new RecurType("FREQ=HOURLY;INTERVAL=1;BYHOUR=12,-3"),
+        eventStart, eventStart.plus(1, ChronoUnit.DAYS));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(3, periods.size());
+    Assert.assertTrue(periods.contains(originalEvent));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.withHour(12), duration)));
+    Assert.assertTrue(periods.contains(new PeriodType(eventStart.withHour(21), duration)));
+
+    eventStart = eventStart.withMonth(9);
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=SECONDLY;INTERVAL=1;BYSECOND=5,7;BYMINUTE=10,-10;BYHOUR=-4,16;BYDAY=MO;BYMONTHDAY=9,16;BYMONTH=9,10"),
+        eventStart, eventStart.plus(2, ChronoUnit.MONTHS));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(17, periods.size());
+    originalEvent = new PeriodType(eventStart, duration);
+    PeriodType periodType = new PeriodType(LocalDateTime.of(2017, 10, 9, 16, 10, 5), duration);
+    Assert.assertTrue(periods.contains(periodType));
+    periods.remove(originalEvent);
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(d -> d.getSecond() == 5 || d.getSecond() == 7));
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(d -> d.getMinute() == 10 || d.getMinute() == 50));
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(d -> d.getHour() == 16 || d.getHour() == 20));
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(d -> d.getDayOfMonth() == 16 || d.getDayOfMonth() == 9));
+    Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(d -> d.getMonthValue() == 9 || d.getMonthValue() == 10));
+
+
+    Set<PeriodType> periods2 = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=MINUTELY;INTERVAL=1;BYSECOND=5,7;BYMINUTE=10,-10;BYHOUR=-4,16;BYDAY=MO;BYMONTHDAY=9,16;BYMONTH=9,10"),
+        eventStart, eventStart.plus(2, ChronoUnit.MONTHS));
+//    periods.forEach(System.out::println);
+    periods2.remove(originalEvent);
+    Assert.assertTrue(periods.containsAll(periods2) && periods2.containsAll(periods));
+
+    periods2 = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=HOURLY;INTERVAL=1;BYSECOND=5,7;BYMINUTE=10,-10;BYHOUR=-4,16;BYDAY=MO;BYMONTHDAY=9,16;BYMONTH=9,10"),
+        eventStart, eventStart.plus(2, ChronoUnit.MONTHS));
+//    periods.forEach(System.out::println);
+    periods2.remove(originalEvent);
+    Assert.assertTrue(periods.containsAll(periods2) && periods2.containsAll(periods));
+
+    periods2 = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=DAILY;INTERVAL=1;BYSECOND=5,7;BYMINUTE=10,-10;BYHOUR=-4,16;BYDAY=MO;BYMONTHDAY=9,16;BYMONTH=9,10"),
+        eventStart, eventStart.plus(2, ChronoUnit.MONTHS));
+//    periods.forEach(System.out::println);
+    periods2.remove(originalEvent);
+    Assert.assertTrue(periods.containsAll(periods2) && periods2.containsAll(periods));
+
+    eventStart = eventStart.withMonth(1);
+    /**
+     * The DAILY frequency should be limited by the BYMONTH rule
+     */
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=DAILY;INTERVAL=1;BYMONTH=1,3,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(3 * 31, periods.size());
+  }
+
+  @Test
+  public void testLimitRuleExceptions() throws Exception {
+    final LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0);
+    final Duration duration = Duration.ofSeconds(1);
+
+    /**
+     * The DAILY frequency should not be affected by the BYYEARDAY rule
+     */
+    Set<PeriodType> periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=DAILY;INTERVAL=1;BYYEARDAY=1,2,3,4,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(Year.from(eventStart).length(), periods.size());
+    /**
+     * The DAILY frequency should not be affected by the BYWEEKNO rule
+     */
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=DAILY;INTERVAL=1;BYWEEKNO=1,2,3,4,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(Year.from(eventStart).length(), periods.size());
+    /**
+     * The WEEKLY frequency should not be affected by the BYMONTH rule
+     */
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=WEEKLY;INTERVAL=1;BYMONTHDAY=1,3,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(53, periods.size());
+    /**
+     * The WEEKLY frequency should not be affected by the BYYEARDAY rule
+     */
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=WEEKLY;INTERVAL=1;BYYEARDAY=1,3,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(53, periods.size());
+    /**
+     * The WEEKLY frequency should not be affected by the BYWEEKNO rule
+     */
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=WEEKLY;INTERVAL=1;BYWEEKNO=1,3,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(53, periods.size());
+    /**
+     * The MONTHLY frequency should not be affected by the BYWEEKNO rule
+     */
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=MONTHLY;INTERVAL=1;BYWEEKNO=1,3,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(12, periods.size());
+    /**
+     * The MONTHLY frequency should not be affected by the BYYEARDAY rule
+     */
+    periods = ICalendar.calculatePeriodSet(eventStart, eventStart.plus(duration),
+        new RecurType("FREQ=MONTHLY;INTERVAL=1;BYYEARDAY=1,3,5"),
+        eventStart, eventStart.with(TemporalAdjusters.lastDayOfYear()));
+//    periods.forEach(System.out::println);
+    Assert.assertEquals(12, periods.size());
+  }
+
+//  @Test
+  public void testRuleEquivalence() throws Exception {
+    LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0),
+        eventEnd = eventStart.plus(1, ChronoUnit.SECONDS),
+        periodStart = eventStart,
+        periodEnd = periodStart.plus(2, ChronoUnit.MINUTES);
+    final Duration duration = Duration.ofSeconds(1);
+    final PeriodType originalEvent = new PeriodType(eventStart, duration);
+    Set<PeriodType> periods = ICalendar.calculatePeriodSet(eventStart, eventEnd,
+        new RecurType("FREQ=SECONDLY;INTERVAL=1;BYSECOND=5,7"),
+        periodStart, periodStart.plus(2, ChronoUnit.DAYS));
+//    periods.forEach(System.out::println);
+    System.out.println(periods.size());
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd,
+        new RecurType("FREQ=MINUTELY;INTERVAL=1;BYSECOND=5,7"),
+        periodStart, periodStart.plus(2, ChronoUnit.DAYS));
+    System.out.println(periods.size());
+    periods = ICalendar.calculatePeriodSet(eventStart, eventEnd,
+        new RecurType("FREQ=HOURLY;INTERVAL=1;BYSECOND=5,7"),
+        periodStart, periodStart.plus(2, ChronoUnit.DAYS));
+    System.out.println(periods.size());
   }
 }

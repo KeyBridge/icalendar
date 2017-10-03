@@ -173,43 +173,49 @@ public class ICalendar {
      */
     while (pStart.compareTo(periodEnd) <= 0) {
       /**
-       * Build a list of candidate DTSTART dates within the current FREQ period.
-       * Each candidate LocalDateTime entry corresponding to the original event
-       * (or the hour if BYHOUR is set).
+       * Before we move on to create a startCandidateSet, check if this pStart
+       * dateTime is ruled out by any BYxxx rule
        */
-      Set<LocalDateTime> startCandidateSet = expandByRecurrenceRule(recurType, pStart, weekFields);
-      /**
-       * Scan through the set of candidate START dates, evaluating their
-       * validity and adding only those that match the recurrence rule.
-       */
-      for (LocalDateTime startCandidate : startCandidateSet) {
-        if (recurType.isSetUntil() && recurType.getUntil().before(startCandidate)) {
-          /**
-           * INVALID: candidate is AFTER the UNTIL date.
-           */
-          LOGGER.log(Level.FINEST, "Warning: AFTER the UNTIL date {0}", startCandidate);
-        } else if (recurType.isSetCount() && periodSet.size() >= recurType.getCount()) {
-          /**
-           * INVALID: COUNT value is exceeded.
-           */
-          LOGGER.log(Level.FINEST, "Warning: COUNT EXCEEDED {0}", startCandidate);
-        } else if (!startCandidate.isBefore(periodStart)
-                && !startCandidate.isBefore(eventStart)
-                && !startCandidate.isAfter(periodEnd)) {
-          /**
-           * VALID: CREATE and ADD and new PeriodType to the set.
-           */
-          periodSet.add(new PeriodType(startCandidate, duration));
-        } else {
-          /**
-           * INVALID: OUT OF RANGE or other UNKNOWN error.
-           */
-          LOGGER.log(Level.FINEST, "Warning: OUT OF RANGE or other UNKNOWN error {0}", startCandidate);
+      if (!isNegatedByLimitRule(recurType, pStart)) {
+        /**
+         * Build a list of candidate DTSTART dates within the current FREQ period.
+         * Each candidate LocalDateTime entry corresponding to the original event
+         * (or the hour if BYHOUR is set).
+         */
+        Set<LocalDateTime> startCandidateSet = expandByRecurrenceRule(recurType, pStart, weekFields);
+        /**
+         * Scan through the set of candidate START dates, evaluating their
+         * validity and adding only those that match the recurrence rule.
+         */
+        for (LocalDateTime startCandidate : startCandidateSet) {
+          if (recurType.isSetUntil() && recurType.getUntil().before(startCandidate)) {
+            /**
+             * INVALID: candidate is AFTER the UNTIL date.
+             */
+            LOGGER.log(Level.FINEST, "Warning: AFTER the UNTIL date {0}", startCandidate);
+          } else if (recurType.isSetCount() && periodSet.size() >= recurType.getCount()) {
+            /**
+             * INVALID: COUNT value is exceeded.
+             */
+            LOGGER.log(Level.FINEST, "Warning: COUNT EXCEEDED {0}", startCandidate);
+          } else if (!startCandidate.isBefore(periodStart)
+              && !startCandidate.isBefore(eventStart)
+              && !startCandidate.isAfter(periodEnd)) {
+            /**
+             * VALID: CREATE and ADD and new PeriodType to the set.
+             */
+            periodSet.add(new PeriodType(startCandidate, duration));
+          } else {
+            /**
+             * INVALID: OUT OF RANGE or other UNKNOWN error.
+             */
+            LOGGER.log(Level.FINEST, "Warning: OUT OF RANGE or other UNKNOWN error {0}", startCandidate);
+          }
         }
       }
       /**
        * Important: Increment the pStart value by the FREQ increment, multiplied
-       * by the FREQ INTERVAL value if present. This tncrements the specified
+       * by the FREQ INTERVAL value if present. This increments the specified
        * calendar according to the FREQ and INTERVAL specified in this
        * recurrence rule. If no INTERVAL value is set in the recurrence then the
        * calendar is incremented by one FREQ period. Otherwise the calendar is
@@ -224,6 +230,43 @@ public class ICalendar {
      * Return a sorted version of the period set.
      */
     return new TreeSet<>(periodSet);
+  }
+
+  /**
+   * A static utility method that checks if a LocalDateTime candidate is rueld out by any of the BYxxx rules.
+   * For example, a SECONDLY recurrence with BYSECOND=1 should only occur on the first second of each minute
+   * (thus making it equivalent to a MINUTELY recurrence with BYSECOND=1 or a MINUTELY recurrence with an event
+   * starting on the first second.
+   * @param recurType RecurType instance
+   * @param candidate candidate dateTime
+   * @return is this candidate dateTime ruled out by RRULEs in the RecurType
+   */
+  private static boolean isNegatedByLimitRule(final RecurType recurType, final LocalDateTime candidate) {
+    switch (recurType.getFreq()) {
+      case SECONDLY:
+        if (recurType.isSetBysecond() && noneMatch(recurType.getBysecond(), 60, candidate.getSecond())) return true;
+      case MINUTELY:
+        if (recurType.isSetByminute() && noneMatch(recurType.getByminute(), 60, candidate.getMinute())) return true;
+      case HOURLY:
+        if (recurType.isSetByhour() && noneMatch(recurType.getByhour(), 24, candidate.getHour())) return true;
+      case DAILY:
+        if (recurType.isSetByday() && recurType.getByday().stream()
+        .noneMatch(t -> t.getWeekdayRecurType().getDayOfWeek() == candidate.getDayOfWeek() && (!t.isMonthly() ||
+            candidate.equals(calculateNthWeekday(candidate, t))))) return true;
+        if (recurType.isSetBymonthday() && noneMatch(recurType.getBymonthday(), candidate.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth(), candidate.getDayOfMonth())) return true;
+        if (recurType.getFreq() != EFreqRecurType.DAILY &&
+            recurType.isSetByyearday() && noneMatch(recurType.getByyearday(), Year.from(candidate).length(), candidate.getDayOfYear())) return true;
+      case WEEKLY:
+      case MONTHLY:
+        if (recurType.isSetBymonth() && noneMatch(recurType.getBymonth(), 12, candidate.getMonthValue())) return true;
+    }
+
+    return false;
+  }
+
+  private static boolean noneMatch(Collection<Integer> acceptedValues, int negativeValueOffset, int candidate) {
+    return acceptedValues.stream().map(value -> value > 0 ? value : value + negativeValueOffset).noneMatch(v -> v ==
+        candidate);
   }
 
   //<editor-fold defaultstate="collapsed" desc="RRULE Calculators">
@@ -373,7 +416,7 @@ public class ICalendar {
         : dateSet.stream())
         .flatMap(date -> recurType.getByday().stream()
             .filter(NthWeekdayRecurType::isMonthly)
-            .map(dayOfWeek -> calculate(date, dayOfWeek)))
+            .map(dayOfWeek -> calculateNthWeekday(date, dayOfWeek)))
         .map(date -> date.isBefore(periodStart) ? date.plus(1, ChronoUnit.MONTHS) : date)
         .collect(Collectors.toSet());
   }
@@ -387,7 +430,7 @@ public class ICalendar {
    * @return LocalDateTime with the day field set accordingly and all other fields the same
    * as in the input date
    */
-  private static LocalDateTime calculate(LocalDateTime date, NthWeekdayRecurType weekdayRecurType) {
+  private static LocalDateTime calculateNthWeekday(LocalDateTime date, NthWeekdayRecurType weekdayRecurType) {
     return date.with(
         TemporalAdjusters.dayOfWeekInMonth(weekdayRecurType.getInteger(),
             weekdayRecurType.getWeekdayRecurType().getDayOfWeek()));
