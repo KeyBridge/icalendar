@@ -17,14 +17,15 @@ package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.xml.datatype.DatatypeConfigurationException;
 
 import static ietf.params.xml.ns.icalendar.Constants.*;
 
@@ -113,7 +114,7 @@ public class UntilRecurType implements Serializable {
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77041.html">xsd:date</a>
    */
-  @XmlElement
+  @XmlElement(name = "date")
   @XmlJavaTypeAdapter(type = LocalDate.class, value = XmlAdapterLocalDateXCalDate.class)
   protected LocalDate date;
   /**
@@ -161,8 +162,16 @@ public class UntilRecurType implements Serializable {
   @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
   protected LocalDateTime dateTime;
 
-  public UntilRecurType() {
-    this.date = LocalDate.now();
+  /**
+   * Developer note: A parameter-less constructor should not set field values
+   * because this potentially leads to an invalid state when unmarshalling from XML.
+   */
+  public UntilRecurType() {}
+
+  public static UntilRecurType getInstance() {
+    UntilRecurType urt = new UntilRecurType();
+    urt.setDate(LocalDate.now());
+    return urt;
   }
 
   public UntilRecurType(LocalDateTime dateTime) {
@@ -216,6 +225,7 @@ public class UntilRecurType implements Serializable {
    */
   public final void setDateTime(LocalDateTime dateTime) throws DatatypeConfigurationException {
     this.dateTime = dateTime;
+    this.date = null;
   }
 
   public boolean isSetDateTime() {
@@ -238,6 +248,7 @@ public class UntilRecurType implements Serializable {
    */
   public final void setDate(LocalDate date) {
     this.date = date;
+    this.dateTime = null;
   }
 
   public boolean isSetDate() {
