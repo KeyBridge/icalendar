@@ -108,9 +108,9 @@ public class ArrayOfComponents {
     if (baseComponent != null) {
       for (JAXBElement<? extends BaseComponentType> jaxbElement : baseComponent) {
         sb.append("\n")
-                .append("  [").append(jaxbElement.getName()).append("]")
-                .append(" ")
-                .append(jaxbElement.getValue());
+          .append("  [").append(jaxbElement.getName()).append("]")
+          .append(" ")
+          .append(jaxbElement.getValue());
       }
       sb.append("\n");
     }

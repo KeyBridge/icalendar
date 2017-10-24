@@ -51,7 +51,7 @@ import javax.xml.bind.annotation.*;
   MemberParamType.class
 })
 public class CalAddressListParamType
-        extends BaseParameterType {
+  extends BaseParameterType {
 
   @XmlElement(name = "cal-address", required = true)
   protected List<String> calAddress;

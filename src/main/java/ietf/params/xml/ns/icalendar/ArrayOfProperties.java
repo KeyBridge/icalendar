@@ -47,7 +47,8 @@ import javax.xml.bind.annotation.*;
 public class ArrayOfProperties {
 
   @XmlElementRefs({
-    @XmlElementRef(name = "baseProperty", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false),
+    @XmlElementRef(name = "baseProperty", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
+    ,
     @XmlElementRef(name = "tzid", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
   })
   protected List<JAXBElement<? extends BasePropertyType>> basePropertyOrTzid;
@@ -87,9 +88,9 @@ public class ArrayOfProperties {
     if (basePropertyOrTzid != null) {
       for (JAXBElement<? extends BasePropertyType> jaxbElement : basePropertyOrTzid) {
         sb.append("\n")
-                .append("  [").append(jaxbElement.getName()).append("]")
-                .append(" ")
-                .append(jaxbElement.getValue());
+          .append("  [").append(jaxbElement.getName()).append("]")
+          .append(" ")
+          .append(jaxbElement.getValue());
       }
       sb.append("\n");
     }

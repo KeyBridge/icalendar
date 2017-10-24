@@ -46,15 +46,16 @@ import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.LastModifiedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsetfromPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsettoPropType;
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
-import java.math.BigInteger;
-import java.net.URL;
+
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+import java.math.BigInteger;
+import java.net.URL;
 
 /**
  * This object contains factory methods for each Java content interface and Java
@@ -250,7 +251,7 @@ public class ObjectFactory {
    * <p>
    */
   public UntilRecurType createUntilRecurType() {
-    return new UntilRecurType();
+    return UntilRecurType.getInstance();
   }
 
   /**

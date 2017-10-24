@@ -259,8 +259,8 @@ public class ScheduledEvent implements Serializable {
 
   public String toString() {
     return "ScheduledEvent startDate [" + startDate
-            + "] endDate [" + endDate
-            + "] timeZone [" + (timeZone != null ? timeZone.getID() : null) + "]";
+           + "] endDate [" + endDate
+           + "] timeZone [" + (timeZone != null ? timeZone.getID() : null) + "]";
   }
 
 }

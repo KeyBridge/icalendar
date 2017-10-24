@@ -19,12 +19,11 @@ import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.datedatetime.*;
-
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Java class for DateDatetimePropertyType complex type.
@@ -262,8 +261,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
   @Override
   public String toString() {
     return "DateDatetimePropertyType"
-            + " dateTime [" + dateTime
-            + "] date [" + date
-            + ']';
+           + " dateTime [" + dateTime
+           + "] date [" + date
+           + ']';
   }
 }

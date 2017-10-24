@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
   "longitude"
 })
 public class GeoPropType
-        extends BasePropertyType {
+  extends BasePropertyType {
 
   protected float latitude;
   protected float longitude;

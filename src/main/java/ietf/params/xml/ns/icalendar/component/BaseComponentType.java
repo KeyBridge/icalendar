@@ -452,8 +452,8 @@ public abstract class BaseComponentType {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-            + "]\n properties [" + properties
-            + "]\n components [" + components
-            + "]\n";
+           + "]\n properties [" + properties
+           + "]\n components [" + components
+           + "]\n";
   }
 }
