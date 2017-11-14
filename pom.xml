@@ -4,7 +4,7 @@
 
   <groupId>org.ietf.rfc</groupId>
   <artifactId>icalendar</artifactId>
-  <version>2.1.0</version>
+  <version>2.2.0</version>
   <packaging>jar</packaging>
   <name>lib-icalendar</name>
   <description>Internet Calendaring and Scheduling
@@ -35,7 +35,9 @@
     v2.0.1 - change method signature for calculateExpiration; fix until configuration
     v2.0.2 - recurrence rule logic fix
     v2.1.0 - fix recurrence calculations; intersection; difference methods
+    v2.2.0 - rewrite JSF widgets to support BS-4 and latest theme CSS
   </description>
+
 
   <organization>
     <name>IETF</name>
@@ -43,7 +45,6 @@
   </organization>
 
   <url>https://tools.ietf.org/html/rfc5545</url>
-
   <build>
     <plugins>
       <plugin>
@@ -60,6 +61,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
 
@@ -76,13 +79,6 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>keybridge.lib</groupId>
-      <artifactId>xml-adapter</artifactId>
-      <version>1.0.1</version>
-      <scope>test</scope>
-      <type>jar</type>
     </dependency>
 
   </dependencies>

@@ -13,21 +13,22 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div class="form-group">
-      <label>Repeat</label><br/>
+    <div class="form-group" style="min-width: 640px;">
+      <label>Recurrence</label><br/>
       <div class="form-inline d-flex align-items-start">
         <div class="form-group">
+          <h:outputText value="Repeat" styleClass="mr-2"/>
           <h:selectOneMenu id="selectRepeatFrequency"
-                           styleClass="form-control" converter="convertRecurFreq"
+                           styleClass="form-control custom-select border-none text-underline pl-0" converter="convertRecurFreq"
                            value="#{cc.attrs.recur.freq}">
-            <f:selectItem itemLabel="Daily" itemValue="DAILY"/>
-            <f:selectItem itemLabel="Weekly" itemValue="WEEKLY" />
-            <p:ajax update="panelGroupRecurrence, freqLabel" 
+            <f:selectItem itemLabel="daily" itemValue="DAILY"/>
+            <f:selectItem itemLabel="weekly" itemValue="WEEKLY" />
+            <p:ajax update="panelGroupRecurrence, freqLabel"
                     process="@this" partialSubmit="true" global="false"/>
           </h:selectOneMenu>
-          <h:outputText value=" every: " styleClass="mx-2"/>
-          <h:inputText styleClass="form-control"
-                       style="width: 7em !important;"
+          <h:outputText value=" every " styleClass="mx-2"/>
+          <h:inputText styleClass="form-control border-none text-underline"
+                       style="width: 4rem !important;"
                        value="#{cc.attrs.recur.interval}">
             <f:passThroughAttribute name="type" value="number"/>
             <f:passThroughAttribute name="min" value="1"/>
@@ -50,25 +51,25 @@
         </h:panelGroup>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="min-width: 640px;">
       <h:panelGroup id="panelGroupRecurrenceEnd">
-        <label>End</label>
         <div class="form-inline">
           <div class="form-group">
-            <h:selectOneMenu styleClass="form-control mx-2"
+            <h:outputText value="End" styleClass="mr-2"/>
+            <h:selectOneMenu id="endType" styleClass="form-control custom-select border-none text-underline pl-0 mr-2"
                              value="#{cc.attrs.recur.endType}"
                              converter="convertRecurEndtype">
-              <f:selectItem id="until-none" itemLabel="Never " itemValue="NONE"/>
-              <f:selectItem id="until-count" itemLabel="After " itemValue="COUNT"/>
-              <f:selectItem id="until-until" itemLabel="On " itemValue="UNTIL"/>
+              <f:selectItem id="until-none" itemLabel="never" itemValue="NONE"/>
+              <f:selectItem id="until-count" itemLabel="after" itemValue="COUNT"/>
+              <f:selectItem id="until-until" itemLabel="on" itemValue="UNTIL"/>
               <p:ajax update="panelGroupUntil" process="@this" partialSubmit="true" global="false"/>
             </h:selectOneMenu>
           </div>
           <h:panelGroup id="panelGroupUntil">
             <h:panelGroup rendered="#{cc.attrs.recur.endType.value() eq 'COUNT'}">
               <div class="form-group">
-                <h:inputText styleClass="form-control mx-2"
-                             style="width: 7em !important;"
+                <h:inputText id="endCount" styleClass="form-control border-none text-underline mx-2"
+                             style="width: 4rem !important;"
                              value="#{cc.attrs.recur.count}">
                   <f:passThroughAttribute name="type" value="number"/>
                   <f:passThroughAttribute name="min" value="1"/>
@@ -81,7 +82,6 @@
               <div class="form-group">
                 <p:calendar id="inputUntil" pattern="MM/dd/yyyy"
                             styleClass="form-control pcalendar"
-                            navigator="true"
                             showButtonPanel="true"
                             value="#{cc.attrs.recur.untilDate}"
                             mindate="#{cc.attrs.recur.untilDate}">

@@ -27,7 +27,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation id="#{cc.id}">
     <div id="#{cc.clientId}">
-      <div class="row">
+      <div class="row mb-1">
         <div class="col-md-6">
           <div class="form-group">
             <label>#{label.from_time}</label>
@@ -39,8 +39,7 @@
                         timeZone="#{cc.attrs.schedule.timeZone}"
                         mindate="#{cc.attrs.minStartDate}"
                         maxdate="#{cc.attrs.maxStartDate}">
-              <p:ajax event="dateSelect" update="dtEnd"
-                      process="@this" partialSubmit="true" global="false"/>
+              <p:ajax event="dateSelect" update="dtEnd" process="@this" partialSubmit="true" global="false"/>
             </p:calendar>
           </div>
         </div>
@@ -57,33 +56,27 @@
                         maxdate="#{cc.attrs.maxEndDate}">
             </p:calendar>
           </div>
-
-          <h:panelGroup rendered="#{cc.attrs.showAllDay}">
-            <div class="form-group">
-              <label>
-                <h:selectBooleanCheckbox value="#{cc.attrs.schedule.allDay}"/>  #{label.all_day}
-              </label>
-            </div>
-          </h:panelGroup>
         </div>
       </div>
+
+      <h:panelGroup rendered="#{cc.attrs.showAllDay}">
+        <div class="form-group">
+          <label>
+            <h:selectBooleanCheckbox value="#{cc.attrs.schedule.allDay}"/>  #{label.all_day}
+          </label>
+        </div>
+      </h:panelGroup>
 
       <h:panelGroup rendered="#{cc.attrs.showTimeZone}">
         <div class="form-group">
           <label>#{label.timezone}</label><br/>
           <div class="form-inline">
-            <div class="form-group">
-              <h:selectOneMenu id="tzid" styleClass="form-control"
-                               converter="convertTimezone"
-                               value="#{cc.attrs.schedule.timeZone}">
-                <f:selectItems value="#{cc.attrs.timeZones}" var="tz" itemLabel="#{tz.ID}" itemValue="#{tz}"/>
-              </h:selectOneMenu>
-              <p:commandLink id="selectTzid" update="dtStart, dtEnd"
-                             process="dtStart, dtEnd, tzid, @this" partialSubmit="true" global="false"
-                             styleClass="btn btn-secondary input-group-addon">
-                Select
-              </p:commandLink>
-            </div>
+            <h:selectOneMenu id="tzid" styleClass="form-control custom-select mr-2"
+                             converter="convertTimezone"
+                             value="#{cc.attrs.schedule.timeZone}">
+              <f:selectItems value="#{cc.attrs.timeZones}" var="tz" itemLabel="#{tz.ID}" itemValue="#{tz}"/>
+              <p:ajax update="dtStart, dtEnd" process="dtStart, dtEnd, @this" partialSubmit="true" global="false"/>
+            </h:selectOneMenu>
           </div>
         </div>
       </h:panelGroup>
