@@ -43,7 +43,7 @@ public class ConvertRecurWeekday implements Converter {
      * Supports String (name) and Object inputs.
      */
     if (value instanceof EWeekdayRecurType) {
-      return ((EWeekdayRecurType) value).name();
+      return ((Enum<EWeekdayRecurType>) value).name();
     }
     return value != null ? value.toString() : null;
   }

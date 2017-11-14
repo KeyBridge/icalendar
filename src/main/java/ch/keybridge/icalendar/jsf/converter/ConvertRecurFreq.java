@@ -40,7 +40,7 @@ public class ConvertRecurFreq implements Converter {
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
     if (value instanceof EFreqRecurType) {
-      return ((EFreqRecurType) value).name();
+      return ((Enum<EFreqRecurType>) value).name();
     }
     return value != null ? value.toString() : null;
   }

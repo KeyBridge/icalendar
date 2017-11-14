@@ -40,7 +40,7 @@ public class ConvertRecurEndtype implements Converter {
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
     if (value instanceof ERecurEndType) {
-      return ((ERecurEndType) value).name();
+      return ((Enum<ERecurEndType>) value).name();
     }
     return value != null ? value.toString() : null;
   }
