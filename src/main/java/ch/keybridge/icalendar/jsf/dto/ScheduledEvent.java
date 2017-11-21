@@ -234,9 +234,6 @@ public class ScheduledEvent implements Serializable {
   }
 
   public RecurType getRecur() {
-    if (recur == null) {
-      recur = new RecurType(); // DAILY
-    }
     return recur;
   }
 
@@ -257,10 +254,11 @@ public class ScheduledEvent implements Serializable {
     return startDate != null && endDate != null;
   }
 
+  @Override
   public String toString() {
     return "ScheduledEvent startDate [" + startDate
-           + "] endDate [" + endDate
-           + "] timeZone [" + (timeZone != null ? timeZone.getID() : null) + "]";
+      + "] endDate [" + endDate
+      + "] timeZone [" + (timeZone != null ? timeZone.getID() : null) + "]";
   }
 
 }

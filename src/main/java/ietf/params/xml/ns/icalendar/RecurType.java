@@ -693,7 +693,7 @@ public class RecurType implements Serializable {
   }
 
   public void removeByDay(EWeekdayRecurType weekday) {
-    getByday().remove(weekday);
+    getByday().remove(new NthWeekdayRecurType(weekday));
   }
 
   /**
@@ -994,21 +994,21 @@ public class RecurType implements Serializable {
    */
   public String toStringFull() {
     return "RecurType"
-           + " freq [" + freq
-           + "] until [" + until
-           + "] count [" + count
-           + "] interval [" + interval
-           + "] bysecond [" + bysecond
-           + "] byminute [" + byminute
-           + "] byhour [" + byhour
-           + "] byday [" + byday
-           + "] byyearday [" + byyearday
-           + "] bymonthday [" + bymonthday
-           + "] byweekno [" + byweekno
-           + "] bymonth [" + bymonth
-           + "] bysetpos [" + bysetpos
-           + "] wkst [" + wkst
-           + ']';
+      + " freq [" + freq
+      + "] until [" + until
+      + "] count [" + count
+      + "] interval [" + interval
+      + "] bysecond [" + bysecond
+      + "] byminute [" + byminute
+      + "] byhour [" + byhour
+      + "] byday [" + byday
+      + "] byyearday [" + byyearday
+      + "] bymonthday [" + bymonthday
+      + "] byweekno [" + byweekno
+      + "] bymonth [" + bymonth
+      + "] bysetpos [" + bysetpos
+      + "] wkst [" + wkst
+      + ']';
   }
 
   /**
