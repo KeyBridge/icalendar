@@ -99,6 +99,11 @@ public class ScheduledEvent implements Serializable {
    */
   private RecurType recur;
 
+  /**
+   * A URL to find this event in an online calendaring system.
+   */
+  private String url;
+
   public ScheduledEvent() {
   }
 
@@ -243,6 +248,14 @@ public class ScheduledEvent implements Serializable {
 
   public boolean isSetRecur() {
     return this.recur != null;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }//</editor-fold>
 
   /**
