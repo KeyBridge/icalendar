@@ -355,13 +355,13 @@ public class RecurType implements Serializable {
    * <p>
    * This method is forked from the iCal4j Recur class.
    *
-   * @param aValue an iCalendar RECUR String representation of a recurrence.
+   * @param recur an iCalendar RECUR String representation of a recurrence.
    * @throws Exception if the specified string contains an invalid
    *                   representation of an UNTIL date value or otherwise cannot
    *                   be parsed
    */
-  public RecurType(final String aValue) throws Exception {
-    final StringTokenizer tokenizer = new StringTokenizer(aValue, ";=");
+  public RecurType(final String recur) throws Exception {
+    final StringTokenizer tokenizer = new StringTokenizer(recur, ";=");
     while (tokenizer.hasMoreTokens()) {
       final String token = tokenizer.nextToken();
       switch (token) {
@@ -445,11 +445,51 @@ public class RecurType implements Serializable {
   /**
    * Sets the value of the freq property.
    *
-   * @param value allowed object is {@link EFreqRecurType }
+   * @param freq allowed object is {@link EFreqRecurType }
    *
    */
-  public void setFreq(EFreqRecurType value) {
-    this.freq = value;
+  public void setFreq(EFreqRecurType freq) {
+    this.freq = freq;
+    /**
+     * Here we implement the logic requirements set above in the field
+     * descriptions.
+     * <p>
+     * Developer note: It is not explicitly clear how to handle 'byday'
+     * configurations for recurrence frequencies below WEEKLY. Here we presume
+     * they do not apply and discard.
+     */
+    switch (freq) {
+      case SECONDLY:
+        byday = null;
+        byweekno = null;
+        break;
+      case MINUTELY:
+        byday = null;
+        byweekno = null;
+        break;
+      case HOURLY:
+        byday = null;
+        byweekno = null;
+        break;
+      case DAILY:
+        byday = null;
+        byweekno = null;
+        byyearday = null;
+        break;
+      case WEEKLY:
+        bymonthday = null;
+        byweekno = null;
+        byyearday = null;
+        break;
+      case MONTHLY:
+        byweekno = null;
+        byyearday = null;
+        break;
+      case YEARLY:
+        break;
+      default:
+        throw new AssertionError(freq.name());
+    }
   }
 
   public boolean isSetFreq() {
