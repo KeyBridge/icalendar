@@ -16,7 +16,6 @@
 package ietf.params.xml.ns.icalendar.util;
 
 import ietf.params.xml.ns.icalendar.*;
-import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
 import ietf.params.xml.ns.icalendar.component.base.VcalendarType;
 import ietf.params.xml.ns.icalendar.component.base.VeventType;
 import ietf.params.xml.ns.icalendar.property.base.CalscalePropType;
@@ -43,6 +42,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.ejb.Schedule;
+
+import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
 
 /**
  * A utility class to help interact and manipulate ICalendar classes and
@@ -98,7 +99,7 @@ public class ICalendar {
     /**
      * Confirm the period of interest contains the event.
      */
-    if (periodEnd.isBefore(eventStart) || periodStart.isAfter(calculateExpiration(ZonedDateTime.of(eventEnd, ZONE_UTC), recurType).toLocalDateTime())) {
+    if (periodEnd.isBefore(eventStart) || periodStart.isAfter(calculateExpiration(ZonedDateTime.of(eventEnd, ZONE_UTC), null, recurType).toLocalDateTime())) {
       throw new IllegalArgumentException("Event does not contain period of interest.");
     }
     /**
@@ -125,7 +126,7 @@ public class ICalendar {
      * Second: Add the initial event if it falls within the (adjusted) period.
      */
     if ((pStart.isBefore(eventStart) || pStart.isEqual(eventStart))
-        && (periodEnd.isAfter(eventStart) || periodEnd.isEqual(eventStart))) {
+      && (periodEnd.isAfter(eventStart) || periodEnd.isEqual(eventStart))) {
       periodSet.add(new PeriodType(eventStart, duration));
     }
     /**
@@ -197,8 +198,8 @@ public class ICalendar {
              */
             LOGGER.log(Level.FINEST, "Warning: COUNT EXCEEDED {0}", startCandidate);
           } else if (!startCandidate.isBefore(periodStart)
-                     && !startCandidate.isBefore(eventStart)
-                     && !startCandidate.isAfter(periodEnd)) {
+            && !startCandidate.isBefore(eventStart)
+            && !startCandidate.isAfter(periodEnd)) {
             /**
              * VALID: CREATE and ADD and new PeriodType to the set.
              */
@@ -265,7 +266,7 @@ public class ICalendar {
           return true;
         }
         if (recurType.getFreq() != EFreqRecurType.DAILY
-            && recurType.isSetByyearday() && noneMatch(recurType.getByyearday(), Year.from(candidate).length(), candidate.getDayOfYear())) {
+          && recurType.isSetByyearday() && noneMatch(recurType.getByyearday(), Year.from(candidate).length(), candidate.getDayOfYear())) {
           return true;
         }
       case WEEKLY:
@@ -280,7 +281,7 @@ public class ICalendar {
 
   private static boolean noneMatch(Collection<Integer> acceptedValues, int negativeValueOffset, int candidate) {
     return acceptedValues.stream().map(value -> value > 0 ? value : value + negativeValueOffset).noneMatch(v -> v
-                                                                                                                == candidate);
+      == candidate);
   }
 
   //<editor-fold defaultstate="collapsed" desc="RRULE Calculators">
@@ -547,7 +548,7 @@ public class ICalendar {
    *                    week-of-year fields.
    * @return a non-null TreeSet
    */
-  public static Set<LocalDateTime> expandByRecurrenceRule(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+  protected static Set<LocalDateTime> expandByRecurrenceRule(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
     /**
      * Initialize the set. Use a HashSet to enforce uniqueness. Each (cascaded)
      * calculating method called within the SWITCH statement inspects and is
@@ -765,23 +766,10 @@ public class ICalendar {
    * of a Scheduled event, accounting for recurrence if configured. If
    * recurrence is not configured then the {@code dateEnd} field is returned.
    *
-   * @param dateTime the event start date
-   * @param recur    a recurrence rule
-   * @return the last date of this Schedule (accounting for recurrence)
-   */
-  public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, RecurType recur) {
-    return calculateExpiration(dateTime, null, recur);
-  }
-
-  /**
-   * Calculate and return the calculated expiration date (i.e. that last date)
-   * of a Scheduled event, accounting for recurrence if configured. If
-   * recurrence is not configured then the {@code dateEnd} field is returned.
-   *
    * @param dateTime       the event end date
+   * @param dateEndMaximum (optional) the maximum duration allowable (set to
+   *                       NULL for default of one year)
    * @param recur          a recurrence rule
-   * @param dateEndMaximum the maximum duration allowable (default is one year
-   *                       if not configured)
    * @return the last date of this Schedule (accounting for recurrence)
    */
   public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, ZonedDateTime dateEndMaximum, RecurType recur) {
