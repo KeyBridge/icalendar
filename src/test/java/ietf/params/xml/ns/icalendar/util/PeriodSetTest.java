@@ -34,13 +34,17 @@ public class PeriodSetTest {
   @Test
   public void testCalculatePeriodSet() throws Exception {
 
-    LocalDateTime eventStart = LocalDateTime.of(2017, Month.NOVEMBER, 23, 0, 0);
+    LocalDateTime eventStart = LocalDateTime.of(2017, Month.NOVEMBER, 12, 0, 0);
     LocalDateTime eventEnd = eventStart.plusHours(2);
 
     LocalDateTime periodStart = LocalDateTime.of(2017, Month.OCTOBER, 29, 0, 0);
     LocalDateTime periodEnd = LocalDateTime.of(2017, Month.DECEMBER, 9, 0, 0);
 
-    RecurType recurType = new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO");
+//    RecurType recurType = new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO");;
+    RecurType recurType = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=SU,WE,FR");
+
+    System.out.println("RECUR ");
+    System.out.println("  " + recurType.toString());
 
     Set<PeriodType> periodSet = ICalendar.calculatePeriodSet(eventStart, eventEnd, recurType, periodStart, periodEnd);
 
