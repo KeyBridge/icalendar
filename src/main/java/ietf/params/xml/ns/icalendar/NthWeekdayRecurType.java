@@ -31,7 +31,10 @@ package ietf.params.xml.ns.icalendar;
  */
 public class NthWeekdayRecurType {
 
-  // Any valid instance requires a non-null weekdayRecurType field
+  /**
+   * The weekday recur type. Any valid instance requires a non-null
+   * weekdayRecurType field
+   */
   private final EWeekdayRecurType weekdayRecurType;
   /**
    * A null or zero integer indicates every occurrence of a weekday in WEEKLY
