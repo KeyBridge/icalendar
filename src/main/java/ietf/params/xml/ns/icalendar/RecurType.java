@@ -23,6 +23,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -134,6 +136,7 @@ public class RecurType implements Serializable {
   private static final String BYMONTH = "BYMONTH";
   private static final String BYSETPOS = "BYSETPOS";
   private static final String WKST = "WKST";
+
   /**
    * The FREQ rule part is REQUIRED, but MUST NOT occur more than once.
    * <p>
@@ -332,7 +335,6 @@ public class RecurType implements Serializable {
    * type-weekday = ( "SU" | "MO" | "TU" | "WE" | "TH" | "FR" | "SA" )
    */
   protected EWeekdayRecurType wkst;
-
   /**
    * Added helper field identifying the recurrence end strategy. Either "COUNT",
    * "UNTIL" or "NONE" depending upon whether the recurrence has a count or
@@ -953,78 +955,82 @@ public class RecurType implements Serializable {
 
   @Override
   public int hashCode() {
-    int result = freq.hashCode();
-    result = 31 * result + (until != null ? until.hashCode() : 0);
-    result = 31 * result + (count != null ? count.hashCode() : 0);
-    result = 31 * result + (interval != null ? interval.hashCode() : 0);
-    result = 31 * result + (bysecond != null ? bysecond.hashCode() : 0);
-    result = 31 * result + (byminute != null ? byminute.hashCode() : 0);
-    result = 31 * result + (byhour != null ? byhour.hashCode() : 0);
-    result = 31 * result + (byday != null ? byday.hashCode() : 0);
-    result = 31 * result + (bymonthday != null ? bymonthday.hashCode() : 0);
-    result = 31 * result + (byyearday != null ? byyearday.hashCode() : 0);
-    result = 31 * result + (byweekno != null ? byweekno.hashCode() : 0);
-    result = 31 * result + (bymonth != null ? bymonth.hashCode() : 0);
-    result = 31 * result + (bysetpos != null ? bysetpos.hashCode() : 0);
-    result = 31 * result + (wkst != null ? wkst.hashCode() : 0);
-    result = 31 * result + (endType != null ? endType.hashCode() : 0);
-    return result;
+    int hash = 7;
+    hash = 23 * hash + Objects.hashCode(this.freq);
+    hash = 23 * hash + Objects.hashCode(this.until);
+    hash = 23 * hash + Objects.hashCode(this.count);
+    hash = 23 * hash + Objects.hashCode(this.interval);
+    hash = 23 * hash + Objects.hashCode(this.bysecond);
+    hash = 23 * hash + Objects.hashCode(this.byminute);
+    hash = 23 * hash + Objects.hashCode(this.byhour);
+    hash = 23 * hash + Objects.hashCode(this.byday);
+    hash = 23 * hash + Objects.hashCode(this.bymonthday);
+    hash = 23 * hash + Objects.hashCode(this.byyearday);
+    hash = 23 * hash + Objects.hashCode(this.byweekno);
+    hash = 23 * hash + Objects.hashCode(this.bymonth);
+    hash = 23 * hash + Objects.hashCode(this.bysetpos);
+    hash = 23 * hash + Objects.hashCode(this.wkst);
+    hash = 23 * hash + Objects.hashCode(this.endType);
+    return hash;
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
       return false;
     }
 
-    RecurType recurType = (RecurType) o;
+    final RecurType other = (RecurType) obj;
 
-    if (freq != recurType.freq) {
+    if (this.freq != other.freq) {
       return false;
     }
-    if (until != null ? !until.equals(recurType.until) : recurType.until != null) {
+    if (!Objects.equals(this.until, other.until)) {
       return false;
     }
-    if (count != null ? !count.equals(recurType.count) : recurType.count != null) {
+    if (!Objects.equals(this.count, other.count)) {
       return false;
     }
-    if (interval != null ? !interval.equals(recurType.interval) : recurType.interval != null) {
+    if (!Objects.equals(this.interval, other.interval)) {
       return false;
     }
-    if (bysecond != null ? !bysecond.equals(recurType.bysecond) : recurType.bysecond != null) {
+    if (!Objects.equals(this.bysecond, other.bysecond)) {
       return false;
     }
-    if (byminute != null ? !byminute.equals(recurType.byminute) : recurType.byminute != null) {
+    if (!Objects.equals(this.byminute, other.byminute)) {
       return false;
     }
-    if (byhour != null ? !byhour.equals(recurType.byhour) : recurType.byhour != null) {
+    if (!Objects.equals(this.byhour, other.byhour)) {
       return false;
     }
-    if (byday != null ? !byday.equals(recurType.byday) : recurType.byday != null) {
+    if (!Objects.equals(this.byday, other.byday)) {
       return false;
     }
-    if (bymonthday != null ? !bymonthday.equals(recurType.bymonthday) : recurType.bymonthday != null) {
+    if (!Objects.equals(this.bymonthday, other.bymonthday)) {
       return false;
     }
-    if (byyearday != null ? !byyearday.equals(recurType.byyearday) : recurType.byyearday != null) {
+    if (!Objects.equals(this.byyearday, other.byyearday)) {
       return false;
     }
-    if (byweekno != null ? !byweekno.equals(recurType.byweekno) : recurType.byweekno != null) {
+    if (!Objects.equals(this.byweekno, other.byweekno)) {
       return false;
     }
-    if (bymonth != null ? !bymonth.equals(recurType.bymonth) : recurType.bymonth != null) {
+    if (!Objects.equals(this.bymonth, other.bymonth)) {
       return false;
     }
-    if (bysetpos != null ? !bysetpos.equals(recurType.bysetpos) : recurType.bysetpos != null) {
+    if (!Objects.equals(this.bysetpos, other.bysetpos)) {
       return false;
     }
-    if (wkst != recurType.wkst) {
+    if (this.wkst != other.wkst) {
       return false;
     }
-    return endType == recurType.endType;
+    return this.endType == other.endType;
   }
 
   /**
@@ -1435,11 +1441,10 @@ public class RecurType implements Serializable {
       try {
         list.add(converter.unmarshal(t.nextToken()));
       } catch (Exception e) {
-        e.printStackTrace();
+        Logger.getLogger(RecurType.class.getName()).log(Level.SEVERE, null, e);
       }
     }
     return list;
-  }
+  }//</editor-fold>
 
-//</editor-fold>
 }
