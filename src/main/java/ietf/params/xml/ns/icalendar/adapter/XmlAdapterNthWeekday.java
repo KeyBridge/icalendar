@@ -61,9 +61,6 @@ public class XmlAdapterNthWeekday extends XmlAdapter<String, NthWeekdayRecurType
    */
   @Override
   public String marshal(NthWeekdayRecurType v) {
-    if (v == null) {
-      return null;
-    }
-    return v.toString();
+    return v != null ? v.toString() : null;
   }
 }
