@@ -27,40 +27,36 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation id="#{cc.id}">
     <div id="#{cc.clientId}">
-      <div class="row mb-1">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>#{label.from_time}</label>
-            <p:calendar id="dtStart" styleClass="pcalendar form-control"
-                        pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
-                        required="#{cc.attrs.required}" requiredMessage="Please select the start date"
-                        showButtonPanel="true"
-                        value="#{cc.attrs.schedule.startDate}"
-                        timeZone="#{cc.attrs.schedule.timeZone}"
-                        mindate="#{cc.attrs.minStartDate}"
-                        maxdate="#{cc.attrs.maxStartDate}">
-              <p:ajax event="dateSelect" update="dtEnd" process="@this" partialSubmit="true" global="false"/>
-            </p:calendar>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>#{label.to_time}</label><br/>
-            <p:calendar id="dtEnd" styleClass="pcalendar form-control"
-                        pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
-                        required="#{cc.attrs.required}" requiredMessage="Please select the end date"
-                        showButtonPanel="true"
-                        value="#{cc.attrs.schedule.endDate}"
-                        timeZone="#{cc.attrs.schedule.timeZone}"
-                        mindate="#{cc.attrs.schedule.startDate}"
-                        maxdate="#{cc.attrs.maxEndDate}">
-            </p:calendar>
-          </div>
-        </div>
+
+      <div class="form-group">
+        <label>#{label.from_time}<h:outputText value="*" styleClass="text-danger"/></label>
+        <p:calendar id="dtStart" styleClass="pcalendar form-control"
+                    pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
+                    required="#{cc.attrs.required}" requiredMessage="Please select the start date"
+                    showButtonPanel="true"
+                    value="#{cc.attrs.schedule.startDate}"
+                    timeZone="UTC"
+                    mindate="#{cc.attrs.minStartDate}"
+                    maxdate="#{cc.attrs.maxStartDate}">
+          <p:ajax event="dateSelect" listener="#{scheduleBean.onSetEventStart()}"  update="dtEnd" process="@this" partialSubmit="true" global="false"/>
+        </p:calendar>
+      </div>
+
+      <div class="form-group">
+        <label>#{label.to_time}<h:outputText value="*" styleClass="text-danger"/></label>
+        <p:calendar id="dtEnd" styleClass="pcalendar form-control"
+                    pattern="#{cc.attrs.timePicker?'MM/dd/yyyy HH:mm':'MM/dd/yyyy'}"
+                    required="#{cc.attrs.required}" requiredMessage="Please select the end date"
+                    showButtonPanel="true"
+                    value="#{cc.attrs.schedule.endDate}"
+                    timeZone="UTC"
+                    mindate="#{cc.attrs.schedule.startDate}"
+                    maxdate="#{cc.attrs.maxEndDate}">
+        </p:calendar>
       </div>
 
       <h:panelGroup rendered="#{cc.attrs.showAllDay}">
-        <div class="form-group">
+        <div class="form-check">
           <label>
             <h:selectBooleanCheckbox value="#{cc.attrs.schedule.allDay}"/>  #{label.all_day}
           </label>
@@ -69,13 +65,12 @@
 
       <h:panelGroup rendered="#{cc.attrs.showTimeZone}">
         <div class="form-group">
-          <label>#{label.timezone}</label><br/>
+          <label>#{label.timezone}<h:outputText value="*" styleClass="text-danger"/></label><br/>
           <div class="form-inline">
             <h:selectOneMenu id="tzid" styleClass="form-control custom-select mr-2"
                              converter="convertTimezone"
                              value="#{cc.attrs.schedule.timeZone}">
               <f:selectItems value="#{cc.attrs.timeZones}" var="tz" itemLabel="#{tz.ID}" itemValue="#{tz}"/>
-              <p:ajax update="dtStart, dtEnd" process="dtStart, dtEnd, @this" partialSubmit="true" global="false"/>
             </h:selectOneMenu>
           </div>
         </div>
