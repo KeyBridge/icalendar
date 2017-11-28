@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ietf.params.xml.ns.icalendar.util;
+package ch.keybridge.icalendar;
 
 import ietf.params.xml.ns.icalendar.*;
 import ietf.params.xml.ns.icalendar.component.base.VcalendarType;
