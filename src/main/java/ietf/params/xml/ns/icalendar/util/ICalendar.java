@@ -83,8 +83,8 @@ public class ICalendar {
    *                    SATURDAY at or after the last daily of the month.
    * @return a non-null TreeSet containing calculated event instances occurring
    *         during the defined period (e.g. between the period start and end
-   *         dates.) // * @throws DatatypeConfigurationException if a PeriodType
-   *         fails to build
+   *         dates.) Returns an EMPTY TreeSet if the event does not intersect
+   *         the period of interest.
    */
   public static Set<PeriodType> calculatePeriodSet(final LocalDateTime eventStart,
                                                    final LocalDateTime eventEnd,
@@ -100,7 +100,13 @@ public class ICalendar {
      * Confirm the period of interest contains the event.
      */
     if (periodEnd.isBefore(eventStart) || periodStart.isAfter(calculateExpiration(ZonedDateTime.of(eventEnd, ZONE_UTC), null, recurType).toLocalDateTime())) {
-      throw new IllegalArgumentException("Event does not contain period of interest.");
+      /**
+       * Update 11/28/17: Fail gracefully if the period does not contain the
+       * event and return an empty set.
+       */
+//      throw new IllegalArgumentException("Event does not contain period of interest.");
+      LOGGER.fine("Event does not intersect period of interest");
+      return periodSet;
     }
     /**
      * Preserve the event duration. This is applied later to each calculated
