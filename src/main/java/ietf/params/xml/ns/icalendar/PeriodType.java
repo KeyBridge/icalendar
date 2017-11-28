@@ -264,14 +264,16 @@ public final class PeriodType implements Comparable<PeriodType> {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final PeriodType other = (PeriodType) obj;
-    if (!Objects.equals(this.start, other.start)) {
+    final PeriodType o = (PeriodType) obj;
+    if (!Objects.equals(this.start, o.start)) {
       return false;
     }
-    if (!Objects.equals(this.end, other.end)) {
-      return false;
-    }
-    return Objects.equals(this.duration, other.duration);
+    /**
+     * Only the end OR duration may be configured, not both.
+     */
+    return this.end != null
+           ? Objects.equals(this.end, o.end == null ? o.start.plus(o.duration) : o.end)
+           : Objects.equals(this.duration, o.duration == null ? Duration.between(o.start, o.end) : o.duration);
   }
 
   @Override
@@ -283,11 +285,13 @@ public final class PeriodType implements Comparable<PeriodType> {
     int startComparison = start.compareTo(o.start);
     if (startComparison != 0) {
       return startComparison;
-    } else if (end == null) {
-      return duration.compareTo(o.duration == null ? Duration.between(o.start, o.end) : o.duration);
-    } else {
-      return end.compareTo(o.end == null ? o.start.plus(o.duration) : o.end);
     }
+    /**
+     * Only the end OR duration may be configured, not both.
+     */
+    return end != null
+           ? end.compareTo(o.end == null ? o.start.plus(o.duration) : o.end)
+           : duration.compareTo(o.duration == null ? Duration.between(o.start, o.end) : o.duration);
   }
 
   /**
