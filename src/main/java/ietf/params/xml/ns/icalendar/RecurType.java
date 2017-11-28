@@ -16,7 +16,6 @@
 package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterNthWeekday;
-import ietf.params.xml.ns.icalendar.util.EWeekday;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -1327,7 +1326,7 @@ public class RecurType implements Serializable {
    * @return a reader-friendly NthWeekday string
    */
   private static String getNthWeekdayString(NthWeekdayRecurType recurType) {
-    final String weekday = EWeekday.valueOf((recurType.getWeekdayRecurType().name())).getLabel();
+    final String weekday = EWeekdayRecurType.valueOf((recurType.getWeekdayRecurType().name())).getDisplayName();
     return recurType.getInteger() == null || recurType.getInteger() == 0
            ? weekday
            : getPosition(recurType.getInteger()) + " " + weekday;
