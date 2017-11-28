@@ -16,6 +16,8 @@
 package ietf.params.xml.ns.icalendar;
 
 import java.time.DayOfWeek;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
@@ -100,7 +102,35 @@ public enum EWeekdayRecurType {
     return name();
   }
 
+  /**
+   * Get the day common name with correct capitalization, in the default locale.
+   *
+   * @return the label. e.g. 'Sunday'
+   */
+  public String getDisplayName() {
+    return dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+  }
+
+  /**
+   * Gets the textual representation, such as 'Mon' or 'Friday'.
+   * <p>
+   * This returns the textual name used to identify the day-of-week, suitable
+   * for presentation to the user. The parameters control the style of the
+   * returned text and the locale.
+   * <p>
+   * If no textual mapping is found then the {@link #getValue() numeric value}
+   * is returned.
+   *
+   * @param style  the length of the text required, not null
+   * @param locale the locale to use, not null
+   * @return the text value of the day-of-week, not null
+   */
+  public String getDisplayName(TextStyle style, Locale locale) {
+    return dayOfWeek.getDisplayName(TextStyle.FULL, null);
+  }
+
   public static EWeekdayRecurType fromValue(String v) {
     return valueOf(v);
   }
+
 }
