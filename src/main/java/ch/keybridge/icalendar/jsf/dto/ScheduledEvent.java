@@ -17,6 +17,7 @@ package ch.keybridge.icalendar.jsf.dto;
 import ietf.params.xml.ns.icalendar.RecurType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -33,7 +34,7 @@ import java.util.TimeZone;
  * @author Jesse Caulfield
  * @since v7.5.0 created 12/10/2015
  */
-public class ScheduledEvent implements Serializable {
+public class ScheduledEvent implements Serializable, Comparable<ScheduledEvent> {
 
   private static final long serialVersionUID = 1L;
 
@@ -272,6 +273,39 @@ public class ScheduledEvent implements Serializable {
     return "ScheduledEvent startDate [" + startDate
       + "] endDate [" + endDate
       + "] timeZone [" + (timeZone != null ? timeZone.getID() : null) + "]";
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 73 * hash + Objects.hashCode(this.startDate);
+    hash = 73 * hash + Objects.hashCode(this.endDate);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final ScheduledEvent other = (ScheduledEvent) obj;
+    if (!Objects.equals(this.startDate, other.startDate)) {
+      return false;
+    }
+    return Objects.equals(this.endDate, other.endDate);
+  }
+
+  @Override
+  public int compareTo(ScheduledEvent o) {
+    return this.startDate.equals(o.startDate)
+           ? this.endDate.compareTo(o.endDate)
+           : this.startDate.compareTo(o.startDate);
   }
 
 }
