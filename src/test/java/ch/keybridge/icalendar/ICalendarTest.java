@@ -11,8 +11,9 @@
  * Standard Product License Agreement. A copy of either Agreement can be
  * obtained upon request from: info@keybridgewireless.com
  */
-package ietf.params.xml.ns.icalendar.util;
+package ch.keybridge.icalendar;
 
+import ch.keybridge.icalendar.ICalendar;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
 import org.junit.Assert;

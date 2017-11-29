@@ -16,8 +16,9 @@
  * and its suppliers, if any. The intellectual and technical concepts contained
  * herein are proprietary.
  */
-package ietf.params.xml.ns.icalendar.util;
+package ch.keybridge.icalendar;
 
+import ch.keybridge.icalendar.ICalendar;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
 import java.time.LocalDateTime;
