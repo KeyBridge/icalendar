@@ -4,7 +4,7 @@
 
   <groupId>org.ietf.rfc</groupId>
   <artifactId>icalendar</artifactId>
-  <version>2.3.1</version>
+  <version>2.4.0</version>
   <packaging>jar</packaging>
   <name>lib-icalendar</name>
   <description>Internet Calendaring and Scheduling
@@ -38,6 +38,8 @@
     v2.2.0 - rewrite JSF widgets to support BS-4 and latest theme CSS
     v2.3.0 - fix type cast but in period set expansion
     v2.3.1 - update equality tests, fail gracefully when event does not intersect the period of interest
+    v2.4.0 - add java.time compatible Event class, reorganize ICalendar utility; move JSF content to lib-faces-icalendar
+
   </description>
 
 
@@ -69,12 +71,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <version>7.0</version>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
