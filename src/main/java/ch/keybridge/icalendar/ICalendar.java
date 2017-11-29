@@ -41,7 +41,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.ejb.Schedule;
 
 import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
 
@@ -743,7 +742,7 @@ public class ICalendar {
         vEvent.getProperties().addProperty(o.createRrule(new RrulePropType(new RecurType(rrule))));
 
       } catch (Exception e) {
-        Logger.getLogger(Schedule.class.getName()).log(Level.WARNING, "Schedule recurrence error:  {0}", e.getMessage());
+        Logger.getLogger(ICalendar.class.getName()).log(Level.WARNING, "Schedule recurrence error:  {0}", e.getMessage());
       }
     }
     /**
