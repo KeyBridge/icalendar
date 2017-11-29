@@ -661,6 +661,20 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
+   * Set the Recurrence Rule. This is used to identify properties that contain a
+   * recurrence rule specification.
+   * <p>
+   * Developer note: In general the <code>rrule</code> should not be set
+   * directly. Instead prefer to set the <code>recur</code> field.
+   *
+   * @param rrule a RRule string. For example, "FREQ=YEARLY;BYMONTH=1"
+   * @throws java.lang.Exception if the rule cannot be parsed
+   */
+  public void setRrule(String rrule) throws Exception {
+    setRecurType(new RecurType(rrule));
+  }
+
+  /**
    * Get the schedule display Time Zone. (Optional) If not specifically
    * configured otherwise the default {@code UTC} time zone is always returned.
    * <p>
