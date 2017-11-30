@@ -308,7 +308,7 @@ public class Event implements Comparable<Event>, Serializable {
    */
   private ETransparency transparency;
   /**
-   * This property is an extension field the identifies whether the Schedule
+   * This property is an extension field the identifies whether the Event
    * represents an all day (e.g. 24-hour) event.
    * <p>
    * The default implementation value is false.
@@ -390,7 +390,7 @@ public class Event implements Comparable<Event>, Serializable {
    * that is a URI that points to directory information with more structured
    * specification of the location.
    * <p>
-   * This provides an option to associate a location with this Schedule.
+   * This provides an option to associate a location with this Event.
    */
   private String location;
 
@@ -403,14 +403,14 @@ public class Event implements Comparable<Event>, Serializable {
 
   /**
    * Build a regular schedule with the indicated Start/calendarEnd dates and
-   * times. The returned Schedule is NOT configured as all day.
+   * times. The returned Event is NOT configured as all day.
    * <p>
    * If the dateEnd parameter is set to NULL then a default 1-hour duration is
    * configured.
    *
    * @param dateStart the Start date and time in the indicated time zone.
    * @param dateEnd   the End date and time.
-   * @return a Schedule instance with the desired configuration
+   * @return an Event instance with the desired configuration
    */
   public static Event getInstance(ZonedDateTime dateStart, ZonedDateTime dateEnd) {
     Event s = new Event();
@@ -422,7 +422,7 @@ public class Event implements Comparable<Event>, Serializable {
 
   /**
    * Build a regular schedule with the indicated Start/calendarEnd dates and
-   * times. The returned Schedule is NOT configured as all day.
+   * times. The returned Event is NOT configured as all day.
    * <p>
    * If the dateEnd parameter is set to NULL then a default 1-hour duration is
    * configured.
@@ -430,7 +430,7 @@ public class Event implements Comparable<Event>, Serializable {
    * @param dateStart the Start date and time in the indicated time zone.
    * @param dateEnd   the End date and time.
    * @param timeZone  (Optional) the time zone (defaults to UTC)
-   * @return a Schedule instance with the desired configuration
+   * @return an Event instance with the desired configuration
    */
   public static Event getInstance(LocalDateTime dateStart, LocalDateTime dateEnd, ZoneId timeZone) {
     return getInstance(ZonedDateTime.of(dateStart, timeZone), ZonedDateTime.of(dateEnd, timeZone));
@@ -449,7 +449,7 @@ public class Event implements Comparable<Event>, Serializable {
    *                       {@code ChronoUnit.MINUTES}.
    * @param durationAmount the duration amount to be added in increments of the
    *                       declared calendar field unit.
-   * @return a Schedule instance with the desired configuration
+   * @return an Event instance with the desired configuration
    * @throws IllegalArgumentException if the duration amount is zero or negative
    */
   public static Event getInstance(ZonedDateTime dateStart, TemporalUnit temporalUnit, long durationAmount) {
@@ -472,7 +472,7 @@ public class Event implements Comparable<Event>, Serializable {
    *                       {@code ChronoUnit.MINUTES}.
    * @param durationAmount the duration amount to be added in increments of the
    *                       declared calendar field unit.
-   * @return a Schedule instance with the desired configuration
+   * @return an Event instance with the desired configuration
    * @throws IllegalArgumentException if the duration amount is zero or negative
    */
   public static Event getInstance(LocalDateTime dateStart, TemporalUnit temporalUnit, long durationAmount) {
@@ -624,7 +624,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Set the Schedule rrule parameter using an iCal4j Recur instance. If a null
+   * Set the Event rrule parameter using an iCal4j Recur instance. If a null
    * instance is given then the internal rrule field is set to an empty
    * (non-null) string.
    *
@@ -671,7 +671,9 @@ public class Event implements Comparable<Event>, Serializable {
    * @throws java.lang.Exception if the rule cannot be parsed
    */
   public void setRrule(String rrule) throws Exception {
-    setRecurType(new RecurType(rrule));
+    if (rrule != null && !rrule.trim().isEmpty()) {
+      setRecurType(new RecurType(rrule));
+    }
   }
 
   /**
@@ -1085,7 +1087,7 @@ public class Event implements Comparable<Event>, Serializable {
    * that is a URI that points to directory information with more structured
    * specification of the location.
    * <p>
-   * This provides an option to associate a location with this Schedule.
+   * This provides an option to associate a location with this Event.
    *
    * @return the schedule event location
    */
@@ -1104,7 +1106,7 @@ public class Event implements Comparable<Event>, Serializable {
    * that is a URI that points to directory information with more structured
    * specification of the location.
    * <p>
-   * This provides an option to associate a location with this Schedule.
+   * This provides an option to associate a location with this Event.
    *
    * @param location the schedule event location
    */
@@ -1195,12 +1197,12 @@ public class Event implements Comparable<Event>, Serializable {
     getCategories().add(category);
   }// </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc="Schedule calculator methods">
+  // <editor-fold defaultstate="collapsed" desc="Event calculator methods">
   /**
-   * Returns the first date of this Schedule. This returns the
-   * {@link #dateStart} field.
+   * Returns the first date of this Event. This returns the {@link #dateStart}
+   * field.
    *
-   * @return the first date of this Schedule
+   * @return the first date of this Event
    */
   public ZonedDateTime getDateEffective() {
     return getDateStart();
@@ -1208,13 +1210,13 @@ public class Event implements Comparable<Event>, Serializable {
 
   /**
    * Calculate and return the calculated expiration date (i.e. that last date)
-   * of a Scheduled event, accounting for recurrence if configured. If
+   * of a scheduled Event, accounting for recurrence if configured. If
    * recurrence is not configured then the {@code dateEnd} field is returned.
    * <p>
    * If no recurrence {@code UNTIL} date is specified then the default maximum
    * of 1 year is returned.
    *
-   * @return the last date of this Schedule (accounting for recurrence)
+   * @return the last date of this Event (accounting for recurrence)
    */
   public ZonedDateTime getDateExpire() {
     return ICalendar.calculateExpiration(dateEnd, null, recurType);
@@ -1352,7 +1354,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Calculate the difference between this Schedule and another.
+   * Calculate the difference between this Event and another.
    * <p>
    * This method computes the temporal equivalent of an inverted
    * <em>set-theoretic difference</em>: the period in this schedule {@code A}
@@ -1372,7 +1374,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Calculate the part of Schedule A not in Schedule B.
+   * Calculate the part of Event A not in Event B.
    * <p>
    * This method computes the temporal equivalent of an
    * <strong>inverted</strong> <em>relative complement</em> or
@@ -1448,7 +1450,7 @@ public class Event implements Comparable<Event>, Serializable {
      * Case: A contains B
      */
     if (b.contains(a)) {
-      throw new Exception("Difference calculation A\\B is not defined: Schedule B contains A and there is no part of A not in B");
+      throw new Exception("Difference calculation A\\B is not defined: Event B contains A and there is no part of A not in B");
     }
     /**
      * Case: A after B produces leading interval (b_start--a_start), Case: A
@@ -1526,7 +1528,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Convenience method to evaluate if this Schedule is active and should be
+   * Convenience method to evaluate if this Event is active and should be
    * considered valid. The opposite of this method is {@link #isExpired()}
    * <p>
    * Returns TRUE if the Start date is before or after NOW and the calendarEnd
@@ -1539,8 +1541,8 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Convenience method to evaluate if this Schedule includes the current date
-   * and time.
+   * Convenience method to evaluate if this Event includes the current date and
+   * time.
    * <p>
    * Returns TRUE if the Start date is before NOW and the calendarEnd date is
    * after NOW.
@@ -1552,8 +1554,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Convenience method to evaluate if the Schedule has a Start date in the
-   * future.
+   * Convenience method to evaluate if the Event has a Start date in the future.
    *
    * @return TRUE if the Start date is after the current system time
    */
@@ -1562,7 +1563,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Convenience method to evaluate if the Schedule has expired. The opposite of
+   * Convenience method to evaluate if the Event has expired. The opposite of
    * this method is {@link #isActive()}
    *
    * @return TRUE if the expiration date is before the current system time
@@ -1630,7 +1631,7 @@ public class Event implements Comparable<Event>, Serializable {
    * calculator uses the dateExpiration field to account for Recurrence, if
    * present.
    * <p>
-   * Utility method to determine the Duration of this Schedule.
+   * Utility method to determine the Duration of this Event.
    * <p>
    * This method is forked from the example presented in Marc Whitlow's blog.
    *
@@ -1648,7 +1649,7 @@ public class Event implements Comparable<Event>, Serializable {
    * Determine the duration between the Start and calendarEnd dates. This is the
    * duration of a single event and does not evaluate recurrence.
    * <p>
-   * Utility method to determine the Duration of this Schedule
+   * Utility method to determine the Duration of this Event
    *
    * @return String describing the time between the Start and calendarEnd dates,
    *         e.g. 6 hours and 23 minutes.
@@ -1660,7 +1661,7 @@ public class Event implements Comparable<Event>, Serializable {
   /**
    * Determine the duration between the effective and expiration dates.
    * <p>
-   * Utility method to determine the Duration of this Schedule
+   * Utility method to determine the Duration of this Event
    *
    * @return String describing the time between the Start and calendarEnd dates,
    *         e.g. 2 years 1 day 6 hours and 23 minutes.
@@ -1735,7 +1736,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Adjust the DTEND field to set the Schedule duration to the indicated value.
+   * Adjust the DTEND field to set the Event duration to the indicated value.
    * <p>
    * This method sets the DTEND field to the DTSTART value, then adds the
    * indicated amount to adjust the schedule duration.
@@ -1757,7 +1758,7 @@ public class Event implements Comparable<Event>, Serializable {
    * <p>
    * RFC5545 says either 'dateEnd' or 'duration' may appear in a 'eventprop',
    * but 'dateEnd' and 'duration' MUST NOT occur in the same 'eventprop'. Use
-   * this method when creating a Schedule from a VCARD datatype that specified
+   * this method when creating an Event from a VCARD datatype that specified
    * duration but not DTEND.
    *
    * @param duration a non-null javax.xml.datatype.Duration object. null values
@@ -1787,10 +1788,10 @@ public class Event implements Comparable<Event>, Serializable {
      * Throw an exception if this entity cannot be properly prePersistd
      */
     if (dateStart == null) {
-      throw new Exception("Schedule start date is required.");
+      throw new Exception("Event start date is required.");
     }
     if (dateEnd == null) {
-      throw new Exception("Schedule end date is required.");
+      throw new Exception("Event end date is required.");
     }
     return true;
   }
@@ -1839,7 +1840,7 @@ public class Event implements Comparable<Event>, Serializable {
    * original object and may be indepcalendarEndently persisted to the database
    * without concern for a pre-existing record error.
    *
-   * @return a copy of this Schedule with a new ID and UUID and null location.
+   * @return a copy of this Event with a new ID and UUID and null location.
    */
   @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
   public Event copy() {
@@ -1860,16 +1861,16 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Get a complete representation of all Schedule entity class fields and their
+   * Get a complete representation of all Event entity class fields and their
    * current setting.
    *
-   * @return a String representation of this Schedule
+   * @return a String representation of this Event
    */
   public String toStringFull() {
     if (dateStart == null || dateEnd == null) {
-      return "Schedule not configured.";
+      return "Event not configured.";
     }
-    return "Schedule"
+    return "Event"
       + " id [" + id
       + "] allDayEvent [" + allDayEvent
       + "] classification [" + classification
@@ -1890,7 +1891,7 @@ public class Event implements Comparable<Event>, Serializable {
   @Override
   public String toString() {
     if (dateStart == null || dateEnd == null) {
-      return "Schedule not configured.";
+      return "Event not configured.";
     }
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_12HR, Locale.ENGLISH);
     return allDayEvent ? "All day " : "" + dateStart.format(dateFormatter) + " to " + dateEnd.format(dateFormatter) + " (" + getZoneId().getId() + ")";
@@ -1909,7 +1910,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Enumerated values for the Schedule.transparency field.
+   * Enumerated values for the Event.transparency field.
    * <p>
    * This property defines whether an event is transparent or not to busy time
    * searches. It corresponds to the Time Transparency iCalendar field.
@@ -1937,7 +1938,7 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Enumerated values for the Schedule.classification field.
+   * Enumerated values for the Event.classification field.
    * <p>
    * These are allowed values for the iCalendar 'CLASS' field, which corresponds
    * to the iCalendar property “CLASS” and defines the access classification for
@@ -1993,7 +1994,7 @@ public class Event implements Comparable<Event>, Serializable {
    *
    * @param periodStart the date to begin calculating schedule occurrences
    * @param periodEnd   the period calendarEnd date
-   * @return a list of individual Schedule occurrences.
+   * @return a list of individual Event occurrences.
    */
   public List<Event> calculatePeriodList(final ZonedDateTime periodStart, final ZonedDateTime periodEnd) {
     /**
@@ -2005,8 +2006,8 @@ public class Event implements Comparable<Event>, Serializable {
     /**
      * Calculate a recurrence set for this schedule configuration.
      * <p>
-     * Developer note: Schedule currently ONLY supports RRULE. Possible
-     * recurrence configurations include: <br>
+     * Developer note: Event currently ONLY supports RRULE. Possible recurrence
+     * configurations include: <br>
      * RDATE. A list to include in a recurrence set.<br>
      * RRULE: A rule to calculate inclusion in a recurrence set.<br>
      * EXDATE: A list to exclude from a recurrence set.<br>
@@ -2027,7 +2028,7 @@ public class Event implements Comparable<Event>, Serializable {
           return Event.getInstance(periodType.getStart(), periodType.getEnd(), getZoneId());
         }).collect(Collectors.toList());
     } catch (Exception e) {
-      Logger.getLogger(Event.class.getName()).log(Level.SEVERE, "Schedule period list error:  {0}", e.getMessage());
+      Logger.getLogger(Event.class.getName()).log(Level.SEVERE, "Event period list error:  {0}", e.getMessage());
       Logger.getLogger(Event.class.getName()).log(Level.SEVERE, null, e);
     }
     /**
