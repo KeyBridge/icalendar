@@ -657,7 +657,7 @@ public class ICalendar {
   }
 
   /**
-   * Build an iCalendar VEvent from a Schedule entity.
+   * Build an iCalendar VEvent from an Event entity.
    * <p>
    * If a location is configured the location name will be recorded in the
    * vEvent.location field.
@@ -666,7 +666,7 @@ public class ICalendar {
    * Apache.lang HashCodeBuilder method, which is not linked to the library by
    * default.
    *
-   * @return an iCalendar VEvent from this Schedule configuration
+   * @return an iCalendar VEvent from this Event configuration
    */
   public VeventType vEvent(LocalDate dateStart,
                            LocalDate dateEnd,
@@ -685,7 +685,7 @@ public class ICalendar {
 
     ObjectFactory o = new ObjectFactory();
     /**
-     * Developer note: Set DTSTART/DTEND as DATE if the schedule is an all-day
+     * Developer note: Set DTSTART/DTEND as DATE if the Event is an all-day
      * event. This will strip the time component. Otherwise set as a DATETIME,
      * which preserves the time component.
      */
@@ -742,7 +742,7 @@ public class ICalendar {
         vEvent.getProperties().addProperty(o.createRrule(new RrulePropType(new RecurType(rrule))));
 
       } catch (Exception e) {
-        Logger.getLogger(ICalendar.class.getName()).log(Level.WARNING, "Schedule recurrence error:  {0}", e.getMessage());
+        Logger.getLogger(ICalendar.class.getName()).log(Level.WARNING, "Event recurrence error:  {0}", e.getMessage());
       }
     }
     /**
@@ -768,14 +768,14 @@ public class ICalendar {
 
   /**
    * Calculate and return the calculated expiration date (i.e. that last date)
-   * of a Scheduled event, accounting for recurrence if configured. If
-   * recurrence is not configured then the {@code dateEnd} field is returned.
+   * of an Event event, accounting for recurrence if configured. If recurrence
+   * is not configured then the {@code dateEnd} field is returned.
    *
    * @param dateTime       the event end date
    * @param dateEndMaximum (optional) the maximum duration allowable (set to
    *                       NULL for default of one year)
    * @param recur          a recurrence rule
-   * @return the last date of this Schedule (accounting for recurrence)
+   * @return the last date of this Event (accounting for recurrence)
    */
   public static ZonedDateTime calculateExpiration(ZonedDateTime dateTime, ZonedDateTime dateEndMaximum, RecurType recur) {
     /**
@@ -785,7 +785,7 @@ public class ICalendar {
       return dateTime;
     }
     /**
-     * Schedule Recurrences should always have an UNTIL or COUNT association but
+     * Event Recurrences should always have an UNTIL or COUNT association but
      * never both. If they do not then force the expiration to +1 year. If the
      * recurrence specified a UNTIL date then use it. Otherwise verify that the
      * COUNT is configured. If it is not configured then return the default
@@ -828,5 +828,5 @@ public class ICalendar {
     return dateEndMaximum != null ? dateEndMaximum : dateTime.plus(1, ChronoUnit.YEARS);
   }
 
-//  Schedule calculator methods
+//  Event calculator methods
 }
