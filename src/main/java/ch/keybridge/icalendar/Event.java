@@ -60,20 +60,20 @@ import javax.xml.bind.annotation.XmlType;
  * The "DTSTART" property for a "VEVENT" specifies the inclusive Start of the
  * event. For recurring events, it also specifies the very first instance in the
  * recurrence set. The "DTEND" property for a "VEVENT" component specifies the
- * non-inclusive calendarEnd of the event. For cases where a "VEVENT" component
+ * non-inclusive End of the event. For cases where a "VEVENT" component
  * specifies a "DTSTART" property with a DATE data type but no "DTEND" property,
- * the events non-inclusive calendarEnd is the calendarEnd of the date specified
- * by the "DTSTART" property. For cases where a "VEVENT" component specifies a
+ * the events non-inclusive End is the End of the date specified by the
+ * "DTSTART" property. For cases where a "VEVENT" component specifies a
  * "DTSTART" property with a DATE-TIME data type but no "DTEND" property, the
- * event calendarEnds on the same date and time of day specified by the
- * "DTSTART" property.
+ * event ends on the same date and time of day specified by the "DTSTART"
+ * property.
  * <p>
  * The "VEVENT" component cannot be nested within another component. However,
  * "VEVENT" components can be related to each other or to a "VTODO" or to a
  * "VJOURNAL" component with the "RELATED-TO" property. <h2>Validation</h2> <ul>
  * <li>The dateEnd attribute must follow the dateStart attribute.</li> <li>A day
- * is defined as beginning at midnight and calendarEnding at one second before
- * midnight on the same day: From 0:00:00 to 23:59:59.</li>
+ * is defined as beginning at midnight and Ending at one second before midnight
+ * on the same day: From 0:00:00 to 23:59:59.</li>
  * <li>If a recurrence rule rrule attribute is present the dateExpiration
  * attribute must be calculated.</li> <li>The time zone tzid attribute is always
  * required. </li> <li>Three-character time zone notation (e.g. “EDT”) is not
@@ -91,8 +91,8 @@ import javax.xml.bind.annotation.XmlType;
  * It is an ERROR to provide more than one value.</li>
  * <li> BYSETPOS may only be used with a MONTHLY recurrence frequency.</li>
  * </ul> </li> <li>If the allDayEvent attribute is set to “TRUE” then the
- * schedule times must be set to begin at 0:00:00 and calendarEnd at 23:59:59 on
- * the respective Start and calendarEnd dates.</li> </ul>
+ * schedule times must be set to begin at 0:00:00 and End at 23:59:59 on the
+ * respective Start and End dates.</li> </ul>
  *
  * @see <a href="http://tools.ietf.org/html/rfc5545">Internet Calendaring and
  * Scheduling</a>
@@ -149,15 +149,14 @@ public class Event implements Comparable<Event>, Serializable {
   private ZonedDateTime dateStart;
   /**
    * The "DTEND" property for a "VEVENT" component specifies the non-inclusive
-   * calendarEnd of the event.
+   * End of the event.
    * <p>
    * For cases where a "VEVENT" component specifies a "DTSTART" property with a
-   * DATE data type but no "DTEND" property, the events non-inclusive
-   * calendarEnd is the calendarEnd of the date specified by the "DTSTART"
-   * property. For cases where a "VEVENT" component specifies a "DTSTART"
-   * property with a DATE-TIME data type but no "DTEND" property, the event
-   * calendarEnds on the same date and time of day specified by the "DTSTART"
-   * property.
+   * DATE data type but no "DTEND" property, the events non-inclusive End is the
+   * End of the date specified by the "DTSTART" property. For cases where a
+   * "VEVENT" component specifies a "DTSTART" property with a DATE-TIME data
+   * type but no "DTEND" property, the event ends on the same date and time of
+   * day specified by the "DTSTART" property.
    * <p>
    * The value is specified in the UTC Time Zone.
    */
@@ -324,8 +323,7 @@ public class Event implements Comparable<Event>, Serializable {
    */
   private boolean recurrence = false;
   /**
-   * The recurrence object. This transient field is populated in postConstruct
-   * and populated the RRule on setting.
+   * The recurrence configuration.
    */
   private RecurType recurType;
 
@@ -368,7 +366,7 @@ public class Event implements Comparable<Event>, Serializable {
    * descriptions associated with the activity
    * <p>
    * If a description is not set this returns a pretty-print description of the
-   * Start and calendarEnd date plus recurrence.
+   * Start and End date plus recurrence.
    * <p>
    * This property provides a more complete description of the component than
    * that provided by the "SUMMARY" property, [and is used in the "VEVENT" to]
@@ -402,8 +400,29 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Build a regular schedule with the indicated Start/calendarEnd dates and
-   * times. The returned Event is NOT configured as all day.
+   * Build a regular schedule with the indicated Start/End dates and times. The
+   * returned Event is NOT configured as all day.
+   * <p>
+   * If the dateEnd parameter is set to NULL then a default 1-hour duration is
+   * configured.
+   *
+   * @param dateStart the Start date and time in the indicated time zone.
+   * @param dateEnd   the End date and time.
+   * @param recur     The recurrence configuration
+   * @return an Event instance with the desired configuration
+   */
+  public static Event getInstance(ZonedDateTime dateStart, ZonedDateTime dateEnd, RecurType recur) {
+    Event s = new Event();
+    s.setDateStart(dateStart);
+    s.setDateEnd(dateEnd);
+    s.setZoneSameInstant(dateStart.getZone());
+    s.setRecurType(recur);
+    return s;
+  }
+
+  /**
+   * Build a regular schedule with the indicated Start/End dates and times. The
+   * returned Event is NOT configured as all day.
    * <p>
    * If the dateEnd parameter is set to NULL then a default 1-hour duration is
    * configured.
@@ -413,16 +432,12 @@ public class Event implements Comparable<Event>, Serializable {
    * @return an Event instance with the desired configuration
    */
   public static Event getInstance(ZonedDateTime dateStart, ZonedDateTime dateEnd) {
-    Event s = new Event();
-    s.setDateStart(dateStart);
-    s.setDateEnd(dateEnd);
-    s.setZoneSameInstant(dateStart.getZone());
-    return s;
+    return getInstance(dateStart, dateEnd, null);
   }
 
   /**
-   * Build a regular schedule with the indicated Start/calendarEnd dates and
-   * times. The returned Event is NOT configured as all day.
+   * Build a regular schedule with the indicated Start/End dates and times. The
+   * returned Event is NOT configured as all day.
    * <p>
    * If the dateEnd parameter is set to NULL then a default 1-hour duration is
    * configured.
@@ -879,7 +894,7 @@ public class Event implements Comparable<Event>, Serializable {
    * textual descriptions associated with the activity
    * <p>
    * If a description is not set this returns a pretty-print description of the
-   * Start and calendarEnd date plus recurrence.
+   * Start and End date plus recurrence.
    * <p>
    * This property provides a more complete description of the component than
    * that provided by the "SUMMARY" property, [and is used in the "VEVENT" to]
@@ -1139,16 +1154,16 @@ public class Event implements Comparable<Event>, Serializable {
 
   /**
    * Adds the specified (signed) amount to the specified field. This method
-   * updates both the event schedule Start and calendarEnd times.
+   * updates both the event schedule Start and End times.
    * <p>
    * Add operation is made on <em>both</em> the START and END fields.
    * <p>
-   * NOTE: This default implementation on CalcalendarEndar just repeatedly calls
-   * the version of roll() that rolls by one unit. This may not always do the
-   * right thing. For example, if the DAY_OF_MONTH field is 31, rolling through
-   * February will leave it set to 28. The GregorianCalcalendarEndar version of
-   * this function takes care of this problem. Other subclasses should also
-   * provide overrides of this function that do the right thing.
+   * NOTE: This default implementation on Calendar just repeatedly calls the
+   * version of roll() that rolls by one unit. This may not always do the right
+   * thing. For example, if the DAY_OF_MONTH field is 31, rolling through
+   * February will leave it set to 28. The GregorianCalendar version of this
+   * function takes care of this problem. Other subclasses should also provide
+   * overrides of this function that do the right thing.
    *
    * @param temporalUnit the field
    * @param amount       the signed amount to add to the field.
@@ -1563,8 +1578,8 @@ public class Event implements Comparable<Event>, Serializable {
    * Convenience method to evaluate if this Event is active and should be
    * considered valid. The opposite of this method is {@link #isExpired()}
    * <p>
-   * Returns TRUE if the Start date is before or after NOW and the calendarEnd
-   * date is not before NOW
+   * Returns TRUE if the Start date is before or after NOW and the End date is
+   * not before NOW
    *
    * @return TRUE if the schedule is EITHER not expired OR begins in the future.
    */
@@ -1576,8 +1591,7 @@ public class Event implements Comparable<Event>, Serializable {
    * Convenience method to evaluate if this Event includes the current date and
    * time.
    * <p>
-   * Returns TRUE if the Start date is before NOW and the calendarEnd date is
-   * after NOW.
+   * Returns TRUE if the Start date is before NOW and the End date is after NOW.
    *
    * @return TRUE if the schedule contains the current date and time.
    */
@@ -1608,8 +1622,7 @@ public class Event implements Comparable<Event>, Serializable {
    * Convenience method to print a human-readable sentence description.
    *
    * @return A formatted, human readable description of this schedule. e.g. "All
-   *         day from [DtTART] to [DteND] with recurrence, calendarEnding on
-   *         [EXIPIRE]"
+   *         day from [DtTART] to [DteND] with recurrence, Ending on [EXIPIRE]"
    */
   public String getFormattedDescription() {
     /**
@@ -1667,10 +1680,10 @@ public class Event implements Comparable<Event>, Serializable {
    * <p>
    * This method is forked from the example presented in Marc Whitlow's blog.
    *
-   * @return String describing the time between the Start and calendarEnd dates.
-   *         e.g. 2 years 1 day 6 hours and 23 minutes.
+   * @return String describing the time between the Start and End dates. e.g. 2
+   *         years 1 day 6 hours and 23 minutes.
    * @see <a
-   * href="http://www.colabrativ.com/calendar-and-timestamp-duration-determination-method-in-java/">CalcalendarEndar
+   * href="http://www.colabrativ.com/calendar-and-timestamp-duration-determination-method-in-java/">Calendar
    * and Timestamp Duration Determination Method in Java</a>
    */
   public String getDurationDataTypeString() {
@@ -1678,13 +1691,13 @@ public class Event implements Comparable<Event>, Serializable {
   }
 
   /**
-   * Determine the duration between the Start and calendarEnd dates. This is the
+   * Determine the duration between the Start and End dates. This is the
    * duration of a single event and does not evaluate recurrence.
    * <p>
    * Utility method to determine the Duration of this Event
    *
-   * @return String describing the time between the Start and calendarEnd dates,
-   *         e.g. 6 hours and 23 minutes.
+   * @return String describing the time between the Start and End dates, e.g. 6
+   *         hours and 23 minutes.
    */
   public String getDurationEvent() {
     return durationDescription(dateStart.withHour(0).withMinute(0), dateEnd.withHour(23).withMinute(59));
@@ -1695,8 +1708,8 @@ public class Event implements Comparable<Event>, Serializable {
    * <p>
    * Utility method to determine the Duration of this Event
    *
-   * @return String describing the time between the Start and calendarEnd dates,
-   *         e.g. 2 years 1 day 6 hours and 23 minutes.
+   * @return String describing the time between the Start and End dates, e.g. 2
+   *         years 1 day 6 hours and 23 minutes.
    */
   public String getDurationExpiration() {
     return durationDescription(allDayEvent ? dateStart.withHour(0).withMinute(0) : dateStart,
@@ -1707,7 +1720,7 @@ public class Event implements Comparable<Event>, Serializable {
    * Helper method to build a duration description String from two s.
    *
    * @param start the Start date/time
-   * @param end   the calendarEnd date/time
+   * @param end   the End date/time
    * @return a non-null string
    */
   public static String durationDescription(ZonedDateTime start, ZonedDateTime end) {
@@ -1869,8 +1882,8 @@ public class Event implements Comparable<Event>, Serializable {
 
   /**
    * Creates a copy of this object. The returned object is unique from the
-   * original object and may be indepcalendarEndently persisted to the database
-   * without concern for a pre-existing record error.
+   * original object and may be indepEndently persisted to the database without
+   * concern for a pre-existing record error.
    *
    * @return a copy of this Event with a new ID and UUID and null location.
    */
@@ -2003,10 +2016,10 @@ public class Event implements Comparable<Event>, Serializable {
    * Build a period list for a recurring event within the indicated dates of
    * interest.
    * <p>
-   * The Start and calendarEnd dates denote the dates of interest. If no events
-   * fall within the Start and calendarEnd dates and an empty list is returned.
-   * For example, if building a view for the month of May the Start date and
-   * calendarEnd dates would be May 01, May 31, respectively.
+   * The Start and End dates denote the dates of interest. If no events fall
+   * within the Start and End dates and an empty list is returned. For example,
+   * if building a view for the month of May the Start date and End dates would
+   * be May 01, May 31, respectively.
    * <p>
    * This method is typically used when rendering a iCalendar widget.
    * <p>
@@ -2025,7 +2038,7 @@ public class Event implements Comparable<Event>, Serializable {
    * default.
    *
    * @param periodStart the date to begin calculating schedule occurrences
-   * @param periodEnd   the period calendarEnd date
+   * @param periodEnd   the period End date
    * @return a list of individual Event occurrences.
    */
   public List<Event> calculatePeriodList(final ZonedDateTime periodStart, final ZonedDateTime periodEnd) {
