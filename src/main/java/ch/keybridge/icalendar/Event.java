@@ -1271,14 +1271,14 @@ public class Event implements Comparable<Event>, Serializable {
    * this schedule event start and end dates fall outside the other schedule
    * start and end dates.
    *
-   * @param schedule the other schedule instance
+   * @param event the other schedule instance
    * @return true if the date falls within the event described by the schedule
    */
-  public boolean contains(Event schedule) {
-    if (schedule == null) {
+  public boolean contains(Event event) {
+    if (event == null) {
       return false;
     }
-    return !getDateStart().isAfter(schedule.getDateStart()) && !getDateEnd().isBefore(schedule.getDateEnd());
+    return !getDateStart().isAfter(event.getDateStart()) && !getDateEnd().isBefore(event.getDateEnd());
   }
 
   /**
@@ -1307,17 +1307,17 @@ public class Event implements Comparable<Event>, Serializable {
    * Developer note: Read the functional description carefully: the comparison
    * applies recurrence to both schedules.
    *
-   * @param schedule the other schedule to evaluate
+   * @param event the other schedule to evaluate
    * @return true if the date falls within the event described by the schedule
    */
-  public boolean intersects(Event schedule) {
-    if (schedule == null) {
+  public boolean intersects(Event event) {
+    if (event == null) {
       return false;
     }
 
     if (recurrence) {
-      if (schedule.isRecurrence()) {
-        final Collection<Event> scheduleEvents = schedule.calculatePeriodList(schedule.getDateStart(), schedule.getDateExpire());
+      if (event.isRecurrence()) {
+        final Collection<Event> scheduleEvents = event.calculatePeriodList(event.getDateStart(), event.getDateExpire());
         for (Event s : calculatePeriodList(getDateStart(), getDateExpire())) {
           for (Event t : scheduleEvents) {
             if (intersect(s, t) || intersect(t, s)) {
@@ -1327,17 +1327,17 @@ public class Event implements Comparable<Event>, Serializable {
         }
         return false;
       } else {
-        return calculatePeriodList(getDateStart(), getDateExpire()).stream().anyMatch(s -> intersect(s, schedule) || intersect(schedule, s));
+        return calculatePeriodList(getDateStart(), getDateExpire()).stream().anyMatch(s -> intersect(s, event) || intersect(event, s));
       }
-    } else if (schedule.isRecurrence()) {
-      for (Event t : schedule.calculatePeriodList(schedule.getDateStart(), schedule.getDateExpire())) {
+    } else if (event.isRecurrence()) {
+      for (Event t : event.calculatePeriodList(event.getDateStart(), event.getDateExpire())) {
         if (intersect(this, t) || intersect(t, this)) {
           return true;
         }
       }
       return false;
     } else {
-      return intersect(this, schedule) || intersect(schedule, this);
+      return intersect(this, event) || intersect(event, this);
     }
   }
 
@@ -1351,26 +1351,6 @@ public class Event implements Comparable<Event>, Serializable {
    */
   public static boolean intersect(Event s, Event t) {
     return !(s.getDateEnd().isBefore(t.getDateStart()) || s.getDateStart().isAfter(t.getDateEnd()));
-  }
-
-  /**
-   * Calculate the difference between this Event and another.
-   * <p>
-   * This method computes the temporal equivalent of an inverted
-   * <em>set-theoretic difference</em>: the period in this schedule {@code A}
-   * that are not in the other schedule {@code B}:
-   * <pre>
-   * |-------------|          A: this schedule
-   *          |------------|  B: that schedule
-   * |--------|               result (this not in that)
-   * </pre>
-   *
-   * @param schedule the other schedule.
-   * @return the period in the other schedule not in this schedule
-   * @throws Exception if the other schedule is wholly contains in this
-   */
-  public Event difference(Event schedule) throws Exception {
-    return difference(this, schedule);
   }
 
   /**
@@ -1525,6 +1505,58 @@ public class Event implements Comparable<Event>, Serializable {
        */
       return Event.getInstance(a.getDateStart(), b.getDateStart());
     }
+  }
+
+  /**
+   * Calculate the difference between this Event and another.
+   * <p>
+   * This method computes the temporal equivalent of an inverted
+   * <em>set-theoretic difference</em>: the period in this schedule {@code A}
+   * that are not in the other schedule {@code B}:
+   * <pre>
+   * |-------------|          A: this schedule
+   *          |------------|  B: that schedule
+   * |--------|               result (this not in that)
+   * </pre>
+   *
+   * @param event the other schedule.
+   * @return the period in the other schedule not in this schedule
+   * @throws Exception if the other schedule is wholly contains in this
+   */
+  public Event difference(Event event) throws Exception {
+    return difference(this, event);
+  }
+
+  /**
+   * Evaluate the difference between this starting Event interval and a
+   * collection of services, each which may (or may not) have a blocking Event
+   * configuration.
+   * <p>
+   * This method iteratively trims (a copy of) the current event and returns the
+   * remainder of what is left. If nothing is left an exception is thrown.
+   * <p>
+   * The resulting Event does NOT have a recurrence configuration.
+   *
+   * @param events a collection of potentially intersecting Events
+   * @return the part of the desired Event
+   * @throws Exception if there is no remainder period
+   */
+  public Event difference(final Collection<Event> events) throws Exception {
+    Event a = this.copy();
+    /**
+     * Iteratively trim Event A with B.
+     */
+    for (Event b : events) {
+      try {
+        a = a.difference(b);
+      } catch (Exception ex) {
+        throw new Exception(b.toString() + " contains entire period " + this.toString());
+      }
+    }
+    /**
+     * Return the remainder if any is left.
+     */
+    return a;
   }
 
   /**
