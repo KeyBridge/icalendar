@@ -15,6 +15,9 @@
 package ch.keybridge.icalendar;
 
 import ietf.params.xml.ns.icalendar.RecurType;
+
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -24,8 +27,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * The Event object is designed to enable the recording, persistence and
@@ -1325,34 +1326,35 @@ public class Event implements Comparable<Event>, Serializable {
    * @param event the other schedule to evaluate
    * @return true if the date falls within the event described by the schedule
    */
-  public boolean intersects(Event event) {
+  public boolean intersects(final Event event) {
     if (event == null) {
       return false;
     }
 
     if (recurrence) {
       if (event.isRecurrence()) {
+        // Both events are recurring. The most complex case.
         final Collection<Event> scheduleEvents = event.calculatePeriodList(event.getDateStart(), event.getDateExpire());
         for (Event s : calculatePeriodList(getDateStart(), getDateExpire())) {
           for (Event t : scheduleEvents) {
-            if (intersect(s, t) || intersect(t, s)) {
+            if (intersect(s, t)) {
               return true;
             }
           }
         }
         return false;
       } else {
-        return calculatePeriodList(getDateStart(), getDateExpire()).stream().anyMatch(s -> intersect(s, event) || intersect(event, s));
+        return calculatePeriodList(getDateStart(), getDateExpire()).stream().anyMatch(s -> intersect(s, event));
       }
     } else if (event.isRecurrence()) {
       for (Event t : event.calculatePeriodList(event.getDateStart(), event.getDateExpire())) {
-        if (intersect(this, t) || intersect(t, this)) {
+        if (intersect(this, t)) {
           return true;
         }
       }
       return false;
     } else {
-      return intersect(this, event) || intersect(event, this);
+      return intersect(this, event);
     }
   }
 
