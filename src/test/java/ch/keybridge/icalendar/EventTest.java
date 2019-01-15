@@ -409,7 +409,7 @@ public class EventTest {
     System.out.println("EventTest difference");
 
 //    Calendar sstart = Calendar.getInstance();    sstart.set(Calendar.HOUR_OF_DAY, 9);    sstart.set(Calendar.MINUTE, 0);
-    Event s = Event.getInstance(ZonedDateTime.now().withHour(9).withMinute(0), ChronoUnit.HOURS, 3);
+    Event s = Event.getInstance(ZonedDateTime.now().withHour(9).withMinute(0).withDayOfYear(2), ChronoUnit.HOURS, 3);
     s.setRrule("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO,TU,TH");
 
     System.out.println("s = " + s);
@@ -423,7 +423,7 @@ public class EventTest {
 //    tstart.set(Calendar.MINUTE, 0);
 //    tstart.add(Calendar.DAY_OF_YEAR, 14);
 
-    Event t = Event.getInstance(tstart, ChronoUnit.HOURS, 48);
+    Event t = Event.getInstance(tstart, ChronoUnit.HOURS, 2);
     t.setAllDayEvent(true);
 
     System.out.println("  \nt: " + t);
