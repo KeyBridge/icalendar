@@ -15,7 +15,7 @@
  */
 package ietf.params.xml.ns.icalendar.adapter;
 
-import ietf.params.xml.ns.icalendar.EWeekdayRecurType;
+import ietf.params.xml.ns.icalendar.WeekdayRecurType;
 import ietf.params.xml.ns.icalendar.NthWeekdayRecurType;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -45,7 +45,7 @@ public class XmlAdapterNthWeekday extends XmlAdapter<String, NthWeekdayRecurType
     if (v == null || v.isEmpty() || v.length() < 2) {
       return null;
     }
-    NthWeekdayRecurType weekdayRecurType = new NthWeekdayRecurType(EWeekdayRecurType.valueOf(v.substring(v.length() - 2)));
+    NthWeekdayRecurType weekdayRecurType = new NthWeekdayRecurType(WeekdayRecurType.valueOf(v.substring(v.length() - 2)));
     if (v.length() > 2) {
       weekdayRecurType.setInteger(Integer.valueOf(v.substring(0, v.length() - 2)));
     }

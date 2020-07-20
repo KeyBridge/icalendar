@@ -154,7 +154,7 @@ public class RecurType implements Serializable {
    * "WEEKLY" | "MONTHLY" | "YEARLY" }
    */
   @XmlElement(required = true)
-  protected EFreqRecurType freq;
+  protected FreqRecurType freq;
   /**
    * The UNTIL or COUNT rule parts are OPTIONAL, but they MUST NOT occur in the
    * same 'recur'.
@@ -333,20 +333,20 @@ public class RecurType implements Serializable {
    * <p>
    * type-weekday = ( "SU" | "MO" | "TU" | "WE" | "TH" | "FR" | "SA" )
    */
-  protected EWeekdayRecurType wkst;
+  protected WeekdayRecurType wkst;
   /**
    * Added helper field identifying the recurrence end strategy. Either "COUNT",
    * "UNTIL" or "NONE" depending upon whether the recurrence has a count or
    * until configuration (or neither). Default is NONE if not set.
    */
   @XmlTransient
-  protected ERecurEndType endType;
+  protected RecurEndType endType;
 
   /**
    * Construct a new DAILY recurrence type.
    */
   public RecurType() {
-    freq = EFreqRecurType.DAILY;
+    freq = FreqRecurType.DAILY;
   }
 
   /**
@@ -367,7 +367,7 @@ public class RecurType implements Serializable {
       final String token = tokenizer.nextToken();
       switch (token) {
         case FREQ:
-          freq = EFreqRecurType.fromValue(nextToken(tokenizer, token));
+          freq = FreqRecurType.fromValue(nextToken(tokenizer, token));
           break;
         case UNTIL:
           until = new UntilRecurType(nextToken(tokenizer, token));
@@ -406,7 +406,7 @@ public class RecurType implements Serializable {
           bysetpos = listParseInteger(nextToken(tokenizer, token));
           break;
         case WKST:
-          wkst = EWeekdayRecurType.valueOf(nextToken(tokenizer, token));
+          wkst = WeekdayRecurType.valueOf(nextToken(tokenizer, token));
           break;
       }
     }
@@ -436,20 +436,20 @@ public class RecurType implements Serializable {
   /**
    * Gets the value of the freq property.
    *
-   * @return possible object is {@link EFreqRecurType }
+   * @return possible object is {@link FreqRecurType }
    *
    */
-  public EFreqRecurType getFreq() {
+  public FreqRecurType getFreq() {
     return freq;
   }
 
   /**
    * Sets the value of the freq property.
    *
-   * @param freq allowed object is {@link EFreqRecurType }
+   * @param freq allowed object is {@link FreqRecurType }
    *
    */
-  public void setFreq(EFreqRecurType freq) {
+  public void setFreq(FreqRecurType freq) {
     this.freq = freq;
     /**
      * Here we implement the logic requirements set above in the field
@@ -726,14 +726,14 @@ public class RecurType implements Serializable {
     this.byday = null;
   }
 
-  public void addByDay(EWeekdayRecurType weekday) {
+  public void addByDay(WeekdayRecurType weekday) {
     NthWeekdayRecurType nthWeekdayRecurType = new NthWeekdayRecurType(weekday);
     if (!getByday().contains(nthWeekdayRecurType)) {
       getByday().add(nthWeekdayRecurType);
     }
   }
 
-  public void removeByDay(EWeekdayRecurType weekday) {
+  public void removeByDay(WeekdayRecurType weekday) {
     getByday().remove(new NthWeekdayRecurType(weekday));
   }
 
@@ -866,20 +866,20 @@ public class RecurType implements Serializable {
   /**
    * Gets the value of the wkst property.
    *
-   * @return possible object is {@link EWeekdayRecurType }
+   * @return possible object is {@link WeekdayRecurType }
    *
    */
-  public EWeekdayRecurType getWkst() {
+  public WeekdayRecurType getWkst() {
     return wkst;
   }
 
   /**
    * Sets the value of the wkst property.
    *
-   * @param value allowed object is {@link EWeekdayRecurType }
+   * @param value allowed object is {@link WeekdayRecurType }
    *
    */
-  public void setWkst(EWeekdayRecurType value) {
+  public void setWkst(WeekdayRecurType value) {
     this.wkst = value;
   }
 
@@ -896,17 +896,17 @@ public class RecurType implements Serializable {
    * @return the recurrence end type. Default is NONE if not otherwise
    *         configured.
    */
-  public ERecurEndType getEndType() {
+  public RecurEndType getEndType() {
     /**
      * Initialize the recurrence end type if not already configured.
      */
     if (endType == null) {
       if (isSetCount()) {
-        endType = ERecurEndType.COUNT;
+        endType = RecurEndType.COUNT;
       } else if (isSetUntil()) {
-        endType = ERecurEndType.UNTIL;
+        endType = RecurEndType.UNTIL;
       } else {
-        endType = ERecurEndType.NONE;
+        endType = RecurEndType.NONE;
       }
     }
     return endType;
@@ -920,7 +920,7 @@ public class RecurType implements Serializable {
    *
    * @param endType the end type strategy
    */
-  public void setEndType(ERecurEndType endType) {
+  public void setEndType(RecurEndType endType) {
 
     this.endType = endType;
     switch (endType) {
@@ -1326,7 +1326,7 @@ public class RecurType implements Serializable {
    * @return a reader-friendly NthWeekday string
    */
   private static String getNthWeekdayString(NthWeekdayRecurType recurType) {
-    final String weekday = EWeekdayRecurType.valueOf((recurType.getWeekdayRecurType().name())).getDisplayName();
+    final String weekday = WeekdayRecurType.valueOf((recurType.getWeekdayRecurType().name())).getDisplayName();
     return recurType.getInteger() == null || recurType.getInteger() == 0
            ? weekday
            : getPosition(recurType.getInteger()) + " " + weekday;
@@ -1383,8 +1383,8 @@ public class RecurType implements Serializable {
    * @param frequency the FREQ label. e.g. DAILY
    * @return the English label equivalent. e.g. "day"
    */
-  private String getFrequencyLabel(EFreqRecurType frequency) {
-    if (EFreqRecurType.DAILY.equals(frequency)) {
+  private String getFrequencyLabel(FreqRecurType frequency) {
+    if (FreqRecurType.DAILY.equals(frequency)) {
       return "day";
     } else {
       return frequency.name().replace("LY", "").toLowerCase();

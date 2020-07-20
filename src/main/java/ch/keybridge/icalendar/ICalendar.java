@@ -270,7 +270,7 @@ public class ICalendar {
         if (recurType.isSetBymonthday() && noneMatch(recurType.getBymonthday(), candidate.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth(), candidate.getDayOfMonth())) {
           return true;
         }
-        if (recurType.getFreq() != EFreqRecurType.DAILY
+        if (recurType.getFreq() != FreqRecurType.DAILY
           && recurType.isSetByyearday() && noneMatch(recurType.getByyearday(), Year.from(candidate).length(), candidate.getDayOfYear())) {
           return true;
         }

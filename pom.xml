@@ -4,7 +4,7 @@
 
   <groupId>org.ietf.rfc</groupId>
   <artifactId>icalendar</artifactId>
-  <version>2.4.0</version>
+  <version>2.6.0</version>
   <packaging>jar</packaging>
   <name>lib-icalendar</name>
   <description>Internet Calendaring and Scheduling
@@ -39,6 +39,10 @@
     v2.3.0 - fix type cast but in period set expansion
     v2.3.1 - update equality tests, fail gracefully when event does not intersect the period of interest
     v2.4.0 - add java.time compatible Event class, reorganize ICalendar utility; move JSF content to lib-faces-icalendar
+    v2.5.0 - rename enumerated classes, remove 'E' prefix
+    v2.6.0 - rewrite to use zonedatetime instead of localdatetime
+
+
 
   </description>
 

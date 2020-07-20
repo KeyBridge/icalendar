@@ -35,7 +35,7 @@ public class NthWeekdayRecurType {
    * The weekday recur type. Any valid instance requires a non-null
    * weekdayRecurType field
    */
-  private final EWeekdayRecurType weekdayRecurType;
+  private final WeekdayRecurType weekdayRecurType;
   /**
    * A null or zero integer indicates every occurrence of a weekday in WEEKLY
    * context (isMonthly() returns false), whereas a non-null and non-zero
@@ -44,7 +44,7 @@ public class NthWeekdayRecurType {
    */
   private Integer integer;
 
-  public NthWeekdayRecurType(EWeekdayRecurType weekdayRecurType) {
+  public NthWeekdayRecurType(WeekdayRecurType weekdayRecurType) {
     this.weekdayRecurType = weekdayRecurType;
   }
 
@@ -53,7 +53,7 @@ public class NthWeekdayRecurType {
    *
    * @return non-null EWeekdayRecurType instance
    */
-  public EWeekdayRecurType getWeekdayRecurType() {
+  public WeekdayRecurType getWeekdayRecurType() {
     return weekdayRecurType;
   }
 

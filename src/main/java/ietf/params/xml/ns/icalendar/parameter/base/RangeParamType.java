@@ -15,7 +15,7 @@
  */
 package ietf.params.xml.ns.icalendar.parameter.base;
 
-import ietf.params.xml.ns.icalendar.ERangeValueType;
+import ietf.params.xml.ns.icalendar.RangeValueType;
 import ietf.params.xml.ns.icalendar.parameter.BaseParameterType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -45,25 +45,25 @@ import javax.xml.bind.annotation.XmlType;
 public class RangeParamType extends BaseParameterType {
 
   @XmlElement(required = true)
-  protected ERangeValueType text;
+  protected RangeValueType text;
 
   /**
    * Gets the value of the text property.
    *
-   * @return possible object is {@link ERangeValueType }
+   * @return possible object is {@link RangeValueType }
    *
    */
-  public ERangeValueType getText() {
+  public RangeValueType getText() {
     return text;
   }
 
   /**
    * Sets the value of the text property.
    *
-   * @param value allowed object is {@link ERangeValueType }
+   * @param value allowed object is {@link RangeValueType }
    *
    */
-  public void setText(ERangeValueType value) {
+  public void setText(RangeValueType value) {
     this.text = value;
   }
 

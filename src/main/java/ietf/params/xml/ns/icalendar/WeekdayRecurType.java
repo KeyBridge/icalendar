@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "WeekdayRecurType")
 @XmlEnum
-public enum EWeekdayRecurType {
+public enum WeekdayRecurType {
 
   /**
    * Sunday
@@ -76,7 +76,7 @@ public enum EWeekdayRecurType {
 
   private final DayOfWeek dayOfWeek;
 
-  EWeekdayRecurType(DayOfWeek dayOfWeek) {
+  WeekdayRecurType(DayOfWeek dayOfWeek) {
     this.dayOfWeek = dayOfWeek;
   }
 
@@ -129,7 +129,7 @@ public enum EWeekdayRecurType {
     return dayOfWeek.getDisplayName(TextStyle.FULL, null);
   }
 
-  public static EWeekdayRecurType fromValue(String v) {
+  public static WeekdayRecurType fromValue(String v) {
     return valueOf(v);
   }
 

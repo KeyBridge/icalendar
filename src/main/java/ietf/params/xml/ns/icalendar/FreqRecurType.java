@@ -42,7 +42,7 @@ import java.time.temporal.TemporalUnit;
  */
 @XmlType(name = "FreqRecurType")
 @XmlEnum
-public enum EFreqRecurType {
+public enum FreqRecurType {
 
   SECONDLY(ChronoUnit.SECONDS),
   MINUTELY(ChronoUnit.MINUTES),
@@ -53,7 +53,7 @@ public enum EFreqRecurType {
   YEARLY(ChronoUnit.YEARS);
   private final TemporalUnit temporalUnit;
 
-  private EFreqRecurType(TemporalUnit temporalField) {
+  private FreqRecurType(TemporalUnit temporalField) {
     this.temporalUnit = temporalField;
   }
 
@@ -80,7 +80,7 @@ public enum EFreqRecurType {
     return name();
   }
 
-  public static EFreqRecurType fromValue(String v) {
+  public static FreqRecurType fromValue(String v) {
     return valueOf(v);
   }
 }

@@ -16,30 +16,33 @@
 package ietf.params.xml.ns.icalendar;
 
 import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * A helper class containing Recurrence end type strategy.
+ * Java class for ERangeValueType.
  * <p>
- * This is useful when examining the (calculated) Recur object and returns
- * either "COUNT", "UNTIL" or "NONE" depending upon whether the recurrence has a
- * count or until configuration (or neither).
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <pre>
+ * &lt;simpleType name="ERangeValueType">
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
+ *     &lt;enumeration value="THISANDFUTURE"/>
+ *   &lt;/restriction>
+ * &lt;/simpleType>
+ * </pre>
+ * <p>
  */
-@XmlType(name = "RecurEndType")
+@XmlType(name = "RangeValueType")
 @XmlEnum
-@XmlTransient
-public enum ERecurEndType {
+public enum RangeValueType {
 
-  COUNT,
-  UNTIL,
-  NONE;
+  THISANDFUTURE;
 
   public String value() {
     return name();
   }
 
-  public static ERecurEndType fromValue(String v) {
+  public static RangeValueType fromValue(String v) {
     return valueOf(v);
   }
 }
