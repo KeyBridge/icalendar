@@ -165,7 +165,7 @@ public class Event implements Comparable<Event>, Serializable {
    * The schedule display Time Zone. (Optional) If not specifically configured
    * otherwise the default {@code UTC} time zone is always returned.
    */
-  private ZoneId zone;
+  private ZoneId zoneId;
 
   /**
    * This property defines the persistent, globally unique identifier for the
@@ -209,7 +209,7 @@ public class Event implements Comparable<Event>, Serializable {
    * Developer note: This is analogous to the creation date and time for a file
    * in the file system.
    */
-  private LocalDateTime created;
+  private ZonedDateTime created;
 
   /**
    * This is the iCalendar 'CLASS' field, but is renamed to 'classification' as
@@ -396,7 +396,7 @@ public class Event implements Comparable<Event>, Serializable {
    * Default no-arg constructor. This should only be called by JPA.
    */
   public Event() {
-    this.created = LocalDateTime.now(Clock.systemUTC());
+    this.created = ZonedDateTime.now(Clock.systemUTC());
   }
 
   /**
@@ -415,7 +415,7 @@ public class Event implements Comparable<Event>, Serializable {
     Event s = new Event();
     s.setDateStart(dateStart);
     s.setDateEnd(dateEnd);
-    s.setZoneSameInstant(dateStart.getZone());
+    s.setZoneId(dateStart.getZone());
     s.setRecurType(recur);
     return s;
   }
@@ -472,30 +472,6 @@ public class Event implements Comparable<Event>, Serializable {
       throw new IllegalArgumentException("Duration must be a positive number.");
     }
     return getInstance(dateStart, dateStart.plus(durationAmount, temporalUnit));
-  }
-
-  /**
-   * Build a regular schedule with the indicated Start date and duration amount
-   * times. Duration is configured as a static Calendar field type and amount.
-   * <p>
-   * Adds the specified amount of time to the given calendar field, based on the
-   * calendar's rules. For example, to set a duration of 5 days use
-   * (Calendar.DAY_OF_MONTH, 5).
-   *
-   * @param dateStart      the Start date and time in the indicated time zone.
-   * @param temporalUnit   the duration calendar field. e.g.
-   *                       {@code ChronoUnit.MINUTES}.
-   * @param durationAmount the duration amount to be added in increments of the
-   *                       declared calendar field unit.
-   * @return an Event instance with the desired configuration
-   * @throws IllegalArgumentException if the duration amount is zero or negative
-   */
-  public static Event getInstance(LocalDateTime dateStart, TemporalUnit temporalUnit, long durationAmount) {
-    if (durationAmount <= 0) {
-      throw new IllegalArgumentException("Duration must be a positive number.");
-    }
-    return getInstance(ZonedDateTime.of(dateStart, ZONE_UTC),
-                       ZonedDateTime.of(dateStart.plus(durationAmount, temporalUnit), ZONE_UTC));
   }
 
   //<editor-fold defaultstate="collapsed" desc="Getter and Setter">
@@ -711,7 +687,16 @@ public class Event implements Comparable<Event>, Serializable {
    *         returned by default if not otherwise configured.
    */
   public ZoneId getZoneId() {
-    return zone == null ? ZONE_UTC : zone;
+    return zoneId == null ? ZONE_UTC : zoneId;
+  }
+
+  /**
+   * Set the time zone.
+   *
+   * @param zone the time zone
+   */
+  public void setZoneId(ZoneId zone) {
+    this.zoneId = zone;
   }
 
   /**
@@ -729,7 +714,7 @@ public class Event implements Comparable<Event>, Serializable {
       dateStart = dateStart.withZoneSameLocal(zone);
       dateEnd = dateEnd.withZoneSameLocal(zone);
     }
-    this.zone = zone;
+    this.zoneId = zone;
   }
 
   /**
@@ -749,7 +734,7 @@ public class Event implements Comparable<Event>, Serializable {
       dateStart = dateStart.withZoneSameInstant(zone);
       dateEnd = dateEnd.withZoneSameInstant(zone);
     }
-    this.zone = zone;
+    this.zoneId = zone;
   }
 
   /**
@@ -765,6 +750,9 @@ public class Event implements Comparable<Event>, Serializable {
    * Set the time zone by providing a String ID. This will be automatically
    * converted to a java.time.ZoneId. This is a convenience shortcut to
    * {@link #setZoneSameLocal(java.time.ZoneId) }
+   * <p>
+   * The time zone is changed but the local time is preserved. For example: 2:00
+   * EST will become 2:00 PST.
    * <p>
    * Developer note: This method fails silently. If the ID is invalid or
    * conversion to a java.util.TimeZone fails the <em>tzid</em> field will be
@@ -850,7 +838,7 @@ public class Event implements Comparable<Event>, Serializable {
    *
    * @return the date-time stamp when this schedule was created
    */
-  public LocalDateTime getCreated() {
+  public ZonedDateTime getCreated() {
     return created;
   }
 
@@ -863,7 +851,7 @@ public class Event implements Comparable<Event>, Serializable {
    *
    * @param created the date-time stamp when this schedule was created
    */
-  public void setCreated(LocalDateTime created) {
+  public void setCreated(ZonedDateTime created) {
     this.created = created;
   }
 
@@ -2059,18 +2047,18 @@ public class Event implements Comparable<Event>, Serializable {
      * EXRULE: A rule to calculate exclusion from a recurrence set.
      */
     try {
-      return ICalendar.calculatePeriodSet(dateStart.toLocalDateTime(),
-                                          dateEnd.toLocalDateTime(),
+      return ICalendar.calculatePeriodSet(dateStart,
+                                          dateEnd,
                                           recurType,
-                                          periodStart.withZoneSameInstant(getZoneId()).toLocalDateTime(),
-                                          periodEnd.withZoneSameInstant(getZoneId()).toLocalDateTime()).stream()
+                                          periodStart.withZoneSameInstant(getZoneId()),
+                                          periodEnd.withZoneSameInstant(getZoneId())).stream()
         .map(periodType -> {
           /**
            * Developer note: PeriodType DATETIME values are ALWAYS set to UTC
            * (ZULU) time. //todo Comment does not reflect existing code:
            * getTimeZone() returns a non-UTC timezone if one is set
            */
-          return Event.getInstance(periodType.getStart(), periodType.getEnd(), getZoneId());
+          return Event.getInstance(periodType.getStart(), periodType.getEnd());
         }).collect(Collectors.toList());
     } catch (Exception e) {
       Logger.getLogger(Event.class.getName()).log(Level.SEVERE, "Event period list error:  {0}", e.getMessage());
