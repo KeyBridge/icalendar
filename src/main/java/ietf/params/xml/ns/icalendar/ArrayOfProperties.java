@@ -27,12 +27,12 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="ArrayOfProperties"> &lt;complexContent&gt;
+ * <pre> &lt;complexType name="ArrayOfProperties"&gt; &lt;complexContent&gt;
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- * &lt;sequence> &lt;choice maxOccurs="unbounded" minOccurs="0"&gt; &lt;element
+ * &lt;sequence&gt; &lt;choice maxOccurs="unbounded" minOccurs="0"&gt; &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseProperty"/&gt; &lt;element
  * name="tzid" type="{urn:ietf:params:xml:ns:icalendar-2.0}TextPropertyType"/&gt;
- * &lt;/choice> &lt;/sequence&gt; &lt;/restriction> &lt;/complexContent&gt;
+ * &lt;/choice&gt; &lt;/sequence&gt; &lt;/restriction&gt; &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
  */

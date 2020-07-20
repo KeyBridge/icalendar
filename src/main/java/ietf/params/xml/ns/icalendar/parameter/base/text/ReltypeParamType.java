@@ -31,9 +31,9 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * Java class for ReltypeParamType complex type. The following schema fragment
  * specifies the expected content contained within this class.
- * <pre> &lt;complexType name="ReltypeParamType"> &lt;complexContent>
- * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}TextParameterType">
- * &lt;/extension> &lt;/complexContent> &lt;/complexType>
+ * <pre> &lt;complexType name="ReltypeParamType"&gt; &lt;complexContent>
+ * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}TextParameterType"&gt;
+ * &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

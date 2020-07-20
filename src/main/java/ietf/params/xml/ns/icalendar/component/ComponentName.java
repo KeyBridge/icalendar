@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * for current iCalendar components. Any new iCalendar components added in the
  * future will be converted in the same way.
  *
- * @author Jesse Caulfield <jesse@caulfield.org> 07/04/14
+ * @author Jesse Caulfield 07/04/14
  */
 @XmlEnum
 @XmlTransient

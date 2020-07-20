@@ -26,11 +26,11 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="AttachPropType"> &lt;complexContent> &lt;extension
- * base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"> &lt;choice>
- * &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}uri"/> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}binary"/> &lt;/choice>
- * &lt;/extension> &lt;/complexContent> &lt;/complexType>
+ * <pre> &lt;complexType name="AttachPropType"&gt; &lt;complexContent&gt; &lt;extension
+ * base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"&gt; &lt;choice&gt;
+ * &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}uri"/&gt; &lt;element
+ * ref="{urn:ietf:params:xml:ns:icalendar-2.0}binary"/&gt; &lt;/choice&gt;
+ * &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="ArrayOfComponents"> &lt;complexContent&gt;
- * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- * &lt;sequence> &lt;element
+ * <pre> &lt;complexType name="ArrayOfComponents"&gt; &lt;complexContent&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ * &lt;sequence&gt; &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseComponent"
- * maxOccurs="unbounded" minOccurs="0"/&gt; &lt;/sequence> &lt;/restriction&gt;
+ * maxOccurs="unbounded" minOccurs="0"/&gt; &lt;/sequence&gt; &lt;/restriction&gt;
  * &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
@@ -72,7 +72,7 @@ public class ArrayOfComponents {
    * <p>
    * Developer note: Use the ObjectFactory to build jaXBElements.
    *
-   * @param jaXBElement
+   * @param jaXBElement jaXBElement to the baseProperty
    */
   public void addComponent(JAXBElement<? extends BaseComponentType> jaXBElement) {
     getBaseComponent().add(jaXBElement);

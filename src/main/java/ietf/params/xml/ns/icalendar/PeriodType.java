@@ -43,15 +43,15 @@ import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="PeriodType"> &lt;complexContent> &lt;restriction
- * base="{http://www.w3.org/2001/XMLSchema}anyType"> &lt;sequence> &lt;element
- * name="start" type="{urn:ietf:params:xml:ns:icalendar-2.0}DateTimeType"/>
- * &lt;sequence> &lt;choice> &lt;element name="end"
- * type="{urn:ietf:params:xml:ns:icalendar-2.0}DateTimeType"/> &lt;element
+ * <pre> &lt;complexType name="PeriodType"&gt; &lt;complexContent&gt; &lt;restriction
+ * base="{http://www.w3.org/2001/XMLSchema}anyType"&gt; &lt;sequence&gt; &lt;element
+ * name="start" type="{urn:ietf:params:xml:ns:icalendar-2.0}DateTimeType"/&gt;
+ * &lt;sequence&gt; &lt;choice&gt; &lt;element name="end"
+ * type="{urn:ietf:params:xml:ns:icalendar-2.0}DateTimeType"/&gt; &lt;element
  * name="duration"
- * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"/> &lt;/choice>
- * &lt;/sequence> &lt;/sequence> &lt;/restriction> &lt;/complexContent>
- * &lt;/complexType>
+ * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"/&gt; &lt;/choice&gt;
+ * &lt;/sequence&gt; &lt;/sequence&gt; &lt;/restriction&gt; &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre> Example: The period starting at 18:00:00 UTC, on January 1, 1997 and
  * ending at 07:00:00 UTC on January 2, 1997 would be:
  * {@code 19970101T180000Z/19970102T070000Z}
@@ -292,7 +292,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    * <p>
    * period = period-explicit / period-start
    * <p>
-   * period-explicit = date-time "/" date-time -OR-<br/>
+   * period-explicit = date-time "/" date-time -OR- <br>
    * period-start = date-time "/" dur-value
    *
    * @return Period of Time formatted as a string.

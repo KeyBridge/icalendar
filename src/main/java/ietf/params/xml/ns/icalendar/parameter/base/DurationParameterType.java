@@ -28,11 +28,11 @@ import javax.xml.datatype.Duration;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="DurationParameterType"> &lt;complexContent>
- * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType">
- * &lt;sequence> &lt;element name="duration"
- * type="{http://www.w3.org/2001/XMLSchema}duration"/> &lt;/sequence>
- * &lt;/extension> &lt;/complexContent> &lt;/complexType>
+ * <pre> &lt;complexType name="DurationParameterType"&gt; &lt;complexContent>
+ * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType"&gt;
+ * &lt;sequence&gt; &lt;element name="duration"
+ * type="{http://www.w3.org/2001/XMLSchema}duration"/&gt; &lt;/sequence&gt;
+ * &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

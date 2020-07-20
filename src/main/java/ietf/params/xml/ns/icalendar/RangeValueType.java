@@ -24,11 +24,11 @@ import javax.xml.bind.annotation.XmlType;
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <pre>
- * &lt;simpleType name="ERangeValueType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *     &lt;enumeration value="THISANDFUTURE"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="ERangeValueType"&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token"&gt;
+ * &lt;enumeration value="THISANDFUTURE"/&gt;
+ * &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  */
 @XmlType(name = "RangeValueType")

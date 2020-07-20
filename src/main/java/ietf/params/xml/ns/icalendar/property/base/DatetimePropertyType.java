@@ -30,11 +30,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="DatetimePropertyType"> &lt;complexContent>
- * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
- * &lt;sequence> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date-time"/> &lt;/sequence>
- * &lt;/extension> &lt;/complexContent> &lt;/complexType>
+ * <pre> &lt;complexType name="DatetimePropertyType"&gt; &lt;complexContent>
+ * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"&gt;
+ * &lt;sequence&gt; &lt;element
+ * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date-time"/&gt; &lt;/sequence&gt;
+ * &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -60,7 +60,7 @@ public class NthWeekdayRecurType {
   /**
    * Get the integer instance. Can be null!
    *
-   * @return
+   * @return the integer instance
    */
   public Integer getInteger() {
     return integer;
@@ -73,7 +73,8 @@ public class NthWeekdayRecurType {
   /**
    * Returns true if this BYDAY value expands in a MONTHLY or YEARLY "RRULE".
    *
-   * @return boolean
+   * @return boolean true if this BYDAY value expands in a MONTHLY or YEARLY
+   *         "RRULE".
    */
   public boolean isMonthly() {
     return integer != null && integer != 0;

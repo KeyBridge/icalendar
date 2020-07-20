@@ -27,17 +27,17 @@ import javax.xml.bind.annotation.XmlType;
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <pre>
- * &lt;simpleType name="EWeekdayRecurType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *     &lt;enumeration value="SU"/>
- *     &lt;enumeration value="MO"/>
- *     &lt;enumeration value="TU"/>
- *     &lt;enumeration value="WE"/>
- *     &lt;enumeration value="TH"/>
- *     &lt;enumeration value="FR"/>
- *     &lt;enumeration value="SA"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="EWeekdayRecurType"&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token"&gt;
+ * &lt;enumeration value="SU"/&gt;
+ * &lt;enumeration value="MO"/&gt;
+ * &lt;enumeration value="TU"/&gt;
+ * &lt;enumeration value="WE"/&gt;
+ * &lt;enumeration value="TH"/&gt;
+ * &lt;enumeration value="FR"/&gt;
+ * &lt;enumeration value="SA"/&gt;
+ * &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  */
 @XmlType(name = "WeekdayRecurType")
@@ -117,8 +117,8 @@ public enum WeekdayRecurType {
    * for presentation to the user. The parameters control the style of the
    * returned text and the locale.
    * <p>
-   * If no textual mapping is found then the {@link #getValue() numeric value}
-   * is returned.
+   * If no textual mapping is found then the {@code getValue()} numeric value is
+   * returned.
    *
    * @param style  the length of the text required, not null
    * @param locale the locale to use, not null

@@ -52,7 +52,7 @@ import static ietf.params.xml.ns.icalendar.Constants.ZONE_UTC;
  * Recur.java class in the iCal4j project (v2.0) and are &copy; 2004 Ben
  * Fortuna. Credit to the original author for paving the way.
  *
- * @author Jesse Caulfield <jesse@caulfield.org> 07/07/14
+ * @author Jesse Caulfield 07/07/14
  */
 public class ICalendar {
 
@@ -318,7 +318,7 @@ public class ICalendar {
      * The function indicates a LocalDatetime field and value that should be set
      * in each entry in the dateSet. e.g. ZonedDateTime::withDayOfYear
      * <p>
-     * expandByWeekNo: (date, integer) -> date.with(weekFields.weekOfYear(),
+     * expandByWeekNo: (date, integer) -&gt; date.with(weekFields.weekOfYear(),
      * integer)
      */
     return (dateSet.isEmpty()

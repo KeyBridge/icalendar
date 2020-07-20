@@ -28,24 +28,24 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * Java class for ToleranceValueType complex type. The following schema fragment
  * specifies the expected content contained within this class.
- * <pre> &lt;complexType name="ToleranceValueType"> &lt;complexContent>
- * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- * &lt;sequence> &lt;element name="startbefore"
+ * <pre> &lt;complexType name="ToleranceValueType"&gt; &lt;complexContent&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ * &lt;sequence&gt; &lt;element name="startbefore"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
- * minOccurs="0"/> &lt;element name="startafter"
+ * minOccurs="0"/&gt; &lt;element name="startafter"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
- * minOccurs="0"/> &lt;element name="endbefore"
+ * minOccurs="0"/&gt; &lt;element name="endbefore"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
- * minOccurs="0"/> &lt;element name="endafter"
+ * minOccurs="0"/&gt; &lt;element name="endafter"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
- * minOccurs="0"/> &lt;element name="durationlong"
+ * minOccurs="0"/&gt; &lt;element name="durationlong"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
- * minOccurs="0"/> &lt;element name="durationshort"
+ * minOccurs="0"/&gt; &lt;element name="durationshort"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
- * minOccurs="0"/> &lt;element name="precision"
+ * minOccurs="0"/&gt; &lt;element name="precision"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
- * minOccurs="0"/> &lt;/sequence> &lt;/restriction> &lt;/complexContent>
- * &lt;/complexType>
+ * minOccurs="0"/&gt; &lt;/sequence&gt; &lt;/restriction&gt; &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

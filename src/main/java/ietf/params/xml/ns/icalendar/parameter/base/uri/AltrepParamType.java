@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="AltrepParamType"> &lt;complexContent>
- * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}UriParameterType">
- * &lt;/extension> &lt;/complexContent> &lt;/complexType>
+ * <pre> &lt;complexType name="AltrepParamType"&gt; &lt;complexContent>
+ * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}UriParameterType"&gt;
+ * &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -28,11 +28,11 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="TolerancePropType"> &lt;complexContent>
- * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
- * &lt;sequence> &lt;element name="tolerate"
- * type="{urn:ietf:params:xml:ns:icalendar-2.0}ToleranceValueType"/>
- * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
+ * <pre> &lt;complexType name="TolerancePropType"&gt; &lt;complexContent>
+ * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"&gt;
+ * &lt;sequence&gt; &lt;element name="tolerate"
+ * type="{urn:ietf:params:xml:ns:icalendar-2.0}ToleranceValueType"/&gt;
+ * &lt;/sequence&gt; &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -27,13 +27,13 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="RequestStatusPropType"> &lt;complexContent>
- * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
- * &lt;sequence> &lt;element name="code"
- * type="{http://www.w3.org/2001/XMLSchema}string"/> &lt;element
- * name="description" type="{http://www.w3.org/2001/XMLSchema}string"/>
- * &lt;element name="extdata" type="{http://www.w3.org/2001/XMLSchema}string"/>
- * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
+ * <pre> &lt;complexType name="RequestStatusPropType"&gt; &lt;complexContent>
+ * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"&gt;
+ * &lt;sequence&gt; &lt;element name="code"
+ * type="{http://www.w3.org/2001/XMLSchema}string"/&gt; &lt;element
+ * name="description" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ * &lt;element name="extdata" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ * &lt;/sequence&gt; &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

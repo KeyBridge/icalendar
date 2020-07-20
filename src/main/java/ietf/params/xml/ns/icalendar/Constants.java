@@ -99,9 +99,9 @@ public class Constants {
    * LETTER Z suffix character, the UTC designator, appended to the time value.
    * <p>
    * RFC 6321: 3.3.5 DATE-TIME: The date-time encoding pattern is:
-   * <code>pattern-date-time = xsd:string { pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?" }</code>
+   * {@code pattern-date-time = xsd:string { pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ?" }}
    * XML Definition: Appendix A # 3.3.5 Example:
-   * <date-time>2011-05-17T12:00:00</date-time>
+   * &lt;date-time&gt;2011-05-17T12:00:00&lt;/date-time&gt;
    * <p>
    * The "TZID" property parameter MUST NOT be applied to DATE-TIME properties
    * whose time values are specified in UTC.
