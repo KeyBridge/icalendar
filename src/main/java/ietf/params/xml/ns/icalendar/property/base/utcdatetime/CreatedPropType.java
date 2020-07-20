@@ -16,11 +16,10 @@
 package ietf.params.xml.ns.icalendar.property.base.utcdatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.UtcDatetimePropertyType;
-
+import java.time.ZonedDateTime;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.time.LocalDateTime;
 
 /**
  * Java class for CreatedPropType complex type.
@@ -40,7 +39,7 @@ public class CreatedPropType extends UtcDatetimePropertyType {
   public CreatedPropType() {
   }
 
-  public CreatedPropType(LocalDateTime dateTime) {
+  public CreatedPropType(ZonedDateTime dateTime) {
     super(dateTime);
   }
 

@@ -18,11 +18,12 @@
  */
 package ch.keybridge.icalendar;
 
-import ch.keybridge.icalendar.ICalendar;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Set;
 import org.junit.Test;
 
@@ -35,11 +36,13 @@ public class PeriodSetTest {
   @Test
   public void testCalculatePeriodSet() throws Exception {
 
-    LocalDateTime eventStart = LocalDateTime.of(2017, Month.OCTOBER, 29, 0, 0);
-    LocalDateTime eventEnd = eventStart.plusHours(2);
+    ZoneId zoneId = ZoneId.systemDefault();
 
-    LocalDateTime periodStart = LocalDateTime.of(2017, Month.OCTOBER, 29, 0, 0);
-    LocalDateTime periodEnd = LocalDateTime.of(2017, Month.DECEMBER, 9, 0, 0);
+    ZonedDateTime eventStart = LocalDateTime.of(2017, Month.OCTOBER, 29, 0, 0).atZone(zoneId);
+    ZonedDateTime eventEnd = eventStart.plusHours(2);
+
+    ZonedDateTime periodStart = LocalDateTime.of(2017, Month.OCTOBER, 29, 0, 0).atZone(zoneId);
+    ZonedDateTime periodEnd = LocalDateTime.of(2017, Month.DECEMBER, 9, 0, 0).atZone(zoneId);
 
 //    RecurType recurType = new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=SU,MO");;
 //    RecurType recurType = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=SU,WE,FR");
@@ -48,7 +51,11 @@ public class PeriodSetTest {
     System.out.println("RECUR ");
     System.out.println("  " + recurType.toString());
 
-    Set<PeriodType> periodSet = ICalendar.calculatePeriodSet(eventStart, eventEnd, recurType, periodStart, periodEnd);
+    Set<PeriodType> periodSet = ICalendar.calculatePeriodSet(eventStart,
+                                                             eventEnd,
+                                                             recurType,
+                                                             periodStart,
+                                                             periodEnd);
 
     System.out.println("Calculate period set " + periodSet.size() + " events");
 

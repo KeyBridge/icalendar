@@ -13,17 +13,16 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDate;
 import java.util.Date;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *
@@ -70,6 +69,9 @@ public class RecurTypeTest {
       Marshaller m = context.createMarshaller();
       StringWriter writer = new StringWriter();
       m.marshal(recur, writer);
+
+      System.out.println("xml " + writer.toString());
+
       Unmarshaller um = context.createUnmarshaller();
       Assert.assertEquals(recur, um.unmarshal(new StringReader(writer.toString())));
     } catch (JAXBException e) {

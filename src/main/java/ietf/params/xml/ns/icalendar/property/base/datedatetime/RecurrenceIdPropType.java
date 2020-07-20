@@ -16,12 +16,11 @@
 package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
-
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Java class for RecurrenceIdPropType complex type.
@@ -41,7 +40,7 @@ public class RecurrenceIdPropType extends DateDatetimePropertyType {
   public RecurrenceIdPropType() {
   }
 
-  public RecurrenceIdPropType(LocalDateTime dateTime) {
+  public RecurrenceIdPropType(ZonedDateTime dateTime) {
     super(dateTime);
   }
 

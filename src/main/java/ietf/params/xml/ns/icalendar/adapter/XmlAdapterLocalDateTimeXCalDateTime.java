@@ -18,7 +18,9 @@ package ietf.params.xml.ns.icalendar.adapter;
 import ietf.params.xml.ns.icalendar.Constants;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
@@ -98,7 +100,13 @@ public class XmlAdapterLocalDateTimeXCalDateTime extends XmlAdapter<String, Loca
     if (v == null || v.isEmpty()) {
       return null;
     }
-    return LocalDateTime.parse(v, Constants.FORMATTER_RFC5545_DATE_TIME);
+    for (DateTimeFormatter formatter : Arrays.asList(Constants.FORMATTER_RFC5545_DATE_TIME, Constants.FORMATTER_RFC2245_DATE_TIME)) {
+      try {
+        return LocalDateTime.parse(v, formatter);
+      } catch (Exception e) {
+      }
+    }
+    return null;
   }
 
   /**

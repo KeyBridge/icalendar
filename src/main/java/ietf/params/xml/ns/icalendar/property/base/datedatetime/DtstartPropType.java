@@ -17,7 +17,7 @@ package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -40,7 +40,7 @@ public class DtstartPropType extends DateDatetimePropertyType {
   public DtstartPropType() {
   }
 
-  public DtstartPropType(LocalDateTime dateTime) {
+  public DtstartPropType(ZonedDateTime dateTime) {
     super(dateTime);
   }
 

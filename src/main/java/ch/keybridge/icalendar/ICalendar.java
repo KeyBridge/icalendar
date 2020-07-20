@@ -85,11 +85,11 @@ public class ICalendar {
    *         dates.) Returns an EMPTY TreeSet if the event does not intersect
    *         the period of interest.
    */
-  public static Set<PeriodType> calculatePeriodSet(final LocalDateTime eventStart,
-                                                   final LocalDateTime eventEnd,
+  public static Set<PeriodType> calculatePeriodSet(final ZonedDateTime eventStart,
+                                                   final ZonedDateTime eventEnd,
                                                    final RecurType recurType,
-                                                   final LocalDateTime periodStart,
-                                                   final LocalDateTime periodEnd) {
+                                                   final ZonedDateTime periodStart,
+                                                   final ZonedDateTime periodEnd) {
     /**
      * Initialize the period list. Use a HashSet for speed and to enforce
      * uniqueness. This is copied into a TreeSet later to provide a sorted set.
@@ -98,7 +98,7 @@ public class ICalendar {
     /**
      * Confirm the period of interest contains the event.
      */
-    if (periodEnd.isBefore(eventStart) || periodStart.isAfter(calculateExpiration(ZonedDateTime.of(eventEnd, ZONE_UTC), null, recurType).toLocalDateTime())) {
+    if (periodEnd.isBefore(eventStart) || periodStart.isAfter(calculateExpiration(eventEnd, null, recurType))) {
       /**
        * Update 11/28/17: Fail gracefully if the period does not contain the
        * event and return an empty set.
@@ -116,7 +116,7 @@ public class ICalendar {
      * Copy the period start datetime into a local variable to facilitate
      * calculation. This local variable will be internally manipulated.
      */
-    LocalDateTime pStart = LocalDateTime.from(periodStart);
+    ZonedDateTime pStart = periodStart;
     /**
      * Now begin the recurrence set calculation.
      * <p>
@@ -183,15 +183,15 @@ public class ICalendar {
       if (!isNegatedByLimitRule(recurType, pStart)) {
         /**
          * Build a list of candidate DTSTART dates within the current FREQ
-         * period. Each candidate LocalDateTime entry corresponding to the
+         * period. Each candidate ZonedDateTime entry corresponding to the
          * original event (or the hour if BYHOUR is set).
          */
-        Set<LocalDateTime> startCandidateSet = expandByRecurrenceRule(recurType, pStart, weekFields);
+        Set<ZonedDateTime> startCandidateSet = expandByRecurrenceRule(recurType, pStart, weekFields);
         /**
          * Scan through the set of candidate START dates, evaluating their
          * validity and adding only those that match the recurrence rule.
          */
-        for (LocalDateTime startCandidate : startCandidateSet) {
+        for (ZonedDateTime startCandidate : startCandidateSet) {
           if (recurType.isSetUntil() && recurType.getUntil().before(startCandidate)) {
             /**
              * INVALID: candidate is AFTER the UNTIL date.
@@ -237,7 +237,7 @@ public class ICalendar {
   }
 
   /**
-   * A static utility method that checks if a LocalDateTime candidate is rueld
+   * A static utility method that checks if a ZonedDateTime candidate is ruled
    * out by any of the BYxxx rules. For example, a SECONDLY recurrence with
    * BYSECOND=1 should only occur on the first second of each minute (thus
    * making it equivalent to a MINUTELY recurrence with BYSECOND=1 or a MINUTELY
@@ -247,7 +247,7 @@ public class ICalendar {
    * @param candidate candidate dateTime
    * @return is this candidate dateTime ruled out by RRULEs in the RecurType
    */
-  private static boolean isNegatedByLimitRule(final RecurType recurType, final LocalDateTime candidate) {
+  private static boolean isNegatedByLimitRule(final RecurType recurType, final ZonedDateTime candidate) {
     switch (recurType.getFreq()) {
       case SECONDLY:
         if (recurType.isSetBysecond() && noneMatch(recurType.getBysecond(), 60, candidate.getSecond())) {
@@ -299,24 +299,24 @@ public class ICalendar {
    *                           represent the BY[TEMPORAL_AMOUNT] rule values
    * @param temporalUnitLength a function providing the length of the
    * @param periodStart        the period start
-   * @param function           a function that creates new LocalDateTimes given
+   * @param function           a function that creates new ZonedDateTime given
    *                           the cartesian product of input dates and
    *                           BY[TEMPORAL_AMOUNT] rule values
    * @return a non-null HashSet
    */
-  private static Set<LocalDateTime> expandByGeneric(Set<LocalDateTime> dateSet,
+  private static Set<ZonedDateTime> expandByGeneric(Set<ZonedDateTime> dateSet,
                                                     boolean isSet,
                                                     Supplier<Collection<Integer>> byValueSupplier,
-                                                    Function<LocalDateTime, Integer> temporalUnitLength,
-                                                    LocalDateTime periodStart,
-                                                    BiFunction<LocalDateTime, Integer, LocalDateTime> function,
+                                                    Function<ZonedDateTime, Integer> temporalUnitLength,
+                                                    ZonedDateTime periodStart,
+                                                    BiFunction<ZonedDateTime, Integer, ZonedDateTime> function,
                                                     TemporalUnit forwardAdjustment) {
     if (!isSet) {
       return dateSet;
     }
     /**
      * The function indicates a LocalDatetime field and value that should be set
-     * in each entry in the dateSet. e.g. LocalDateTime::withDayOfYear
+     * in each entry in the dateSet. e.g. ZonedDateTime::withDayOfYear
      * <p>
      * expandByWeekNo: (date, integer) -> date.with(weekFields.weekOfYear(),
      * integer)
@@ -339,8 +339,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandBySecond(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return expandByGeneric(dateSet, recurType.isSetBysecond(), recurType::getBysecond, date -> 60, periodStart, LocalDateTime::withSecond, ChronoUnit.MINUTES);
+  protected static Set<ZonedDateTime> expandBySecond(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetBysecond(), recurType::getBysecond, date -> 60, periodStart, ZonedDateTime::withSecond, ChronoUnit.MINUTES);
   }
 
   /**
@@ -353,8 +353,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByMinute(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return expandByGeneric(dateSet, recurType.isSetByminute(), recurType::getByminute, date -> 60, periodStart, LocalDateTime::withMinute, ChronoUnit.HOURS);
+  protected static Set<ZonedDateTime> expandByMinute(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetByminute(), recurType::getByminute, date -> 60, periodStart, ZonedDateTime::withMinute, ChronoUnit.HOURS);
   }
 
   /**
@@ -367,18 +367,18 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByHour(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return expandByGeneric(dateSet, recurType.isSetByhour(), recurType::getByhour, date -> 24, periodStart, LocalDateTime::withHour, ChronoUnit.DAYS);
+  protected static Set<ZonedDateTime> expandByHour(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetByhour(), recurType::getByhour, date -> 24, periodStart, ZonedDateTime::withHour, ChronoUnit.DAYS);
   }
 
   /**
-   * Utility method that creates a HashSet containing one LocalDateTime
+   * Utility method that creates a HashSet containing one ZonedDateTime
    *
-   * @param dateTime some LocalDateTime
+   * @param dateTime some ZonedDateTime
    * @return a HashSet containing only dateTime
    */
-  protected static Set<LocalDateTime> asSet(LocalDateTime dateTime) {
-    Set<LocalDateTime> set = new HashSet<>();
+  protected static Set<ZonedDateTime> asSet(ZonedDateTime dateTime) {
+    Set<ZonedDateTime> set = new HashSet<>();
     set.add(Objects.requireNonNull(dateTime));
     return set;
   }
@@ -399,7 +399,7 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<ZonedDateTime> expandByDay(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
     if (!recurType.isSetByday() || recurType.getByday().stream().allMatch(NthWeekdayRecurType::isMonthly)) {
       return dateSet;
     }
@@ -430,7 +430,7 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByNthWeekday(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
+  protected static Set<ZonedDateTime> expandByNthWeekday(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
     if (!recurType.isSetByday() || recurType.getByday().stream().noneMatch(NthWeekdayRecurType::isMonthly)) {
       return dateSet;
     }
@@ -451,10 +451,10 @@ public class ICalendar {
    * @param weekdayRecurType NthWeekdayRecurType containing the weekday (Monday,
    *                         Tuesday, etc...) and an integer specifying which
    *                         (1st, 2nd, ..., second last, last) one to pick
-   * @return LocalDateTime with the day field set accordingly and all other
+   * @return ZonedDateTime with the day field set accordingly and all other
    *         fields the same as in the input date
    */
-  private static LocalDateTime calculateNthWeekday(LocalDateTime date, NthWeekdayRecurType weekdayRecurType) {
+  private static ZonedDateTime calculateNthWeekday(ZonedDateTime date, NthWeekdayRecurType weekdayRecurType) {
     return date.with(
       TemporalAdjusters.dayOfWeekInMonth(weekdayRecurType.getInteger(),
                                          weekdayRecurType.getWeekdayRecurType().getDayOfWeek()));
@@ -475,9 +475,10 @@ public class ICalendar {
    * @param recurType   the recurrence type (not used but present here for
    *                    consistency with other date set generators.
    * @param periodStart the period start
+   * @param weekFields  the week field
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByWeekNo(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+  protected static Set<ZonedDateTime> expandByWeekNo(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart, WeekFields weekFields) {
     return expandByGeneric(dateSet,
                            recurType.isSetByweekno(),
                            recurType::getByweekno,
@@ -496,8 +497,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByMonth(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return expandByGeneric(dateSet, recurType.isSetBymonth(), recurType::getBymonth, date -> 12, periodStart, LocalDateTime::withMonth, ChronoUnit.YEARS);
+  protected static Set<ZonedDateTime> expandByMonth(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetBymonth(), recurType::getBymonth, date -> 12, periodStart, ZonedDateTime::withMonth, ChronoUnit.YEARS);
   }
 
   /**
@@ -509,8 +510,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByMonthDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return expandByGeneric(dateSet, recurType.isSetBymonthday(), recurType::getBymonthday, date -> Month.from(date).length(Year.from(date).isLeap()), periodStart, LocalDateTime::withDayOfMonth, ChronoUnit.MONTHS);
+  protected static Set<ZonedDateTime> expandByMonthDay(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetBymonthday(), recurType::getBymonthday, date -> Month.from(date).length(Year.from(date).isLeap()), periodStart, ZonedDateTime::withDayOfMonth, ChronoUnit.MONTHS);
   }
 
   /**
@@ -527,8 +528,8 @@ public class ICalendar {
    * @param periodStart the period start
    * @return a non-null HashSet
    */
-  protected static Set<LocalDateTime> expandByYearDay(Set<LocalDateTime> dateSet, RecurType recurType, LocalDateTime periodStart) {
-    return expandByGeneric(dateSet, recurType.isSetByyearday(), recurType::getByyearday, date -> Year.from(date).length(), periodStart, LocalDateTime::withDayOfYear, ChronoUnit.YEARS);
+  protected static Set<ZonedDateTime> expandByYearDay(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart) {
+    return expandByGeneric(dateSet, recurType.isSetByyearday(), recurType::getByyearday, date -> Year.from(date).length(), periodStart, ZonedDateTime::withDayOfYear, ChronoUnit.YEARS);
   }
 
   /**
@@ -553,13 +554,13 @@ public class ICalendar {
    *                    week-of-year fields.
    * @return a non-null TreeSet
    */
-  protected static Set<LocalDateTime> expandByRecurrenceRule(RecurType recurType, LocalDateTime periodStart, WeekFields weekFields) {
+  protected static Set<ZonedDateTime> expandByRecurrenceRule(RecurType recurType, ZonedDateTime periodStart, WeekFields weekFields) {
     /**
      * Initialize the set. Use a HashSet to enforce uniqueness. Each (cascaded)
      * calculating method called within the SWITCH statement inspects and is
      * able to initialize the dateSet.
      */
-    Set<LocalDateTime> dateSet = asSet(periodStart);
+    Set<ZonedDateTime> dateSet = asSet(periodStart);
     /**
      * Intercept invalid or incomplete RecurType entries.
      */
@@ -614,8 +615,8 @@ public class ICalendar {
        * Organize the dataSet into a sorted ArrayList, then extract entries
        * based upon their position in the list.
        */
-      List<LocalDateTime> dates = dateSet.stream().sorted().collect(Collectors.toList());
-      Set<LocalDateTime> setPosDates = new TreeSet<>();
+      List<ZonedDateTime> dates = dateSet.stream().sorted().collect(Collectors.toList());
+      Set<ZonedDateTime> setPosDates = new TreeSet<>();
       for (Integer setPosition : recurType.getBysetpos()) {
         if (setPosition > 0 && setPosition <= dates.size()) {
           /**
@@ -711,8 +712,8 @@ public class ICalendar {
       vEvent.getProperties().addProperty(o.createDtstart(new DtstartPropType(dateStart)));
       vEvent.getProperties().addProperty(o.createDtend(new DtendPropType(dateEnd)));
     }
-    vEvent.getProperties().addProperty(o.createDtstamp(new DtstampPropType(LocalDateTime.now(ZONE_UTC))));
-    vEvent.getProperties().addProperty(o.createCreated(new CreatedPropType(LocalDateTime.now(ZONE_UTC))));
+    vEvent.getProperties().addProperty(o.createDtstamp(new DtstampPropType(ZonedDateTime.now(ZONE_UTC))));
+    vEvent.getProperties().addProperty(o.createCreated(new CreatedPropType(ZonedDateTime.now(ZONE_UTC))));
     vEvent.getProperties().addProperty(o.createPriority(new PriorityPropType(5)));
     vEvent.getProperties().addProperty(o.createMethod(MethodPropType.PUBLISH));
     vEvent.getProperties().addProperty(o.createSequence(new SequencePropType(0)));
@@ -810,16 +811,16 @@ public class ICalendar {
       if (recur.getUntil().isSetDate()) {
         /**
          * Only a date is provided with no time. We must convert a date to a
-         * ZonedDateTime. Set the time to midnight tonight.
+         * ZonedDateTime. Set the time to midnight.
          */
         return ZonedDateTime.of(recur.getUntil().getDate(),
-                                LocalTime.of(23, 59), // midnight tonight
+                                LocalTime.of(23, 59),
                                 dateTime.getZone());
       } else {
         /**
          * The until is a date-time; easily to transform to a ZonedDateTime.
          */
-        return ZonedDateTime.of(recur.getUntil().getDateTime(), dateTime.getZone());
+        return recur.getUntil().getDateTime();
       }
     } else if (recur.isSetCount()) {
       /**

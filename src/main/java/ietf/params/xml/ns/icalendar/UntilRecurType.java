@@ -15,12 +15,12 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterZonedDateTimeXCalDateTime;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -157,8 +157,8 @@ public class UntilRecurType implements Serializable {
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
    */
   @XmlElement(name = "date-time")
-  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
-  protected LocalDateTime dateTime;
+  @XmlJavaTypeAdapter(value = XmlAdapterZonedDateTimeXCalDateTime.class)
+  protected ZonedDateTime dateTime;
 
   /**
    * Developer note: A parameter-less constructor should not set field values
@@ -174,7 +174,7 @@ public class UntilRecurType implements Serializable {
     return urt;
   }
 
-  public UntilRecurType(LocalDateTime dateTime) {
+  public UntilRecurType(ZonedDateTime dateTime) {
     this.dateTime = dateTime;
   }
 
@@ -196,12 +196,12 @@ public class UntilRecurType implements Serializable {
     if (untilDateTimeString == null || untilDateTimeString.isEmpty()) {
       throw new IllegalArgumentException("Cannot parse a null or empty string.");
     }
-    if (PATTERN_RFC6321_DATE_TIME.length() - 4 == untilDateTimeString.length()) {
-      setDateTime(LocalDateTime.parse(untilDateTimeString, FORMATTER_RFC2245_DATE_TIME));
-    } else if (PATTERN_RFC5545_DATE.length() == untilDateTimeString.length()) {
-      setDate(LocalDate.parse(untilDateTimeString, FORMATTER_RFC5545_DATE));
-    } else if (PATTERN_RFC5545_DATE_TIME.length() - 4 == untilDateTimeString.length()) {
-      setDateTime(LocalDateTime.parse(untilDateTimeString, FORMATTER_RFC5545_DATE_TIME));
+    LocalDate localDate = new XmlAdapterLocalDateXCalDate().unmarshal(untilDateTimeString);
+    ZonedDateTime zonedDateTime = new XmlAdapterZonedDateTimeXCalDateTime().unmarshal(untilDateTimeString);
+    if (localDate != null) {
+      setDate(localDate);
+    } else if (zonedDateTime != null) {
+      setDateTime(zonedDateTime);
     } else {
       throw new ParseException("Failed to parse UNTIL date string: " + untilDateTimeString, 0);
     }
@@ -214,7 +214,7 @@ public class UntilRecurType implements Serializable {
    *
    * @return a non-null Calendar instance.
    */
-  public LocalDateTime getDateTime() {
+  public ZonedDateTime getDateTime() {
     return dateTime;
   }
 
@@ -223,7 +223,7 @@ public class UntilRecurType implements Serializable {
    *
    * @param dateTime the calendar value
    */
-  public final void setDateTime(LocalDateTime dateTime) throws DatatypeConfigurationException {
+  public final void setDateTime(ZonedDateTime dateTime) {
     this.dateTime = dateTime;
     this.date = null;
   }
@@ -286,7 +286,7 @@ public class UntilRecurType implements Serializable {
    * @return true if the time of this Calendar is before the time represented by
    *         when; false otherwise.
    */
-  public boolean before(LocalDateTime when) {
+  public boolean before(ZonedDateTime when) {
     return date != null ? getDate().isBefore(when.toLocalDate()) : getDateTime().isBefore(when);
   }
 
@@ -298,7 +298,7 @@ public class UntilRecurType implements Serializable {
    * @return true if the time of this Calendar is after the time represented by
    *         when; false otherwise.
    */
-  public boolean after(LocalDateTime when) {
+  public boolean after(ZonedDateTime when) {
     return date != null ? getDate().isAfter(when.toLocalDate()) : getDateTime().isAfter(when);
   }
 

@@ -1,5 +1,6 @@
 package ietf.params.xml.ns.icalendar;
 
+import java.time.Clock;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -25,17 +26,14 @@ public class Constants {
    * second of mean solar time at 0° longitude; it does not observe daylight
    * saving time.
    */
-  public static final ZoneId ZONE_UTC = ZoneId.of("UTC");
+  public static final ZoneId ZONE_UTC = Clock.systemUTC().getZone();
 
   /**
-   * "yyyyMMdd".
-   * <p>
-   * RFC5545 3.3.4. DATE
+   * "yyyyMMdd". RFC5545 3.3.4. DATE
    * <p>
    * Purpose: This value type is used to identify values that contain a calendar
-   * date.
-   * <p>
-   * Format Definition: This value type is defined by the following notation:
+   * date. Format Definition: This value type is defined by the following
+   * notation:
    * <pre>
    * date               = date-value
    * date-value         = date-fullyear date-month date-mday
@@ -63,15 +61,11 @@ public class Constants {
    */
   public static final String PATTERN_RFC5545_DATE = "yyyyMMdd";
   /**
-   * "yyyy-MM-dd".
-   * <p>
-   * RFC6321 date format.
+   * "yyyy-MM-dd". RFC6321 date format.
    */
   public static final String PATTERN_RFC6321_DATE = "yyyy-MM-dd";
   /**
-   * "yyyy-MM-dd'T'HH:mm:ss'Z'".
-   * <p>
-   * RFC 5545 3.3.5. DATE-TIME
+   * "yyyy-MM-dd'T'HH:mm:ss'Z'". RFC 5545 3.3.5. DATE-TIME
    * <p>
    * Purpose: This value type is used to identify values that specify a precise
    * calendar date and time of day.
@@ -97,11 +91,9 @@ public class Constants {
    * The form of date and time with UTC offset MUST NOT be used. For example,
    * the following is not valid for a DATE-TIME value:
    * <p>
-   * 19980119T230000-0800 ;Invalid time format
-   * <p>
-   * FORM #1: DATE WITH LOCAL TIME <em>NOT SUPPORTED</em>
-   * <p>
-   * FORM #2: DATE WITH UTC TIME
+   * - 19980119T230000-0800 ;Invalid time format <br>
+   * - FORM #1: DATE WITH LOCAL TIME <em>NOT SUPPORTED</em> <br>
+   * - FORM #2: DATE WITH UTC TIME
    * <p>
    * The date with UTC time, or absolute time, is identified by a LATIN CAPITAL
    * LETTER Z suffix character, the UTC designator, appended to the time value.
@@ -124,9 +116,7 @@ public class Constants {
    */
   public static final String PATTERN_RFC5545_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   /**
-   * "yyyyMMdd'T'HHmmss'Z'".
-   * <p>
-   * RFC 2445 UTC date time pattern.
+   * "yyyyMMdd'T'HHmmss'Z'". RFC 2445 UTC date time pattern.
    * <p>
    * This pattern is to be used only when printing to String. The
    * PATTERN_RFC5545_DATE and PATTERN_RFC5545_DATE_TIME are to be used when
@@ -135,27 +125,19 @@ public class Constants {
   public static final String PATTERN_RFC6321_DATE_TIME = "yyyyMMdd'T'HHmmss'Z'";
 
   /**
-   * "yyyyMMdd".
-   * <p>
-   * RFC5545 3.3.4. DATE formatter.
+   * "yyyyMMdd". RFC5545 3.3.4. DATE formatter.
    */
   public static final DateTimeFormatter FORMATTER_RFC5545_DATE = DateTimeFormatter.ofPattern(PATTERN_RFC5545_DATE, Locale.ENGLISH);
   /**
-   * "yyyy-MM-dd".
-   * <p>
-   * RFC6321 date format.
+   * "yyyy-MM-dd". RFC6321 date format.
    */
   public static final DateTimeFormatter FORMATTER_RFC6321_DATE = DateTimeFormatter.ofPattern(PATTERN_RFC6321_DATE, Locale.ENGLISH);
   /**
-   * "yyyy-MM-dd'T'HH:mm:ss'Z'".
-   * <p>
-   * RFC 5545 3.3.5. DATE-TIME.
+   * "yyyy-MM-dd'T'HH:mm:ss'Z'". RFC 5545 3.3.5. DATE-TIME.
    */
   public static final DateTimeFormatter FORMATTER_RFC5545_DATE_TIME = DateTimeFormatter.ofPattern(PATTERN_RFC5545_DATE_TIME, Locale.ENGLISH);
   /**
-   * "yyyyMMdd'T'HHmmss'Z'".
-   * <p>
-   * RFC 2445 UTC date time pattern.
+   * "yyyyMMdd'T'HHmmss'Z'". RFC 2445 UTC date time pattern.
    */
   public static final DateTimeFormatter FORMATTER_RFC2245_DATE_TIME = DateTimeFormatter.ofPattern(PATTERN_RFC6321_DATE_TIME, Locale.ENGLISH);
 

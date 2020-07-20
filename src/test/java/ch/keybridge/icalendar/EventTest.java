@@ -151,7 +151,7 @@ public class EventTest {
     /**
      * A four hour schedule on Jan 06.
      */
-    Event srecur = Event.getInstance(LocalDateTime.of(2017, 1, 06, 10, 0, 0), ChronoUnit.HOURS, 4);
+    Event srecur = Event.getInstance(ZonedDateTime.of(2017, 1, 06, 10, 0, 0, 0, ZoneId.of("UTC")), ChronoUnit.HOURS, 4);
     srecur.setRecurType(new RecurType("FREQ=WEEKLY;INTERVAL=1;BYDAY=TH,FR,SA"));
 //    System.out.println("  Event sRecur : " + srecur);
 
@@ -165,8 +165,8 @@ public class EventTest {
 //    for (Event schedule : srecur.calculatePeriodList(scheduleMain.getDateStart(), scheduleMain.getDateEnd())) {      System.out.println("    period intercept " + schedule);    }
     Collection<Event> schedules = new TreeSet<>();
     schedules.add(srecur);
-    schedules.add(Event.getInstance(LocalDateTime.of(2017, 1, 03, 6, 0, 0), ChronoUnit.DAYS, 2));
-    schedules.add(Event.getInstance(LocalDateTime.of(2017, 1, 04, 6, 0, 0), ChronoUnit.DAYS, 2));
+    schedules.add(Event.getInstance(ZonedDateTime.of(2017, 1, 03, 6, 0, 0, 0, ZoneId.of("UTC")), ChronoUnit.DAYS, 2));
+    schedules.add(Event.getInstance(ZonedDateTime.of(2017, 1, 04, 6, 0, 0, 0, ZoneId.of("UTC")), ChronoUnit.DAYS, 2));
 //    schedules.add(Event.getInstance(new Date(2017, 1, 01, 6, 0, 0), Calendar.DAY_OF_YEAR, 2));
 //    schedules.add(Event.getInstance(new Date(2017, 1, 01, 6, 0, 0), Calendar.DAY_OF_YEAR, 3));
 //    schedules.add(Event.getInstance(new Date(2017, 1, 02, 6, 0, 0), Calendar.DAY_OF_YEAR, 1));
@@ -206,7 +206,7 @@ public class EventTest {
   @Test
   public void testPeriodSet() throws Exception {
     System.out.println("\nTest PeriodSet");
-    Event srecur = Event.getInstance(LocalDateTime.of(2017, 1, 6, 10, 0, 0), ChronoUnit.HOURS, 4);
+    Event srecur = Event.getInstance(ZonedDateTime.of(2017, 1, 6, 10, 0, 0, 0, ZoneId.of("UTC")), ChronoUnit.HOURS, 4);
 //    srecur.setRrule("FREQ=WEEKLY;INTERVAL=1;");
     srecur.setRrule("FREQ=DAILY;COUNT=10");
     System.out.println("  Event sRecur : " + srecur + " " + srecur.getRecurType());
@@ -227,13 +227,13 @@ public class EventTest {
   @Test
   public void testIntersection() throws Exception {
     System.out.println("Test Intersection");
-    Event scheduleMain = Event.getInstance(ZonedDateTime.of(LocalDateTime.of(2017, 1, 12, 12, 0, 0), ZoneId.systemDefault()), ChronoUnit.DAYS, 2);
+    Event scheduleMain = Event.getInstance(ZonedDateTime.of(2017, 1, 12, 12, 0, 0, 0, ZoneId.systemDefault()), ChronoUnit.DAYS, 2);
     System.out.println("  Event MAIN   : " + scheduleMain);
 
     /**
      * A four hour schedule on Jan 06.
      */
-    Event srecur = Event.getInstance(LocalDateTime.of(2017, 1, 06, 10, 0, 0), ChronoUnit.HOURS, 4);
+    Event srecur = Event.getInstance(ZonedDateTime.of(2017, 1, 06, 10, 0, 0, 0, ZoneId.systemDefault()), ChronoUnit.HOURS, 4);
     srecur.setRrule("FREQ=DAILY;INTERVAL=1;");
     System.out.println("  Event sRecur : " + srecur + " " + srecur.getRecurType());
 
@@ -458,7 +458,7 @@ public class EventTest {
   @Test
   public void testPeriodList() throws Exception {
     Event s = Event.getInstance(
-      LocalDateTime.of(2017, 9, 1, 9, 0, 0),
+      ZonedDateTime.of(2017, 9, 1, 9, 0, 0, 0, ZoneId.systemDefault()),
       ChronoUnit.HOURS, 2);
 
     System.out.println("s = " + s);
@@ -534,7 +534,7 @@ public class EventTest {
 
   @Test
   public void testPeriodListX() throws Exception {
-    LocalDateTime eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0),
+    ZonedDateTime eventStart = ZonedDateTime.of(2017, 9, 1, 9, 0, 0, 0, ZoneId.systemDefault()),
       eventEnd = eventStart.plus(2, ChronoUnit.HOURS),
       periodStart = eventStart,
       periodEnd = eventStart.plus(1, ChronoUnit.YEARS);
@@ -572,10 +572,10 @@ public class EventTest {
 
   }
 
-  public static void testEveryEventInSet(Set<PeriodType> periodsToTest, LocalDateTime periodEnd, PeriodType firstEvent, int interval, TemporalUnit temporalUnit) {
+  public static void testEveryEventInSet(Set<PeriodType> periodsToTest, ZonedDateTime periodEnd, PeriodType firstEvent, int interval, TemporalUnit temporalUnit) {
     int count = 0;
     Duration eventLength = firstEvent.getDuration();
-    LocalDateTime testDate = firstEvent.getStart();
+    ZonedDateTime testDate = firstEvent.getStart();
     while (testDate.compareTo(periodEnd) <= 0) {
       count++;
       Assert.assertTrue(periodsToTest.contains(new PeriodType(testDate, testDate.plus(eventLength))));
@@ -586,7 +586,7 @@ public class EventTest {
 
   @Test
   public void testByDayAndMinute() throws Exception {
-    LocalDateTime eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0),
+    ZonedDateTime eventStart = ZonedDateTime.of(2017, 9, 1, 9, 0, 0, 0, ZoneId.systemDefault()),
       eventEnd = eventStart.plus(2, ChronoUnit.HOURS),
       periodStart = eventStart,
       periodEnd = periodStart.plus(1, ChronoUnit.WEEKS);
@@ -649,7 +649,8 @@ public class EventTest {
         eventStart.plus(6, ChronoUnit.DAYS).withHour(16),
         eventStart.plus(6, ChronoUnit.DAYS).withHour(18))));
 
-    eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0);
+    eventStart = ZonedDateTime.of(2017, 9, 1, 9, 0, 0, 0, ZoneId.systemDefault());
+
     eventEnd = eventStart.plus(2, ChronoUnit.HOURS);
     periodStart = eventStart;
     periodEnd = periodStart.plus(6, ChronoUnit.DAYS);
@@ -663,7 +664,7 @@ public class EventTest {
     periods.forEach(System.out::println);
     Assert.assertEquals(5, periods.size());
 
-    eventStart = LocalDateTime.of(2017, 9, 1, 9, 0, 0);
+    eventStart = ZonedDateTime.of(2017, 9, 1, 9, 0, 0, 0, ZoneId.systemDefault());
     eventEnd = eventStart.plus(2, ChronoUnit.HOURS);
     periodStart = eventStart.minus(2, ChronoUnit.HOURS);
     periodEnd = periodStart.plus(1, ChronoUnit.WEEKS);
@@ -680,7 +681,7 @@ public class EventTest {
 
   @Test
   public void testByTemporalUnit() throws Exception {
-    LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0),
+    ZonedDateTime eventStart = ZonedDateTime.of(2017, 1, 1, 7, 0, 0, 0, ZoneId.systemDefault()),
       eventEnd = eventStart.plus(1, ChronoUnit.MINUTES),
       periodStart = eventStart,
       periodEnd = periodStart.plus(50, ChronoUnit.YEARS);
@@ -827,7 +828,8 @@ public class EventTest {
      * 19970105T083000
      * RRULE:FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;BYMINUTE=30
      */
-    eventStart = LocalDateTime.of(1997, 1, 5, 8, 30, 0);
+    eventStart = ZonedDateTime.of(1997, 1, 5, 8, 30, 0, 0, ZoneId.systemDefault());
+//    eventStart = LocalDateTime.of(1997, 1, 5, 8, 30, 0);
     eventEnd = eventStart.plus(1, ChronoUnit.MINUTES);
     periodStart = eventStart;
     periodEnd = periodStart.plus(50, ChronoUnit.YEARS);
@@ -843,7 +845,7 @@ public class EventTest {
 
   @Test
   public void testLimitByTemporalUnit() throws Exception {
-    LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0),
+    ZonedDateTime eventStart = ZonedDateTime.of(2017, 1, 1, 7, 0, 0, 0, ZoneId.systemDefault()),
       eventEnd = eventStart.plus(1, ChronoUnit.SECONDS),
       periodStart = eventStart,
       periodEnd = periodStart.plus(2, ChronoUnit.MINUTES);
@@ -909,7 +911,8 @@ public class EventTest {
 //    periods.forEach(System.out::println);
     Assert.assertEquals(17, periods.size());
     originalEvent = new PeriodType(eventStart, duration);
-    PeriodType periodType = new PeriodType(LocalDateTime.of(2017, 10, 9, 16, 10, 5), duration);
+    ZonedDateTime periodStartDateTime = ZonedDateTime.of(2017, 10, 9, 16, 10, 5, 0, ZoneId.systemDefault());
+    PeriodType periodType = new PeriodType(periodStartDateTime, duration);
     Assert.assertTrue(periods.contains(periodType));
     periods.remove(originalEvent);
     Assert.assertTrue(periods.stream().map(PeriodType::getStart).allMatch(d -> d.getSecond() == 5 || d.getSecond() == 7));
@@ -952,7 +955,7 @@ public class EventTest {
 
   @Test
   public void testLimitRuleExceptions() throws Exception {
-    final LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0);
+    final ZonedDateTime eventStart = ZonedDateTime.of(2017, 1, 1, 7, 0, 0, 0, ZoneId.systemDefault());
     final Duration duration = Duration.ofSeconds(1);
 
     /**
@@ -1015,7 +1018,7 @@ public class EventTest {
 
 //  @Test
   public void testRuleEquivalence() throws Exception {
-    LocalDateTime eventStart = LocalDateTime.of(2017, 1, 1, 7, 0, 0),
+    final ZonedDateTime eventStart = ZonedDateTime.of(2017, 1, 1, 7, 0, 0, 0, ZoneId.systemDefault()),
       eventEnd = eventStart.plus(1, ChronoUnit.SECONDS),
       periodStart = eventStart,
       periodEnd = periodStart.plus(2, ChronoUnit.MINUTES);

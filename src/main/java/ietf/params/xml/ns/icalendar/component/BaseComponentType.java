@@ -28,7 +28,7 @@ import ietf.params.xml.ns.icalendar.property.base.recur.RrulePropType;
 import ietf.params.xml.ns.icalendar.property.base.text.UidPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.*;
@@ -215,7 +215,7 @@ public abstract class BaseComponentType {
    *
    * @return
    */
-  public LocalDateTime getDTSTAMP() {
+  public ZonedDateTime getDTSTAMP() {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtstamp is a DtstampPropType
      */
@@ -227,7 +227,7 @@ public abstract class BaseComponentType {
     }
   }
 
-  public void setDTSTAMP(LocalDateTime dateTime) {
+  public void setDTSTAMP(ZonedDateTime dateTime) {
     getProperties().addProperty(new ObjectFactory().createDtstamp(new DtstampPropType(dateTime)));
   }
 
@@ -247,7 +247,7 @@ public abstract class BaseComponentType {
    *
    * @return when the calendar component begins
    */
-  public LocalDateTime getDTSTART() {
+  public ZonedDateTime getDTSTART() {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtstart is a DtstartPropType
      */
@@ -259,7 +259,7 @@ public abstract class BaseComponentType {
     }
   }
 
-  public void setDTSTART(LocalDateTime dateTime) {
+  public void setDTSTART(ZonedDateTime dateTime) {
     getProperties().addProperty(new ObjectFactory().createDtstart(new DtstartPropType(dateTime)));
   }
 
@@ -279,7 +279,7 @@ public abstract class BaseComponentType {
    *
    * @return when the calendar component begins
    */
-  public LocalDateTime getDTEND() {
+  public ZonedDateTime getDTEND() {
     /**
      * QName {urn:ietf:params:xml:ns:icalendar-2.0}dtend is a DtendPropType
      * <p>
@@ -299,7 +299,7 @@ public abstract class BaseComponentType {
     }
   }
 
-  public void setDTEND(LocalDateTime dateTime) throws Exception {
+  public void setDTEND(ZonedDateTime dateTime) throws Exception {
     if (findJaXBElement("DURATION") != null) {
       throw new Exception("DURATION is already set. RFC5545 says either 'dtend' or 'duration' may appear in a 'eventprop', but 'dtend' and 'duration' MUST NOT occur in the same 'eventprop'");
     }

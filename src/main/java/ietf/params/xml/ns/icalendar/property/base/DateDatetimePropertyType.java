@@ -15,12 +15,14 @@
  */
 package ietf.params.xml.ns.icalendar.property.base;
 
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterZonedDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.datedatetime.*;
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -96,8 +98,8 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
    */
   @XmlElement(name = "date-time")
-  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
-  protected LocalDateTime dateTime;
+  @XmlJavaTypeAdapter(value = XmlAdapterZonedDateTimeXCalDateTime.class)
+  protected ZonedDateTime dateTime;
   /**
    * xsd:date — Gregorian calendar date
    * <p>
@@ -157,7 +159,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
    *
    * @param dateTime the date time configuration
    */
-  public DateDatetimePropertyType(LocalDateTime dateTime) {
+  public DateDatetimePropertyType(ZonedDateTime dateTime) {
     /**
      * Call normalize to Normalize this instance to UTC.
      * <p>
@@ -176,7 +178,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
    */
   public DateDatetimePropertyType(LocalDate date) {
     this.date = date;
-    this.dateTime = date.atStartOfDay();
+    this.dateTime = date.atStartOfDay(Clock.systemUTC().getZone());
   }
 
   /**
@@ -184,7 +186,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
    *
    * @return possible object is {@link LocalDateTime }
    */
-  public LocalDateTime getDateTime() {
+  public ZonedDateTime getDateTime() {
     return dateTime;
   }
 
@@ -193,7 +195,7 @@ public class DateDatetimePropertyType extends BasePropertyType {
    *
    * @param value allowed object is {@link LocalDateTime }
    */
-  public void setDateTime(LocalDateTime value) {
+  public void setDateTime(ZonedDateTime value) {
     this.dateTime = value;
   }
 

@@ -16,10 +16,10 @@
 package ietf.params.xml.ns.icalendar;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterDurationXCalDateTime;
-import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
+import ietf.params.xml.ns.icalendar.adapter.XmlAdapterZonedDateTimeXCalDateTime;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -54,13 +54,10 @@ import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME
  * &lt;/complexType>
  * </pre> Example: The period starting at 18:00:00 UTC, on January 1, 1997 and
  * ending at 07:00:00 UTC on January 2, 1997 would be:
- * <p>
- * 19970101T180000Z/19970102T070000Z
+ * {@code 19970101T180000Z/19970102T070000Z}
  * <p>
  * The period start at 18:00:00 on January 1, 1997 and lasting 5 hours and 30
- * minutes would be:
- * <p>
- * 19970101T180000Z/PT5H30M
+ * minutes would be: {@code 19970101T180000Z/PT5H30M}
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PeriodType", propOrder = {
@@ -68,26 +65,25 @@ import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME
   "end",
   "duration"
 })
-
 public final class PeriodType implements Comparable<PeriodType> {
 
   @XmlElement(required = true)
-  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
-  protected LocalDateTime start;
-  @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
-  protected LocalDateTime end;
-  @XmlJavaTypeAdapter(type = Duration.class, value = XmlAdapterDurationXCalDateTime.class)
+  @XmlJavaTypeAdapter(value = XmlAdapterZonedDateTimeXCalDateTime.class)
+  protected ZonedDateTime start;
+  @XmlJavaTypeAdapter(value = XmlAdapterZonedDateTimeXCalDateTime.class)
+  protected ZonedDateTime end;
+  @XmlJavaTypeAdapter(value = XmlAdapterDurationXCalDateTime.class)
   protected Duration duration;
 
   public PeriodType() {
   }
 
-  public PeriodType(LocalDateTime start, LocalDateTime end) {
+  public PeriodType(ZonedDateTime start, ZonedDateTime end) {
     this.start = start;
     this.end = end;
   }
 
-  public PeriodType(LocalDateTime start, Duration duration) {
+  public PeriodType(ZonedDateTime start, Duration duration) {
     this.start = start;
     setDuration(duration);
   }
@@ -114,7 +110,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    *
    * @return possible object is {@link XMLGregorianCalendar }
    */
-  public LocalDateTime getStart() {
+  public ZonedDateTime getStart() {
     return start;
   }
 
@@ -123,7 +119,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    *
    * @param value allowed object is {@link XMLGregorianCalendar }
    */
-  public void setStart(LocalDateTime value) {
+  public void setStart(ZonedDateTime value) {
     start = value;
   }
 
@@ -135,7 +131,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    *
    * @return possible object is {@link XMLGregorianCalendar }
    */
-  public LocalDateTime getEnd() {
+  public ZonedDateTime getEnd() {
     if (end != null) {
       return end;
     } else if (duration != null) {
@@ -150,7 +146,7 @@ public final class PeriodType implements Comparable<PeriodType> {
    *
    * @param value allowed object is {@link XMLGregorianCalendar }
    */
-  public void setEnd(LocalDateTime value) {
+  public void setEnd(ZonedDateTime value) {
     if (value != null) {
       this.end = value;
       this.duration = null;

@@ -30,12 +30,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="ArrayOfParameters"> &lt;complexContent>
- * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ * <pre> &lt;complexType name="ArrayOfParameters"> &lt;complexContent&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseParameter"
- * maxOccurs="unbounded" minOccurs="0"/> &lt;/sequence> &lt;/restriction>
- * &lt;/complexContent> &lt;/complexType>
+ * maxOccurs="unbounded" minOccurs="0"/&gt; &lt;/sequence> &lt;/restriction&gt;
+ * &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

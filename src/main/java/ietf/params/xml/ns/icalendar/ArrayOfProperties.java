@@ -27,13 +27,13 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="ArrayOfProperties"> &lt;complexContent>
- * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- * &lt;sequence> &lt;choice maxOccurs="unbounded" minOccurs="0"> &lt;element
- * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseProperty"/> &lt;element
- * name="tzid" type="{urn:ietf:params:xml:ns:icalendar-2.0}TextPropertyType"/>
- * &lt;/choice> &lt;/sequence> &lt;/restriction> &lt;/complexContent>
- * &lt;/complexType>
+ * <pre> &lt;complexType name="ArrayOfProperties"> &lt;complexContent&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ * &lt;sequence> &lt;choice maxOccurs="unbounded" minOccurs="0"&gt; &lt;element
+ * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseProperty"/&gt; &lt;element
+ * name="tzid" type="{urn:ietf:params:xml:ns:icalendar-2.0}TextPropertyType"/&gt;
+ * &lt;/choice> &lt;/sequence&gt; &lt;/restriction> &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -73,7 +73,7 @@ public class ArrayOfProperties {
    * <p>
    * Developer note: Use the ObjectFactory to build jaXBElements.
    *
-   * @param jaXBElement
+   * @param jaXBElement jaXBElement to add to the baseProperty list
    */
   public void addProperty(JAXBElement<? extends BasePropertyType> jaXBElement) {
     getBasePropertyOrTzid().add(jaXBElement);

@@ -1029,22 +1029,7 @@ public class RecurType implements Serializable {
    * @return a dump of the Recurrence internal configuration.
    */
   public String toStringFull() {
-    return "RecurType"
-      + " freq [" + freq
-      + "] until [" + until
-      + "] count [" + count
-      + "] interval [" + interval
-      + "] bysecond [" + bysecond
-      + "] byminute [" + byminute
-      + "] byhour [" + byhour
-      + "] byday [" + byday
-      + "] byyearday [" + byyearday
-      + "] bymonthday [" + bymonthday
-      + "] byweekno [" + byweekno
-      + "] bymonth [" + bymonth
-      + "] bysetpos [" + bysetpos
-      + "] wkst [" + wkst
-      + ']';
+    return "RecurType{" + "freq=" + freq + ", until=" + until + ", count=" + count + ", interval=" + interval + ", bysecond=" + bysecond + ", byminute=" + byminute + ", byhour=" + byhour + ", byday=" + byday + ", bymonthday=" + bymonthday + ", byyearday=" + byyearday + ", byweekno=" + byweekno + ", bymonth=" + bymonth + ", bysetpos=" + bysetpos + ", wkst=" + wkst + ", endType=" + endType + '}';
   }
 
   /**

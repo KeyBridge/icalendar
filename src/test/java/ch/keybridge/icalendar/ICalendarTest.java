@@ -17,9 +17,7 @@ import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
@@ -32,7 +30,7 @@ import org.junit.Test;
  */
 public class ICalendarTest {
 
-//  @Test
+  @Test
   public void testPeriodListX() throws Exception {
     System.out.println("TestPeriodList");
 
@@ -71,6 +69,7 @@ public class ICalendarTest {
 //    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
     RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
 
+    System.out.println(" recur " + recur);
     System.out.println(" recur " + recur.toStringFull());
 //    Set<PeriodType> recurSet = ICalendar.calculateRecurrenceSet(dtstart.getTime(),
 //                                                                    dtend.getTime(),
@@ -91,8 +90,8 @@ public class ICalendarTest {
 
     DateTimeFormatter format = DateTimeFormatter.ofPattern("EEEE, MMMM dd yyyy KK:mm a");
 
-    LocalDateTime eventStart = LocalDateTime.of(2014, 1, 5, 0, 0, 0);
-    LocalDateTime eventEnd = LocalDateTime.of(2014, 1, 6, 0, 0, 0);
+    ZonedDateTime eventStart = LocalDateTime.of(2014, 1, 5, 0, 0, 0).atZone(ZoneId.systemDefault());
+    ZonedDateTime eventEnd = LocalDateTime.of(2014, 1, 6, 0, 0, 0).atZone(ZoneId.systemDefault());
 
     System.out.println("  event Start      " + eventStart.format(format));
     System.out.println("  event End        " + eventEnd.format(format));
@@ -108,8 +107,8 @@ public class ICalendarTest {
     System.out.println(recur.getFreq());
     System.out.println(recur.getInterval());
 
-    LocalDateTime periodStart = LocalDateTime.of(2014, 1, 1, 0, 0, 0);
-    LocalDateTime periodEnd = LocalDateTime.of(2014, 2, 28, 0, 0, 0);
+    ZonedDateTime periodStart = LocalDateTime.of(2014, 1, 1, 0, 0, 0).atZone(ZoneId.systemDefault());
+    ZonedDateTime periodEnd = LocalDateTime.of(2014, 2, 28, 0, 0, 0).atZone(ZoneId.systemDefault());
     System.out.println("  period start     " + periodStart.format(format));
     System.out.println("  period End       " + periodEnd.format(format));
 //    List<Schedule> list = s.getPeriodList(periodStart, periodEnd);
@@ -137,22 +136,22 @@ public class ICalendarTest {
   @Test
   public void testWeekly() throws Exception {
     System.out.println("TestWeekly");
-    Set<LocalDateTime> dateSet = new HashSet<>();
+    Set<ZonedDateTime> dateSet = new HashSet<>();
 //    RecurType recurType = new RecurType("FREQ=WEEKLY;INTERVAL=2;UNTIL=20171025T000000Z");
 //    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=15;INTERVAL=2;BYDAY=TU,WE,TH");
-    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z");
+//    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z");
 //    RecurType recur = new RecurType("FREQ=WEEKLY;UNTIL=20140730T000000Z;WKST=SU;BYDAY=TU,WE,TH,SA");
 //    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=15;INTERVAL=2;WKST=SU;BYDAY=TU,WE,TH");
 //    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5");
-//    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
+    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
 
     WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 4);
 
-    Set<LocalDateTime> daily = ICalendar.asSet(LocalDateTime.now());
+    Set<ZonedDateTime> daily = ICalendar.asSet(ZonedDateTime.now());
 
     System.out.println("  weekly size  " + daily.size());
-    for (LocalDateTime localDateTime : daily) {
-      System.out.println("   " + localDateTime);
+    for (ZonedDateTime dateTime : daily) {
+      System.out.println("   " + dateTime);
     }
     for (Integer integer : recur.getByweekno()) {
       System.out.println("  by week no " + integer);
@@ -172,11 +171,11 @@ public class ICalendarTest {
 
     System.out.println("  RecurType " + recur);
 
-    LocalDateTime periodStart = LocalDateTime.now();
+    ZonedDateTime periodStart = ZonedDateTime.now();
 
-    Set<LocalDateTime> candidates = ICalendar.expandByRecurrenceRule(recur, periodStart, weekFields);
+    Set<ZonedDateTime> candidates = ICalendar.expandByRecurrenceRule(recur, periodStart, weekFields);
 
-    for (LocalDateTime candidate : candidates) {
+    for (ZonedDateTime candidate : candidates) {
       System.out.println("  candidate  " + candidate);
     }
     /**

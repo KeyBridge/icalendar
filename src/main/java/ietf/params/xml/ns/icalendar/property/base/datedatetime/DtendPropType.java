@@ -16,11 +16,11 @@
 package ietf.params.xml.ns.icalendar.property.base.datedatetime;
 
 import ietf.params.xml.ns.icalendar.property.base.DateDatetimePropertyType;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Java class for DtendPropType complex type.
@@ -39,7 +39,7 @@ public class DtendPropType extends DateDatetimePropertyType {
   public DtendPropType() {
   }
 
-  public DtendPropType(LocalDateTime dateTime) {
+  public DtendPropType(ZonedDateTime dateTime) {
     super(dateTime);
   }
 
