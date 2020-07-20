@@ -25,15 +25,11 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="XBedeworkExsynchEndtzidPropType">
+ * <pre> &lt;complexType name="XBedeworkExsynchEndtzidPropType">
  * &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}TextPropertyType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "XBedeworkExsynchEndtzidPropType")

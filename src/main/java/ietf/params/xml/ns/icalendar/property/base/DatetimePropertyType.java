@@ -30,16 +30,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="DatetimePropertyType"> &lt;complexContent>
+ * <pre> &lt;complexType name="DatetimePropertyType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date-time"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DatetimePropertyType", propOrder = {
@@ -86,7 +82,6 @@ public class DatetimePropertyType extends BasePropertyType {
    *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
-   *
    */
   @XmlElement(name = "date-time", required = true)
   @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
@@ -96,7 +91,6 @@ public class DatetimePropertyType extends BasePropertyType {
    * Gets the value of the dateTime property.
    *
    * @return possible object is {@link XMLGregorianCalendar }
-   *
    */
   public XMLGregorianCalendar getDateTime() {
     return dateTime;
@@ -106,7 +100,6 @@ public class DatetimePropertyType extends BasePropertyType {
    * Sets the value of the dateTime property.
    *
    * @param value allowed object is {@link XMLGregorianCalendar }
-   *
    */
   public void setDateTime(XMLGregorianCalendar value) {
     /**
@@ -139,9 +132,6 @@ public class DatetimePropertyType extends BasePropertyType {
       return false;
     }
     final DatetimePropertyType other = (DatetimePropertyType) obj;
-    if (!Objects.equals(this.dateTime, other.dateTime)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.dateTime, other.dateTime);
   }
 }

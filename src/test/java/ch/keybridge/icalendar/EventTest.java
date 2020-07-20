@@ -156,7 +156,6 @@ public class EventTest {
 //    System.out.println("  Event sRecur : " + srecur);
 
     /**
-     *
      */
 //    for (Event srr : srecur.calculatePeriodList(srecur.getDateStart(),
 //                                             scheduleMain.getDateEnd())) {

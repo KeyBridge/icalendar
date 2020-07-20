@@ -27,15 +27,11 @@ import java.time.LocalDateTime;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="DtstampPropType"> &lt;complexContent>
+ * <pre> &lt;complexType name="DtstampPropType"> &lt;complexContent>
  * &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}UtcDatetimePropertyType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DtstampPropType")

@@ -26,16 +26,12 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="IntegerPropertyType"> &lt;complexContent>
+ * <pre> &lt;complexType name="IntegerPropertyType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}integer"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "IntegerPropertyType", propOrder = {
@@ -58,7 +54,6 @@ public class IntegerPropertyType extends BasePropertyType {
    * Gets the value of the integer property.
    *
    * @return possible object is {@link BigInteger }
-   *
    */
   public Integer getInteger() {
     return integer;
@@ -68,7 +63,6 @@ public class IntegerPropertyType extends BasePropertyType {
    * Sets the value of the integer property.
    *
    * @param value allowed object is {@link BigInteger }
-   *
    */
   public void setInteger(Integer value) {
     this.integer = value;
@@ -94,9 +88,6 @@ public class IntegerPropertyType extends BasePropertyType {
       return false;
     }
     final IntegerPropertyType other = (IntegerPropertyType) obj;
-    if (!Objects.equals(this.integer, other.integer)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.integer, other.integer);
   }
 }

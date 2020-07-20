@@ -113,7 +113,6 @@ public final class PeriodType implements Comparable<PeriodType> {
    * Gets the value of the start property.
    *
    * @return possible object is {@link XMLGregorianCalendar }
-   *
    */
   public LocalDateTime getStart() {
     return start;
@@ -123,7 +122,6 @@ public final class PeriodType implements Comparable<PeriodType> {
    * Sets the value of the start property.
    *
    * @param value allowed object is {@link XMLGregorianCalendar }
-   *
    */
   public void setStart(LocalDateTime value) {
     start = value;
@@ -151,7 +149,6 @@ public final class PeriodType implements Comparable<PeriodType> {
    * duration is set to null.
    *
    * @param value allowed object is {@link XMLGregorianCalendar }
-   *
    */
   public void setEnd(LocalDateTime value) {
     if (value != null) {

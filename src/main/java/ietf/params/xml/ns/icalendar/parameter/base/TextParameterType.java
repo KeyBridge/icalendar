@@ -25,15 +25,11 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="TextParameterType"> &lt;complexContent>
+ * <pre> &lt;complexType name="TextParameterType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType">
  * &lt;sequence> &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}text"/>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TextParameterType", propOrder = {
@@ -72,7 +68,6 @@ public class TextParameterType extends BaseParameterType {
    * Gets the value of the text property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getText() {
     return text;
@@ -82,7 +77,6 @@ public class TextParameterType extends BaseParameterType {
    * Sets the value of the text property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setText(String value) {
     this.text = value;
@@ -108,9 +102,6 @@ public class TextParameterType extends BaseParameterType {
       return false;
     }
     final TextParameterType other = (TextParameterType) obj;
-    if (!Objects.equals(this.text, other.text)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.text, other.text);
   }
 }

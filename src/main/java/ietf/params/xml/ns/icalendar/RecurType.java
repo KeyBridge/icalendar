@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * This value type is used to identify properties that contain a recurrence rule
  * specification.
  * <p>
- * <p>
  * This value type is a structured value consisting of a list of one or more
  * recurrence grammar parts. Each rule part is defined by a NAME=VALUE pair. The
  * rule parts are separated from each other by the SEMICOLON character. The rule
@@ -437,7 +436,6 @@ public class RecurType implements Serializable {
    * Gets the value of the freq property.
    *
    * @return possible object is {@link FreqRecurType }
-   *
    */
   public FreqRecurType getFreq() {
     return freq;
@@ -447,7 +445,6 @@ public class RecurType implements Serializable {
    * Sets the value of the freq property.
    *
    * @param freq allowed object is {@link FreqRecurType }
-   *
    */
   public void setFreq(FreqRecurType freq) {
     this.freq = freq;
@@ -567,7 +564,6 @@ public class RecurType implements Serializable {
    * Gets the value of the count property.
    *
    * @return possible object is {@link Integer }
-   *
    */
   public Integer getCount() {
     return count;
@@ -585,7 +581,6 @@ public class RecurType implements Serializable {
    * zero) the UNTIL field is set to null.
    *
    * @param count allowed object is {@link Integer }
-   *
    */
   public void setCount(Integer count) {
     this.count = count;
@@ -607,7 +602,6 @@ public class RecurType implements Serializable {
    * Gets the value of the interval property.
    *
    * @return possible object is {@link String }
-   *
    */
   public Integer getInterval() {
     return interval;
@@ -617,7 +611,6 @@ public class RecurType implements Serializable {
    * Sets the value of the interval property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setInterval(Integer value) {
     this.interval = value;
@@ -867,7 +860,6 @@ public class RecurType implements Serializable {
    * Gets the value of the wkst property.
    *
    * @return possible object is {@link WeekdayRecurType }
-   *
    */
   public WeekdayRecurType getWkst() {
     return wkst;
@@ -877,7 +869,6 @@ public class RecurType implements Serializable {
    * Sets the value of the wkst property.
    *
    * @param value allowed object is {@link WeekdayRecurType }
-   *
    */
   public void setWkst(WeekdayRecurType value) {
     this.wkst = value;

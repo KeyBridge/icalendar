@@ -24,24 +24,16 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="BooleanParameterType"> &lt;complexContent>
+ * <pre> &lt;complexType name="BooleanParameterType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}boolean"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BooleanParameterType", propOrder = {
-  "_boolean"
-})
-@XmlSeeAlso({
-  RsvpParamType.class
-})
+@XmlType(name = "BooleanParameterType", propOrder = {"_boolean"})
+@XmlSeeAlso({RsvpParamType.class})
 public class BooleanParameterType extends BaseParameterType {
 
   @XmlElement(name = "boolean")
@@ -49,7 +41,6 @@ public class BooleanParameterType extends BaseParameterType {
 
   /**
    * Gets the value of the boolean property.
-   * <p>
    */
   public boolean isBoolean() {
     return _boolean;
@@ -57,7 +48,6 @@ public class BooleanParameterType extends BaseParameterType {
 
   /**
    * Sets the value of the boolean property.
-   * <p>
    */
   public void setBoolean(boolean value) {
     this._boolean = value;
@@ -83,9 +73,6 @@ public class BooleanParameterType extends BaseParameterType {
       return false;
     }
     final BooleanParameterType other = (BooleanParameterType) obj;
-    if (this._boolean != other._boolean) {
-      return false;
-    }
-    return true;
+    return this._boolean == other._boolean;
   }
 }

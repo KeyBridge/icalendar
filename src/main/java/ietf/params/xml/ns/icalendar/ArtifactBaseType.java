@@ -25,19 +25,12 @@ import javax.xml.bind.annotation.XmlType;
  * allow attributes from other namespaces to be added to ws-calendar-based
  * schemas.
  * <p>
- * <p>
- * Java class for ArtifactBaseType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre> &lt;complexType name="ArtifactBaseType"> &lt;complexContent>
+ * Java class for ArtifactBaseType complex type. The following schema fragment
+ * specifies the expected content contained within this class.
+ * <pre> &lt;complexType name="ArtifactBaseType"> &lt;complexContent>
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  * &lt;/restriction> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArtifactBaseType")

@@ -27,9 +27,7 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="ArrayOfProperties"> &lt;complexContent>
+ * <pre> &lt;complexType name="ArrayOfProperties"> &lt;complexContent>
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  * &lt;sequence> &lt;choice maxOccurs="unbounded" minOccurs="0"> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseProperty"/> &lt;element
@@ -37,8 +35,6 @@ import javax.xml.bind.annotation.*;
  * &lt;/choice> &lt;/sequence> &lt;/restriction> &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArrayOfProperties", propOrder = {
@@ -54,6 +50,8 @@ public class ArrayOfProperties {
 
   /**
    * Gets the value of the basePropertyOrTzid property.
+   *
+   * @return the value of the basePropertyOrTzid
    */
   public List<JAXBElement<? extends BasePropertyType>> getBasePropertyOrTzid() {
     if (basePropertyOrTzid == null) {
@@ -112,9 +110,6 @@ public class ArrayOfProperties {
       return false;
     }
     final ArrayOfProperties other = (ArrayOfProperties) obj;
-    if (!Objects.equals(this.basePropertyOrTzid, other.basePropertyOrTzid)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.basePropertyOrTzid, other.basePropertyOrTzid);
   }
 }

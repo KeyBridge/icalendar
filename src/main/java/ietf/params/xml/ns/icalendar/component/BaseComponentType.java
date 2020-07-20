@@ -34,7 +34,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.*;
 
 /**
- *
  * This type is the basis for all components and provides a base class for
  * applications.
  * <p>
@@ -128,7 +127,6 @@ public abstract class BaseComponentType {
    * Gets the value of the properties property.
    *
    * @return possible object is {@link ArrayOfProperties }
-   *
    */
   public ArrayOfProperties getProperties() {
     if (properties == null) {
@@ -141,7 +139,6 @@ public abstract class BaseComponentType {
    * Sets the value of the properties property.
    *
    * @param value allowed object is {@link ArrayOfProperties }
-   *
    */
   public void setProperties(ArrayOfProperties value) {
     this.properties = value;
@@ -155,7 +152,6 @@ public abstract class BaseComponentType {
    * Gets the value of the components property.
    *
    * @return possible object is {@link ArrayOfComponents }
-   *
    */
   public ArrayOfComponents getComponents() {
     if (components == null) {
@@ -168,7 +164,6 @@ public abstract class BaseComponentType {
    * Sets the value of the components property.
    *
    * @param value allowed object is {@link ArrayOfComponents }
-   *
    */
   public void setComponents(ArrayOfComponents value) {
     this.components = value;
@@ -250,7 +245,7 @@ public abstract class BaseComponentType {
    * Property Parameters: IANA, non-standard, value data type, and time zone
    * identifier property parameters can be specified on this property.
    *
-   * @return
+   * @return when the calendar component begins
    */
   public LocalDateTime getDTSTART() {
     /**
@@ -269,11 +264,11 @@ public abstract class BaseComponentType {
   }
 
   /**
-   * Date-Time Start
+   * Date-Time End
    * <p>
-   * Property Name: DTSTART
+   * Property Name: DTEND
    * <p>
-   * Purpose: This property specifies when the calendar component begins.
+   * Purpose: This property specifies when the calendar component ends.
    * <p>
    * Value Type: The default value type is DATE-TIME. The time value MUST be one
    * of the forms defined for the DATE-TIME value type. The value type can be
@@ -282,7 +277,7 @@ public abstract class BaseComponentType {
    * Property Parameters: IANA, non-standard, value data type, and time zone
    * identifier property parameters can be specified on this property.
    *
-   * @return
+   * @return when the calendar component begins
    */
   public LocalDateTime getDTEND() {
     /**
@@ -363,7 +358,7 @@ public abstract class BaseComponentType {
    * Purpose: This value type is used to identify properties that contain a
    * recurrence rule specification.
    *
-   * @return
+   * @return recurrence rule specification
    */
   public RrulePropType getRRULE() {
     /**
@@ -381,7 +376,7 @@ public abstract class BaseComponentType {
    * Set the RRULE parameter with a RecurType definition. This method creates an
    * internal RrulePropType.
    *
-   * @param recurType
+   * @param recurType the RRULE parameter
    */
   public void setRRULE(RecurType recurType) {
     getProperties().addProperty(new ObjectFactory().createRrule(new RrulePropType(recurType)));
@@ -390,7 +385,7 @@ public abstract class BaseComponentType {
   /**
    * The RrulePropType must contain a valid RecurType.
    *
-   * @param rrulePropType
+   * @param rrulePropType The RrulePropType
    */
   public void setRRULE(RrulePropType rrulePropType) {
     getProperties().addProperty(new ObjectFactory().createRrule(rrulePropType));
@@ -434,7 +429,7 @@ public abstract class BaseComponentType {
   /**
    * Equals is based on hash code, which is based on UID.
    *
-   * @param obj
+   * @param obj the other object
    * @return TRUE if the UID values match, otherwise FALSE
    */
   @Override
@@ -451,9 +446,6 @@ public abstract class BaseComponentType {
 
   @Override
   public String toString() {
-    return this.getClass().getSimpleName()
-           + "]\n properties [" + properties
-           + "]\n components [" + components
-           + "]\n";
+    return "BaseComponentType{" + "name=" + name + ", properties=" + properties + ", components=" + components + '}';
   }
 }

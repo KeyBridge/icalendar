@@ -15,7 +15,6 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import static ietf.params.xml.ns.icalendar.Constants.*;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateTimeXCalDateTime;
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterLocalDateXCalDate;
 import java.io.Serializable;
@@ -26,6 +25,8 @@ import java.util.Objects;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.DatatypeConfigurationException;
+
+import static ietf.params.xml.ns.icalendar.Constants.*;
 
 /**
  * Java class for UntilRecurType complex type.
@@ -154,7 +155,6 @@ public class UntilRecurType implements Serializable {
    *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
-   *
    */
   @XmlElement(name = "date-time")
   @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
@@ -309,9 +309,9 @@ public class UntilRecurType implements Serializable {
    */
   public String toStringFull() {
     return "UntilRecurType"
-           + " dateTime [" + dateTime
-           + "] date [" + date
-           + ']';
+      + " dateTime [" + dateTime
+      + "] date [" + date
+      + ']';
   }
 
   /**

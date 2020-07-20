@@ -26,16 +26,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="AttachPropType"> &lt;complexContent> &lt;extension
+ * <pre> &lt;complexType name="AttachPropType"> &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"> &lt;choice>
  * &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}uri"/> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}binary"/> &lt;/choice>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttachPropType", propOrder = {
@@ -51,7 +47,6 @@ public class AttachPropType extends BasePropertyType {
    * Gets the value of the uri property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getUri() {
     return uri;
@@ -61,7 +56,6 @@ public class AttachPropType extends BasePropertyType {
    * Sets the value of the uri property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setUri(String value) {
     this.uri = value;
@@ -75,7 +69,6 @@ public class AttachPropType extends BasePropertyType {
    * Gets the value of the binary property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getBinary() {
     return binary;
@@ -85,7 +78,6 @@ public class AttachPropType extends BasePropertyType {
    * Sets the value of the binary property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setBinary(String value) {
     this.binary = value;
@@ -115,9 +107,6 @@ public class AttachPropType extends BasePropertyType {
     if (!Objects.equals(this.uri, other.uri)) {
       return false;
     }
-    if (!Objects.equals(this.binary, other.binary)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.binary, other.binary);
   }
 }

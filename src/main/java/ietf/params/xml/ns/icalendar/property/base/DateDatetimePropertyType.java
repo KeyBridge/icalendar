@@ -30,17 +30,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="DateDatetimePropertyType"> &lt;complexContent>
+ * <pre> &lt;complexType name="DateDatetimePropertyType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;choice> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date-time"/> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date"/> &lt;/choice>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DateDatetimePropertyType", propOrder = {
@@ -98,7 +94,6 @@ public class DateDatetimePropertyType extends BasePropertyType {
    *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
-   *
    */
   @XmlElement(name = "date-time")
   @XmlJavaTypeAdapter(type = LocalDateTime.class, value = XmlAdapterLocalDateTimeXCalDateTime.class)
@@ -180,15 +175,14 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * @param date a date
    */
   public DateDatetimePropertyType(LocalDate date) {
-    setDate(date);
-    setDateTime(date.atStartOfDay());
+    this.date = date;
+    this.dateTime = date.atStartOfDay();
   }
 
   /**
    * Gets the value of the dateTime property.
    *
    * @return possible object is {@link LocalDateTime }
-   *
    */
   public LocalDateTime getDateTime() {
     return dateTime;
@@ -198,7 +192,6 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * Sets the value of the dateTime property.
    *
    * @param value allowed object is {@link LocalDateTime }
-   *
    */
   public void setDateTime(LocalDateTime value) {
     this.dateTime = value;
@@ -212,7 +205,6 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * Gets the value of the date property.
    *
    * @return possible object is {@link LocalDate }
-   *
    */
   public LocalDate getDate() {
     return date;
@@ -222,7 +214,6 @@ public class DateDatetimePropertyType extends BasePropertyType {
    * Sets the value of the date property.
    *
    * @param value allowed object is {@link LocalDate }
-   *
    */
   public void setDate(LocalDate value) {
     this.date = value;
@@ -252,17 +243,11 @@ public class DateDatetimePropertyType extends BasePropertyType {
     if (!Objects.equals(this.dateTime, other.dateTime)) {
       return false;
     }
-    if (!Objects.equals(this.date, other.date)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.date, other.date);
   }
 
   @Override
   public String toString() {
-    return "DateDatetimePropertyType"
-           + " dateTime [" + dateTime
-           + "] date [" + date
-           + ']';
+    return "DateDatetimePropertyType{" + "dateTime=" + dateTime + ", date=" + date + '}';
   }
 }

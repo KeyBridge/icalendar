@@ -40,9 +40,9 @@ public class XmlAdapterLocalDateXCalDateTest {
 
     // Test for all dates in year 1970-01-01
     DateTestUtil.generateDateTimes()
-            .map(LocalDateTime::toLocalDate)
-            .distinct()
-            .forEach(dateTime1 -> testMarshalUnmarsal(dateTime1, false));
+      .map(LocalDateTime::toLocalDate)
+      .distinct()
+      .forEach(dateTime1 -> testMarshalUnmarsal(dateTime1, false));
   }
 
   private static void testMarshalUnmarsal(LocalDate date, boolean logToConsole) {

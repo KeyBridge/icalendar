@@ -25,13 +25,9 @@ import javax.xml.bind.annotation.*;
 /**
  * types the content of the xCal attach element
  * <p>
- * Java class for WsCalendarAttachType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre> &lt;complexType name="WsCalendarAttachType"> &lt;complexContent>
+ * Java class for WsCalendarAttachType complex type. The following schema
+ * fragment specifies the expected content contained within this class.
+ * <pre> &lt;complexType name="WsCalendarAttachType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;choice maxOccurs="unbounded" minOccurs="0"> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}artifact"/> &lt;element
@@ -40,8 +36,6 @@ import javax.xml.bind.annotation.*;
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}text"/> &lt;/choice>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "WsCalendarAttachType", propOrder = {
@@ -51,17 +45,16 @@ public class WsCalendarAttachType extends BasePropertyType {
 
   @XmlElementRefs({
     @XmlElementRef(name = "artifactBase", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
-    ,
-    @XmlElementRef(name = "uri", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
-    ,
-    @XmlElementRef(name = "artifact", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
-    ,
-    @XmlElementRef(name = "text", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
+    ,  @XmlElementRef(name = "uri", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
+    ,  @XmlElementRef(name = "artifact", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
+    ,  @XmlElementRef(name = "text", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
   })
   protected List<JAXBElement<?>> artifactOrArtifactBaseOrUri;
 
   /**
    * Gets the value of the artifactOrArtifactBaseOrUri property.
+   *
+   * @return the value of the artifactOrArtifactBaseOrUri
    */
   public List<JAXBElement<?>> getArtifactOrArtifactBaseOrUri() {
     if (artifactOrArtifactBaseOrUri == null) {
@@ -94,9 +87,6 @@ public class WsCalendarAttachType extends BasePropertyType {
       return false;
     }
     final WsCalendarAttachType other = (WsCalendarAttachType) obj;
-    if (!Objects.equals(this.artifactOrArtifactBaseOrUri, other.artifactOrArtifactBaseOrUri)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.artifactOrArtifactBaseOrUri, other.artifactOrArtifactBaseOrUri);
   }
 }

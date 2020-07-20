@@ -133,7 +133,6 @@ public class TriggerPropType extends BasePropertyType {
    *
    * @see <a
    * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
-   *
    */
   @XmlElement(name = "date-time")
   @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)
@@ -143,7 +142,6 @@ public class TriggerPropType extends BasePropertyType {
    * Gets the value of the duration property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getDuration() {
     return duration;
@@ -153,7 +151,6 @@ public class TriggerPropType extends BasePropertyType {
    * Sets the value of the duration property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setDuration(String value) {
     this.duration = value;
@@ -167,7 +164,6 @@ public class TriggerPropType extends BasePropertyType {
    * Gets the value of the dateTime property.
    *
    * @return possible object is {@link XMLGregorianCalendar }
-   *
    */
   public XMLGregorianCalendar getDateTime() {
     return dateTime;
@@ -177,7 +173,6 @@ public class TriggerPropType extends BasePropertyType {
    * Sets the value of the dateTime property.
    *
    * @param value allowed object is {@link XMLGregorianCalendar }
-   *
    */
   public void setDateTime(XMLGregorianCalendar value) {
     this.dateTime = value;

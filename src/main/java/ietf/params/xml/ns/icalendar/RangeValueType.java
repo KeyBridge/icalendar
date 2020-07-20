@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Java class for ERangeValueType.
+ * Java class for RangeValueType.
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * <p>
  */
 @XmlType(name = "RangeValueType")
 @XmlEnum

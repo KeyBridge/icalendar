@@ -28,16 +28,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="TolerancePropType"> &lt;complexContent>
+ * <pre> &lt;complexType name="TolerancePropType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element name="tolerate"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}ToleranceValueType"/>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TolerancePropType", propOrder = {
@@ -52,7 +48,6 @@ public class TolerancePropType extends BasePropertyType {
    * Gets the value of the tolerate property.
    *
    * @return possible object is {@link ToleranceValueType }
-   *
    */
   public ToleranceValueType getTolerate() {
     return tolerate;
@@ -62,7 +57,6 @@ public class TolerancePropType extends BasePropertyType {
    * Sets the value of the tolerate property.
    *
    * @param value allowed object is {@link ToleranceValueType }
-   *
    */
   public void setTolerate(ToleranceValueType value) {
     this.tolerate = value;
@@ -88,9 +82,6 @@ public class TolerancePropType extends BasePropertyType {
       return false;
     }
     final TolerancePropType other = (TolerancePropType) obj;
-    if (!Objects.equals(this.tolerate, other.tolerate)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.tolerate, other.tolerate);
   }
 }

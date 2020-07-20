@@ -27,16 +27,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="RangeParamType"> &lt;complexContent> &lt;extension
+ * <pre> &lt;complexType name="RangeParamType"> &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType"> &lt;sequence>
  * &lt;element name="text"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}ERangeValueType"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RangeParamType", propOrder = {
@@ -51,7 +47,6 @@ public class RangeParamType extends BaseParameterType {
    * Gets the value of the text property.
    *
    * @return possible object is {@link RangeValueType }
-   *
    */
   public RangeValueType getText() {
     return text;
@@ -61,7 +56,6 @@ public class RangeParamType extends BaseParameterType {
    * Sets the value of the text property.
    *
    * @param value allowed object is {@link RangeValueType }
-   *
    */
   public void setText(RangeValueType value) {
     this.text = value;
@@ -87,9 +81,6 @@ public class RangeParamType extends BaseParameterType {
       return false;
     }
     final RangeParamType other = (RangeParamType) obj;
-    if (this.text != other.text) {
-      return false;
-    }
-    return true;
+    return this.text == other.text;
   }
 }

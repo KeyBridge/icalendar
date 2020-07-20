@@ -25,19 +25,14 @@ import javax.xml.bind.annotation.XmlType;
  *
  * Timezones only contain daylight and standard
  * <p>
- * <p>
  * Java class for VtimezoneType complex type.
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="VtimezoneType"> &lt;complexContent> &lt;extension
+ * <pre> &lt;complexType name="VtimezoneType"> &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseComponentType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VtimezoneType")

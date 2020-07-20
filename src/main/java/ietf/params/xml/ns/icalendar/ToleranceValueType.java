@@ -26,14 +26,9 @@ import javax.xml.bind.annotation.XmlType;
  * for the indicated value, e.g. startafter=PT5M indicates that 5 minutes late
  * is acceptable.
  * <p>
- * <p>
- * Java class for ToleranceValueType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre> &lt;complexType name="ToleranceValueType"> &lt;complexContent>
+ * Java class for ToleranceValueType complex type. The following schema fragment
+ * specifies the expected content contained within this class.
+ * <pre> &lt;complexType name="ToleranceValueType"> &lt;complexContent>
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  * &lt;sequence> &lt;element name="startbefore"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}DurationValueType"
@@ -52,8 +47,6 @@ import javax.xml.bind.annotation.XmlType;
  * minOccurs="0"/> &lt;/sequence> &lt;/restriction> &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ToleranceValueType", propOrder = {
@@ -79,7 +72,6 @@ public class ToleranceValueType {
    * Gets the value of the startbefore property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getStartbefore() {
     return startbefore;
@@ -89,7 +81,6 @@ public class ToleranceValueType {
    * Sets the value of the startbefore property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setStartbefore(String value) {
     this.startbefore = value;
@@ -103,7 +94,6 @@ public class ToleranceValueType {
    * Gets the value of the startafter property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getStartafter() {
     return startafter;
@@ -113,7 +103,6 @@ public class ToleranceValueType {
    * Sets the value of the startafter property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setStartafter(String value) {
     this.startafter = value;
@@ -127,7 +116,6 @@ public class ToleranceValueType {
    * Gets the value of the endbefore property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getEndbefore() {
     return endbefore;
@@ -137,7 +125,6 @@ public class ToleranceValueType {
    * Sets the value of the endbefore property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setEndbefore(String value) {
     this.endbefore = value;
@@ -151,7 +138,6 @@ public class ToleranceValueType {
    * Gets the value of the endafter property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getEndafter() {
     return endafter;
@@ -161,7 +147,6 @@ public class ToleranceValueType {
    * Sets the value of the endafter property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setEndafter(String value) {
     this.endafter = value;
@@ -175,7 +160,6 @@ public class ToleranceValueType {
    * Gets the value of the durationlong property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getDurationlong() {
     return durationlong;
@@ -185,7 +169,6 @@ public class ToleranceValueType {
    * Sets the value of the durationlong property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setDurationlong(String value) {
     this.durationlong = value;
@@ -199,7 +182,6 @@ public class ToleranceValueType {
    * Gets the value of the durationshort property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getDurationshort() {
     return durationshort;
@@ -209,7 +191,6 @@ public class ToleranceValueType {
    * Sets the value of the durationshort property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setDurationshort(String value) {
     this.durationshort = value;
@@ -223,7 +204,6 @@ public class ToleranceValueType {
    * Gets the value of the precision property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getPrecision() {
     return precision;
@@ -233,7 +213,6 @@ public class ToleranceValueType {
    * Sets the value of the precision property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setPrecision(String value) {
     this.precision = value;
@@ -283,9 +262,6 @@ public class ToleranceValueType {
     if (!Objects.equals(this.durationshort, other.durationshort)) {
       return false;
     }
-    if (!Objects.equals(this.precision, other.precision)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.precision, other.precision);
   }
 }

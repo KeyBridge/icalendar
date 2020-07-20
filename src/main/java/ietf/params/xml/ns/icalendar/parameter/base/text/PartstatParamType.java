@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
  * partstat-event = ("NEEDS-ACTION" ; Event needs action / "ACCEPTED" ; Event
  * accepted / "DECLINED" ; Event declined / "TENTATIVE" ; Event tentatively ;
  * accepted / "DELEGATED" ; Event delegated / x-name ; Experimental status /
@@ -41,19 +40,12 @@ import javax.xml.bind.annotation.XmlType;
  * iana-token) ; Other IANA-registered ; status ; These are the participation
  * statuses for a "VJOURNAL". ; Default is NEEDS-ACTION.
  * <p>
- * <p>
- * Java class for PartstatParamType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre> &lt;complexType name="PartstatParamType"> &lt;complexContent>
+ * Java class for PartstatParamType complex type. The following schema fragment
+ * specifies the expected content contained within this class.
+ * <pre> &lt;complexType name="PartstatParamType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}TextParameterType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartstatParamType")

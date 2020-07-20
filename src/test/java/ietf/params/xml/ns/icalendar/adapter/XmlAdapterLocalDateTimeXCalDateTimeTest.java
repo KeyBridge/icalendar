@@ -2,7 +2,6 @@ package ietf.params.xml.ns.icalendar.adapter;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -40,7 +39,7 @@ public class XmlAdapterLocalDateTimeXCalDateTimeTest {
 
     // Test for all dateTimes in year 1970-01-01 at 30 second increments
     DateTestUtil.generateDateTimes()
-            .forEach(dateTime1 -> testMarshalUnmarsal(dateTime1, false));
+      .forEach(dateTime1 -> testMarshalUnmarsal(dateTime1, false));
   }
 
   private static void testMarshalUnmarsal(LocalDateTime dateTime, boolean logToConsole) {

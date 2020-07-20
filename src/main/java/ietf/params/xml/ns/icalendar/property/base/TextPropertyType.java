@@ -25,15 +25,11 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="TextPropertyType"> &lt;complexContent>
+ * <pre> &lt;complexType name="TextPropertyType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}text"/>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TextPropertyType", propOrder = {
@@ -81,7 +77,6 @@ public class TextPropertyType extends BasePropertyType {
    * Gets the value of the text property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getText() {
     return text;
@@ -91,7 +86,6 @@ public class TextPropertyType extends BasePropertyType {
    * Sets the value of the text property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setText(String value) {
     this.text = value;
@@ -117,10 +111,7 @@ public class TextPropertyType extends BasePropertyType {
       return false;
     }
     final TextPropertyType other = (TextPropertyType) obj;
-    if (!Objects.equals(this.text, other.text)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.text, other.text);
   }
 
   @Override

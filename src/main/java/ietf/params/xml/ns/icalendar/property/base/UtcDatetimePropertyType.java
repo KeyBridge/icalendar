@@ -21,29 +21,24 @@ import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CompletedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.CreatedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.LastModifiedPropType;
-
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Java class for UtcDatetimePropertyType complex type.
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="UtcDatetimePropertyType"> &lt;complexContent>
+ * <pre> &lt;complexType name="UtcDatetimePropertyType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}utc-date-time"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UtcDatetimePropertyType", propOrder = {
@@ -72,7 +67,6 @@ public class UtcDatetimePropertyType extends BasePropertyType {
    * Gets the value of the utcDateTime property.
    *
    * @return possible object is {@link XMLGregorianCalendar }
-   *
    */
   public LocalDateTime getUtcDateTime() {
     return utcDateTime;
@@ -82,7 +76,6 @@ public class UtcDatetimePropertyType extends BasePropertyType {
    * Sets the value of the utcDateTime property.
    *
    * @param value allowed object is {@link XMLGregorianCalendar }
-   *
    */
   public void setUtcDateTime(LocalDateTime value) {
     this.utcDateTime = value;
@@ -108,14 +101,12 @@ public class UtcDatetimePropertyType extends BasePropertyType {
       return false;
     }
     final UtcDatetimePropertyType other = (UtcDatetimePropertyType) obj;
-    if (!Objects.equals(this.utcDateTime, other.utcDateTime)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.utcDateTime, other.utcDateTime);
   }
 
   @Override
   public String toString() {
-    return "UtcDatetimePropertyType" + " utcDateTime [" + utcDateTime + ']';
+    return "UtcDatetimePropertyType{" + "utcDateTime=" + utcDateTime + '}';
   }
+
 }

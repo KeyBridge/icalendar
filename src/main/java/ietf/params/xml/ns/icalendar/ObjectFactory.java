@@ -46,16 +46,15 @@ import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.LastModifiedPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsetfromPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsettoPropType;
-
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+import java.math.BigInteger;
+import java.net.URL;
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
-import java.math.BigInteger;
-import java.net.URL;
 
 /**
  * This object contains factory methods for each Java content interface and Java
@@ -65,7 +64,6 @@ import java.net.URL;
  * can consist of schema derived interfaces and classes representing the binding
  * of schema type definitions, element declarations and model groups. Factory
  * methods for each of these are provided in this class.
- * <p>
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -201,14 +199,12 @@ public class ObjectFactory {
   /**
    * Create a new ObjectFactory that can be used to create new instances of
    * schema derived classes for package: ietf.params.xml.ns.icalendar_2
-   * <p>
    */
   public ObjectFactory() {
   }
 
   /**
    * Create an instance of {@link SummaryPropType }
-   * <p>
    */
   public SummaryPropType createSummaryPropType() {
     return new SummaryPropType();
@@ -216,7 +212,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkExsynchLastmodPropType }
-   * <p>
    */
   public XBedeworkExsynchLastmodPropType createXBedeworkExsynchLastmodPropType() {
     return new XBedeworkExsynchLastmodPropType();
@@ -224,7 +219,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DelegatedToParamType }
-   * <p>
    */
   public DelegatedToParamType createDelegatedToParamType() {
     return new DelegatedToParamType();
@@ -232,7 +226,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link AttendeePropType }
-   * <p>
    */
   public AttendeePropType createAttendeePropType() {
     return new AttendeePropType();
@@ -240,7 +233,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VeventType }
-   * <p>
    */
   public VeventType createVeventType() {
     return new VeventType();
@@ -248,7 +240,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link UntilRecurType }
-   * <p>
    */
   public UntilRecurType createUntilRecurType() {
     return UntilRecurType.getInstance();
@@ -256,7 +247,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RdatePropType }
-   * <p>
    */
   public RdatePropType createRdatePropType() {
     return new RdatePropType();
@@ -264,7 +254,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link WsCalendarTypeType }
-   * <p>
    */
   public WsCalendarTypeType createWsCalendarTypeType() {
     return new WsCalendarTypeType();
@@ -272,7 +261,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CreatedPropType }
-   * <p>
    */
   public CreatedPropType createCreatedPropType() {
     return new CreatedPropType();
@@ -280,7 +268,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TolerancePropType }
-   * <p>
    */
   public TolerancePropType createTolerancePropType() {
     return new TolerancePropType();
@@ -288,7 +275,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RoleParamType }
-   * <p>
    */
   public RoleParamType createRoleParamType() {
     return new RoleParamType();
@@ -296,7 +282,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkUidParamType }
-   * <p>
    */
   public XBedeworkUidParamType createXBedeworkUidParamType() {
     return new XBedeworkUidParamType();
@@ -304,7 +289,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link WsCalendarAttachType }
-   * <p>
    */
   public WsCalendarAttachType createWsCalendarAttachType() {
     return new WsCalendarAttachType();
@@ -312,7 +296,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link PercentCompletePropType }
-   * <p>
    */
   public PercentCompletePropType createPercentCompletePropType() {
     return new PercentCompletePropType();
@@ -320,7 +303,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RequestStatusPropType }
-   * <p>
    */
   public RequestStatusPropType createRequestStatusPropType() {
     return new RequestStatusPropType();
@@ -328,7 +310,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkRegistrationEndPropType }
-   * <p>
    */
   public XBedeworkRegistrationEndPropType createXBedeworkRegistrationEndPropType() {
     return new XBedeworkRegistrationEndPropType();
@@ -336,7 +317,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link OrganizerPropType }
-   * <p>
    */
   public OrganizerPropType createOrganizerPropType() {
     return new OrganizerPropType();
@@ -344,7 +324,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link AvailableType }
-   * <p>
    */
   public AvailableType createAvailableType() {
     return new AvailableType();
@@ -352,7 +331,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VfreebusyType }
-   * <p>
    */
   public VfreebusyType createVfreebusyType() {
     return new VfreebusyType();
@@ -360,7 +338,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkMaxTicketsPropType }
-   * <p>
    */
   public XBedeworkMaxTicketsPropType createXBedeworkMaxTicketsPropType() {
     return new XBedeworkMaxTicketsPropType();
@@ -368,7 +345,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DelegatedFromParamType }
-   * <p>
    */
   public DelegatedFromParamType createDelegatedFromParamType() {
     return new DelegatedFromParamType();
@@ -376,7 +352,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ScheduleAgentParamType }
-   * <p>
    */
   public ScheduleAgentParamType createScheduleAgentParamType() {
     return new ScheduleAgentParamType();
@@ -384,7 +359,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link SentByParamType }
-   * <p>
    */
   public SentByParamType createSentByParamType() {
     return new SentByParamType();
@@ -392,7 +366,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link PartstatParamType }
-   * <p>
    */
   public PartstatParamType createPartstatParamType() {
     return new PartstatParamType();
@@ -400,7 +373,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ReltypeParamType }
-   * <p>
    */
   public ReltypeParamType createReltypeParamType() {
     return new ReltypeParamType();
@@ -408,7 +380,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ArrayOfComponents }
-   * <p>
    */
   public ArrayOfComponents createArrayOfComponents() {
     return new ArrayOfComponents();
@@ -416,7 +387,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link LanguageParamType }
-   * <p>
    */
   public LanguageParamType createLanguageParamType() {
     return new LanguageParamType();
@@ -424,7 +394,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CommentPropType }
-   * <p>
    */
   public CommentPropType createCommentPropType() {
     return new CommentPropType();
@@ -432,7 +401,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DurationParameterType }
-   * <p>
    */
   public DurationParameterType createDurationParameterType() {
     return new DurationParameterType();
@@ -440,7 +408,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VtodoType }
-   * <p>
    */
   public VtodoType createVtodoType() {
     return new VtodoType();
@@ -448,7 +415,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link WsCalendarIntervalType }
-   * <p>
    */
   public WsCalendarIntervalType createWsCalendarIntervalType() {
     return new WsCalendarIntervalType();
@@ -456,7 +422,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RangeParamType }
-   * <p>
    */
   public RangeParamType createRangeParamType() {
     return new RangeParamType();
@@ -464,7 +429,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link LinkPropType }
-   * <p>
    */
   public LinkPropType createLinkPropType() {
     return new LinkPropType();
@@ -472,7 +436,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link FbtypeParamType }
-   * <p>
    */
   public FbtypeParamType createFbtypeParamType() {
     return new FbtypeParamType();
@@ -480,7 +443,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CalscalePropType }
-   * <p>
    */
   public CalscalePropType createCalscalePropType() {
     return new CalscalePropType();
@@ -488,7 +450,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ContactPropType }
-   * <p>
    */
   public ContactPropType createContactPropType() {
     return new ContactPropType();
@@ -496,7 +457,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TznamePropType }
-   * <p>
    */
   public TznamePropType createTznamePropType() {
     return new TznamePropType();
@@ -504,7 +464,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VersionPropType }
-   * <p>
    */
   public VersionPropType createVersionPropType() {
     return new VersionPropType();
@@ -512,7 +471,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ValarmType }
-   * <p>
    */
   public ValarmType createValarmType() {
     return new ValarmType();
@@ -520,7 +478,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ScheduleForceSendParamType }
-   * <p>
    */
   public ScheduleForceSendParamType createScheduleForceSendParamType() {
     return new ScheduleForceSendParamType();
@@ -528,7 +485,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ExrulePropType }
-   * <p>
    */
   public ExrulePropType createExrulePropType() {
     return new ExrulePropType();
@@ -536,7 +492,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link WsCalendarGluonType }
-   * <p>
    */
   public WsCalendarGluonType createWsCalendarGluonType() {
     return new WsCalendarGluonType();
@@ -544,7 +499,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link EncodingParamType }
-   * <p>
    */
   public EncodingParamType createEncodingParamType() {
     return new EncodingParamType();
@@ -552,7 +506,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CompletedPropType }
-   * <p>
    */
   public CompletedPropType createCompletedPropType() {
     return new CompletedPropType();
@@ -560,7 +513,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link MemberParamType }
-   * <p>
    */
   public MemberParamType createMemberParamType() {
     return new MemberParamType();
@@ -568,7 +520,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TzurlPropType }
-   * <p>
    */
   public TzurlPropType createTzurlPropType() {
     return new TzurlPropType();
@@ -576,7 +527,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TriggerPropType }
-   * <p>
    */
   public TriggerPropType createTriggerPropType() {
     return new TriggerPropType();
@@ -584,7 +534,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VavailabilityType }
-   * <p>
    */
   public VavailabilityType createVavailabilityType() {
     return new VavailabilityType();
@@ -592,7 +541,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link LastModifiedPropType }
-   * <p>
    */
   public LastModifiedPropType createLastModifiedPropType() {
     return new LastModifiedPropType();
@@ -600,7 +548,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VjournalType }
-   * <p>
    */
   public VjournalType createVjournalType() {
     return new VjournalType();
@@ -608,7 +555,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ArtifactType }
-   * <p>
    */
   public ArtifactType createArtifactType() {
     return new ArtifactType();
@@ -616,7 +562,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link AttachPropType }
-   * <p>
    */
   public AttachPropType createAttachPropType() {
     return new AttachPropType();
@@ -624,7 +569,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link SequencePropType }
-   * <p>
    */
   public SequencePropType createSequencePropType() {
     return new SequencePropType();
@@ -632,7 +576,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link MethodPropType }
-   * <p>
    */
   public MethodPropType createMethodPropType() {
     return new MethodPropType();
@@ -640,7 +583,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TextParameterType }
-   * <p>
    */
   public TextParameterType createTextParameterType() {
     return new TextParameterType();
@@ -648,7 +590,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ExdatePropType }
-   * <p>
    */
   public ExdatePropType createExdatePropType() {
     return new ExdatePropType();
@@ -656,7 +597,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DtstampPropType }
-   * <p>
    */
   public DtstampPropType createDtstampPropType() {
     return new DtstampPropType();
@@ -664,7 +604,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TzidParamType }
-   * <p>
    */
   public TzidParamType createTzidParamType() {
     return new TzidParamType();
@@ -672,7 +611,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link UidPropType }
-   * <p>
    */
   public UidPropType createUidPropType() {
     return new UidPropType();
@@ -680,7 +618,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ResourcesPropType }
-   * <p>
    */
   public ResourcesPropType createResourcesPropType() {
     return new ResourcesPropType();
@@ -688,7 +625,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link LocationPropType }
-   * <p>
    */
   public LocationPropType createLocationPropType() {
     return new LocationPropType();
@@ -696,7 +632,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RrulePropType }
-   * <p>
    */
   public RrulePropType createRrulePropType() {
     return new RrulePropType();
@@ -704,7 +639,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XMicrosoftCdoIntendedstatusPropType }
-   * <p>
    */
   public XMicrosoftCdoIntendedstatusPropType createXMicrosoftCdoIntendedstatusPropType() {
     return new XMicrosoftCdoIntendedstatusPropType();
@@ -712,7 +646,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ProdidPropType }
-   * <p>
    */
   public ProdidPropType createProdidPropType() {
     return new ProdidPropType();
@@ -720,7 +653,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link FmttypeParamType }
-   * <p>
    */
   public FmttypeParamType createFmttypeParamType() {
     return new FmttypeParamType();
@@ -728,7 +660,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RelatedParamType }
-   * <p>
    */
   public RelatedParamType createRelatedParamType() {
     return new RelatedParamType();
@@ -736,7 +667,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkCostPropType }
-   * <p>
    */
   public XBedeworkCostPropType createXBedeworkCostPropType() {
     return new XBedeworkCostPropType();
@@ -744,7 +674,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DtstartPropType }
-   * <p>
    */
   public DtstartPropType createDtstartPropType() {
     return new DtstartPropType();
@@ -752,7 +681,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkExsynchStarttzidPropType }
-   * <p>
    */
   public XBedeworkExsynchStarttzidPropType createXBedeworkExsynchStarttzidPropType() {
     return new XBedeworkExsynchStarttzidPropType();
@@ -760,7 +688,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkExsynchEndtzidPropType }
-   * <p>
    */
   public XBedeworkExsynchEndtzidPropType createXBedeworkExsynchEndtzidPropType() {
     return new XBedeworkExsynchEndtzidPropType();
@@ -768,7 +695,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DescriptionPropType }
-   * <p>
    */
   public DescriptionPropType createDescriptionPropType() {
     return new DescriptionPropType();
@@ -776,7 +702,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link PriorityPropType }
-   * <p>
    */
   public PriorityPropType createPriorityPropType(int priority) {
     return new PriorityPropType(priority);
@@ -784,7 +709,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DurationPropType }
-   * <p>
    */
   public DurationPropType createDurationPropType() {
     return new DurationPropType();
@@ -792,7 +716,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link FreebusyPropType }
-   * <p>
    */
   public FreebusyPropType createFreebusyPropType() {
     return new FreebusyPropType();
@@ -800,7 +723,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RecurrenceIdPropType }
-   * <p>
    */
   public RecurrenceIdPropType createRecurrenceIdPropType() {
     return new RecurrenceIdPropType();
@@ -808,7 +730,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ActionPropType }
-   * <p>
    */
   public ActionPropType createActionPropType() {
     return new ActionPropType();
@@ -816,7 +737,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TzoffsettoPropType }
-   * <p>
    */
   public TzoffsettoPropType createTzoffsettoPropType() {
     return new TzoffsettoPropType();
@@ -824,7 +744,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ArrayOfParameters }
-   * <p>
    */
   public ArrayOfParameters createArrayOfParameters() {
     return new ArrayOfParameters();
@@ -832,7 +751,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link GeoPropType }
-   * <p>
    */
   public GeoPropType createGeoPropType() {
     return new GeoPropType();
@@ -840,7 +758,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DtendPropType }
-   * <p>
    */
   public DtendPropType createDtendPropType() {
     return new DtendPropType();
@@ -848,7 +765,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link StatusPropType }
-   * <p>
    */
   public StatusPropType createStatusPropType() {
     return new StatusPropType();
@@ -856,7 +772,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ClassPropType }
-   * <p>
    */
   public ClassPropType createClassPropType() {
     return new ClassPropType();
@@ -864,7 +779,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ArrayOfProperties }
-   * <p>
    */
   public ArrayOfProperties createArrayOfProperties() {
     return new ArrayOfProperties();
@@ -872,7 +786,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link PeriodType }
-   * <p>
    */
   public PeriodType createPeriodType() {
     return new PeriodType();
@@ -880,7 +793,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link AltrepParamType }
-   * <p>
    */
   public AltrepParamType createAltrepParamType() {
     return new AltrepParamType();
@@ -888,7 +800,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link UrlPropType }
-   * <p>
    */
   public UrlPropType createUrlPropType() {
     return new UrlPropType();
@@ -896,7 +807,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkInstanceOnlyPropType }
-   * <p>
    */
   public XBedeworkInstanceOnlyPropType createXBedeworkInstanceOnlyPropType() {
     return new XBedeworkInstanceOnlyPropType();
@@ -904,7 +814,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XMicrosoftCdoBusystatusPropType }
-   * <p>
    */
   public XMicrosoftCdoBusystatusPropType createXMicrosoftCdoBusystatusPropType() {
     return new XMicrosoftCdoBusystatusPropType();
@@ -912,7 +821,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CnParamType }
-   * <p>
    */
   public CnParamType createCnParamType() {
     return new CnParamType();
@@ -920,7 +828,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DuePropType }
-   * <p>
    */
   public DuePropType createDuePropType() {
     return new DuePropType();
@@ -928,7 +835,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TranspPropType }
-   * <p>
    */
   public TranspPropType createTranspPropType() {
     return new TranspPropType();
@@ -936,7 +842,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VtimezoneType }
-   * <p>
    */
   public VtimezoneType createVtimezoneType() {
     return new VtimezoneType();
@@ -944,7 +849,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RepeatPropType }
-   * <p>
    */
   public RepeatPropType createRepeatPropType() {
     return new RepeatPropType();
@@ -952,7 +856,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RelatedToPropType }
-   * <p>
    */
   public RelatedToPropType createRelatedToPropType() {
     return new RelatedToPropType();
@@ -960,7 +863,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ICalendarType }
-   * <p>
    */
   public ICalendarType createIcalendarType() {
     return new ICalendarType();
@@ -968,7 +870,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DirParamType }
-   * <p>
    */
   public DirParamType createDirParamType() {
     return new DirParamType();
@@ -976,7 +877,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link StandardType }
-   * <p>
    */
   public StandardType createStandardType() {
     return new StandardType();
@@ -984,7 +884,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TzoffsetfromPropType }
-   * <p>
    */
   public TzoffsetfromPropType createTzoffsetfromPropType() {
     return new TzoffsetfromPropType();
@@ -992,7 +891,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkMaxTicketsPerUserPropType }
-   * <p>
    */
   public XBedeworkMaxTicketsPerUserPropType createXBedeworkMaxTicketsPerUserPropType() {
     return new XBedeworkMaxTicketsPerUserPropType();
@@ -1000,7 +898,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ScheduleStatusParamType }
-   * <p>
    */
   public ScheduleStatusParamType createScheduleStatusParamType() {
     return new ScheduleStatusParamType();
@@ -1008,7 +905,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CutypeParamType }
-   * <p>
    */
   public CutypeParamType createCutypeParamType() {
     return new CutypeParamType();
@@ -1016,7 +912,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link XBedeworkRegistrationStartPropType }
-   * <p>
    */
   public XBedeworkRegistrationStartPropType createXBedeworkRegistrationStartPropType() {
     return new XBedeworkRegistrationStartPropType();
@@ -1024,7 +919,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RsvpParamType }
-   * <p>
    */
   public RsvpParamType createRsvpParamType() {
     return new RsvpParamType();
@@ -1032,7 +926,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link VcalendarType }
-   * <p>
    */
   public VcalendarType createVcalendarType() {
     return new VcalendarType();
@@ -1040,7 +933,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CategoriesPropType }
-   * <p>
    */
   public CategoriesPropType createCategoriesPropType() {
     return new CategoriesPropType();
@@ -1048,7 +940,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DaylightType }
-   * <p>
    */
   public DaylightType createDaylightType() {
     return new DaylightType();
@@ -1056,7 +947,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DateDatetimePropertyType }
-   * <p>
    */
   public DateDatetimePropertyType createDateDatetimePropertyType() {
     return new DateDatetimePropertyType();
@@ -1064,7 +954,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link DatetimePropertyType }
-   * <p>
    */
   public DatetimePropertyType createDatetimePropertyType() {
     return new DatetimePropertyType();
@@ -1072,7 +961,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CalAddressPropertyType }
-   * <p>
    */
   public CalAddressPropertyType createCalAddressPropertyType() {
     return new CalAddressPropertyType();
@@ -1080,7 +968,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link UtcDatetimePropertyType }
-   * <p>
    */
   public UtcDatetimePropertyType createUtcDatetimePropertyType() {
     return new UtcDatetimePropertyType();
@@ -1088,7 +975,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CalAddressParamType }
-   * <p>
    */
   public CalAddressParamType createCalAddressParamType() {
     return new CalAddressParamType();
@@ -1096,7 +982,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link UtcOffsetPropertyType }
-   * <p>
    */
   public UtcOffsetPropertyType createUtcOffsetPropertyType() {
     return new UtcOffsetPropertyType();
@@ -1104,7 +989,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link CalAddressListParamType }
-   * <p>
    */
   public CalAddressListParamType createCalAddressListParamType() {
     return new CalAddressListParamType();
@@ -1112,7 +996,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TextListPropertyType }
-   * <p>
    */
   public TextListPropertyType createTextListPropertyType() {
     return new TextListPropertyType();
@@ -1120,7 +1003,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link BooleanParameterType }
-   * <p>
    */
   public BooleanParameterType createBooleanParameterType() {
     return new BooleanParameterType();
@@ -1128,7 +1010,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TextPropertyType }
-   * <p>
    */
   public TextPropertyType createTextPropertyType() {
     return new TextPropertyType();
@@ -1136,7 +1017,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RecurPropertyType }
-   * <p>
    */
   public RecurPropertyType createRecurPropertyType() {
     return new RecurPropertyType();
@@ -1144,7 +1024,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link IntegerPropertyType }
-   * <p>
    */
   public IntegerPropertyType createIntegerPropertyType() {
     return new IntegerPropertyType();
@@ -1152,7 +1031,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link BusytypePropType }
-   * <p>
    */
   public BusytypePropType createBusytypePropType() {
     return new BusytypePropType();
@@ -1160,7 +1038,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link UriPropertyType }
-   * <p>
    */
   public UriPropertyType createUriPropertyType() {
     return new UriPropertyType();
@@ -1168,7 +1045,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link RecurType }
-   * <p>
    */
   public RecurType createRecurType() {
     return new RecurType();
@@ -1176,7 +1052,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link TzidPropType }
-   * <p>
    */
   public TzidPropType createTzidPropType() {
     return new TzidPropType();
@@ -1184,7 +1059,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link ToleranceValueType }
-   * <p>
    */
   public ToleranceValueType createToleranceValueType() {
     return new ToleranceValueType();
@@ -1192,7 +1066,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link UriParameterType }
-   * <p>
    */
   public UriParameterType createUriParameterType() {
     return new UriParameterType();
@@ -1201,7 +1074,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RecurrenceIdPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "recurrence-id", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RecurrenceIdPropType> createRecurrenceId(RecurrenceIdPropType value) {
@@ -1211,7 +1083,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link PriorityPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "priority", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<PriorityPropType> createPriority(PriorityPropType value) {
@@ -1221,7 +1092,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DescriptionPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "description", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DescriptionPropType> createDescription(DescriptionPropType value) {
@@ -1231,7 +1101,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ResourcesPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "resources", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ResourcesPropType> createResources(ResourcesPropType value) {
@@ -1241,7 +1110,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link CnParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "cn", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<CnParamType> createCn(CnParamType value) {
@@ -1251,7 +1119,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XMicrosoftCdoBusystatusPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-microsoft-cdo-busystatus", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XMicrosoftCdoBusystatusPropType> createXMicrosoftCdoBusystatus(XMicrosoftCdoBusystatusPropType value) {
@@ -1261,7 +1128,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link String }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "cal-address")
   public JAXBElement<String> createCalAddress(String value) {
@@ -1271,7 +1137,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link GeoPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "geo", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<GeoPropType> createGeo(GeoPropType value) {
@@ -1281,7 +1146,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VtimezoneType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vtimezone", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VtimezoneType> createVtimezone(VtimezoneType value) {
@@ -1291,7 +1155,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "date-time")
   public JAXBElement<XMLGregorianCalendar> createDateTime(XMLGregorianCalendar value) {
@@ -1301,7 +1164,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VcalendarType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vcalendar")
   public JAXBElement<VcalendarType> createVcalendar(VcalendarType value) {
@@ -1311,7 +1173,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link CategoriesPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "categories", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CategoriesPropType> createCategories(CategoriesPropType value) {
@@ -1321,7 +1182,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkRegistrationStartPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-registration-start", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkRegistrationStartPropType> createXBedeworkRegistrationStart(XBedeworkRegistrationStartPropType value) {
@@ -1331,7 +1191,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link CutypeParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "cutype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<CutypeParamType> createCutype(CutypeParamType value) {
@@ -1341,7 +1200,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkMaxTicketsPerUserPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-max-tickets-per-user", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkMaxTicketsPerUserPropType> createXBedeworkMaxTicketsPerUser(XBedeworkMaxTicketsPerUserPropType value) {
@@ -1351,7 +1209,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkUidParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-uid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<XBedeworkUidParamType> createXBedeworkUid(XBedeworkUidParamType value) {
@@ -1361,7 +1218,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link WsCalendarAttachType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-wsCalendar-attach", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<WsCalendarAttachType> createXWsCalendarAttach(WsCalendarAttachType value) {
@@ -1371,7 +1227,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RoleParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "role", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RoleParamType> createRole(RoleParamType value) {
@@ -1381,7 +1236,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link CreatedPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "created", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CreatedPropType> createCreated(CreatedPropType value) {
@@ -1391,7 +1245,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link WsCalendarTypeType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-wscalendar-type", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<WsCalendarTypeType> createXWscalendarType(WsCalendarTypeType value) {
@@ -1401,7 +1254,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link String }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "time")
   public JAXBElement<String> createTime(String value) {
@@ -1410,7 +1262,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link JAXBElement }{@code <}{@link Float }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "float")
   public JAXBElement<Float> createFloat(Float value) {
@@ -1420,7 +1271,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link UntilRecurType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "until")
   public JAXBElement<UntilRecurType> createUntil(UntilRecurType value) {
@@ -1430,7 +1280,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link AttendeePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "attendee", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<AttendeePropType> createAttendee(AttendeePropType value) {
@@ -1440,7 +1289,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ArrayOfComponents }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "components")
   public JAXBElement<ArrayOfComponents> createComponents(ArrayOfComponents value) {
@@ -1450,7 +1298,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RequestStatusPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "request-status", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RequestStatusPropType> createRequestStatus(RequestStatusPropType value) {
@@ -1460,7 +1307,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TextParameterType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rel", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<TextParameterType> createRel(TextParameterType value) {
@@ -1470,7 +1316,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link OrganizerPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-organizer", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<OrganizerPropType> createXBedeworkExsynchOrganizer(OrganizerPropType value) {
@@ -1480,7 +1325,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link SequencePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "sequence", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<SequencePropType> createSequence(SequencePropType value) {
@@ -1490,7 +1334,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "integer")
   public JAXBElement<BigInteger> createInteger(BigInteger value) {
@@ -1500,7 +1343,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link MemberParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "member", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<MemberParamType> createMember(MemberParamType value) {
@@ -1510,7 +1352,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ActionPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "action", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ActionPropType> createAction(ActionPropType value) {
@@ -1520,7 +1361,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TzoffsettoPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzoffsetto", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TzoffsettoPropType> createTzoffsetto(TzoffsettoPropType value) {
@@ -1530,7 +1370,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DtstartPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dtstart", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DtstartPropType> createDtstart(DtstartPropType value) {
@@ -1540,7 +1379,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link FmttypeParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "fmttype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<FmttypeParamType> createFmttype(FmttypeParamType value) {
@@ -1550,7 +1388,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkCostPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-cost", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkCostPropType> createXBedeworkCost(XBedeworkCostPropType value) {
@@ -1560,7 +1397,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RelatedParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "related", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RelatedParamType> createRelated(RelatedParamType value) {
@@ -1570,7 +1406,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link LocationPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "location", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<LocationPropType> createLocation(LocationPropType value) {
@@ -1580,7 +1415,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "count")
   public JAXBElement<BigInteger> createCount(BigInteger value) {
@@ -1590,7 +1424,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XMicrosoftCdoIntendedstatusPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-microsoft-cdo-intendedstatus", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XMicrosoftCdoIntendedstatusPropType> createXMicrosoftCdoIntendedstatus(XMicrosoftCdoIntendedstatusPropType value) {
@@ -1600,7 +1433,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkInstanceOnlyPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-instance-only", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkInstanceOnlyPropType> createXBedeworkInstanceOnly(XBedeworkInstanceOnlyPropType value) {
@@ -1610,7 +1442,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DtendPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dtend", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DtendPropType> createDtend(DtendPropType value) {
@@ -1620,7 +1451,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ICalendarType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "icalendar")
   public JAXBElement<ICalendarType> createIcalendar(ICalendarType value) {
@@ -1630,7 +1460,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ArtifactBaseType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "artifactBase")
   public JAXBElement<ArtifactBaseType> createArtifactBase(ArtifactBaseType value) {
@@ -1640,7 +1469,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RsvpParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rsvp", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RsvpParamType> createRsvp(RsvpParamType value) {
@@ -1650,7 +1478,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DurationPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "duration", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DurationPropType> createDuration(DurationPropType value) {
@@ -1660,7 +1487,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link StandardType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "standard", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<StandardType> createStandard(StandardType value) {
@@ -1670,7 +1496,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TolerancePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tolerance", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TolerancePropType> createTolerance(TolerancePropType value) {
@@ -1680,7 +1505,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link CommentPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "comment", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CommentPropType> createComment(CommentPropType value) {
@@ -1690,7 +1514,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DurationParameterType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "gap", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DurationParameterType> createGap(DurationParameterType value) {
@@ -1700,7 +1523,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link PartstatParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "partstat", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<PartstatParamType> createPartstat(PartstatParamType value) {
@@ -1710,7 +1532,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkMaxTicketsPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-max-tickets", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkMaxTicketsPropType> createXBedeworkMaxTickets(XBedeworkMaxTicketsPropType value) {
@@ -1720,7 +1541,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkRegistrationEndPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-registration-end", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkRegistrationEndPropType> createXBedeworkRegistrationEnd(XBedeworkRegistrationEndPropType value) {
@@ -1730,7 +1550,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link CompletedPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "completed", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CompletedPropType> createCompleted(CompletedPropType value) {
@@ -1740,7 +1559,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link EncodingParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "encoding", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<EncodingParamType> createEncoding(EncodingParamType value) {
@@ -1750,7 +1568,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ValarmType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "valarm", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<ValarmType> createValarm(ValarmType value) {
@@ -1760,7 +1577,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link CalscalePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "calscale", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<CalscalePropType> createCalscale(CalscalePropType value) {
@@ -1770,7 +1586,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link WsCalendarIntervalType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "interval", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<WsCalendarIntervalType> createInterval(WsCalendarIntervalType value) {
@@ -1780,7 +1595,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VtodoType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vtodo", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VtodoType> createVtodo(VtodoType value) {
@@ -1790,7 +1604,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link String }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "binary")
   public JAXBElement<String> createBinary(String value) {
@@ -1800,7 +1613,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TzidParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<TzidParamType> createTzid(TzidParamType value) {
@@ -1810,7 +1622,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DtstampPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dtstamp", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DtstampPropType> createDtstamp(DtstampPropType value) {
@@ -1820,7 +1631,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link MethodPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "method", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<MethodPropType> createMethod(MethodPropType value) {
@@ -1830,7 +1640,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VavailabilityType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vavailability", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VavailabilityType> createVavailability(VavailabilityType value) {
@@ -1840,7 +1649,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link FreebusyPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "freebusy", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<FreebusyPropType> createFreebusy(FreebusyPropType value) {
@@ -1850,7 +1658,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ArrayOfParameters }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "parameters")
   public JAXBElement<ArrayOfParameters> createParameters(ArrayOfParameters value) {
@@ -1860,7 +1667,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkExsynchEndtzidPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-endtzid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkExsynchEndtzidPropType> createXBedeworkExsynchEndtzid(XBedeworkExsynchEndtzidPropType value) {
@@ -1870,7 +1676,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkExsynchStarttzidPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-starttzid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkExsynchStarttzidPropType> createXBedeworkExsynchStarttzid(XBedeworkExsynchStarttzidPropType value) {
@@ -1880,7 +1685,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DuePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "due", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DuePropType> createDue(DuePropType value) {
@@ -1890,7 +1694,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link String }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "uri")
   public JAXBElement<String> createUri(String value) {
@@ -1900,7 +1703,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link PeriodType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "period")
   public JAXBElement<PeriodType> createPeriod(PeriodType value) {
@@ -1910,7 +1712,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link UrlPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "url", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<UrlPropType> createUrl(UrlPropType value) {
@@ -1920,7 +1721,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link String }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "text")
   public JAXBElement<String> createText(String value) {
@@ -1930,7 +1730,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RelatedToPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "related-to", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RelatedToPropType> createRelatedTo(RelatedToPropType value) {
@@ -1940,7 +1739,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RepeatPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "repeat", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RepeatPropType> createRepeat(RepeatPropType value) {
@@ -1950,7 +1748,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DaylightType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "daylight", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<DaylightType> createDaylight(DaylightType value) {
@@ -1960,7 +1757,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link BaseComponentType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "baseComponent")
   public JAXBElement<BaseComponentType> createBaseComponent(BaseComponentType value) {
@@ -1970,7 +1766,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "boolean")
   public JAXBElement<Boolean> createBoolean(Boolean value) {
@@ -1980,7 +1775,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RdatePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rdate", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RdatePropType> createRdate(RdatePropType value) {
@@ -1990,7 +1784,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link SummaryPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "summary", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<SummaryPropType> createSummary(SummaryPropType value) {
@@ -2000,7 +1793,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link String }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "utc-offset")
   public JAXBElement<String> createUtcOffset(String value) {
@@ -2009,7 +1801,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link JAXBElement }{@code <}{@link Float }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "latitude")
   public JAXBElement<Float> createLatitude(Float value) {
@@ -2019,7 +1810,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ScheduleAgentParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "schedule-agent", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ScheduleAgentParamType> createScheduleAgent(ScheduleAgentParamType value) {
@@ -2029,7 +1819,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DelegatedFromParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "delegated-from", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DelegatedFromParamType> createDelegatedFrom(DelegatedFromParamType value) {
@@ -2039,7 +1828,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VfreebusyType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vfreebusy", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VfreebusyType> createVfreebusy(VfreebusyType value) {
@@ -2049,7 +1837,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link AvailableType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "available", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<AvailableType> createAvailable(AvailableType value) {
@@ -2059,7 +1846,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link OrganizerPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "organizer", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<OrganizerPropType> createOrganizer(OrganizerPropType value) {
@@ -2069,7 +1855,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ScheduleForceSendParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "schedule-force-send", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ScheduleForceSendParamType> createScheduleForceSend(ScheduleForceSendParamType value) {
@@ -2079,7 +1864,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "date")
   public JAXBElement<XMLGregorianCalendar> createDate(XMLGregorianCalendar value) {
@@ -2089,7 +1873,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TznamePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzname", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TznamePropType> createTzname(TznamePropType value) {
@@ -2099,7 +1882,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link BaseParameterType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "baseParameter")
   public JAXBElement<BaseParameterType> createBaseParameter(BaseParameterType value) {
@@ -2109,7 +1891,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ExdatePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "exdate", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ExdatePropType> createExdate(ExdatePropType value) {
@@ -2119,7 +1900,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ArtifactType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "artifact")
   public JAXBElement<ArtifactType> createArtifact(ArtifactType value) {
@@ -2128,7 +1908,6 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link JAXBElement }{@code <}{@link Float }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "longitude")
   public JAXBElement<Float> createLongitude(Float value) {
@@ -2138,7 +1917,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DurationPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "granularity", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<DurationPropType> createGranularity(DurationPropType value) {
@@ -2148,7 +1926,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "utc-date-time")
   public JAXBElement<XMLGregorianCalendar> createUtcDateTime(XMLGregorianCalendar value) {
@@ -2158,7 +1935,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ProdidPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "prodid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ProdidPropType> createProdid(ProdidPropType value) {
@@ -2168,7 +1944,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link BasePropertyType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "baseProperty")
   public JAXBElement<BasePropertyType> createBaseProperty(BasePropertyType value) {
@@ -2178,7 +1953,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RrulePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "rrule", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<RrulePropType> createRrule(RrulePropType value) {
@@ -2188,7 +1962,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link UidPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "uid", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<UidPropType> createUid(UidPropType value) {
@@ -2198,7 +1971,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TranspPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "transp", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TranspPropType> createTransp(TranspPropType value) {
@@ -2208,7 +1980,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link AltrepParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "altrep", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<AltrepParamType> createAltrep(AltrepParamType value) {
@@ -2218,7 +1989,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ClassPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "class", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ClassPropType> createClass(ClassPropType value) {
@@ -2228,7 +1998,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ArrayOfProperties }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "properties")
   public JAXBElement<ArrayOfProperties> createProperties(ArrayOfProperties value) {
@@ -2238,7 +2007,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link StatusPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "status", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<StatusPropType> createStatus(StatusPropType value) {
@@ -2248,7 +2016,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DirParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "dir", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DirParamType> createDir(DirParamType value) {
@@ -2258,7 +2025,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ScheduleStatusParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "schedule-status", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ScheduleStatusParamType> createScheduleStatus(ScheduleStatusParamType value) {
@@ -2268,7 +2034,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TzoffsetfromPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzoffsetfrom", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TzoffsetfromPropType> createTzoffsetfrom(TzoffsetfromPropType value) {
@@ -2278,7 +2043,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VeventType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vevent", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VeventType> createVevent(VeventType value) {
@@ -2288,7 +2052,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link DelegatedToParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "delegated-to", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<DelegatedToParamType> createDelegatedTo(DelegatedToParamType value) {
@@ -2298,7 +2061,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link XBedeworkExsynchLastmodPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "x-bedework-exsynch-lastmod", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<XBedeworkExsynchLastmodPropType> createXBedeworkExsynchLastmod(XBedeworkExsynchLastmodPropType value) {
@@ -2308,7 +2070,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link LanguageParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "language", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<LanguageParamType> createLanguage(LanguageParamType value) {
@@ -2318,7 +2079,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ReltypeParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "reltype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<ReltypeParamType> createReltype(ReltypeParamType value) {
@@ -2328,7 +2088,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link SentByParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "sent-by", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<SentByParamType> createSentBy(SentByParamType value) {
@@ -2338,7 +2097,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link PercentCompletePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "percent-complete", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<PercentCompletePropType> createPercentComplete(PercentCompletePropType value) {
@@ -2348,7 +2106,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ExrulePropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "exrule", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ExrulePropType> createExrule(ExrulePropType value) {
@@ -2358,7 +2115,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link WsCalendarGluonType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "gluon", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<WsCalendarGluonType> createGluon(WsCalendarGluonType value) {
@@ -2368,7 +2124,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link ContactPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "contact", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<ContactPropType> createContact(ContactPropType value) {
@@ -2378,7 +2133,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link FbtypeParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "fbtype", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<FbtypeParamType> createFbtype(FbtypeParamType value) {
@@ -2388,7 +2142,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VersionPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "version", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<VersionPropType> createVersion(VersionPropType value) {
@@ -2398,7 +2151,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link RangeParamType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "range", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseParameter")
   public JAXBElement<RangeParamType> createRange(RangeParamType value) {
@@ -2408,7 +2160,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link LinkPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "link", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<LinkPropType> createLink(LinkPropType value) {
@@ -2418,7 +2169,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link AttachPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "attach", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<AttachPropType> createAttach(AttachPropType value) {
@@ -2428,7 +2178,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link VjournalType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "vjournal", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseComponent")
   public JAXBElement<VjournalType> createVjournal(VjournalType value) {
@@ -2438,7 +2187,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link LastModifiedPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "last-modified", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<LastModifiedPropType> createLastModified(LastModifiedPropType value) {
@@ -2448,7 +2196,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TriggerPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "trigger", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TriggerPropType> createTrigger(TriggerPropType value) {
@@ -2458,7 +2205,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TzurlPropType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzurl", substitutionHeadNamespace = "urn:ietf:params:xml:ns:icalendar-2.0", substitutionHeadName = "baseProperty")
   public JAXBElement<TzurlPropType> createTzurl(TzurlPropType value) {
@@ -2468,7 +2214,6 @@ public class ObjectFactory {
   /**
    * Create an instance of
    * {@link JAXBElement }{@code <}{@link TextPropertyType }{@code >}}
-   * <p>
    */
   @XmlElementDecl(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", name = "tzid", scope = ArrayOfProperties.class)
   public JAXBElement<TextPropertyType> createArrayOfPropertiesTzid(TextPropertyType value) {

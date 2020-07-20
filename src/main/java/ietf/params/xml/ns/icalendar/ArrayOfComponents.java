@@ -30,17 +30,13 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="ArrayOfComponents"> &lt;complexContent>
+ * <pre> &lt;complexType name="ArrayOfComponents"> &lt;complexContent>
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseComponent"
  * maxOccurs="unbounded" minOccurs="0"/> &lt;/sequence> &lt;/restriction>
  * &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArrayOfComponents", propOrder = {
@@ -53,6 +49,8 @@ public class ArrayOfComponents {
 
   /**
    * Gets the value of the baseComponent property.
+   *
+   * @return the value of the baseComponent
    */
   public List<JAXBElement<? extends BaseComponentType>> getBaseComponent() {
     if (baseComponent == null) {
@@ -96,10 +94,7 @@ public class ArrayOfComponents {
       return false;
     }
     final ArrayOfComponents other = (ArrayOfComponents) obj;
-    if (!Objects.equals(this.baseComponent, other.baseComponent)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.baseComponent, other.baseComponent);
   }
 
   @Override

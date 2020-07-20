@@ -39,7 +39,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * <p>
  */
 @XmlType(name = "WeekdayRecurType")
 @XmlEnum

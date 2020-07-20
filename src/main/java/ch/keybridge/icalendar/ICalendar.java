@@ -649,7 +649,7 @@ public class ICalendar {
     String PRODID = "-//Key Bridge iCalendarFactory/2//EN";
     VcalendarType vc = new VcalendarType();
     ObjectFactory o = new ObjectFactory();
-    vc.getProperties().addProperty(o.createCalscale(new CalscalePropType(ECalscaleValueType.GREGORIAN)));
+    vc.getProperties().addProperty(o.createCalscale(new CalscalePropType(CalscaleValueType.GREGORIAN)));
     vc.getProperties().addProperty(o.createVersion(new VersionPropType("2")));
     vc.getProperties().addProperty(o.createProdid(new ProdidPropType(PRODID)));
     vc.getComponents().addComponent(o.createVevent(vEvent));

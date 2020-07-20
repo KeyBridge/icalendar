@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
  * reltypeparam = "RELTYPE" "=" ("PARENT" ; Parent relationship - Default /
  * "CHILD" ; Child relationship / "SIBLING" ; Sibling relationship / iana-token
  * ; Some other IANA-registered ; iCalendar relationship type / x-name) ; A
@@ -30,19 +29,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * ; Default is PARENT
  * <p>
- * <p>
- * Java class for ReltypeParamType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre> &lt;complexType name="ReltypeParamType"> &lt;complexContent>
+ * Java class for ReltypeParamType complex type. The following schema fragment
+ * specifies the expected content contained within this class.
+ * <pre> &lt;complexType name="ReltypeParamType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}TextParameterType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReltypeParamType")

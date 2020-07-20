@@ -29,16 +29,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="IcalendarType"> &lt;complexContent>
+ * <pre> &lt;complexType name="IcalendarType"> &lt;complexContent>
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}vcalendar" maxOccurs="unbounded"/>
  * &lt;/sequence> &lt;/restriction> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "IcalendarType", propOrder = {
@@ -60,12 +56,8 @@ public class ICalendarType {
    * For example, to add a new item, do as follows:
    * <pre>
    *    getVcalendar().add(newItem);
-   * </pre>
-   * <p>
-   * <p>
-   * Objects of the following type(s) are allowed in the list
+   * </pre> Objects of the following type(s) are allowed in the list
      * {@link VcalendarType }
-   * <p>
    * <p>
    */
   public List<VcalendarType> getVcalendar() {

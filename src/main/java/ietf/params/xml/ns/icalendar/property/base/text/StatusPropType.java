@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
  * status = "STATUS" statparam ":" statvalue CRLF
  * <p>
  * statparam = *(";" other-param)
@@ -40,19 +39,12 @@ import javax.xml.bind.annotation.XmlType;
  * journal is final. / "CANCELLED" ;Indicates journal is removed. ;Status values
  * for "VJOURNAL".
  * <p>
- * <p>
- * Java class for StatusPropType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre> &lt;complexType name="StatusPropType"> &lt;complexContent> &lt;extension
+ * Java class for StatusPropType complex type. The following schema fragment
+ * specifies the expected content contained within this class.
+ * <pre> &lt;complexType name="StatusPropType"> &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}TextPropertyType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StatusPropType")

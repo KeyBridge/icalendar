@@ -30,16 +30,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="FreebusyPropType"> &lt;complexContent>
+ * <pre> &lt;complexType name="FreebusyPropType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}period"
  * maxOccurs="unbounded"/> &lt;/sequence> &lt;/extension> &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FreebusyPropType", propOrder = {
@@ -62,12 +58,8 @@ public class FreebusyPropType extends BasePropertyType {
    * <pre>
    *    getPeriod().add(newItem);
    * </pre>
-   * <p>
-   * <p>
-   * Objects of the following type(s) are allowed in the list
-     * {@link PeriodType }
-   * <p>
-   * <p>
+   *
+   * @return value of the period
    */
   public List<PeriodType> getPeriod() {
     if (period == null) {
@@ -100,9 +92,6 @@ public class FreebusyPropType extends BasePropertyType {
       return false;
     }
     final FreebusyPropType other = (FreebusyPropType) obj;
-    if (!Objects.equals(this.period, other.period)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.period, other.period);
   }
 }

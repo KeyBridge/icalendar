@@ -30,17 +30,13 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="ArrayOfParameters"> &lt;complexContent>
+ * <pre> &lt;complexType name="ArrayOfParameters"> &lt;complexContent>
  * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}baseParameter"
  * maxOccurs="unbounded" minOccurs="0"/> &lt;/sequence> &lt;/restriction>
  * &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArrayOfParameters", propOrder = {
@@ -53,6 +49,8 @@ public class ArrayOfParameters {
 
   /**
    * Gets the value of the baseParameter property.
+   *
+   * @return the value of the baseParameter
    */
   public List<JAXBElement<? extends BaseParameterType>> getBaseParameter() {
     if (baseParameter == null) {
@@ -85,9 +83,6 @@ public class ArrayOfParameters {
       return false;
     }
     final ArrayOfParameters other = (ArrayOfParameters) obj;
-    if (!Objects.equals(this.baseParameter, other.baseParameter)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.baseParameter, other.baseParameter);
   }
 }

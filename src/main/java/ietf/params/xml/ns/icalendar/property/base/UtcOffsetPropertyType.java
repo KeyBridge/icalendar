@@ -99,7 +99,6 @@ public class UtcOffsetPropertyType extends BasePropertyType {
    * Gets the value of the utcOffset property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getUtcOffset() {
     return utcOffset;
@@ -109,7 +108,6 @@ public class UtcOffsetPropertyType extends BasePropertyType {
    * Sets the value of the utcOffset property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setUtcOffset(String value) {
     this.utcOffset = value;

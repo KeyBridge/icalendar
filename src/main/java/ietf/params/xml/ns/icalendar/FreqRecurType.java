@@ -15,10 +15,10 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Java class for EFreqRecurType.
@@ -38,7 +38,6 @@ import java.time.temporal.TemporalUnit;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * <p>
  */
 @XmlType(name = "FreqRecurType")
 @XmlEnum

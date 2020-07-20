@@ -27,9 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="RequestStatusPropType"> &lt;complexContent>
+ * <pre> &lt;complexType name="RequestStatusPropType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element name="code"
  * type="{http://www.w3.org/2001/XMLSchema}string"/> &lt;element
@@ -37,8 +35,6 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;element name="extdata" type="{http://www.w3.org/2001/XMLSchema}string"/>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RequestStatusPropType", propOrder = {
@@ -59,7 +55,6 @@ public class RequestStatusPropType extends BasePropertyType {
    * Gets the value of the code property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getCode() {
     return code;
@@ -69,7 +64,6 @@ public class RequestStatusPropType extends BasePropertyType {
    * Sets the value of the code property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setCode(String value) {
     this.code = value;
@@ -83,7 +77,6 @@ public class RequestStatusPropType extends BasePropertyType {
    * Gets the value of the description property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getDescription() {
     return description;
@@ -93,7 +86,6 @@ public class RequestStatusPropType extends BasePropertyType {
    * Sets the value of the description property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setDescription(String value) {
     this.description = value;
@@ -107,7 +99,6 @@ public class RequestStatusPropType extends BasePropertyType {
    * Gets the value of the extdata property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getExtdata() {
     return extdata;
@@ -117,7 +108,6 @@ public class RequestStatusPropType extends BasePropertyType {
    * Sets the value of the extdata property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setExtdata(String value) {
     this.extdata = value;
@@ -151,9 +141,6 @@ public class RequestStatusPropType extends BasePropertyType {
     if (!Objects.equals(this.description, other.description)) {
       return false;
     }
-    if (!Objects.equals(this.extdata, other.extdata)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.extdata, other.extdata);
   }
 }

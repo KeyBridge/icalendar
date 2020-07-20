@@ -27,22 +27,15 @@ import javax.xml.namespace.QName;
 /**
  *
  * The artifact is here to handle elements that are not proper extensions of
- * wsCalendar.
- * <p>
- * <p>
- * Java class for ArtifactType complex type.
+ * wsCalendar. Java class for ArtifactType complex type.
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="ArtifactType"> &lt;complexContent> &lt;restriction
+ * <pre> &lt;complexType name="ArtifactType"> &lt;complexContent> &lt;restriction
  * base="{http://www.w3.org/2001/XMLSchema}anyType"> &lt;anyAttribute
  * processContents='lax' namespace='##other'/> &lt;/restriction>
  * &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArtifactType")

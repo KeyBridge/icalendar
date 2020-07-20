@@ -26,15 +26,11 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="UriParameterType"> &lt;complexContent>
+ * <pre> &lt;complexType name="UriParameterType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType">
  * &lt;sequence> &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}uri"/>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UriParameterType", propOrder = {
@@ -53,7 +49,6 @@ public class UriParameterType extends BaseParameterType {
    * Gets the value of the uri property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getUri() {
     return uri;
@@ -63,7 +58,6 @@ public class UriParameterType extends BaseParameterType {
    * Sets the value of the uri property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setUri(String value) {
     this.uri = value;
@@ -89,10 +83,7 @@ public class UriParameterType extends BaseParameterType {
       return false;
     }
     final UriParameterType other = (UriParameterType) obj;
-    if (!Objects.equals(this.uri, other.uri)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.uri, other.uri);
   }
 
   @Override

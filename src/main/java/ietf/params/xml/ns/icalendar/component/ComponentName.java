@@ -21,6 +21,14 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  * An enumerate list of iCalendar component types. The name is used when writing
  * the component to String.
+ * <p>
+ * 3.3. Components (RFC 6321)
+ * <p>
+ * Each calendar component in the "VCALENDAR" object, delimited by "BEGIN" and
+ * "END", will be converted to an enclosing XML element with the same name, but
+ * in lowercase. As an example, the table below shows iCalendar-to-xCal mappings
+ * for current iCalendar components. Any new iCalendar components added in the
+ * future will be converted in the same way.
  *
  * @author Jesse Caulfield <jesse@caulfield.org> 07/04/14
  */
@@ -29,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public enum ComponentName {
 
   AVAILABLE,
+  DAYLIGHT,
+  STANDARD,
   VALARM,
   VAVAILABILITY,
   VCALENDAR,
@@ -37,6 +47,6 @@ public enum ComponentName {
   VJOURNAL,
   VTIMEZONE,
   VTODO,
-  VVENUE;
+  VVENUE,
 
 }

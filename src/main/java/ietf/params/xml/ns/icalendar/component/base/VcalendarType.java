@@ -26,19 +26,14 @@ import javax.xml.bind.annotation.XmlType;
  * This type is the basis for all components and provides a base class for
  * applications.
  * <p>
- * <p>
  * Java class for VcalendarType complex type.
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="VcalendarType"> &lt;complexContent> &lt;extension
+ * <pre> &lt;complexType name="VcalendarType"> &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseComponentType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VcalendarType")

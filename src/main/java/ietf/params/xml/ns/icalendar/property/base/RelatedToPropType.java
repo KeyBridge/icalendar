@@ -26,17 +26,13 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="RelatedToPropType"> &lt;complexContent>
+ * <pre> &lt;complexType name="RelatedToPropType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;choice> &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}uri"/>
  * &lt;element name="uid" type="{http://www.w3.org/2001/XMLSchema}string"/>
  * &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}text"/> &lt;/choice>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RelatedToPropType", propOrder = {
@@ -54,7 +50,6 @@ public class RelatedToPropType extends BasePropertyType {
    * Gets the value of the uri property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getUri() {
     return uri;
@@ -64,7 +59,6 @@ public class RelatedToPropType extends BasePropertyType {
    * Sets the value of the uri property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setUri(String value) {
     this.uri = value;
@@ -78,7 +72,6 @@ public class RelatedToPropType extends BasePropertyType {
    * Gets the value of the uid property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getUid() {
     return uid;
@@ -88,7 +81,6 @@ public class RelatedToPropType extends BasePropertyType {
    * Sets the value of the uid property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setUid(String value) {
     this.uid = value;
@@ -102,7 +94,6 @@ public class RelatedToPropType extends BasePropertyType {
    * Gets the value of the text property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getText() {
     return text;
@@ -112,7 +103,6 @@ public class RelatedToPropType extends BasePropertyType {
    * Sets the value of the text property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setText(String value) {
     this.text = value;
@@ -146,9 +136,6 @@ public class RelatedToPropType extends BasePropertyType {
     if (!Objects.equals(this.uid, other.uid)) {
       return false;
     }
-    if (!Objects.equals(this.text, other.text)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.text, other.text);
   }
 }

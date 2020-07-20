@@ -25,16 +25,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="GeoPropType"> &lt;complexContent> &lt;extension
+ * <pre> &lt;complexType name="GeoPropType"> &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"> &lt;sequence>
  * &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}latitude"/>
  * &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}longitude"/>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GeoPropType", propOrder = {
@@ -49,7 +45,6 @@ public class GeoPropType
 
   /**
    * Gets the value of the latitude property.
-   * <p>
    */
   public float getLatitude() {
     return latitude;
@@ -57,7 +52,6 @@ public class GeoPropType
 
   /**
    * Sets the value of the latitude property.
-   * <p>
    */
   public void setLatitude(float value) {
     this.latitude = value;
@@ -69,7 +63,6 @@ public class GeoPropType
 
   /**
    * Gets the value of the longitude property.
-   * <p>
    */
   public float getLongitude() {
     return longitude;
@@ -77,7 +70,6 @@ public class GeoPropType
 
   /**
    * Sets the value of the longitude property.
-   * <p>
    */
   public void setLongitude(float value) {
     this.longitude = value;
@@ -89,14 +81,17 @@ public class GeoPropType
 
   @Override
   public int hashCode() {
-    int hash = 3;
-    hash = 19 * hash + Float.floatToIntBits(this.latitude);
-    hash = 19 * hash + Float.floatToIntBits(this.longitude);
+    int hash = 5;
+    hash = 97 * hash + Float.floatToIntBits(this.latitude);
+    hash = 97 * hash + Float.floatToIntBits(this.longitude);
     return hash;
   }
 
   @Override
   public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
     if (obj == null) {
       return false;
     }
@@ -107,9 +102,7 @@ public class GeoPropType
     if (Float.floatToIntBits(this.latitude) != Float.floatToIntBits(other.latitude)) {
       return false;
     }
-    if (Float.floatToIntBits(this.longitude) != Float.floatToIntBits(other.longitude)) {
-      return false;
-    }
-    return true;
+    return Float.floatToIntBits(this.longitude) == Float.floatToIntBits(other.longitude);
   }
+
 }

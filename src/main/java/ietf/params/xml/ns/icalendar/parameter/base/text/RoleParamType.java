@@ -21,22 +21,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
  * Standard values "CHAIR" "REQ-PARTICIPANT" "OPT-PARTICIPANT" "NON-PARTICIPANT"
  * <p>
- * <p>
- * Java class for RoleParamType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre> &lt;complexType name="RoleParamType"> &lt;complexContent> &lt;extension
+ * Java class for RoleParamType complex type. The following schema fragment
+ * specifies the expected content contained within this class.
+ * <pre> &lt;complexType name="RoleParamType"> &lt;complexContent> &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}TextParameterType">
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RoleParamType")

@@ -15,7 +15,7 @@
  */
 package ietf.params.xml.ns.icalendar.property.base;
 
-import ietf.params.xml.ns.icalendar.ECalscaleValueType;
+import ietf.params.xml.ns.icalendar.CalscaleValueType;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -27,16 +27,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="CalscalePropType"> &lt;complexContent>
+ * <pre> &lt;complexType name="CalscalePropType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element name="text"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}ECalscaleValueType"/>
  * &lt;/sequence> &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CalscalePropType", propOrder = {
@@ -45,33 +41,31 @@ import javax.xml.bind.annotation.XmlType;
 public class CalscalePropType extends BasePropertyType {
 
   @XmlElement(required = true)
-  protected ECalscaleValueType text;
+  protected CalscaleValueType text;
 
   public CalscalePropType() {
-    this.text = ECalscaleValueType.GREGORIAN;
+    this.text = CalscaleValueType.GREGORIAN;
   }
 
-  public CalscalePropType(ECalscaleValueType text) {
+  public CalscalePropType(CalscaleValueType text) {
     this.text = text;
   }
 
   /**
    * Gets the value of the text property.
    *
-   * @return possible object is {@link ECalscaleValueType }
-   *
+   * @return possible object is {@link CalscaleValueType }
    */
-  public ECalscaleValueType getText() {
+  public CalscaleValueType getText() {
     return text;
   }
 
   /**
    * Sets the value of the text property.
    *
-   * @param value allowed object is {@link ECalscaleValueType }
-   *
+   * @param value allowed object is {@link CalscaleValueType }
    */
-  public void setText(ECalscaleValueType value) {
+  public void setText(CalscaleValueType value) {
     this.text = value;
   }
 
@@ -95,9 +89,6 @@ public class CalscalePropType extends BasePropertyType {
       return false;
     }
     final CalscalePropType other = (CalscalePropType) obj;
-    if (this.text != other.text) {
-      return false;
-    }
-    return true;
+    return this.text == other.text;
   }
 }

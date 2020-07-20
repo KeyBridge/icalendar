@@ -28,16 +28,12 @@ import javax.xml.datatype.Duration;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="DurationParameterType"> &lt;complexContent>
+ * <pre> &lt;complexType name="DurationParameterType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType">
  * &lt;sequence> &lt;element name="duration"
  * type="{http://www.w3.org/2001/XMLSchema}duration"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DurationParameterType", propOrder = {
@@ -52,7 +48,6 @@ public class DurationParameterType extends BaseParameterType {
    * Gets the value of the duration property.
    *
    * @return possible object is {@link Duration }
-   *
    */
   public Duration getDuration() {
     return duration;
@@ -62,7 +57,6 @@ public class DurationParameterType extends BaseParameterType {
    * Sets the value of the duration property.
    *
    * @param value allowed object is {@link Duration }
-   *
    */
   public void setDuration(Duration value) {
     this.duration = value;
@@ -88,9 +82,6 @@ public class DurationParameterType extends BaseParameterType {
       return false;
     }
     final DurationParameterType other = (DurationParameterType) obj;
-    if (!Objects.equals(this.duration, other.duration)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.duration, other.duration);
   }
 }

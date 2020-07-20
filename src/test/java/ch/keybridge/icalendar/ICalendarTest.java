@@ -13,12 +13,8 @@
  */
 package ch.keybridge.icalendar;
 
-import ch.keybridge.icalendar.ICalendar;
 import ietf.params.xml.ns.icalendar.PeriodType;
 import ietf.params.xml.ns.icalendar.RecurType;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -27,6 +23,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *
@@ -128,9 +126,9 @@ public class ICalendarTest {
     int i = 0;
     for (PeriodType periodType : periodSet) {
       System.out.println("    " + i++
-              + " " + Duration.between(periodType.getStart(), periodType.getEnd())
-              + "   " + periodType.getStart().format(format)
-              + "   " + periodType.getEnd().format(format)
+        + " " + Duration.between(periodType.getStart(), periodType.getEnd())
+        + "   " + periodType.getStart().format(format)
+        + "   " + periodType.getEnd().format(format)
       );
     }
 

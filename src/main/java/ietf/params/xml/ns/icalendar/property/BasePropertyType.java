@@ -61,7 +61,6 @@ public abstract class BasePropertyType {
    * Gets the value of the parameters property.
    *
    * @return possible object is {@link ArrayOfParameters }
-   *
    */
   public ArrayOfParameters getParameters() {
     if (parameters == null) {
@@ -74,7 +73,6 @@ public abstract class BasePropertyType {
    * Sets the value of the parameters property.
    *
    * @param value allowed object is {@link ArrayOfParameters }
-   *
    */
   public void setParameters(ArrayOfParameters value) {
     this.parameters = value;
@@ -100,9 +98,6 @@ public abstract class BasePropertyType {
       return false;
     }
     final BasePropertyType other = (BasePropertyType) obj;
-    if (!Objects.equals(this.parameters, other.parameters)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.parameters, other.parameters);
   }
 }

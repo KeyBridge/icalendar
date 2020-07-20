@@ -17,7 +17,6 @@ package ietf.params.xml.ns.icalendar.property.base;
 
 import ietf.params.xml.ns.icalendar.adapter.XmlAdapterDurationXCalDateTime;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
-
 import java.time.Duration;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -100,7 +99,6 @@ public class DurationPropType extends BasePropertyType {
    * Gets the value of the duration property.
    *
    * @return possible object is {@link String }
-   *
    */
   public Duration getDuration() {
     return duration;
@@ -110,7 +108,6 @@ public class DurationPropType extends BasePropertyType {
    * Sets the value of the duration property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setDuration(Duration value) {
     this.duration = value;

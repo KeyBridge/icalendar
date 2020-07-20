@@ -25,26 +25,17 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="CalAddressParamType"> &lt;complexContent>
+ * <pre> &lt;complexType name="CalAddressParamType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType">
  * &lt;sequence> &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}cal-address"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CalAddressParamType", propOrder = {
-  "calAddress"
-})
-@XmlSeeAlso({
-  SentByParamType.class
-})
-public class CalAddressParamType
-  extends BaseParameterType {
+@XmlType(name = "CalAddressParamType", propOrder = {"calAddress"})
+@XmlSeeAlso({SentByParamType.class})
+public class CalAddressParamType extends BaseParameterType {
 
   @XmlElement(name = "cal-address", required = true)
   protected String calAddress;
@@ -53,7 +44,6 @@ public class CalAddressParamType
    * Gets the value of the calAddress property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getCalAddress() {
     return calAddress;
@@ -63,7 +53,6 @@ public class CalAddressParamType
    * Sets the value of the calAddress property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setCalAddress(String value) {
     this.calAddress = value;
@@ -89,9 +78,6 @@ public class CalAddressParamType
       return false;
     }
     final CalAddressParamType other = (CalAddressParamType) obj;
-    if (!Objects.equals(this.calAddress, other.calAddress)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.calAddress, other.calAddress);
   }
 }

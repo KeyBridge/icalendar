@@ -27,16 +27,12 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <p>
- * <
- * pre> &lt;complexType name="RecurPropertyType"> &lt;complexContent>
+ * <pre> &lt;complexType name="RecurPropertyType"> &lt;complexContent>
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType">
  * &lt;sequence> &lt;element name="recur"
  * type="{urn:ietf:params:xml:ns:icalendar-2.0}RecurType"/> &lt;/sequence>
  * &lt;/extension> &lt;/complexContent> &lt;/complexType>
  * </pre>
- * <p>
- * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RecurPropertyType", propOrder = {
@@ -62,7 +58,6 @@ public class RecurPropertyType extends BasePropertyType {
    * Gets the value of the recur property.
    *
    * @return possible object is {@link RecurType }
-   *
    */
   public RecurType getRecur() {
     return recur;
@@ -72,7 +67,6 @@ public class RecurPropertyType extends BasePropertyType {
    * Sets the value of the recur property.
    *
    * @param value allowed object is {@link RecurType }
-   *
    */
   public void setRecur(RecurType value) {
     this.recur = value;
@@ -98,10 +92,7 @@ public class RecurPropertyType extends BasePropertyType {
       return false;
     }
     final RecurPropertyType other = (RecurPropertyType) obj;
-    if (!Objects.equals(this.recur, other.recur)) {
-      return false;
-    }
-    return true;
+    return Objects.equals(this.recur, other.recur);
   }
 
   @Override
