@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.*;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="BooleanParameterType"&gt; &lt;complexContent>
+ * <pre>  &lt;complexType name="BooleanParameterType"&gt; &lt;complexContent&gt;
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseParameterType"&gt;
  * &lt;sequence&gt; &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}boolean"/&gt; &lt;/sequence&gt;
@@ -41,6 +41,8 @@ public class BooleanParameterType extends BaseParameterType {
 
   /**
    * Gets the value of the boolean property.
+   *
+   * @return the value of the boolean property
    */
   public boolean isBoolean() {
     return _boolean;
@@ -48,6 +50,8 @@ public class BooleanParameterType extends BaseParameterType {
 
   /**
    * Sets the value of the boolean property.
+   *
+   * @param value the value
    */
   public void setBoolean(boolean value) {
     this._boolean = value;

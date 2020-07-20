@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.*;
  * <p>
  * Java class for WsCalendarAttachType complex type. The following schema
  * fragment specifies the expected content contained within this class.
- * <pre> &lt;complexType name="WsCalendarAttachType"&gt; &lt;complexContent>
+ * <pre>  &lt;complexType name="WsCalendarAttachType"&gt; &lt;complexContent&gt;
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"&gt;
  * &lt;choice maxOccurs="unbounded" minOccurs="0"&gt; &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}artifact"/&gt; &lt;element

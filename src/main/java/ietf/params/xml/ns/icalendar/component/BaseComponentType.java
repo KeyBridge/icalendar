@@ -213,7 +213,7 @@ public abstract class BaseComponentType {
    * time that the information associated with the calendar component was last
    * revised in the calendar store.
    *
-   * @return
+   * @return Date-Time Stamp. dtstamp is a DtstampPropType
    */
   public ZonedDateTime getDTSTAMP() {
     /**

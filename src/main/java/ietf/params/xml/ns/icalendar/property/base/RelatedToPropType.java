@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="RelatedToPropType"&gt; &lt;complexContent>
+ * <pre>  &lt;complexType name="RelatedToPropType"&gt; &lt;complexContent&gt;
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"&gt;
  * &lt;choice&gt; &lt;element ref="{urn:ietf:params:xml:ns:icalendar-2.0}uri"/&gt;
  * &lt;element name="uid" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;

@@ -305,7 +305,7 @@ public class UntilRecurType implements Serializable {
   /**
    * Print both the dateTime and date fields.
    *
-   * @return
+   * @return the dateTime and date fields
    */
   public String toStringFull() {
     return "UntilRecurType"

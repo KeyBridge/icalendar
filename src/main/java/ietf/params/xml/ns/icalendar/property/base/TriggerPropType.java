@@ -132,7 +132,7 @@ public class TriggerPropType extends BasePropertyType {
    * 01-10-26T21:32 (all the parts must be specified).
    *
    * @see <a
-   * href="http://books.xmlschemata.org/relaxng/ch19-77049.html"&gt;xsd:dateTime</a>
+   * href="http://books.xmlschemata.org/relaxng/ch19-77049.html">xsd:dateTime</a>
    */
   @XmlElement(name = "date-time")
   @XmlJavaTypeAdapter(type = XMLGregorianCalendar.class, value = XmlAdapterXCalDateTime.class)

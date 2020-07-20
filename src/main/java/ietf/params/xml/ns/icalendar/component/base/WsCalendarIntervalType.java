@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * Java class for WsCalendarIntervalType complex type. The following schema
  * fragment specifies the expected content contained within this class.
- * <pre> &lt;complexType name="WsCalendarIntervalType"&gt; &lt;complexContent>
+ * <pre>  &lt;complexType name="WsCalendarIntervalType"&gt; &lt;complexContent&gt;
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BaseComponentType"&gt;
  * &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
  * </pre>

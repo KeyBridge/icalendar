@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="DateDatetimePropertyType"&gt; &lt;complexContent>
+ * <pre>  &lt;complexType name="DateDatetimePropertyType"&gt; &lt;complexContent&gt;
  * &lt;extension base="{urn:ietf:params:xml:ns:icalendar-2.0}BasePropertyType"&gt;
  * &lt;sequence&gt; &lt;choice&gt; &lt;element
  * ref="{urn:ietf:params:xml:ns:icalendar-2.0}date-time"/&gt; &lt;element

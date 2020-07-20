@@ -53,7 +53,7 @@ public class VeventType extends BaseComponentType {
   /**
    * Print the VEvent to a simple string format.
    *
-   * @return
+   * @return the VEvent as a simple string format
    */
   public String toStringMultiline() {
     return BEGIN + ':' + getName()

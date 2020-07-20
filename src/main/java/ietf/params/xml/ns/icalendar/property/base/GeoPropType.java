@@ -45,6 +45,8 @@ public class GeoPropType
 
   /**
    * Gets the value of the latitude property.
+   *
+   * @return the value of the latitude
    */
   public float getLatitude() {
     return latitude;
@@ -52,6 +54,8 @@ public class GeoPropType
 
   /**
    * Sets the value of the latitude property.
+   *
+   * @param value the value of the latitude
    */
   public void setLatitude(float value) {
     this.latitude = value;
@@ -63,6 +67,8 @@ public class GeoPropType
 
   /**
    * Gets the value of the longitude property.
+   *
+   * @return the value of the longitude
    */
   public float getLongitude() {
     return longitude;
@@ -70,6 +76,8 @@ public class GeoPropType
 
   /**
    * Sets the value of the longitude property.
+   *
+   * @param value the value of the longitude
    */
   public void setLongitude(float value) {
     this.longitude = value;

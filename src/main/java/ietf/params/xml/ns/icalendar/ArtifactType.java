@@ -31,7 +31,7 @@ import javax.xml.namespace.QName;
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * <pre> &lt;complexType name="ArtifactType"> &lt;complexContent&gt; &lt;restriction
+ * <pre>  &lt;complexType name="ArtifactType"&gt; &lt;complexContent&gt; &lt;restriction
  * base="{http://www.w3.org/2001/XMLSchema}anyType"&gt; &lt;anyAttribute
  * processContents='lax' namespace='##other'/&gt; &lt;/restriction&gt;
  * &lt;/complexContent&gt; &lt;/complexType&gt;

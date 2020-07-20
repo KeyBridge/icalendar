@@ -117,7 +117,7 @@ public class UtcOffsetPropertyType extends BasePropertyType {
    * Helper method to automatically set the UTC offset string from a given Time
    * Zone.
    *
-   * @param timeZone
+   * @param timeZone the UTC offset time zone
    */
   public final void setUtcOffset(TimeZone timeZone) {
     this.utcOffset = String.format("%s%02d:%02d",

@@ -25,11 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  * transvalue = "OPAQUE" ;Blocks or opaque on busy time searches. /
  * "TRANSPARENT" ;Transparent on busy time searches. ;Default value is OPAQUE
  * <p>
- * <p>
- * Java class for TranspPropType complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * Java class for TranspPropType complex type. The following schema fragment
+ * specifies the expected content contained within this class.
  * <pre> &lt;complexType name="TranspPropType"&gt; &lt;complexContent&gt; &lt;extension
  * base="{urn:ietf:params:xml:ns:icalendar-2.0}TextPropertyType"&gt;
  * &lt;/extension&gt; &lt;/complexContent&gt; &lt;/complexType&gt;
