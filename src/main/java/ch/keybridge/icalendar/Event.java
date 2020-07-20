@@ -232,7 +232,7 @@ public class Event implements Comparable<Event>, Serializable {
    * object. Rather, they provide a method for capturing the intention of the
    * owner for the access to the component.
    */
-  private EClassification classification;
+  private ClassificationType classification;
 
   /**
    * The property defines the organizer for a component. Non-standard, language,
@@ -305,7 +305,7 @@ public class Event implements Comparable<Event>, Serializable {
    * which do not take up the individual's (or resource's) time SHOULD be
    * recorded as TRANSPARENT, making them invisible to free-busy time searches.
    */
-  private ETransparency transparency;
+  private TransparencyType transparency;
   /**
    * This property is an extension field the identifies whether the Event
    * represents an all day (e.g. 24-hour) event.
@@ -873,7 +873,7 @@ public class Event implements Comparable<Event>, Serializable {
    *
    * @return the iCalendar “CLASS” property
    */
-  public EClassification getClassification() {
+  public ClassificationType getClassification() {
     return classification;
   }
 
@@ -884,7 +884,7 @@ public class Event implements Comparable<Event>, Serializable {
    * @param classification the iCalendar “CLASS” property. e.g. "PUBLIC",
    *                       "PRIVATE", “CONFIDENTIAL".
    */
-  public void setClassification(EClassification classification) {
+  public void setClassification(ClassificationType classification) {
     this.classification = classification;
   }
 
@@ -1056,7 +1056,7 @@ public class Event implements Comparable<Event>, Serializable {
    *
    * @return the transparency indicator
    */
-  public ETransparency getTransparency() {
+  public TransparencyType getTransparency() {
     return transparency;
   }
 
@@ -1069,7 +1069,7 @@ public class Event implements Comparable<Event>, Serializable {
    *
    * @param transparency the transparency indicator: OPAQUE or TRANSPARENT
    */
-  public void setTransparency(ETransparency transparency) {
+  public void setTransparency(TransparencyType transparency) {
     this.transparency = transparency;
   }
 
@@ -1968,9 +1968,9 @@ public class Event implements Comparable<Event>, Serializable {
    * recorded as TRANSPARENT, making them invisible to free-busy time searches.
    */
   @SuppressWarnings("PublicInnerClass")
-  @XmlType(name = "ETransparency")
+  @XmlType(name = "TransparencyType")
   @XmlEnum
-  public static enum ETransparency {
+  public static enum TransparencyType {
 
     /**
      * An events that consumes actual time for the individual or resource.
@@ -2003,9 +2003,9 @@ public class Event implements Comparable<Event>, Serializable {
    * the intention of the owner for the access to the component.
    */
   @SuppressWarnings("PublicInnerClass")
-  @XmlType(name = "EClassification")
+  @XmlType(name = "ClassificationType")
   @XmlEnum
-  public static enum EClassification {
+  public static enum ClassificationType {
     PUBLIC,
     PRIVATE,
     CONFIDENTIAL

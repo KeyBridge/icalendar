@@ -16,7 +16,7 @@
 package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
-import ietf.params.xml.ns.icalendar.component.EComponentName;
+import ietf.params.xml.ns.icalendar.component.ComponentName;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
 public class AvailableType extends BaseComponentType {
 
   public AvailableType() {
-    super(EComponentName.AVAILABLE);
+    super(ComponentName.AVAILABLE);
   }
 
 }

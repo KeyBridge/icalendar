@@ -16,8 +16,9 @@
 package ietf.params.xml.ns.icalendar.component.base;
 
 import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME;
+
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
-import ietf.params.xml.ns.icalendar.component.EComponentName;
+import ietf.params.xml.ns.icalendar.component.ComponentName;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,7 +38,7 @@ import javax.xml.bind.annotation.XmlType;
 public class VeventType extends BaseComponentType {
 
   public VeventType() {
-    super(EComponentName.VEVENT);
+    super(ComponentName.VEVENT);
   }
 
   /**

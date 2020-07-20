@@ -646,11 +646,11 @@ public class ICalendar {
    * @throws java.lang.Exception if the VeventType fails to build
    */
   public String buildVCalendar(VeventType vEvent) throws Exception {
-    String PRODID = "-//Key Bridge iCalendarFactory/2.00//EN";
+    String PRODID = "-//Key Bridge iCalendarFactory/2//EN";
     VcalendarType vc = new VcalendarType();
     ObjectFactory o = new ObjectFactory();
     vc.getProperties().addProperty(o.createCalscale(new CalscalePropType(ECalscaleValueType.GREGORIAN)));
-    vc.getProperties().addProperty(o.createVersion(new VersionPropType("2.0")));
+    vc.getProperties().addProperty(o.createVersion(new VersionPropType("2")));
     vc.getProperties().addProperty(o.createProdid(new ProdidPropType(PRODID)));
     vc.getComponents().addComponent(o.createVevent(vEvent));
     return vc.toString();
@@ -666,6 +666,21 @@ public class ICalendar {
    * Apache.lang HashCodeBuilder method, which is not linked to the library by
    * default.
    *
+   * @param dateStart      the event start date
+   * @param dateEnd        the event end date
+   * @param uid            the event uid value
+   * @param allDay         if this is an all day event
+   * @param organizer      the organizer id, typ email
+   * @param summary        a brief event summary
+   * @param description    a detailed event description
+   * @param categories     a list of event categories to help search and
+   *                       identify
+   * @param classification the event classification type. See
+   *                       {@code ClassificationType}
+   * @param transparency   the event transparancy. See {@code TransparencyType}
+   * @param rrule          the event recurrence
+   * @param tzid           the event timezone id
+   * @param location       the event location
    * @return an iCalendar VEvent from this Event configuration
    */
   public VeventType vEvent(LocalDate dateStart,

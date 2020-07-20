@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlEnum
 @XmlTransient
-public enum EComponentName {
+public enum ComponentName {
 
   AVAILABLE,
   VALARM,

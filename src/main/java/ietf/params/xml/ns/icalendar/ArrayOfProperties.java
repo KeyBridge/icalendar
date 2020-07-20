@@ -48,8 +48,7 @@ public class ArrayOfProperties {
 
   @XmlElementRefs({
     @XmlElementRef(name = "baseProperty", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
-    ,
-    @XmlElementRef(name = "tzid", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
+    ,  @XmlElementRef(name = "tzid", namespace = "urn:ietf:params:xml:ns:icalendar-2.0", type = JAXBElement.class, required = false)
   })
   protected List<JAXBElement<? extends BasePropertyType>> basePropertyOrTzid;
 

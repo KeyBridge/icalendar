@@ -87,7 +87,7 @@ public abstract class BaseComponentType {
    * The iCalendar object name. This is set in the component constructor.
    */
   @XmlTransient
-  protected EComponentName name;
+  protected ComponentName name;
 
   protected ArrayOfProperties properties;
   protected ArrayOfComponents components;
@@ -95,21 +95,21 @@ public abstract class BaseComponentType {
   public BaseComponentType() {
   }
 
-  public BaseComponentType(EComponentName name) {
+  public BaseComponentType(ComponentName name) {
     this.name = name;
   }
 
-  public BaseComponentType(EComponentName name, ArrayOfProperties properties) {
+  public BaseComponentType(ComponentName name, ArrayOfProperties properties) {
     this.name = name;
     this.properties = properties;
   }
 
-  public BaseComponentType(EComponentName name, ArrayOfComponents components) {
+  public BaseComponentType(ComponentName name, ArrayOfComponents components) {
     this.name = name;
     this.components = components;
   }
 
-  public BaseComponentType(EComponentName name, ArrayOfProperties properties, ArrayOfComponents components) {
+  public BaseComponentType(ComponentName name, ArrayOfProperties properties, ArrayOfComponents components) {
     this.name = name;
     this.properties = properties;
     this.components = components;
@@ -120,7 +120,7 @@ public abstract class BaseComponentType {
    *
    * @return the iCalendar object name
    */
-  public EComponentName getName() {
+  public ComponentName getName() {
     return name;
   }
 
