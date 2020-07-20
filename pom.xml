@@ -23,13 +23,13 @@
     History:
     v0.0.1 -    2011 - implement draft-daboo-et-al-icalendar-in-xml-11
     v0.1.0 -    2013 - relicense from gpl to apache
-    repost to github
-    add TV whitespace customizations
+    - repost to github
+    - add TV whitespace customizations
     v0.11 -   2014 - public release candidate
-    add icalendar utility to use this as back end for primefaces schedule widget
-    add recurrence
-    force default timezones to UTC
-    use maven build system
+    - add icalendar utility to use this as back end for primefaces schedule widget
+    - add recurrence
+    - force default timezones to UTC
+    - use maven build system
     v1.0.0 - 2017 - check and confirm conformance with current RFC specs.
     v2.0.0 - rewrite using JDK8 date and java.time classes
     v2.0.1 - change method signature for calculateExpiration; fix until configuration
@@ -41,7 +41,7 @@
     v2.4.0 - add java.time compatible Event class, reorganize ICalendar utility; move JSF content to lib-faces-icalendar
     v2.5.0 - rename enumerated classes, remove 'E' prefix
     v2.6.0 - rewrite to use zonedatetime instead of localdatetime
-
+    - (extensively) clean up javadoc to satisfy jdk8 lint
 
 
   </description>
