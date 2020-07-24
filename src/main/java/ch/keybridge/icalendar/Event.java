@@ -412,12 +412,12 @@ public class Event implements Comparable<Event>, Serializable {
    * @return an Event instance with the desired configuration
    */
   public static Event getInstance(ZonedDateTime dateStart, ZonedDateTime dateEnd, RecurType recur) {
-    Event s = new Event();
-    s.setDateStart(dateStart);
-    s.setDateEnd(dateEnd);
-    s.setZoneId(dateStart.getZone());
-    s.setRecurType(recur);
-    return s;
+    Event e = new Event();
+    e.setDateStart(dateStart);
+    e.setDateEnd(dateEnd);
+    e.setZoneId(dateStart.getZone());
+    e.setRecurType(recur);
+    return e;
   }
 
   /**
@@ -1303,14 +1303,14 @@ public class Event implements Comparable<Event>, Serializable {
 
   /**
    * Determine if any period of this schedule intersects any period of another.
-   * In the event of recurrence this method expands both schedule configurations
-   * and evaluates whether ANY period from the second schedule intersects ANY
-   * period of this schedule.
+   * In the event of recurrence this method expands both event configurations
+   * and evaluates whether ANY period from the other Event intersects ANY period
+   * of this Event.
    * <p>
    * Developer note: Read the functional description carefully: the comparison
    * applies recurrence to both schedules.
    *
-   * @param event the other schedule to evaluate
+   * @param event the other Event to evaluate
    * @return true if the date falls within the event described by the schedule
    */
   public boolean intersects(Event event) {
@@ -1494,7 +1494,7 @@ public class Event implements Comparable<Event>, Serializable {
        * <pre>
        * A:     a_s-------------a_e
        * B:  b_s---------b_e
-       * C:             b_e-----a_e        (b_end - a_end)
+       * C:              b_e----a_e        (b_end - a_end)
        * </pre>
        */
       return Event.getInstance(b.getDateEnd(), a.getDateEnd());
@@ -1502,7 +1502,7 @@ public class Event implements Comparable<Event>, Serializable {
       /**
        * <pre>
        * A:  a_s-------------a_e
-       * B:          b_s---------b_e
+       * B:           b_s---------b_e
        * C:  a_s------b_s                 (a_start - b_start)
        * </pre>
        */
@@ -1927,7 +1927,12 @@ public class Event implements Comparable<Event>, Serializable {
       return "Event not configured.";
     }
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_12HR, Locale.ENGLISH);
-    return allDayEvent ? "All day " : "" + dateStart.format(dateFormatter) + " to " + dateEnd.format(dateFormatter) + " (" + getZoneId().getId() + ")";
+    return allDayEvent
+           ? "All day "
+           : "" + dateStart.format(dateFormatter)
+      + " to " + dateEnd.format(dateFormatter)
+      + " (" + getZoneId().getId() + ")"
+      + (recurrence ? " " + recurType.getDescription() : "");
   }
 
   /**
