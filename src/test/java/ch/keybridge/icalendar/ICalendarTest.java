@@ -69,8 +69,9 @@ public class ICalendarTest {
 //    RecurType recur = new RecurType("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,FR;BYHOUR=11,18");
     RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=20;BYDAY=MO,FR;BYHOUR=11,18;BYSETPOS=-1");
 
-    System.out.println(" recur " + recur);
-    System.out.println(" recur " + recur.toStringFull());
+    System.out.println(" recur raw         " + recur);
+    System.out.println(" recur full        " + recur.toStringFull());
+    System.out.println(" recur description " + recur.getDescription());
 //    Set<PeriodType> recurSet = ICalendar.calculateRecurrenceSet(dtstart.getTime(),
 //                                                                    dtend.getTime(),
 //                                                                    recur,
