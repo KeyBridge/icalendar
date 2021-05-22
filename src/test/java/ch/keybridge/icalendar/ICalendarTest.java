@@ -169,6 +169,7 @@ public class ICalendarTest {
 //    RecurType recur = new RecurType("FREQ=WEEKLY;COUNT=10");
 //    RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=2;UNTIL=20170925T000000Z");
     RecurType recur = new RecurType("FREQ=DAILY;INTERVAL=1;COUNT=5");
+//    RecurType recur = new RecurType("FREQ=HOURLY;INTERVAL=1;COUNT=5");
 
     System.out.println("  RecurType " + recur);
 

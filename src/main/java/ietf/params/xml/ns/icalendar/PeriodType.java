@@ -230,6 +230,25 @@ public final class PeriodType implements Comparable<PeriodType> {
   }
 
   /**
+   * Determine if this period contains the indicated date. That is, determine
+   * whether the query date falls within the event period covered by the
+   * schedule between the start and end dates.
+   *
+   * @param date the date of interest
+   * @return true if the date falls within the period
+   */
+  public boolean contains(ZonedDateTime date) {
+    if (date == null) {
+      return false;
+    }
+    /**
+     * Only the end OR duration may be configured, not both. Determine the end.
+     */
+    ZonedDateTime endDate = end == null ? start.plus(duration) : end;
+    return !start.isAfter(date) && !endDate.isBefore(date);
+  }
+
+  /**
    * Hash code is calculated from start, end and duration.
    *
    * @return the object hashcode
