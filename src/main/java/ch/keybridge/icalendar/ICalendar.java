@@ -86,10 +86,10 @@ public class ICalendar {
    *         the period of interest.
    */
   public static Set<PeriodType> calculatePeriodSet(final ZonedDateTime eventStart,
-                                                   final ZonedDateTime eventEnd,
-                                                   final RecurType recurType,
-                                                   final ZonedDateTime periodStart,
-                                                   final ZonedDateTime periodEnd) {
+    final ZonedDateTime eventEnd,
+    final RecurType recurType,
+    final ZonedDateTime periodStart,
+    final ZonedDateTime periodEnd) {
     /**
      * Initialize the period list. Use a HashSet for speed and to enforce
      * uniqueness. This is copied into a TreeSet later to provide a sorted set.
@@ -160,8 +160,8 @@ public class ICalendar {
      * that contains at least four (4) days in that calendar year.
      */
     final WeekFields weekFields = WeekFields.of(recurType.isSetWkst()
-                                                ? recurType.getWkst().getDayOfWeek()
-                                                : DayOfWeek.SUNDAY, 4);
+      ? recurType.getWkst().getDayOfWeek()
+      : DayOfWeek.SUNDAY, 4);
     /**
      * Finally: Scan through the period of interest in FREQ increments. For each
      * increment calculate a list of candidate occurrence dates. Analyze each
@@ -226,8 +226,8 @@ public class ICalendar {
        * incremented by INTERVAL FREQ periods.
        */
       long amount = recurType.isSetInterval() && recurType.getInterval() >= 1
-                    ? recurType.getInterval()
-                    : 1;
+        ? recurType.getInterval()
+        : 1;
       pStart = pStart.plus(amount, recurType.getFreq().getTemporalUnit());
     } // END while loop
     /**
@@ -264,7 +264,7 @@ public class ICalendar {
       case DAILY:
         if (recurType.isSetByday() && recurType.getByday().stream()
           .noneMatch(t -> t.getWeekdayRecurType().getDayOfWeek() == candidate.getDayOfWeek() && (!t.isMonthly()
-                                                                                                 || candidate.equals(calculateNthWeekday(candidate, t))))) {
+          || candidate.equals(calculateNthWeekday(candidate, t))))) {
           return true;
         }
         if (recurType.isSetBymonthday() && noneMatch(recurType.getBymonthday(), candidate.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth(), candidate.getDayOfMonth())) {
@@ -285,8 +285,10 @@ public class ICalendar {
   }
 
   private static boolean noneMatch(Collection<Integer> acceptedValues, int negativeValueOffset, int candidate) {
-    return acceptedValues.stream().map(value -> value > 0 ? value : value + negativeValueOffset).noneMatch(v -> v
-      == candidate);
+    return acceptedValues.stream()
+      .map(value -> {
+        return value > 0 ? value : value + negativeValueOffset;
+      }).noneMatch(v -> v == candidate);
   }
 
   //<editor-fold defaultstate="collapsed" desc="RRULE Calculators">
@@ -305,12 +307,12 @@ public class ICalendar {
    * @return a non-null HashSet
    */
   private static Set<ZonedDateTime> expandByGeneric(Set<ZonedDateTime> dateSet,
-                                                    boolean isSet,
-                                                    Supplier<Collection<Integer>> byValueSupplier,
-                                                    Function<ZonedDateTime, Integer> temporalUnitLength,
-                                                    ZonedDateTime periodStart,
-                                                    BiFunction<ZonedDateTime, Integer, ZonedDateTime> function,
-                                                    TemporalUnit forwardAdjustment) {
+    boolean isSet,
+    Supplier<Collection<Integer>> byValueSupplier,
+    Function<ZonedDateTime, Integer> temporalUnitLength,
+    ZonedDateTime periodStart,
+    BiFunction<ZonedDateTime, Integer, ZonedDateTime> function,
+    TemporalUnit forwardAdjustment) {
     if (!isSet) {
       return dateSet;
     }
@@ -322,8 +324,8 @@ public class ICalendar {
      * integer)
      */
     return (dateSet.isEmpty()
-            ? Stream.of(periodStart)
-            : dateSet.stream()).flatMap(date -> byValueSupplier.get().stream()
+      ? Stream.of(periodStart)
+      : dateSet.stream()).flatMap(date -> byValueSupplier.get().stream()
       .map(integer -> function.apply(date, integer > 0 ? integer : temporalUnitLength.apply(date) + integer)))
       .map(date -> date.isBefore(periodStart) ? date.plus(1, forwardAdjustment) : date)
       .collect(Collectors.toSet());
@@ -404,8 +406,8 @@ public class ICalendar {
       return dateSet;
     }
     return (dateSet.isEmpty()
-            ? Stream.of(periodStart)
-            : dateSet.stream())
+      ? Stream.of(periodStart)
+      : dateSet.stream())
       .flatMap(date -> recurType.getByday().stream()
       .filter(nthWeekDay -> !nthWeekDay.isMonthly())
       .map(dayOfWeek -> date.with(ChronoField.DAY_OF_WEEK, dayOfWeek.getWeekdayRecurType().getDayOfWeek().getValue())))
@@ -435,8 +437,8 @@ public class ICalendar {
       return dateSet;
     }
     return (dateSet.isEmpty()
-            ? Stream.of(periodStart)
-            : dateSet.stream())
+      ? Stream.of(periodStart)
+      : dateSet.stream())
       .flatMap(date -> recurType.getByday().stream()
       .filter(NthWeekdayRecurType::isMonthly)
       .map(dayOfWeek -> calculateNthWeekday(date, dayOfWeek)))
@@ -457,7 +459,7 @@ public class ICalendar {
   private static ZonedDateTime calculateNthWeekday(ZonedDateTime date, NthWeekdayRecurType weekdayRecurType) {
     return date.with(
       TemporalAdjusters.dayOfWeekInMonth(weekdayRecurType.getInteger(),
-                                         weekdayRecurType.getWeekdayRecurType().getDayOfWeek()));
+        weekdayRecurType.getWeekdayRecurType().getDayOfWeek()));
   }
 
   /**
@@ -480,11 +482,11 @@ public class ICalendar {
    */
   protected static Set<ZonedDateTime> expandByWeekNo(Set<ZonedDateTime> dateSet, RecurType recurType, ZonedDateTime periodStart, WeekFields weekFields) {
     return expandByGeneric(dateSet,
-                           recurType.isSetByweekno(),
-                           recurType::getByweekno,
-                           date -> (int) weekFields.weekOfYear().getFrom(date.with(TemporalAdjusters.lastDayOfYear())),
-                           periodStart,
-                           (date, integer) -> date.with(weekFields.weekOfYear(), integer), ChronoUnit.YEARS);
+      recurType.isSetByweekno(),
+      recurType::getByweekno,
+      date -> (int) weekFields.weekOfYear().getFrom(date.with(TemporalAdjusters.lastDayOfYear())),
+      periodStart,
+      (date, integer) -> date.with(weekFields.weekOfYear(), integer), ChronoUnit.YEARS);
   }
 
   /**
@@ -685,18 +687,18 @@ public class ICalendar {
    * @return an iCalendar VEvent from this Event configuration
    */
   public VeventType vEvent(LocalDate dateStart,
-                           LocalDate dateEnd,
-                           String uid,
-                           boolean allDay,
-                           String organizer,
-                           String summary,
-                           String description,
-                           List<String> categories,
-                           String classification,
-                           String transparency,
-                           String rrule,
-                           String tzid,
-                           String location) {
+    LocalDate dateEnd,
+    String uid,
+    boolean allDay,
+    String organizer,
+    String summary,
+    String description,
+    List<String> categories,
+    String classification,
+    String transparency,
+    String rrule,
+    String tzid,
+    String location) {
     VeventType vEvent = new VeventType();
 
     ObjectFactory o = new ObjectFactory();
@@ -814,8 +816,8 @@ public class ICalendar {
          * ZonedDateTime. Set the time to midnight.
          */
         return ZonedDateTime.of(recur.getUntil().getDate(),
-                                LocalTime.of(23, 59),
-                                dateTime.getZone());
+          LocalTime.of(23, 59),
+          dateTime.getZone());
       } else {
         /**
          * The until is a date-time; easily to transform to a ZonedDateTime.

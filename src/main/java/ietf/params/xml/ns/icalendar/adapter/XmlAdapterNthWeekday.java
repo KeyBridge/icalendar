@@ -17,7 +17,7 @@ package ietf.params.xml.ns.icalendar.adapter;
 
 import ietf.params.xml.ns.icalendar.WeekdayRecurType;
 import ietf.params.xml.ns.icalendar.NthWeekdayRecurType;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * A parser for BYDAY RRULE values, such as 1MO, TU, -2FR.

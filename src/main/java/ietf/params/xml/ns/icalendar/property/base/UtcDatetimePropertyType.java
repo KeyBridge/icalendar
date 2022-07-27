@@ -23,8 +23,8 @@ import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import ietf.params.xml.ns.icalendar.property.base.utcdatetime.LastModifiedPropType;
 import java.time.ZonedDateTime;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**

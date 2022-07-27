@@ -15,9 +15,9 @@
  */
 package ietf.params.xml.ns.icalendar;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * A helper class containing Recurrence end type strategy.

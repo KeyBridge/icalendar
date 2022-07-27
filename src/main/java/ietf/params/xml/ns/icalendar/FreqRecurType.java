@@ -17,8 +17,8 @@ package ietf.params.xml.ns.icalendar;
 
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * Java class for EFreqRecurType.

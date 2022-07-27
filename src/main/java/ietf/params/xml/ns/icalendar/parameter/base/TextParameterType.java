@@ -18,7 +18,7 @@ package ietf.params.xml.ns.icalendar.parameter.base;
 import ietf.params.xml.ns.icalendar.parameter.BaseParameterType;
 import ietf.params.xml.ns.icalendar.parameter.base.text.*;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for TextParameterType complex type.

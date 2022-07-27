@@ -17,10 +17,10 @@ package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
 import ietf.params.xml.ns.icalendar.component.ComponentName;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import static ietf.params.xml.ns.icalendar.Constants.FORMATTER_RFC2245_DATE_TIME;
 

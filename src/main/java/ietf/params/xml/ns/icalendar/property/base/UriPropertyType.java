@@ -19,7 +19,7 @@ import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.uri.TzurlPropType;
 import ietf.params.xml.ns.icalendar.property.base.uri.UrlPropType;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for UriPropertyType complex type.

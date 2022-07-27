@@ -22,7 +22,7 @@ import ietf.params.xml.ns.icalendar.parameter.base.caladdresslist.MemberParamTyp
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for CalAddressListParamType complex type.

@@ -50,9 +50,9 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.math.BigInteger;
 import java.net.URL;
-import javax.xml.bind.*;
-import javax.xml.bind.annotation.XmlElementDecl;
-import javax.xml.bind.annotation.XmlRegistry;
+import jakarta.xml.bind.*;
+import jakarta.xml.bind.annotation.XmlElementDecl;
+import jakarta.xml.bind.annotation.XmlRegistry;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 

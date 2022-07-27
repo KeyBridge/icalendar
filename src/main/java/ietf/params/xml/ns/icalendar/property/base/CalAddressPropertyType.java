@@ -19,7 +19,7 @@ import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.caladdress.AttendeePropType;
 import ietf.params.xml.ns.icalendar.property.base.caladdress.OrganizerPropType;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for CalAddressPropertyType complex type.

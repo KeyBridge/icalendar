@@ -17,7 +17,7 @@ package ietf.params.xml.ns.icalendar.parameter.base;
 
 import ietf.params.xml.ns.icalendar.parameter.BaseParameterType;
 import ietf.params.xml.ns.icalendar.parameter.base.bool.RsvpParamType;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for BooleanParameterType complex type.

@@ -30,8 +30,8 @@ import ietf.params.xml.ns.icalendar.property.base.utcdatetime.DtstampPropType;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.Objects;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * This type is the basis for all components and provides a base class for

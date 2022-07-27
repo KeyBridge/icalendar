@@ -20,7 +20,7 @@ import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsetfromPropType
 import ietf.params.xml.ns.icalendar.property.base.utcoffset.TzoffsettoPropType;
 import java.util.Objects;
 import java.util.TimeZone;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for UtcOffsetPropertyType complex type.

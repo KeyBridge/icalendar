@@ -13,5 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@javax.xml.bind.annotation.XmlSchema(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "urn:ietf:params:xml:ns:icalendar-2.0", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package ietf.params.xml.ns.icalendar.parameter.base.uri;

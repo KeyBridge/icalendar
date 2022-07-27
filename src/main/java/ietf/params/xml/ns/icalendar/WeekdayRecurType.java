@@ -18,8 +18,8 @@ package ietf.params.xml.ns.icalendar;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.Locale;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * Java class for EWeekdayRecurType.

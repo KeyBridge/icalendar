@@ -18,7 +18,7 @@ package ietf.params.xml.ns.icalendar.property.base;
 import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import ietf.params.xml.ns.icalendar.property.base.text.*;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for TextPropertyType complex type.

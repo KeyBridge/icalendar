@@ -17,9 +17,9 @@ package ietf.params.xml.ns.icalendar.component.base;
 
 import ietf.params.xml.ns.icalendar.component.BaseComponentType;
 import ietf.params.xml.ns.icalendar.component.ComponentName;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * Java class for VavailabilityType complex type.

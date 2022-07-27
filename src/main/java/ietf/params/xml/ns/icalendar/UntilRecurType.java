@@ -22,8 +22,8 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import static ietf.params.xml.ns.icalendar.Constants.*;

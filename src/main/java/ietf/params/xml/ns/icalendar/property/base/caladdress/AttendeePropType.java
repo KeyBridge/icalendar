@@ -16,9 +16,9 @@
 package ietf.params.xml.ns.icalendar.property.base.caladdress;
 
 import ietf.params.xml.ns.icalendar.property.base.CalAddressPropertyType;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * Java class for AttendeePropType complex type.

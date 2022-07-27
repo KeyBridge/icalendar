@@ -22,7 +22,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalUnit;
 import java.time.temporal.WeekFields;
 import java.util.*;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import org.junit.Assert;
 import org.junit.Test;
 

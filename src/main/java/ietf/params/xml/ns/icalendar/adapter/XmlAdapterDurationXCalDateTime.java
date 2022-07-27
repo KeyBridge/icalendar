@@ -17,7 +17,7 @@ package ietf.params.xml.ns.icalendar.adapter;
 
 import java.time.Duration;
 import java.time.format.DateTimeParseException;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Java XML adapter to translate between the a duration string as defined in the

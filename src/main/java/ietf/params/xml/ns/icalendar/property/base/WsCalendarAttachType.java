@@ -19,8 +19,8 @@ import ietf.params.xml.ns.icalendar.property.BasePropertyType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * types the content of the xCal attach element

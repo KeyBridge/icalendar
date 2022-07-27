@@ -19,7 +19,7 @@ import ietf.params.xml.ns.icalendar.parameter.BaseParameterType;
 import ietf.params.xml.ns.icalendar.parameter.base.uri.AltrepParamType;
 import ietf.params.xml.ns.icalendar.parameter.base.uri.DirParamType;
 import java.util.Objects;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Java class for UriParameterType complex type.

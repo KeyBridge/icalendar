@@ -15,8 +15,8 @@
  */
 package ietf.params.xml.ns.icalendar.component;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 /**
  * An enumerate list of iCalendar component types. The name is used when writing
