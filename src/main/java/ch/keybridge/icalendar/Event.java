@@ -15,6 +15,8 @@
 package ch.keybridge.icalendar;
 
 import ietf.params.xml.ns.icalendar.RecurType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -24,8 +26,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import jakarta.xml.bind.annotation.XmlEnum;
-import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * The Event object is designed to enable the recording, persistence and
@@ -896,8 +896,8 @@ public class Event implements Comparable<Event>, Serializable {
    */
   public String getDescription() {
     return description != null
-           ? description
-           : "From " + dateStart.toLocalDate().format(DateTimeFormatter.ISO_DATE)
+      ? description
+      : "From " + dateStart.toLocalDate().format(DateTimeFormatter.ISO_DATE)
       + " to " + dateEnd.toLocalDate().format(DateTimeFormatter.ISO_DATE)
       + (hasRecur() ? recurType.toString() : "");
   }
@@ -1701,7 +1701,7 @@ public class Event implements Comparable<Event>, Serializable {
    */
   public String getDurationExpiration() {
     return durationDescription(allDayEvent ? dateStart.withHour(0).withMinute(0) : dateStart,
-                               allDayEvent ? getDateExpire().withHour(23).withMonth(59) : getDateExpire());
+      allDayEvent ? getDateExpire().withHour(23).withMonth(59) : getDateExpire());
   }
 
   /**
@@ -1794,8 +1794,7 @@ public class Event implements Comparable<Event>, Serializable {
    * this method when creating an Event from a VCARD datatype that specified
    * duration but not DTEND.
    *
-   * @param duration a non-null javax.xml.datatype.Duration object. null values
-   *                 are ignored.
+   * @param duration a non-null Duration object. null values are ignored.
    */
   public void setDuration(Duration duration) {
     if (duration != null) {
@@ -1928,8 +1927,8 @@ public class Event implements Comparable<Event>, Serializable {
     }
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_12HR, Locale.ENGLISH);
     return allDayEvent
-           ? "All day "
-           : "" + dateStart.format(dateFormatter)
+      ? "All day "
+      : "" + dateStart.format(dateFormatter)
       + " to " + dateEnd.format(dateFormatter)
       + " (" + getZoneId().getId() + ")"
       + (recurrence ? " " + recurType.getDescription() : "");
@@ -1943,8 +1942,8 @@ public class Event implements Comparable<Event>, Serializable {
   @Override
   public int compareTo(Event o) {
     return dateStart.equals(o.getDateStart())
-           ? dateEnd.compareTo(o.getDateEnd())
-           : dateStart.compareTo(o.getDateStart());
+      ? dateEnd.compareTo(o.getDateEnd())
+      : dateStart.compareTo(o.getDateStart());
   }
 
   /**
@@ -2053,10 +2052,10 @@ public class Event implements Comparable<Event>, Serializable {
      */
     try {
       return ICalendar.calculatePeriodSet(dateStart,
-                                          dateEnd,
-                                          recurType,
-                                          periodStart.withZoneSameInstant(getZoneId()),
-                                          periodEnd.withZoneSameInstant(getZoneId())).stream()
+        dateEnd,
+        recurType,
+        periodStart.withZoneSameInstant(getZoneId()),
+        periodEnd.withZoneSameInstant(getZoneId())).stream()
         .map(periodType -> {
           /**
            * Developer note: PeriodType DATETIME values are ALWAYS set to UTC
