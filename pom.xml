@@ -7,7 +7,7 @@
     <version>1.0.0</version>
   </parent>
 
-  <groupId>org.ietf.rfc</groupId>
+  <groupId>keybridge.lib.oss</groupId>
   <artifactId>icalendar</artifactId>
   <version>2.7.0</version>
   <packaging>jar</packaging>
@@ -50,6 +50,7 @@
     - (extensively) clean up javadoc to satisfy jdk8 lint
     v2.7.0 - refactor from `javax.xml.bind` to `jakarta.xml.bind`
     - set parent to keybridge.pom::keybridge-lib
+    - change groupId to keybridge.lib.oss
 
   </description>
 
