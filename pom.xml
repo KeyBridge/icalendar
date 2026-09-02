@@ -4,7 +4,7 @@
   <parent>
     <groupId>keybridge.pom</groupId>
     <artifactId>keybridge-lib</artifactId>
-    <version>1.0.0</version>
+    <version>1.3.0</version>
   </parent>
 
   <groupId>keybridge.lib.oss</groupId>
